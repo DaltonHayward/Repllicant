@@ -164,8 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92bc137119373634e87ea0c84ba12237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notifText: {fileID: 5436668394235753743}
   craftingMenu: {fileID: 5781362662177782990}
+  highlightMaterial: {fileID: 2100000, guid: c9f186be2105f2147a74043f9a5a09f6, type: 2}
 --- !u!114 &4109078555928463125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1037,11 +1037,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 860cb90b6e1be13449c9595be215d0ae, type: 3}
---- !u!1 &5436668394235753743 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5860693071949934568, guid: 860cb90b6e1be13449c9595be215d0ae, type: 3}
-  m_PrefabInstance: {fileID: 1884668850933914343}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8224046636407342399 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7495712175250907096, guid: 860cb90b6e1be13449c9595be215d0ae, type: 3}
