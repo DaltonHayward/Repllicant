@@ -13,9 +13,8 @@ GameObject:
   - component: {fileID: 3895519132994968000}
   - component: {fileID: 1673921272666261347}
   - component: {fileID: 2065709900522242937}
-  - component: {fileID: 9037761848405823829}
+  - component: {fileID: 7606035317997456151}
   - component: {fileID: 1536292643827664397}
-  - component: {fileID: 4109078555928463125}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -136,7 +135,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &9037761848405823829
+--- !u!114 &7606035317997456151
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,10 +144,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2885759946139322027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17fbbdfa2dca31a4fa734cb697faa63c, type: 3}
+  m_Script: {fileID: 11500000, guid: 09bcf9fca3e40af419cf958d7350f342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  _playerCamera: {fileID: 0}
+  _movementSpeed: 5
+  _rotationSpeed: 0.3
 --- !u!114 &1536292643827664397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,15 +164,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingMenu: {fileID: 0}
   highlightMaterial: {fileID: 2100000, guid: c9f186be2105f2147a74043f9a5a09f6, type: 2}
---- !u!114 &4109078555928463125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2885759946139322027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c94acedcd0bbed441aac65b3a4fdcd4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -8,16 +8,16 @@ using UnityEngine.Events;
 public class Interactable : MonoBehaviour
 {
     //This is on workbench
-    public bool isInRange;
-    public KeyCode interactKey;
+    private bool _isInRange;
+    // public KeyCode interactKey;
     public UnityEvent interactAction;
 
     // Update is called once per frame
     void Update()
     {
-        if (isInRange)
+        if (_isInRange)
         {
-            if (Input.GetKeyDown(interactKey))
+            if (InputManager.instance.GetKeyDown("interact"))
             {
                 interactAction.Invoke();
             }
@@ -30,7 +30,7 @@ public class Interactable : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            isInRange = true;
+            _isInRange = true;
             other.gameObject.GetComponent<InteractionNotification>().NotifyPlayer();
             Debug.Log("Player now in range");
         }
@@ -41,7 +41,7 @@ public class Interactable : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            isInRange = false;
+            _isInRange = false;
             other.gameObject.GetComponent<InteractionNotification>().DenotifyPlayer();
             Debug.Log("Player no longer range");
         }
