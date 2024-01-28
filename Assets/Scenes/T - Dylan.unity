@@ -313,11 +313,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &575037849 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5781362662177782990, guid: 93ff0632afd921a42953518d3a198774, type: 3}
-  m_PrefabInstance: {fileID: 1930267513}
-  m_PrefabAsset: {fileID: 0}
 --- !u!850595691 &1113001711
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -498,17 +493,11 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
---- !u!114 &1714025208 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7008255506892191658, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
+--- !u!223 &1338595009 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7950134984957074165, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
   m_PrefabInstance: {fileID: 8599901428897350432}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 529a5fc8c9db6b941b3c38167bb6d30b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1790306148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -762,9 +751,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1536292643827664397, guid: 93ff0632afd921a42953518d3a198774, type: 3}
-      propertyPath: highlightMaterial
+      propertyPath: craftingMenu
       value: 
-      objectReference: {fileID: 2100000, guid: c9f186be2105f2147a74043f9a5a09f6, type: 2}
+      objectReference: {fileID: 1338595009}
     - target: {fileID: 2885759946139322027, guid: 93ff0632afd921a42953518d3a198774, type: 3}
       propertyPath: m_Name
       value: PlayerSample
@@ -809,10 +798,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7084346235932149247, guid: 93ff0632afd921a42953518d3a198774, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1714025208}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -897,7 +882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1846500722052372368, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.98466766
+      value: 0.70533425
       objectReference: {fileID: 0}
     - target: {fileID: 1846500722052372368, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
       propertyPath: m_LocalRotation.x
@@ -905,7 +890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1846500722052372368, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.17444095
+      value: 0.70887494
       objectReference: {fileID: 0}
     - target: {fileID: 1846500722052372368, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
       propertyPath: m_LocalRotation.z
@@ -917,7 +902,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1846500722052372368, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 20.092
+      value: 90.287
       objectReference: {fileID: 0}
     - target: {fileID: 1846500722052372368, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -927,14 +912,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorkBench
       objectReference: {fileID: 0}
-    - target: {fileID: 3967799087021588440, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
-      propertyPath: m_TagString
-      value: Interactable
-      objectReference: {fileID: 0}
-    - target: {fileID: 7008255506892191658, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
-      propertyPath: craftingMenu
-      value: 
-      objectReference: {fileID: 575037849}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

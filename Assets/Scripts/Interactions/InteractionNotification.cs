@@ -8,7 +8,7 @@ public class InteractionNotification : MonoBehaviour
     private GameObject interactable;
     private Material originalMaterial;
 
-    public GameObject craftingMenu;
+    public Canvas craftingMenu;
     public Material highlightMaterial;
 
     private void OnTriggerEnter(Collider other)
@@ -55,7 +55,8 @@ public class InteractionNotification : MonoBehaviour
             renderer.material = originalMaterial;
 
             // Deactivate the crafting menu if the player walks away.
-            craftingMenu.SetActive(false);
+            craftingMenu.enabled = false;
+
         }
         else
         {

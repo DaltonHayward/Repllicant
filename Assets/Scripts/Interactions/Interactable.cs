@@ -7,6 +7,7 @@ using UnityEngine.Events;
 // Requires InteractionNotification component on player and InteractionNotif prefab as player child
 public class Interactable : MonoBehaviour
 {
+    //This is on workbench
     public bool isInRange;
     public KeyCode interactKey;
     public UnityEvent interactAction;

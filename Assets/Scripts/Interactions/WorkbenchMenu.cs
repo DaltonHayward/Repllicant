@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class WorkbenchMenu : MonoBehaviour
 {
-    public GameObject craftingMenu;// Reference to crafting menu canvas
+    //This is on the workbench
+    public Canvas craftingMenu;
     public bool isCrafting;
 
     private void Start()
     {
-        craftingMenu.SetActive(false);
+        craftingMenu.enabled = false;
     }
 
     public void InteractionEvent()
@@ -27,7 +28,7 @@ public class WorkbenchMenu : MonoBehaviour
     public void OpenCraftingMenu()
     {
         // This displays the crafing menu
-        craftingMenu.SetActive(true);
+        craftingMenu.enabled = true;
         isCrafting = true;
 
         // Time.timeScale = 0f; Optional time stop while crafting
@@ -35,8 +36,8 @@ public class WorkbenchMenu : MonoBehaviour
 
     public void CloseCraftingMenu()
     {
-        // Disable pause menu
-        craftingMenu.SetActive(false);
+        // Disable crafting menu
+        craftingMenu.enabled = false;
         isCrafting = false;
 
         // Time.timescale = 1f; Resume regular time if stopped when crafting
