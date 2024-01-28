@@ -5,6 +5,7 @@ using UnityEngine;
 public class InteractionNotification : MonoBehaviour
 {
     public GameObject notifText;
+    public GameObject craftingMenu;
 
     public void NotifyPlayer()
     {
@@ -14,5 +15,7 @@ public class InteractionNotification : MonoBehaviour
     public void DenotifyPlayer()
     {
         notifText.SetActive(false);
+        craftingMenu.SetActive(false);
+
     }
 }
