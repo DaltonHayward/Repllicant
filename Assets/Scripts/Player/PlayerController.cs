@@ -15,15 +15,39 @@ public class PlayerController : MonoBehaviour
 
     private float _cameraYAngle;
 
-
+    [Header("Camera Rotation")]
     [SerializeField][Range(0.1f, 5f)]
     private float _rotationSpeed = 1;
     private bool _isRotating = false;
 
 
+    [Header("Dodge")]
+    [SerializeField][Range(1f, 10f)]
+    private float _dodgeDistance = 5f;
+    [SerializeField][Range(0.1f, 2f)]
+    private float _dodgeDuration = 1;
+    private bool _isDodging = false;
+    // private Animator _anim;
+    private Vector3 _previousPos;
+
+    [SerializeField][Range(0f, 1f)]
+    private float _delayBeforeInvinsible = 0.2f;
+    [SerializeField][Range(0f, 2f)]
+    private float _invinsibleDuration = 1f;
+    public float DodgeCooldown = 1;
+    private float _cooldownTimer;
+
+
+    private enum State {MOVING, DODGING, INTERACTING, ATTACKING};
+    private State _playerState;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        // _anim = GetComponentInChildren<Animator>();
+        _playerState = State.MOVING;
+        _previousPos = transform.position;
         _cameraYAngle = FIRST;
         _playerCamera.rotation = Quaternion.Euler(_playerCamera.localEulerAngles.x, _cameraYAngle, _playerCamera.localEulerAngles.z);
     }
@@ -31,41 +55,37 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerInput();
-        LookAt();
-
-        // cooldown for camera rotation
-        if ((InputManager.instance.GetKey("rotateCameraLeft") || InputManager.instance.GetKey("rotateCameraRight")) && !_isRotating)
-        { 
-            RotateCamera();
-        }
-    }
-    
-    IEnumerator DoLerp(float cameraYAngle)
-    {
-        _isRotating = true;
-
-        float elapsedTime = 0f;
-        float fraction = elapsedTime / _rotationSpeed;
-
-        while(elapsedTime <= _rotationSpeed)
+        switch (_playerState)
         {
-            _playerCamera.rotation = Quaternion.Lerp(_playerCamera.rotation, Quaternion.Euler(_playerCamera.localEulerAngles.x, cameraYAngle, _playerCamera.localEulerAngles.z), fraction);
-            elapsedTime += Time.deltaTime;
-            fraction = elapsedTime / _rotationSpeed;
+            case State.MOVING:
+            {
+                HandleMovement();
+                HandleDodge();
+                LookAt();
 
-            yield return Time.deltaTime;
+                // cooldown for camera rotation
+                if ((InputManager.instance.GetKey("rotateCameraLeft") || InputManager.instance.GetKey("rotateCameraRight")) && !_isRotating)
+                { 
+                    RotateCamera();
+                }
+                break;
+            }
+            case State.DODGING:
+            {
+                break;
+            }
         }
+        
 
-        _isRotating = false;
     }
-    
 
-    private void PlayerInput() 
+    private void HandleMovement() 
     {
+
+        // Player movement
         if(InputManager.instance.GetKey("up")) 
         {
-           transform.position += ConvertToCameraSpace(Vector3.forward) * Time.deltaTime * _movementSpeed;
+            transform.position += ConvertToCameraSpace(Vector3.forward) * Time.deltaTime * _movementSpeed;
         } 
         else if (InputManager.instance.GetKey("down")) 
         {
@@ -75,13 +95,42 @@ public class PlayerController : MonoBehaviour
         if(InputManager.instance.GetKey("left"))
         {
             transform.position += ConvertToCameraSpace(Vector3.left) * Time.deltaTime * _movementSpeed;
-
         } 
         else if (InputManager.instance.GetKey("right")) 
         {
             transform.position -= ConvertToCameraSpace(Vector3.left) * Time.deltaTime * _movementSpeed;
-
         }
+    }
+
+    private void HandleDodge() 
+    {
+        Vector3 direction = (transform.position - _previousPos).normalized;
+        if (InputManager.instance.GetKey("dodge") && !_isDodging)
+        {
+            GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
+            StartCoroutine(Dodge(ConvertToCameraSpace(transform.position + direction * _dodgeDistance)));
+        }
+
+        _previousPos = transform.position;
+    }
+
+    IEnumerator Dodge(Vector3 newPosition)
+    {
+        _isDodging = true;
+        _playerState = State.DODGING;
+        float elapsedTime = 0f;
+        
+        while(elapsedTime < _dodgeDuration)
+        {
+            float ratio = elapsedTime / _dodgeDistance;
+            transform.position = Vector3.Lerp(transform.position, newPosition, ratio);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        _isDodging = false;
+        _playerState = State.MOVING;
     }
 
     private Vector3 ConvertToCameraSpace(Vector3 vectorToRotate) 
@@ -157,8 +206,28 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        StartCoroutine(DoLerp(_cameraYAngle));
+        StartCoroutine(LerpRotation(_cameraYAngle));
     }
+
+    IEnumerator LerpRotation(float cameraYAngle)
+    {
+        _isRotating = true;
+
+        float elapsedTime = 0f;
+        float fraction = elapsedTime / _rotationSpeed;
+
+        while(elapsedTime <= _rotationSpeed)
+        {
+            _playerCamera.rotation = Quaternion.Lerp(_playerCamera.rotation, Quaternion.Euler(_playerCamera.localEulerAngles.x, cameraYAngle, _playerCamera.localEulerAngles.z), fraction);
+            elapsedTime += Time.deltaTime;
+            fraction = elapsedTime / _rotationSpeed;
+
+            yield return Time.deltaTime;
+        }
+
+        _isRotating = false;
+    }
+
 
     // 360 rotation of the player towards the mouse position
     public void LookAt()
