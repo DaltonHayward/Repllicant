@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
 
         // Player movement
-        if(InputManager.instance.GetKey("up")) 
+        if (InputManager.instance.GetKey("up")) 
         {
             transform.position += ConvertToCameraSpace(Vector3.forward) * Time.deltaTime * _movementSpeed;
         } 
