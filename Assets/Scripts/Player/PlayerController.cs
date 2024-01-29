@@ -72,11 +72,10 @@ public class PlayerController : MonoBehaviour
             }
             case State.DODGING:
             {
+                LookAt();
                 break;
             }
         }
-        
-
     }
 
     private void HandleMovement() 
@@ -108,7 +107,7 @@ public class PlayerController : MonoBehaviour
         if (InputManager.instance.GetKey("dodge") && !_isDodging)
         {
             GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
-            StartCoroutine(Dodge(ConvertToCameraSpace(transform.position + direction * _dodgeDistance)));
+            StartCoroutine(Dodge(transform.position + direction * _dodgeDistance));
         }
 
         _previousPos = transform.position;
