@@ -1,25 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform _playerCamera;
-
+    [Header("Player")]
     [SerializeField] private float _movementSpeed;
 
     const float FIRST = 0f;
     const float SECOND = 90f;
     const float THIRD = 180f;
     const float FOURTH = 270f;
-
     private float _cameraYAngle;
-
     [Header("Camera Rotation")]
     [SerializeField][Range(0.1f, 5f)]
     private float _rotationSpeed = 1;
     private bool _isRotating = false;
-
 
     [Header("Dodge")]
     [SerializeField][Range(1f, 10f)]
@@ -34,8 +32,9 @@ public class PlayerController : MonoBehaviour
     private float _delayBeforeInvinsible = 0.2f;
     [SerializeField][Range(0f, 2f)]
     private float _invinsibleDuration = 1f;
-    public float DodgeCooldown = 1;
-    private float _cooldownTimer;
+    [SerializeField][Range(0f, 5f)]   
+    private float _dodgeCooldown = 1;
+    private bool _isColliding = false;
 
 
     private enum State {MOVING, DODGING, INTERACTING, ATTACKING};
@@ -43,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // _anim = GetComponentInChildren<Animator>();
         _playerState = State.MOVING;
@@ -61,7 +60,7 @@ public class PlayerController : MonoBehaviour
             {
                 HandleMovement();
                 HandleDodge();
-                LookAt();
+                LookAtMouse();
 
                 // cooldown for camera rotation
                 if ((InputManager.instance.GetKey("rotateCameraLeft") || InputManager.instance.GetKey("rotateCameraRight")) && !_isRotating)
@@ -72,7 +71,7 @@ public class PlayerController : MonoBehaviour
             }
             case State.DODGING:
             {
-                LookAt();
+                LookAtMouse();
                 break;
             }
         }
@@ -80,56 +79,102 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement() 
     {
+        Vector3 direction = new Vector3(0,0,0);
 
         // Player movement
         if (InputManager.instance.GetKey("up")) 
         {
-            transform.position += ConvertToCameraSpace(Vector3.forward) * Time.deltaTime * _movementSpeed;
+            direction += ConvertToCameraSpace(Vector3.forward);
         } 
         else if (InputManager.instance.GetKey("down")) 
         {
-            transform.position -= ConvertToCameraSpace(Vector3.forward) * Time.deltaTime * _movementSpeed;
+            direction -= ConvertToCameraSpace(Vector3.forward);
         }
 
         if(InputManager.instance.GetKey("left"))
         {
-            transform.position += ConvertToCameraSpace(Vector3.left) * Time.deltaTime * _movementSpeed;
+            direction += ConvertToCameraSpace(Vector3.left);
         } 
         else if (InputManager.instance.GetKey("right")) 
         {
-            transform.position -= ConvertToCameraSpace(Vector3.left) * Time.deltaTime * _movementSpeed;
+
+            direction -= ConvertToCameraSpace(Vector3.left);
         }
+
+        transform.position += _movementSpeed * Time.deltaTime * direction.normalized;
     }
 
     private void HandleDodge() 
     {
         Vector3 direction = (transform.position - _previousPos).normalized;
-        if (InputManager.instance.GetKey("dodge") && !_isDodging)
+        // Debug.Log(direction);
+        
+        if (InputManager.instance.GetKeyDown("dodge") && !_isDodging && direction != Vector3.zero)
         {
             GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
+            Debug.Log(transform.position + direction * _dodgeDistance);
             StartCoroutine(Dodge(transform.position + direction * _dodgeDistance));
+            StartCoroutine(DodgeCooldown());
         }
 
         _previousPos = transform.position;
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.collider.CompareTag("Ground"))
+        {
+            _isColliding = true;
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+         if (!collision.collider.CompareTag("Ground"))
+        {
+            _isColliding = false;
+        }
+    }
+
+    static float Flip(float x)
+    {
+        return 1 - x;
+    }
+
+    public static float EaseOut(float t)
+    {
+        return Flip(Flip(t) * Flip(t));
+    }
+
     IEnumerator Dodge(Vector3 newPosition)
     {
-        _isDodging = true;
         _playerState = State.DODGING;
+
         float elapsedTime = 0f;
+        float ratio = elapsedTime / _dodgeDuration;
+        // Vector3 velocity = Vector3.zero;
         
-        while(elapsedTime < _dodgeDuration)
+        while(elapsedTime < _dodgeDuration && !_isColliding)
         {
-            float ratio = elapsedTime / _dodgeDistance;
-            transform.position = Vector3.Lerp(transform.position, newPosition, ratio);
+            // float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / _dodgeDuration);
+
+            transform.position = Vector3.Lerp(transform.position, newPosition, EaseOut(ratio));
             elapsedTime += Time.deltaTime;
+            ratio = elapsedTime / _dodgeDuration;
 
             yield return null;
         }
 
-        _isDodging = false;
+        yield return new WaitForSeconds(_dodgeDuration - elapsedTime);
+
         _playerState = State.MOVING;
+    }
+
+    IEnumerator DodgeCooldown()
+    {
+        _isDodging = true;
+        yield return new WaitForSeconds(_dodgeCooldown + _dodgeDuration);
+        _isDodging = false;
     }
 
     private Vector3 ConvertToCameraSpace(Vector3 vectorToRotate) 
@@ -213,15 +258,15 @@ public class PlayerController : MonoBehaviour
         _isRotating = true;
 
         float elapsedTime = 0f;
-        float fraction = elapsedTime / _rotationSpeed;
+        float ratio = elapsedTime / _rotationSpeed;
 
         while(elapsedTime <= _rotationSpeed)
         {
-            _playerCamera.rotation = Quaternion.Lerp(_playerCamera.rotation, Quaternion.Euler(_playerCamera.localEulerAngles.x, cameraYAngle, _playerCamera.localEulerAngles.z), fraction);
+            _playerCamera.rotation = Quaternion.Lerp(_playerCamera.rotation, Quaternion.Euler(_playerCamera.localEulerAngles.x, cameraYAngle, _playerCamera.localEulerAngles.z), ratio);
             elapsedTime += Time.deltaTime;
-            fraction = elapsedTime / _rotationSpeed;
+            ratio = elapsedTime / _rotationSpeed;
 
-            yield return Time.deltaTime;
+            yield return null;
         }
 
         _isRotating = false;
@@ -229,7 +274,7 @@ public class PlayerController : MonoBehaviour
 
 
     // 360 rotation of the player towards the mouse position
-    public void LookAt()
+    public void LookAtMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // create a ray from the mouse position of screen to a world point
         RaycastHit[] hits;
