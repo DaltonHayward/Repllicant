@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -52,7 +51,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         switch (_playerState)
         {
@@ -63,7 +62,7 @@ public class PlayerController : MonoBehaviour
                 LookAtMouse();
 
                 // cooldown for camera rotation
-                if ((InputManager.instance.GetKey("rotateCameraLeft") || InputManager.instance.GetKey("rotateCameraRight")) && !_isRotating)
+                if ((InputManager.instance.GetKeyDown("rotateCameraLeft") || InputManager.instance.GetKeyDown("rotateCameraRight")) && !_isRotating)
                 { 
                     RotateCamera();
                 }
@@ -102,6 +101,7 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.position += _movementSpeed * Time.deltaTime * direction.normalized;
+    
     }
 
     private void HandleDodge() 
