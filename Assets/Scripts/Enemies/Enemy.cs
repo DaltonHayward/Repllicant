@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
+
 public class Enemy : MonoBehaviour
 {
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed;
@@ -62,7 +63,6 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(Random.Range(0, 1));
 
         if (Vector3.Distance(player.position, transform.position) < attackRange)
         {

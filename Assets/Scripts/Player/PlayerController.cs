@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private bool _isColliding = false;
 
     [SerializeField] private float _interactRange = 3f;
+    const float GOLDEN_RATIO = .54f;
     private bool _isCrafting = false;
 
 
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         // _anim = GetComponentInChildren<Animator>();
+        GetComponent<SphereCollider>().radius = _interactRange * GOLDEN_RATIO; //finding this number was hell
         _playerState = State.MOVING;
         _previousPos = transform.position;
         _cameraYAngle = FIRST;
@@ -64,27 +66,19 @@ public class PlayerController : MonoBehaviour
             {
                 HandleMovement();
                 HandleDodge();
-             
-
-                // cooldown for camera rotation
-                if ((InputManager.instance.GetKeyDown("rotateCameraLeft") || InputManager.instance.GetKeyDown("rotateCameraRight")) && !_isRotating)
-                { 
-                    RotateCamera();
-                }
                 break;
             }
             case State.DODGING:
             {
-               
                 break;
             }
             case State.INTERACTING:
             {
-                
                 break;
             }
         }
     }
+
     void Update()
     {
         switch (_playerState)
@@ -93,8 +87,13 @@ public class PlayerController : MonoBehaviour
                 {
                     LookAtMouse();
                     HandleInteract();
+
+                    // cooldown for camera rotation
+                    if ((InputManager.instance.GetKeyDown("rotateCameraLeft") || InputManager.instance.GetKeyDown("rotateCameraRight")) && !_isRotating)
+                    { 
+                        RotateCamera();
+                    }
                     break;
-                    
                 }
             case State.DODGING:
                 {
@@ -108,6 +107,7 @@ public class PlayerController : MonoBehaviour
                 }
         }
     }
+
     private void HandleMovement() 
     {
         Vector3 direction = new Vector3(0,0,0);
@@ -135,6 +135,7 @@ public class PlayerController : MonoBehaviour
         transform.position += _movementSpeed * Time.deltaTime * direction.normalized;
     
     }
+
     private void HandleInteract()
     {
         if (InputManager.instance.GetKeyDown("interact"))
@@ -145,7 +146,6 @@ public class PlayerController : MonoBehaviour
             {
                 if (c.CompareTag("Interactable"))
                 {
-
                     ISubscriber subscriber = c.GetComponent<ISubscriber>();
                     if (subscriber != null && !_isCrafting)
                     {
@@ -162,11 +162,8 @@ public class PlayerController : MonoBehaviour
                         break;
                     }
                 }
-                
-
             }
         }
-        
     }
     
     private void HandleDodge() 
@@ -185,19 +182,35 @@ public class PlayerController : MonoBehaviour
         _previousPos = transform.position;
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision other)
     {
-        if (!collision.collider.CompareTag("Ground"))
+        if (!other.collider.CompareTag("Ground"))
         {
             _isColliding = true;
         }
     }
 
-    void OnCollisionExit(Collision collision)
+    void OnCollisionExit(Collision other)
     {
-         if (!collision.collider.CompareTag("Ground"))
+         if (!other.collider.CompareTag("Ground"))
         {
             _isColliding = false;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Interactable"))
+        {
+            other.GetComponent<Renderer>().material.SetColor("_OutlineColor", Color.yellow);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Interactable")) 
+        {
+            other.GetComponent<Renderer>().material.SetColor("_OutlineColor", other.GetComponent<CraftingTable>().GetOriginalOutline());
         }
     }
 
@@ -336,7 +349,6 @@ public class PlayerController : MonoBehaviour
 
         _isRotating = false;
     }
-
 
     // 360 rotation of the player towards the mouse position
     public void LookAtMouse()

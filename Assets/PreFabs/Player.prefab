@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3895519132994968000}
   - component: {fileID: 1673921272666261347}
   - component: {fileID: 2065709900522242937}
+  - component: {fileID: 6190929835885940242}
   - component: {fileID: 7606035317997456151}
   - component: {fileID: 4107661935922531302}
   - component: {fileID: 1536292643827664397}
@@ -136,6 +137,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!135 &6190929835885940242
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2885759946139322027}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7606035317997456151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,7 +177,8 @@ MonoBehaviour:
   _dodgeDuration: 1
   _delayBeforeInvinsible: 0.2
   _invinsibleDuration: 1
-  DodgeCooldown: 1
+  _dodgeCooldown: 1
+  _interactRange: 3
 --- !u!114 &4107661935922531302
 MonoBehaviour:
   m_ObjectHideFlags: 0
