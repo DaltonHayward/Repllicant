@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -35,6 +37,9 @@ public class PlayerController : MonoBehaviour
     private float _dodgeCooldown = 1;
     private bool _isColliding = false;
 
+    [SerializeField] private float _interactRange = 3f;
+    private bool _isCrafting = false;
+
 
     private enum State {MOVING, DODGING, INTERACTING, ATTACKING};
     private State _playerState;
@@ -59,7 +64,7 @@ public class PlayerController : MonoBehaviour
             {
                 HandleMovement();
                 HandleDodge();
-                LookAtMouse();
+             
 
                 // cooldown for camera rotation
                 if ((InputManager.instance.GetKeyDown("rotateCameraLeft") || InputManager.instance.GetKeyDown("rotateCameraRight")) && !_isRotating)
@@ -70,12 +75,39 @@ public class PlayerController : MonoBehaviour
             }
             case State.DODGING:
             {
-                LookAtMouse();
+               
+                break;
+            }
+            case State.INTERACTING:
+            {
+                
                 break;
             }
         }
     }
-
+    void Update()
+    {
+        switch (_playerState)
+        {
+            case State.MOVING:
+                {
+                    LookAtMouse();
+                    HandleInteract();
+                    break;
+                    
+                }
+            case State.DODGING:
+                {
+                    LookAtMouse();
+                    break;
+                }
+            case State.INTERACTING:
+                {
+                    HandleInteract();
+                    break;
+                }
+        }
+    }
     private void HandleMovement() 
     {
         Vector3 direction = new Vector3(0,0,0);
@@ -103,7 +135,40 @@ public class PlayerController : MonoBehaviour
         transform.position += _movementSpeed * Time.deltaTime * direction.normalized;
     
     }
+    private void HandleInteract()
+    {
+        if (InputManager.instance.GetKeyDown("interact"))
+        {
+            Collider[] targets = Physics.OverlapSphere(transform.position, _interactRange);
+   
+            foreach (Collider c in targets)
+            {
+                if (c.CompareTag("Interactable"))
+                {
 
+                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
+                    if (subscriber != null && !_isCrafting)
+                    {
+                        subscriber.ReceiveMessage("OpenMenu");
+                        _isCrafting = true;
+                        _playerState = State.INTERACTING;
+                        break;
+                    }
+                    else if (subscriber != null && _isCrafting)
+                    {
+                        subscriber.ReceiveMessage("CloseMenu");
+                        _isCrafting = false;
+                        _playerState = State.MOVING;
+                        break;
+                    }
+                }
+                
+
+            }
+        }
+        
+    }
+    
     private void HandleDodge() 
     {
         Vector3 direction = (transform.position - _previousPos).normalized;
