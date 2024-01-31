@@ -1,13 +1,36 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed;
     float lastAttackTime;
     Transform player;
+    NavMeshAgent navMeshAgent;
     public bool closePlayer = false;
+    public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
+    public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
+    private void OnDestroy()
+    {
+        float randomValue = Random.value;
+        if (randomValue < commonItemProbability)
+        {
+            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemsProbability)
+        {
+            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
+        {
+            Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
+        }
+    }
     public void Die()
     {
         Destroy(gameObject);
@@ -32,11 +55,15 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = speed;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        print(Random.Range(0, 1));
+
         if (Vector3.Distance(player.position, transform.position) < attackRange)
         {
             if (Time.time - lastAttackTime > attackSpeed)
@@ -48,7 +75,7 @@ public class Enemy : MonoBehaviour
         }
         if (Vector3.Distance(player.position, transform.position) < chaseRange)
         {
-            transform.Translate((player.position - transform.position).normalized * speed, Space.World);
+            navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized);
         }
 
     }
