@@ -65,7 +65,6 @@ public class PlayerController : MonoBehaviour
             case State.MOVING:
             {
                 HandleMovement();
-                HandleDodge();
                 break;
             }
             case State.DODGING:
@@ -87,6 +86,7 @@ public class PlayerController : MonoBehaviour
                 {
                     LookAtMouse();
                     HandleInteract();
+                    HandleDodge();
 
                     // cooldown for camera rotation
                     if ((InputManager.instance.GetKeyDown("rotateCameraLeft") || InputManager.instance.GetKeyDown("rotateCameraRight")) && !_isRotating)
@@ -174,7 +174,6 @@ public class PlayerController : MonoBehaviour
         if (InputManager.instance.GetKeyDown("dodge") && !_isDodging && direction != Vector3.zero)
         {
             GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
-            Debug.Log(transform.position + direction * _dodgeDistance);
             StartCoroutine(Dodge(transform.position + direction * _dodgeDistance));
             StartCoroutine(DodgeCooldown());
         }
