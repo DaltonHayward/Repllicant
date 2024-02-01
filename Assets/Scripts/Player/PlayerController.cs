@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
         {
             case State.MOVING:
             {
-                HandleMovement();
+           
                 break;
             }
             case State.DODGING:
@@ -80,20 +81,29 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (UserInput.instance.CameraLeftInput)
+        {
+            Debug.Log("LEft");
+        }
+        if (UserInput.instance.CameraRightInput)
+        {
+            Debug.Log("Right");
+        }
         switch (_playerState)
         {
             case State.MOVING:
                 {
+                    HandleMovement();
                     LookAtMouse();
                     HandleInteract();
                     HandleDodge();
 
                     // cooldown for camera rotation
-                    if ((InputManager.instance.GetKeyDown("rotateCameraLeft") || InputManager.instance.GetKeyDown("rotateCameraRight")) && !_isRotating)
-                    { 
-                        RotateCamera();
-                    }
+                   
+                    
+                    RotateCamera();
                     break;
+                    
                 }
             case State.DODGING:
                 {
@@ -110,35 +120,17 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement() 
     {
-        Vector3 direction = new Vector3(0,0,0);
+        Vector3 direction = new Vector3(UserInput.instance.MoveInput.x, transform.position.y, UserInput.instance.MoveInput.y);
 
-        // Player movement
-        if (InputManager.instance.GetKey("up")) 
-        {
-            direction += ConvertToCameraSpace(Vector3.forward);
-        } 
-        else if (InputManager.instance.GetKey("down")) 
-        {
-            direction -= ConvertToCameraSpace(Vector3.forward);
-        }
+        Rigidbody rb = GetComponent<Rigidbody>();
 
-        if(InputManager.instance.GetKey("left"))
-        {
-            direction += ConvertToCameraSpace(Vector3.left);
-        } 
-        else if (InputManager.instance.GetKey("right")) 
-        {
-
-            direction -= ConvertToCameraSpace(Vector3.left);
-        }
-
-        transform.position += _movementSpeed * Time.deltaTime * direction.normalized;
+        rb.MovePosition(rb.position + ConvertToCameraSpace(direction) * _movementSpeed * Time.deltaTime);
     
     }
 
     private void HandleInteract()
     {
-        if (InputManager.instance.GetKeyDown("interact"))
+        if (UserInput.instance.InteractInput)
         {
             Collider[] targets = Physics.OverlapSphere(transform.position, _interactRange);
    
@@ -168,13 +160,13 @@ public class PlayerController : MonoBehaviour
     
     private void HandleDodge() 
     {
-        Vector3 direction = (transform.position - _previousPos).normalized;
+        Vector3 direction = new Vector3(UserInput.instance.MoveInput.x, transform.position.y, UserInput.instance.MoveInput.y);
         // Debug.Log(direction);
-        
-        if (InputManager.instance.GetKeyDown("dodge") && !_isDodging && direction != Vector3.zero)
+
+        if (UserInput.instance.DodgeInput && !_isDodging && direction != Vector3.zero)
         {
             GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
-            StartCoroutine(Dodge(transform.position + direction * _dodgeDistance));
+            StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
             StartCoroutine(DodgeCooldown());
         }
 
@@ -226,16 +218,16 @@ public class PlayerController : MonoBehaviour
     IEnumerator Dodge(Vector3 newPosition)
     {
         _playerState = State.DODGING;
+        Rigidbody rb = GetComponent<Rigidbody>();
 
         float elapsedTime = 0f;
         float ratio = elapsedTime / _dodgeDuration;
-        // Vector3 velocity = Vector3.zero;
         
         while(elapsedTime < _dodgeDuration && !_isColliding)
         {
             // float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / _dodgeDuration);
 
-            transform.position = Vector3.Lerp(transform.position, newPosition, EaseOut(ratio));
+            rb.MovePosition(Vector3.Lerp(transform.position, newPosition, EaseOut(ratio)));
             elapsedTime += Time.deltaTime;
             ratio = elapsedTime / _dodgeDuration;
 
@@ -283,55 +275,60 @@ public class PlayerController : MonoBehaviour
 
     private void RotateCamera() 
     {
-        switch (_cameraYAngle) 
+        if (!_isRotating && (UserInput.instance.CameraLeftInput || UserInput.instance.CameraRightInput))
         {
-            case FIRST:
-                if (InputManager.instance.GetKey("rotateCameraRight")) 
-                {
-                    _cameraYAngle = FOURTH;
-                }
-                else if (InputManager.instance.GetKey("rotateCameraLeft"))
-                {
-                    _cameraYAngle = SECOND;
-                }
-                break;
-            case SECOND:
-                if (InputManager.instance.GetKey("rotateCameraRight")) 
-                {
-                    _cameraYAngle = FIRST;
-                }
-                else if (InputManager.instance.GetKey("rotateCameraLeft"))
-                {
-                    _cameraYAngle = THIRD;
-                }
-                break;
-            case THIRD:
-                if (InputManager.instance.GetKey("rotateCameraRight")) 
-                {
-                    _cameraYAngle = SECOND;
-                }
-                else if (InputManager.instance.GetKey("rotateCameraLeft"))
-                {
-                    _cameraYAngle = FOURTH;
-                }
-                break;
-            case FOURTH:
-                if (InputManager.instance.GetKey("rotateCameraRight")) 
-                {
-                    _cameraYAngle = THIRD;
-                }
-                else if (InputManager.instance.GetKey("rotateCameraLeft"))
-                {
-                    _cameraYAngle = FIRST;
-                }
-                break;
-        }
+            switch (_cameraYAngle)
+            {
+                case FIRST:
+                    if (UserInput.instance.CameraLeftInput)
+                    {
+                        _cameraYAngle = FOURTH;
+                    }
+                    else if (UserInput.instance.CameraRightInput)
+                    {
+                        _cameraYAngle = SECOND;
+                    }
+                    break;
+                case SECOND:
+                    if (UserInput.instance.CameraLeftInput)
+                    {
+                        _cameraYAngle = FIRST;
+                    }
+                    else if (UserInput.instance.CameraRightInput)
+                    {
+                        _cameraYAngle = THIRD;
+                    }
+                    break;
+                case THIRD:
+                    if (UserInput.instance.CameraLeftInput)
+                    {
+                        _cameraYAngle = SECOND;
+                    }
+                    else if (UserInput.instance.CameraRightInput)
+                    {
+                        _cameraYAngle = FOURTH;
+                    }
+                    break;
+                case FOURTH:
+                    if (UserInput.instance.CameraLeftInput)
+                    {
+                        _cameraYAngle = THIRD;
+                    }
+                    else if (UserInput.instance.CameraRightInput)
+                    {
+                        _cameraYAngle = FIRST;
+                    }
+                    break;
+            }
 
-        StartCoroutine(LerpRotation(_cameraYAngle));
+            StartCoroutine(LerpRotation(_cameraYAngle));
+        }
+        
     }
 
     IEnumerator LerpRotation(float cameraYAngle)
     {
+        Debug.Log("Lerping");
         _isRotating = true;
 
         float elapsedTime = 0f;
@@ -352,7 +349,7 @@ public class PlayerController : MonoBehaviour
     // 360 rotation of the player towards the mouse position
     public void LookAtMouse()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // create a ray from the mouse position of screen to a world point
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()); // create a ray from the mouse position of screen to a world point
         RaycastHit[] hits;
         hits = Physics.RaycastAll(ray, Mathf.Infinity); // cast the ray through all objects
         for (int i = 0; i < hits.Length; i++)
