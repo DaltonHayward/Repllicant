@@ -17,6 +17,7 @@ public class ItemGrid : MonoBehaviour
     private void Start(){
         rectTransform = GetComponent<RectTransform>();
         Init(InventoryWidth,InventoryHeight);
+        
         // rectTransform.sizeDelta = new Vector2(32, 32); How to change size for possible Upgrades 
         Inventory_Item newitem = Instantiate(itemPrefab).GetComponent<Inventory_Item>();
         storeItem(newitem, 1,1);
