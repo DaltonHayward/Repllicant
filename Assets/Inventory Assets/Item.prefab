@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6115080076278346749}
   - component: {fileID: 3819330184177369338}
   m_Layer: 5
-  m_Name: Coin
+  m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,8 +33,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1054, y: -456}
   m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0, y: 1}
@@ -88,5 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d762c89f6dd6d4c6184440c6a1cdb854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  height: 1
-  width: 1
+  itemData: {fileID: 0}
+  OnGridPositionX: 0
+  OnGridPositionY: 0
