@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 6190929835885940242}
   - component: {fileID: 7606035317997456151}
   - component: {fileID: 4107661935922531302}
-  - component: {fileID: 1536292643827664397}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -34,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.8491751, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -175,7 +174,7 @@ MonoBehaviour:
   _rotationSpeed: 0.3
   _dodgeDistance: 5
   _dodgeDuration: 1
-  _delayBeforeInvinsible: 0.2
+  _delayBeforeInvinsible: 0.04
   _invinsibleDuration: 1
   _dodgeCooldown: 1
   _interactRange: 3
@@ -192,17 +191,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Hp: 100
---- !u!114 &1536292643827664397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2885759946139322027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92bc137119373634e87ea0c84ba12237, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  craftingMenu: {fileID: 0}
-  highlightMaterial: {fileID: 2100000, guid: c9f186be2105f2147a74043f9a5a09f6, type: 2}
