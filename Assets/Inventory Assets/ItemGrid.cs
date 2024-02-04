@@ -75,19 +75,28 @@ public class ItemGrid : MonoBehaviour
             Debug.Log("Item is too big for the grid");
             Destroy(item.gameObject);
         }
-        else {        
-        invItemSlots[x, y] = item;
+        else
+        {
+            invItemSlots[x, y] = item;
 
-        Vector2 position= new Vector2();
-        position.x = x * tileSizeWidth ;
-        position.y = -(y * tileSizeHeight );
-        rectTransform.localPosition = position;
-        item.OnGridPositionX = x;
-        item.OnGridPositionY = y;
-        return true;
+
+            item.OnGridPositionX = x;
+            item.OnGridPositionY = y;
+            Vector2 position = CalculateItemPosition(item,x, y);
+            rectTransform.localPosition = position;
+            return true;
+
         }
         return false;
         
+    }
+
+    public Vector2 CalculateItemPosition(Inventory_Item item, int x, int y)
+    {
+        Vector2 position = new Vector2();
+        position.x = x * tileSizeWidth;
+        position.y = -(y * tileSizeHeight);
+        return position;
     }
 
     /*
@@ -164,6 +173,9 @@ public class ItemGrid : MonoBehaviour
         
         return true;
     }
-    
-    
+
+    internal Inventory_Item GetItem(int x, int y)
+    {
+        return invItemSlots[x, y];
+    }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
@@ -13,17 +14,27 @@ public class InventoryController : MonoBehaviour
     [SerializeField] List<ItemData> items;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] Transform canvasTransform;
+    InventoryHighlight InventoryHighlight;
+    Inventory_Item itemToHighlight;
+    private void Awake() {
+        InventoryHighlight= GetComponent<InventoryHighlight>();    
+    }
+
     private void Update()
     {
 
         IconDrag();
+        
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
             CreateRandomItem();
         }
 
-        if (selectedItemGrid == null) { return; }
+        if (selectedItemGrid == null) { 
+            InventoryHighlight.Display(false);
+            return; }
+        HandleHighlight();
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -32,9 +43,36 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    private void HandleHighlight()
+    {
+        Vector2Int gridPosition = mouseToGridTranslation();
+        if (selectedItem == null)
+        {
+            itemToHighlight = selectedItemGrid.GetItem(gridPosition.x, gridPosition.y);
+            if (itemToHighlight != null)
+            {
+                InventoryHighlight.Display(true);
+                InventoryHighlight.Highlight(itemToHighlight);
+                InventoryHighlight.setParent(selectedItemGrid);
+                InventoryHighlight.SetPosition(selectedItemGrid, itemToHighlight);
+            }
+            else{
+                InventoryHighlight.Display(false);
+            }
+            
+        }
+        else{
+            InventoryHighlight.Display(true);
+            InventoryHighlight.Highlight(selectedItem);
+            InventoryHighlight.setParent(selectedItemGrid);
+            InventoryHighlight.SetPosition(selectedItemGrid, selectedItem, gridPosition.x, gridPosition.y);
+            
+        }
+    }
+
     private void PickUpandMove()
     {
-        Vector2Int gridPosition = selectedItemGrid.GetTileGridPosition(Input.mousePosition);
+        Vector2Int gridPosition = mouseToGridTranslation();
 
         if (selectedItem == null)
         {
@@ -47,12 +85,13 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-          bool complete=  selectedItemGrid.storeItem(selectedItem, gridPosition.x, gridPosition.y, ref overLappingItem);
+            bool complete = selectedItemGrid.storeItem(selectedItem, gridPosition.x, gridPosition.y, ref overLappingItem);
 
             if (complete)
             {
                 selectedItem = null;
-                if (overLappingItem != null){
+                if (overLappingItem != null)
+                {
                     selectedItem = overLappingItem;
                     selectedItemTransform = selectedItem.GetComponent<RectTransform>();
                     overLappingItem = null;
@@ -60,6 +99,20 @@ public class InventoryController : MonoBehaviour
             }
 
         }
+    }
+
+    private Vector2Int mouseToGridTranslation()
+    {
+        Vector2 mousePosition = Input.mousePosition;
+        if (selectedItem != null)
+        {
+            mousePosition.x -= (selectedItem.itemData.width - 1) * ItemGrid.tileSizeWidth / 2;
+            mousePosition.y += (selectedItem.itemData.width - 1) * ItemGrid.tileSizeWidth / 2;
+
+
+        }
+        Vector2Int gridPosition = selectedItemGrid.GetTileGridPosition(mousePosition);
+        return gridPosition;
     }
 
     private void IconDrag()
