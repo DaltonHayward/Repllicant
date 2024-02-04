@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 public class ItemGrid : MonoBehaviour
 {
@@ -49,46 +50,47 @@ public class ItemGrid : MonoBehaviour
     */
     public bool storeItem(Inventory_Item item, int x, int y, ref Inventory_Item overLappingItem)
     {
-        
-        if (BoundryCheck(x, y, item.itemData.width, item.itemData.height) == false){return false;}
-        if (OverlapCheck(x, y, item.itemData.width, item.itemData.height, ref overLappingItem) == false){
+
+        if (BoundryCheck(x, y, item.WIDTH, item.HEIGHT) == false) { return false; }
+        if (OverlapCheck(x, y, item.WIDTH, item.HEIGHT, ref overLappingItem) == false)
+        {
             overLappingItem = null;
-            return false;}
-        if (overLappingItem != null){
+            return false;
+        }
+        if (overLappingItem != null)
+        {
             CleanUpTiles(overLappingItem);
         }
+        putItemInInventory(item, x, y);
+        return true;
+
+
+
+    }
+
+    public void putItemInInventory(Inventory_Item item, int x, int y)
+    {
         RectTransform rectTransform = item.GetComponent<RectTransform>();
         rectTransform.SetParent(this.rectTransform);
-       
 
-        for ( int itemx =0 ; itemx < item.itemData.width; itemx++)
+
+        for (int itemx = 0; itemx < item.WIDTH; itemx++)
         {
-            for (int itemy = 0; itemy < item.itemData.height; itemy++)
+            for (int itemy = 0; itemy < item.HEIGHT; itemy++)
             {
-               
+
                 invItemSlots[x + itemx, y + itemy] = item;
-                
+
             }
         }
 
-        if (x + item.itemData.width > InventoryWidth || y + item.itemData.height > InventoryHeight){
-            Debug.Log("Item is too big for the grid");
-            Destroy(item.gameObject);
-        }
-        else
-        {
-            invItemSlots[x, y] = item;
 
-
-            item.OnGridPositionX = x;
-            item.OnGridPositionY = y;
-            Vector2 position = CalculateItemPosition(item,x, y);
-            rectTransform.localPosition = position;
-            return true;
-
-        }
-        return false;
-        
+        invItemSlots[x, y] = item;
+        item.OnGridPositionX = x;
+        item.OnGridPositionY = y;
+        Vector2 position = CalculateItemPosition(item, x, y);
+        rectTransform.localPosition = position;
+        Debug.Log("Item placed at " + x + " " + y);
     }
 
     public Vector2 CalculateItemPosition(Inventory_Item item, int x, int y)
@@ -124,6 +126,24 @@ public class ItemGrid : MonoBehaviour
         }
         return true;
     }
+
+    private bool CheckFreeSpace(int x, int y, int width, int height)
+        {
+            if (BoundryCheck(x, y, width, height) == false) { return false; }
+            for (int itemx = 0; itemx < width; itemx++)
+            {
+                for (int itemy = 0; itemy < height; itemy++)
+                {
+                    if (invItemSlots[x + itemx, y + itemy] != null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+    
     /*
     if the item is not null, it will remove the item from the grid and return the item
     */
@@ -142,9 +162,9 @@ public class ItemGrid : MonoBehaviour
 
     private void CleanUpTiles(Inventory_Item item)
     {
-        for (int itemx = 0; itemx < item.itemData.width; itemx++)
+        for (int itemx = 0; itemx < item.WIDTH; itemx++)
         {
-            for (int itemy = 0; itemy < item.itemData.height; itemy++)
+            for (int itemy = 0; itemy < item.HEIGHT; itemy++)
             {
                 invItemSlots[item.OnGridPositionX + itemx, item.OnGridPositionY + itemy] = null;
             }
@@ -163,9 +183,9 @@ public class ItemGrid : MonoBehaviour
 
     }
 
-    bool BoundryCheck(int origix, int origiy, int width, int height)
+    public bool BoundryCheck(int origix, int origiy, int width, int height)
     {
-        if (CanStoreItem(origix, origiy) == false || CanStoreItem(origix + width-1, origiy + height-1) == false)
+        if (CanStoreItem(origix, origiy) == false || CanStoreItem(origix + width, origiy + height) == false)
         {
             return false;
         }
@@ -178,4 +198,22 @@ public class ItemGrid : MonoBehaviour
     {
         return invItemSlots[x, y];
     }
+
+    internal Vector2Int? FindSpace(Inventory_Item itemtoInsert)
+    {
+        int height= itemtoInsert.HEIGHT;
+        int width = itemtoInsert.WIDTH;
+        for (int y =0 ; y < InventoryHeight-height +1; y++)
+        {
+            for (int x = 0; x < InventoryWidth - width+ 1; x++)
+            {
+                if(CheckFreeSpace(x, y, width, height)== true){
+                    return new Vector2Int(x, y);
+                }
+
+            }
+        }
+        return null;
+    }
+    
 }

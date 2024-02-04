@@ -12,7 +12,7 @@ public class InventoryHighlight : MonoBehaviour
 
     public void Highlight(Inventory_Item item)
     {
-        Vector2 size = new Vector2(item.itemData.width * ItemGrid.tileSizeWidth, item.itemData.height * ItemGrid.tileSizeHeight);
+        Vector2 size = new Vector2(item.WIDTH * ItemGrid.tileSizeWidth, item.HEIGHT * ItemGrid.tileSizeHeight);
         highlighter.sizeDelta = size;
     }
 
@@ -31,11 +31,13 @@ public class InventoryHighlight : MonoBehaviour
         setParent(target);
 
         Vector2 newPosition = target.CalculateItemPosition(item, x, y);
-        Debug.Log(newPosition);
         highlighter.localPosition = newPosition;
     }
     public void setParent(ItemGrid target)
     {
+        if(target == null)
+        {            return;
+        }
         highlighter.SetParent(target.GetComponent<RectTransform>());
   
     }

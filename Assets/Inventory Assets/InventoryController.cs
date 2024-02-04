@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class InventoryController : MonoBehaviour
 {
-    public ItemGrid selectedItemGrid;
+    [HideInInspector]
+    private ItemGrid selectedItemGrid;
+    public ItemGrid SelectedItemGrid { get => selectedItemGrid; set{
+        selectedItemGrid = value;
+        InventoryHighlight.setParent(selectedItemGrid);
+    } }
+
     Inventory_Item selectedItem;
 
     Inventory_Item overLappingItem;
@@ -16,6 +24,9 @@ public class InventoryController : MonoBehaviour
     [SerializeField] Transform canvasTransform;
     InventoryHighlight InventoryHighlight;
     Inventory_Item itemToHighlight;
+    Vector2 oldPosition;
+
+
     private void Awake() {
         InventoryHighlight= GetComponent<InventoryHighlight>();    
     }
@@ -40,12 +51,46 @@ public class InventoryController : MonoBehaviour
         {
             PickUpandMove();
 
+       
+        } if(Input.GetKeyDown(KeyCode.F)){
+
+            CreateRandomItem();
+            Inventory_Item itemtoInsert = selectedItem;
+            Debug.Log(itemtoInsert);
+            selectedItem=null;
+            InsertItem(itemtoInsert);
+        }
+        if(Input.GetKeyDown(KeyCode.R)){
+            if(selectedItem!=null){
+                RotateItem();
+            }
+        }
+    }
+
+    private void RotateItem()
+    {
+        selectedItem.Rotate();
+    }
+
+    private void InsertItem(Inventory_Item itemtoInsert)
+    {
+        Vector2Int? storePos = selectedItemGrid.FindSpace(itemtoInsert);
+        if (storePos != null)
+        {
+            selectedItemGrid.putItemInInventory(itemtoInsert, storePos.Value.x, storePos.Value.y);
+        }
+        else
+        {
+           return;
         }
     }
 
     private void HandleHighlight()
     {
         Vector2Int gridPosition = mouseToGridTranslation();
+        if (gridPosition == oldPosition) { return; }
+
+        oldPosition=gridPosition;
         if (selectedItem == null)
         {
             itemToHighlight = selectedItemGrid.GetItem(gridPosition.x, gridPosition.y);
@@ -53,7 +98,6 @@ public class InventoryController : MonoBehaviour
             {
                 InventoryHighlight.Display(true);
                 InventoryHighlight.Highlight(itemToHighlight);
-                InventoryHighlight.setParent(selectedItemGrid);
                 InventoryHighlight.SetPosition(selectedItemGrid, itemToHighlight);
             }
             else{
@@ -62,9 +106,8 @@ public class InventoryController : MonoBehaviour
             
         }
         else{
-            InventoryHighlight.Display(true);
+            InventoryHighlight.Display(selectedItemGrid.BoundryCheck(gridPosition.x, gridPosition.y, selectedItem.WIDTH, selectedItem.HEIGHT));
             InventoryHighlight.Highlight(selectedItem);
-            InventoryHighlight.setParent(selectedItemGrid);
             InventoryHighlight.SetPosition(selectedItemGrid, selectedItem, gridPosition.x, gridPosition.y);
             
         }
@@ -106,8 +149,8 @@ public class InventoryController : MonoBehaviour
         Vector2 mousePosition = Input.mousePosition;
         if (selectedItem != null)
         {
-            mousePosition.x -= (selectedItem.itemData.width - 1) * ItemGrid.tileSizeWidth / 2;
-            mousePosition.y += (selectedItem.itemData.width - 1) * ItemGrid.tileSizeWidth / 2;
+            mousePosition.x -= (selectedItem.WIDTH - 1) * ItemGrid.tileSizeWidth / 2;
+            mousePosition.y += (selectedItem.WIDTH - 1) * ItemGrid.tileSizeWidth / 2;
 
 
         }
@@ -134,7 +177,7 @@ public class InventoryController : MonoBehaviour
         newItem.Set(items[selectedUID]);
 
     }
-
+  
 
 
 }
