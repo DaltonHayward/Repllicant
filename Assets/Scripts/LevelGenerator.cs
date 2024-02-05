@@ -138,44 +138,70 @@ public class LevelGenerator : MonoBehaviour
 
         GameObject structure = Instantiate(structureToGen.structure, new Vector3(partitionedArea.x + widthOffset, partitionedArea.y + heightOffset, 0),
             Quaternion.identity);
-        Tilemap structWallsTilemap = structure.transform.Find("Walls").GetComponent<Tilemap>();
-        Tilemap structGroundTilemap = structure.transform.Find("Ground").GetComponent<Tilemap>();
-        // Copy the ground and wall tiles from the structure to corresponding tilemaps of the level generator
-        for (int i = 0; i < structureToGen.width; i++)
-        {
-            for (int j = 0; j > -structureToGen.height; j--)
-            {
-                TileBase wallTile = structWallsTilemap.GetTile(new Vector3Int(i, j, 0));
-                TileBase groundTile = structGroundTilemap.GetTile(new Vector3Int(i, j, 0));
-                if (wallTile != null)
-                {
-                    walls.SetTile(new Vector3Int((int)partitionedArea.x + i + widthOffset, (int)partitionedArea.y + j + heightOffset, 0), wallTile);
-                }
 
-                if (groundTile != null)
+        if (structure != null)
+        {
+            Tilemap structWallsTilemap = structure.transform.Find("Walls").GetComponent<Tilemap>();
+            Tilemap structGroundTilemap = structure.transform.Find("Ground").GetComponent<Tilemap>();
+
+            if (structWallsTilemap != null && structGroundTilemap != null)
+            {
+                // Copy the ground and wall tiles from the structure to corresponding tilemaps of the level generator
+                for (int i = 0; i < structureToGen.width; i++)
                 {
-                    ground.SetTile(new Vector3Int((int)partitionedArea.x + i + widthOffset, (int)partitionedArea.y + j + heightOffset, 0), groundTile);
+                    for (int j = 0; j < structureToGen.height; j++)
+                    {
+                        TileBase wallTile = structWallsTilemap.GetTile(new Vector3Int(i, j, 0));
+                        TileBase groundTile = structGroundTilemap.GetTile(new Vector3Int(i, j, 0));
+
+                        if (wallTile != null)
+                        {
+                            Vector3Int wallTilePosition = new Vector3Int(
+                                (int)partitionedArea.x + i + widthOffset,
+                                (int)partitionedArea.y + j + heightOffset,
+                                0
+                            );
+                            walls.SetTile(wallTilePosition, wallTile);
+                        }
+
+                        if (groundTile != null)
+                        {
+                            Vector3Int groundTilePosition = new Vector3Int(
+                                (int)partitionedArea.x + i + widthOffset,
+                                (int)partitionedArea.y + j + heightOffset,
+                                0
+                            );
+                            ground.SetTile(groundTilePosition, groundTile);
+                        }
+                    }
                 }
             }
-        }
-        // Re-parent the props from the structure to the level generator
-        Transform structProps = structure.transform.Find("Props");
-        List<Transform> childProps = new List<Transform>();
-        foreach (Transform prop in structProps.transform)
-        {
-            childProps.Add(prop);
-        }
-        foreach (Transform childProp in childProps)
-        {
-            // Swap the y and z coordinates of the prop's position
-            Vector3 newPosition = new Vector3(childProp.position.x, 0, childProp.position.y);
-            childProp.position = newPosition;
-            childProp.SetParent(props);
+
+            // Re-parent the props from the structure to the level generator
+            Transform structProps = structure.transform.Find("Props");
+            if (structProps != null)
+            {
+                List<Transform> childProps = new List<Transform>(structProps.childCount);
+                foreach (Transform prop in structProps)
+                {
+                    childProps.Add(prop);
+                }
+
+                foreach (Transform childProp in childProps)
+                {
+                    // Swap the y and z coordinates of the prop's position
+                    Vector3 newPosition = new Vector3(childProp.position.x, childProp.position.z, childProp.position.y);
+                    childProp.position = newPosition;
+                    childProp.SetParent(props);
+                }
+            }
+
+            Destroy(structure);
         }
 
-        Destroy(structure);
         return GetRemainingAreas(partitionedArea, structureToGen, widthOffset, heightOffset);
     }
+
 
 
     // Get the remaining areas in a partitioned room after placing a structure inside of it with a given width and
