@@ -3,7 +3,37 @@ guid: ec14841fbdd536d438d293fb2a9adbbd
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 5c79173a2673bc74e9fc52d5e5116411, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: main_shield_inner
+    second: {fileID: 2100000, guid: 7a2f31abbc2368c4986a5a5a40e05ec2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: main_shield_outer
+    second: {fileID: 2100000, guid: 582fe8e9e36b2a54597d908879cb9c2a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shield_connecting_brace
+    second: {fileID: 2100000, guid: e1719bcadebefe64eb4b19c605e0864b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shield_front_bearing
+    second: {fileID: 2100000, guid: 343b309f2552de844a27e412f605d4b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shield_handle
+    second: {fileID: 2100000, guid: 4c7ea4497bc6e7f48997c6a243edd70b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
