@@ -107,7 +107,7 @@ public class LevelGenerator : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
                 Tile groundTile = baseLevelTiles.groundTiles[Random.Range(0, baseLevelTiles.groundTiles.Count)];
-                ground.SetTile(new Vector3Int(x, y, 0), groundTile);
+                ground.SetTile(new Vector3Int(x + (int)transform.position.x, y + (int)transform.position.z, 0), groundTile);
             }
         }
     }
@@ -136,8 +136,8 @@ public class LevelGenerator : MonoBehaviour
         int widthOffset = Random.Range(0, (int)(partitionedArea.width - structureToGen.width));
         int heightOffset = Random.Range(-(int)(partitionedArea.height - structureToGen.height), 0);
 
-        GameObject structure = Instantiate(structureToGen.structure, new Vector3(partitionedArea.x + widthOffset, partitionedArea.y + heightOffset, 0),
-            Quaternion.identity);
+        Vector3 structurePosition = new Vector3(partitionedArea.x + widthOffset + transform.position.x, partitionedArea.y + heightOffset + transform.position.z, 0);
+        GameObject structure = Instantiate(structureToGen.structure, structurePosition, Quaternion.identity);
 
         if (structure != null)
         {
@@ -157,8 +157,8 @@ public class LevelGenerator : MonoBehaviour
                         if (wallTile != null)
                         {
                             Vector3Int wallTilePosition = new Vector3Int(
-                                (int)partitionedArea.x + i + widthOffset,
-                                (int)partitionedArea.y + j + heightOffset,
+                                (int)(partitionedArea.x + i + widthOffset),
+                                (int)(partitionedArea.y + j + heightOffset),
                                 0
                             );
                             walls.SetTile(wallTilePosition, wallTile);
@@ -167,8 +167,8 @@ public class LevelGenerator : MonoBehaviour
                         if (groundTile != null)
                         {
                             Vector3Int groundTilePosition = new Vector3Int(
-                                (int)partitionedArea.x + i + widthOffset,
-                                (int)partitionedArea.y + j + heightOffset,
+                                (int)(partitionedArea.x + i + widthOffset + transform.position.x),
+                                (int)(partitionedArea.y + -j + heightOffset + transform.position.z),
                                 0
                             );
                             ground.SetTile(groundTilePosition, groundTile);
@@ -181,17 +181,15 @@ public class LevelGenerator : MonoBehaviour
             Transform structProps = structure.transform.Find("Props");
             if (structProps != null)
             {
-                List<Transform> childProps = new List<Transform>(structProps.childCount);
-                foreach (Transform prop in structProps)
+                foreach (Transform childProp in structProps)
                 {
-                    childProps.Add(prop);
-                }
-
-                foreach (Transform childProp in childProps)
-                {
-                    // Swap the y and z coordinates of the prop's position
-                    Vector3 newPosition = new Vector3(childProp.position.x, childProp.position.z, childProp.position.y);
-                    childProp.position = newPosition;
+                    // Calculate the world position of the prop
+                    Vector3 propWorldPosition = new Vector3(
+                        childProp.position.x ,
+                        0,
+                        childProp.position.y 
+                    );
+                    childProp.position = propWorldPosition;
                     childProp.SetParent(props);
                 }
             }
