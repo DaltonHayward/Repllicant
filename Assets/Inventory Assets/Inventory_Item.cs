@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Inventory_Item : MonoBehaviour
 {
-    public ItemData itemData;
+    public ItemData2 itemData;
     public int HEIGHT {
         get {
             if (rotated)
@@ -46,7 +46,7 @@ public class Inventory_Item : MonoBehaviour
 
     }
 
-    internal void Set(ItemData itemData)
+    internal void Set(ItemData2 itemData)
 
     {
         this.itemData = itemData;

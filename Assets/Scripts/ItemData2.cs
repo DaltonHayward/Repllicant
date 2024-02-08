@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class ItemData : ScriptableObject
+public class ItemData2 : ScriptableObject
 {
     // Start is called before the first frame update
     public int width;
@@ -12,12 +12,12 @@ public class ItemData : ScriptableObject
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
