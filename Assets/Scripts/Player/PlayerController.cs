@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour
     private enum State {MOVING, DODGING, INTERACTING, ATTACKING};
     private State _playerState;
 
+    private Canvas _effectCanvas;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -153,9 +155,6 @@ public class PlayerController : MonoBehaviour
                         _playerState = State.MOVING;
                         break;
                     }
-                }
-                if (c.CompareTag("Siren")) {
-                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
                 }
             }
         }
@@ -363,6 +362,15 @@ public class PlayerController : MonoBehaviour
                 transform.LookAt(hits[i].point); // Look at the point
                 transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0)); // Clamp the x and z rotation
             }
+        }
+    }
+
+    public void ReceiveMessage(string channel)
+    {
+        if (channel.Equals("Frequency"))
+        {
+            _effectCanvas.enabled = true;
+            Debug.Log("Lure caught");
         }
     }
 }
