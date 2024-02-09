@@ -38,12 +38,14 @@ public class PlayerController : MonoBehaviour
     private float _dodgeCooldown = 1;
     private bool _isColliding = false;
 
+    public GameObject inventory;
+
     [SerializeField] private float _interactRange = 3f;
     const float GOLDEN_RATIO = .54f;
     private bool _isCrafting = false;
 
 
-    private enum State {MOVING, DODGING, INTERACTING, ATTACKING};
+    private enum State {MOVING, DODGING, INTERACTING, ATTACKING, IS_CRAFTING, INVENTORY};
     private State _playerState;
 
 
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour
         _previousPos = transform.position;
         _cameraYAngle = FIRST;
         _playerCamera.rotation = Quaternion.Euler(_playerCamera.localEulerAngles.x, _cameraYAngle, _playerCamera.localEulerAngles.z);
+
     }
 
     // Update is called once per frame
@@ -113,6 +116,11 @@ public class PlayerController : MonoBehaviour
             case State.INTERACTING:
                 {
                     HandleInteract();
+                    break;
+                }
+            case State.INVENTORY:
+                {
+                    ToggleInventory();
                     break;
                 }
         }
@@ -359,6 +367,23 @@ public class PlayerController : MonoBehaviour
                 Debug.DrawRay(hits[i].transform.position, hits[i].transform.forward, Color.green);
                 transform.LookAt(hits[i].point); // Look at the point
                 transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0)); // Clamp the x and z rotation
+            }
+        }
+    }
+
+    public void ToggleInventory()
+    {
+        if (UserInput.instance.InventoryInput)
+        {
+            if (inventory.activeSelf)
+            {
+                inventory.SetActive(false);
+                _playerState = State.MOVING;
+            }
+            else
+            {
+                inventory.SetActive(true);
+                _playerState = State.INVENTORY;
             }
         }
     }
