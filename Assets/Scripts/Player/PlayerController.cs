@@ -58,34 +58,13 @@ public class PlayerController : MonoBehaviour
         _playerCamera.rotation = Quaternion.Euler(_playerCamera.localEulerAngles.x, _cameraYAngle, _playerCamera.localEulerAngles.z);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        switch (_playerState)
-        {
-            case State.MOVING:
-            {
-           
-                break;
-            }
-            case State.DODGING:
-            {
-                break;
-            }
-            case State.INTERACTING:
-            {
-                break;
-            }
-        }
-    }
-
     void Update()
     {
-        if (UserInput.instance.CameraLeftInput)
+        if (InputManager.instance.CameraLeftInput)
         {
             Debug.Log("LEft");
         }
-        if (UserInput.instance.CameraRightInput)
+        if (InputManager.instance.CameraRightInput)
         {
             Debug.Log("Right");
         }
@@ -120,7 +99,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement() 
     {
-        Vector3 direction = new Vector3(UserInput.instance.MoveInput.x, transform.position.y, UserInput.instance.MoveInput.y);
+        Vector3 direction = new Vector3(InputManager.instance.MoveInput.x, transform.position.y, InputManager.instance.MoveInput.y);
 
         Rigidbody rb = GetComponent<Rigidbody>();
 
@@ -130,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleInteract()
     {
-        if (UserInput.instance.InteractInput)
+        if (InputManager.instance.InteractInput)
         {
             Collider[] targets = Physics.OverlapSphere(transform.position, _interactRange);
    
@@ -138,6 +117,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (c.CompareTag("Interactable"))
                 {
+                    Debug.Log("Here");
                     ISubscriber subscriber = c.GetComponent<ISubscriber>();
                     if (subscriber != null && !_isCrafting)
                     {
@@ -163,10 +143,10 @@ public class PlayerController : MonoBehaviour
     
     private void HandleDodge() 
     {
-        Vector3 direction = new Vector3(UserInput.instance.MoveInput.x, transform.position.y, UserInput.instance.MoveInput.y);
+        Vector3 direction = new Vector3(InputManager.instance.MoveInput.x, transform.position.y, InputManager.instance.MoveInput.y);
         // Debug.Log(direction);
 
-        if (UserInput.instance.DodgeInput && !_isDodging && direction != Vector3.zero)
+        if (InputManager.instance.DodgeInput && !_isDodging && direction != Vector3.zero)
         {
             GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
             StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
@@ -278,46 +258,46 @@ public class PlayerController : MonoBehaviour
 
     private void RotateCamera() 
     {
-        if (!_isRotating && (UserInput.instance.CameraLeftInput || UserInput.instance.CameraRightInput))
+        if (!_isRotating && (InputManager.instance.CameraLeftInput || InputManager.instance.CameraRightInput))
         {
             switch (_cameraYAngle)
             {
                 case FIRST:
-                    if (UserInput.instance.CameraLeftInput)
+                    if (InputManager.instance.CameraLeftInput)
                     {
                         _cameraYAngle = FOURTH;
                     }
-                    else if (UserInput.instance.CameraRightInput)
+                    else if (InputManager.instance.CameraRightInput)
                     {
                         _cameraYAngle = SECOND;
                     }
                     break;
                 case SECOND:
-                    if (UserInput.instance.CameraLeftInput)
+                    if (InputManager.instance.CameraLeftInput)
                     {
                         _cameraYAngle = FIRST;
                     }
-                    else if (UserInput.instance.CameraRightInput)
+                    else if (InputManager.instance.CameraRightInput)
                     {
                         _cameraYAngle = THIRD;
                     }
                     break;
                 case THIRD:
-                    if (UserInput.instance.CameraLeftInput)
+                    if (InputManager.instance.CameraLeftInput)
                     {
                         _cameraYAngle = SECOND;
                     }
-                    else if (UserInput.instance.CameraRightInput)
+                    else if (InputManager.instance.CameraRightInput)
                     {
                         _cameraYAngle = FOURTH;
                     }
                     break;
                 case FOURTH:
-                    if (UserInput.instance.CameraLeftInput)
+                    if (InputManager.instance.CameraLeftInput)
                     {
                         _cameraYAngle = THIRD;
                     }
-                    else if (UserInput.instance.CameraRightInput)
+                    else if (InputManager.instance.CameraRightInput)
                     {
                         _cameraYAngle = FIRST;
                     }
