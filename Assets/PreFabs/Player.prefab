@@ -132,7 +132,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
@@ -178,6 +178,7 @@ MonoBehaviour:
   _delayBeforeInvinsible: 0.04
   _invinsibleDuration: 1
   _dodgeCooldown: 1
+  _inventory: {fileID: 4801379275016198123, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
   _interactRange: 3
 --- !u!114 &4107661935922531302
 MonoBehaviour:

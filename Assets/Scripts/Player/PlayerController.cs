@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField][Range(0.1f, 2f)]
     private float _dodgeDuration = 1;
     private bool _isDodging = false;
-    // private Animator _anim;
     private Vector3 _previousPos;
 
     [SerializeField][Range(0f, 1f)]
@@ -38,12 +37,17 @@ public class PlayerController : MonoBehaviour
     private float _dodgeCooldown = 1;
     private bool _isColliding = false;
 
+    [SerializeField]
+    private Canvas _inventory;
+    private bool _inInventory = false;
+
     [SerializeField] private float _interactRange = 3f;
-    const float GOLDEN_RATIO = .54f;
+    // const float GOLDEN_RATIO = .54f;
     private bool _isCrafting = false;
 
+    private Animator _animator;
 
-    private enum State {MOVING, DODGING, INTERACTING, ATTACKING};
+    private enum State {MOVING, STANDING, DODGING, INTERACTING, ATTACKING, INVENTORY};
     private State _playerState;
 
     private Canvas _effectCanvas;
@@ -53,86 +57,80 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         // _anim = GetComponentInChildren<Animator>();
-        GetComponent<SphereCollider>().radius = _interactRange * GOLDEN_RATIO; //finding this number was hell
-        _playerState = State.MOVING;
+        GetComponent<SphereCollider>().radius = _interactRange;
+        _playerState = State.STANDING;
         _previousPos = transform.position;
         _cameraYAngle = FIRST;
         _playerCamera.rotation = Quaternion.Euler(_playerCamera.localEulerAngles.x, _cameraYAngle, _playerCamera.localEulerAngles.z);
-    }
+        _animator = GetComponent<Animator>();
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        switch (_playerState)
-        {
-            case State.MOVING:
-            {
-           
-                break;
-            }
-            case State.DODGING:
-            {
-                break;
-            }
-            case State.INTERACTING:
-            {
-                break;
-            }
-        }
     }
 
     void Update()
     {
-        if (UserInput.instance.CameraLeftInput)
-        {
-            Debug.Log("LEft");
-        }
-        if (UserInput.instance.CameraRightInput)
-        {
-            Debug.Log("Right");
-        }
         switch (_playerState)
         {
+            case State.STANDING:
+            {
+                HandleMovement();
+                HandleInteract();
+                HandleDodge();
+                RotateCamera();
+                ToggleInventory();
+                LookAtMouse();
+                break;
+            }
             case State.MOVING:
-                {
-                    HandleMovement();
-                    LookAtMouse();
-                    HandleInteract();
-                    HandleDodge();
-
-                    // cooldown for camera rotation
-                   
-                    
-                    RotateCamera();
-                    break;
-                    
-                }
+            {
+                HandleMovement();
+                HandleInteract();
+                HandleDodge();
+                RotateCamera();
+                ToggleInventory();
+                break;
+            }
             case State.DODGING:
-                {
-                    LookAtMouse();
-                    break;
-                }
+            {
+                break;
+            }
             case State.INTERACTING:
-                {
-                    HandleInteract();
-                    break;
-                }
+            {
+                HandleInteract();
+                break;
+            }
+            case State.INVENTORY:
+            {
+                ToggleInventory();
+                break;
+            }
         }
     }
 
     private void HandleMovement() 
     {
-        Vector3 direction = new Vector3(UserInput.instance.MoveInput.x, transform.position.y, UserInput.instance.MoveInput.y);
+        Vector3 direction = new Vector3(InputManager.instance.MoveInput.x, 0, InputManager.instance.MoveInput.y);
 
         Rigidbody rb = GetComponent<Rigidbody>();
 
         rb.MovePosition(rb.position + ConvertToCameraSpace(direction) * _movementSpeed * Time.deltaTime);
+
+        if (direction != Vector3.zero)
+        {
+            _playerState = State.MOVING;
+            transform.forward = ConvertToCameraSpace(direction);
+            _animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            _playerState = State.STANDING;
+            _animator.SetBool("isMoving", false);
+        }
     
     }
 
     private void HandleInteract()
     {
-        if (UserInput.instance.InteractInput)
+        if (InputManager.instance.InteractInput)
         {
             Collider[] targets = Physics.OverlapSphere(transform.position, _interactRange);
    
@@ -140,6 +138,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (c.CompareTag("Interactable"))
                 {
+                    Debug.Log("Here");
                     ISubscriber subscriber = c.GetComponent<ISubscriber>();
                     if (subscriber != null && !_isCrafting)
                     {
@@ -162,10 +161,10 @@ public class PlayerController : MonoBehaviour
     
     private void HandleDodge() 
     {
-        Vector3 direction = new Vector3(UserInput.instance.MoveInput.x, transform.position.y, UserInput.instance.MoveInput.y);
+        Vector3 direction = new Vector3(InputManager.instance.MoveInput.x, transform.position.y, InputManager.instance.MoveInput.y);
         // Debug.Log(direction);
 
-        if (UserInput.instance.DodgeInput && !_isDodging && direction != Vector3.zero)
+        if (InputManager.instance.DodgeInput && !_isDodging && direction != Vector3.zero)
         {
             GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
             StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
@@ -227,9 +226,9 @@ public class PlayerController : MonoBehaviour
         
         while(elapsedTime < _dodgeDuration && !_isColliding)
         {
-            // float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / _dodgeDuration);
+            float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / _dodgeDuration);
 
-            rb.MovePosition(Vector3.Lerp(transform.position, newPosition, EaseOut(ratio)));
+            rb.MovePosition(Vector3.Lerp(transform.position, newPosition, ratio));
             elapsedTime += Time.deltaTime;
             ratio = elapsedTime / _dodgeDuration;
 
@@ -277,46 +276,46 @@ public class PlayerController : MonoBehaviour
 
     private void RotateCamera() 
     {
-        if (!_isRotating && (UserInput.instance.CameraLeftInput || UserInput.instance.CameraRightInput))
+        if (!_isRotating && (InputManager.instance.CameraLeftInput || InputManager.instance.CameraRightInput))
         {
             switch (_cameraYAngle)
             {
                 case FIRST:
-                    if (UserInput.instance.CameraLeftInput)
+                    if (InputManager.instance.CameraLeftInput)
                     {
                         _cameraYAngle = FOURTH;
                     }
-                    else if (UserInput.instance.CameraRightInput)
+                    else if (InputManager.instance.CameraRightInput)
                     {
                         _cameraYAngle = SECOND;
                     }
                     break;
                 case SECOND:
-                    if (UserInput.instance.CameraLeftInput)
+                    if (InputManager.instance.CameraLeftInput)
                     {
                         _cameraYAngle = FIRST;
                     }
-                    else if (UserInput.instance.CameraRightInput)
+                    else if (InputManager.instance.CameraRightInput)
                     {
                         _cameraYAngle = THIRD;
                     }
                     break;
                 case THIRD:
-                    if (UserInput.instance.CameraLeftInput)
+                    if (InputManager.instance.CameraLeftInput)
                     {
                         _cameraYAngle = SECOND;
                     }
-                    else if (UserInput.instance.CameraRightInput)
+                    else if (InputManager.instance.CameraRightInput)
                     {
                         _cameraYAngle = FOURTH;
                     }
                     break;
                 case FOURTH:
-                    if (UserInput.instance.CameraLeftInput)
+                    if (InputManager.instance.CameraLeftInput)
                     {
                         _cameraYAngle = THIRD;
                     }
-                    else if (UserInput.instance.CameraRightInput)
+                    else if (InputManager.instance.CameraRightInput)
                     {
                         _cameraYAngle = FIRST;
                     }
@@ -330,7 +329,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator LerpRotation(float cameraYAngle)
     {
-        Debug.Log("Lerping");
         _isRotating = true;
 
         float elapsedTime = 0f;
@@ -365,7 +363,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ReceiveMessage(string channel)
+    public void ToggleInventory()
+    {
+        if (InputManager.instance.InventoryInput)
+        {
+            if (_inInventory)
+            {
+                _inInventory = false;
+                _inventory.enabled = false;
+                _playerState = State.MOVING;
+            }
+            else
+            {
+                _inInventory = true;
+                _inventory.enabled = true;
+                _playerState = State.INVENTORY;
+                _animator.SetBool("isMoving", false);
+            }
+        }
+    }
+
+     public void ReceiveMessage(string channel)
     {
         if (channel.Equals("Frequency"))
         {
