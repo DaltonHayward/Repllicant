@@ -34,6 +34,11 @@ public class InputManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
 
         _playerInput = GetComponent<PlayerInput>();

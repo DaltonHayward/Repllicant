@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class ItemData2 : ScriptableObject
+public class ItemData : ScriptableObject
 {
     // Start is called before the first frame update
     public int width;

@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField][Range(0.1f, 2f)]
     private float _dodgeDuration = 1;
     private bool _isDodging = false;
-    // private Animator _anim;
     private Vector3 _previousPos;
 
     [SerializeField][Range(0f, 1f)]
@@ -38,12 +37,15 @@ public class PlayerController : MonoBehaviour
     private float _dodgeCooldown = 1;
     private bool _isColliding = false;
 
-    public GameObject inventory;
+    [SerializeField]
+    private Canvas _inventory;
+    private bool _inInventory = false;
 
     [SerializeField] private float _interactRange = 3f;
-    const float GOLDEN_RATIO = .54f;
+    // const float GOLDEN_RATIO = .54f;
     private bool _isCrafting = false;
 
+    private Animator _animator;
 
     private enum State {MOVING, DODGING, INTERACTING, ATTACKING, IS_CRAFTING, INVENTORY};
     private State _playerState;
@@ -53,24 +55,17 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         // _anim = GetComponentInChildren<Animator>();
-        GetComponent<SphereCollider>().radius = _interactRange * GOLDEN_RATIO; //finding this number was hell
+        GetComponent<SphereCollider>().radius = _interactRange;
         _playerState = State.MOVING;
         _previousPos = transform.position;
         _cameraYAngle = FIRST;
         _playerCamera.rotation = Quaternion.Euler(_playerCamera.localEulerAngles.x, _cameraYAngle, _playerCamera.localEulerAngles.z);
+        _animator = GetComponent<Animator>();
 
     }
 
     void Update()
     {
-        if (InputManager.instance.CameraLeftInput)
-        {
-            Debug.Log("LEft");
-        }
-        if (InputManager.instance.CameraRightInput)
-        {
-            Debug.Log("Right");
-        }
         switch (_playerState)
         {
             case State.MOVING:
@@ -80,6 +75,7 @@ public class PlayerController : MonoBehaviour
                     HandleInteract();
                     HandleDodge();
                     RotateCamera();
+                    ToggleInventory();
                     break;
                     
                 }
@@ -103,11 +99,25 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement() 
     {
-        Vector3 direction = new Vector3(InputManager.instance.MoveInput.x, transform.position.y, InputManager.instance.MoveInput.y);
+        Vector3 direction = new Vector3(InputManager.instance.MoveInput.x, 0, InputManager.instance.MoveInput.y);
 
         Rigidbody rb = GetComponent<Rigidbody>();
 
         rb.MovePosition(rb.position + ConvertToCameraSpace(direction) * _movementSpeed * Time.deltaTime);
+
+        
+
+        Debug.Log(direction);
+
+        if (direction != Vector3.zero)
+        {
+            transform.forward = ConvertToCameraSpace(direction);
+            _animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            _animator.SetBool("isMoving", false);
+        }
     
     }
 
@@ -315,7 +325,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator LerpRotation(float cameraYAngle)
     {
-        Debug.Log("Lerping");
         _isRotating = true;
 
         float elapsedTime = 0f;
@@ -352,17 +361,20 @@ public class PlayerController : MonoBehaviour
 
     public void ToggleInventory()
     {
-        if (UserInput.instance.InventoryInput)
+        if (InputManager.instance.InventoryInput)
         {
-            if (inventory.activeSelf)
+            if (_inInventory)
             {
-                inventory.SetActive(false);
+                _inInventory = false;
+                _inventory.enabled = false;
                 _playerState = State.MOVING;
             }
             else
             {
-                inventory.SetActive(true);
+                _inInventory = true;
+                _inventory.enabled = true;
                 _playerState = State.INVENTORY;
+                _animator.SetBool("isMoving", false);
             }
         }
     }
