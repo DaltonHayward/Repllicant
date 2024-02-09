@@ -76,10 +76,6 @@ public class PlayerController : MonoBehaviour
                     LookAtMouse();
                     HandleInteract();
                     HandleDodge();
-
-                    // cooldown for camera rotation
-                   
-                    
                     RotateCamera();
                     break;
                     

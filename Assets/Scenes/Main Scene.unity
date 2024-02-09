@@ -263,7 +263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3967799087021588440, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7950134984957074165, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
       propertyPath: m_Enabled
@@ -419,6 +419,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelGenerator (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3106502204127017146, guid: 68cfefa73b026124da13a4d15bd4a9fc, type: 3}
+      propertyPath: props
+      value: 
+      objectReference: {fileID: 971888825}
     - target: {fileID: 3106502204127017146, guid: 68cfefa73b026124da13a4d15bd4a9fc, type: 3}
       propertyPath: walls
       value: 
@@ -586,6 +590,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
+--- !u!4 &971888825 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1950795225504359042, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
+  m_PrefabInstance: {fileID: 910949250}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1839735485 &1007357117 stripped
 Tilemap:
   m_CorrespondingSourceObject: {fileID: 3241624917700529676, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
@@ -645,7 +654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2522108159561664482, guid: 77daab9665debbf40910a901e7355d6b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -885,6 +894,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6470486514739990557, guid: 9ebf546ba0938c04d9d591c311761f3a, type: 3}
+      propertyPath: props
+      value: 
+      objectReference: {fileID: 971888825}
+    - target: {fileID: 6470486514739990557, guid: 9ebf546ba0938c04d9d591c311761f3a, type: 3}
       propertyPath: walls
       value: 
       objectReference: {fileID: 1007357117}
@@ -910,6 +923,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1567460961}
     m_Modifications:
+    - target: {fileID: 863837350989932598, guid: da4f16f665d7fa64f83c194ae63f2b45, type: 3}
+      propertyPath: props
+      value: 
+      objectReference: {fileID: 971888825}
     - target: {fileID: 863837350989932598, guid: da4f16f665d7fa64f83c194ae63f2b45, type: 3}
       propertyPath: walls
       value: 
@@ -979,6 +996,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 7931868506958332745, guid: 586a8f0a569819f4e80abc88b23a3afd, type: 3}
+      propertyPath: props
+      value: 
+      objectReference: {fileID: 971888825}
     - target: {fileID: 7931868506958332745, guid: 586a8f0a569819f4e80abc88b23a3afd, type: 3}
       propertyPath: walls
       value: 
@@ -1072,7 +1093,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1567460961
 Transform:
   m_ObjectHideFlags: 0
@@ -1113,7 +1134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1694773173
 Transform:
   m_ObjectHideFlags: 0
@@ -1150,7 +1171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1755555866
 Transform:
   m_ObjectHideFlags: 0
@@ -1175,13 +1196,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2065709900522242937, guid: 93ff0632afd921a42953518d3a198774, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065709900522242937, guid: 93ff0632afd921a42953518d3a198774, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2885759946139322027, guid: 93ff0632afd921a42953518d3a198774, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2885759946139322027, guid: 93ff0632afd921a42953518d3a198774, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5137240465372930784, guid: 93ff0632afd921a42953518d3a198774, type: 3}
       propertyPath: m_LocalPosition.x
