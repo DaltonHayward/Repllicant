@@ -1,21 +1,19 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-[RequireComponent(typeof(NavMeshAgent))]
 
-public class Enemy : MonoBehaviour
+public class Siren : MonoBehaviour
 {
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed;
     float lastAttackTime;
     Transform player;
-    NavMeshAgent navMeshAgent;
     public bool closePlayer = false;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
     private void OnDestroy()
     {
         float randomValue = Random.value;
-        if (randomValue < commonItemProbability)
+        /*if (randomValue < commonItemProbability)
         {
             Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
         }
@@ -30,7 +28,7 @@ public class Enemy : MonoBehaviour
         else
         {
             Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
-        }
+        }*/
     }
     public void Die()
     {
@@ -56,8 +54,6 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = speed;
     }
 
     // Update is called once per frame
@@ -75,7 +71,6 @@ public class Enemy : MonoBehaviour
         }
         if (Vector3.Distance(player.position, transform.position) < chaseRange)
         {
-            navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized);
         }
 
     }
