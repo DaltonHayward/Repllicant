@@ -154,6 +154,9 @@ public class PlayerController : MonoBehaviour
                         break;
                     }
                 }
+                if (c.CompareTag("Siren")) {
+                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
+                }
             }
         }
     }
