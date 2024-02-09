@@ -9,10 +9,12 @@ public class ItemData2 : ScriptableObject
     public int width;
     public int height;
     public Sprite itemIcon;
+    public GameObject itemPrefab;
 
     void Start()
     {
-
+        GameObject item = this.itemPrefab;
+        
     }
 
     // Update is called once per frame
