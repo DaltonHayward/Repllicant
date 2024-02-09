@@ -5,7 +5,7 @@ using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, ISubscriber
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform _playerCamera;
     [Header("Player")]
@@ -153,6 +153,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
                         _playerState = State.MOVING;
                         break;
                     }
+                }
+                if (c.CompareTag("Siren")) {
+                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
                 }
             }
         }
