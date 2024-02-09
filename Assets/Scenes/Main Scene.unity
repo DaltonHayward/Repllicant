@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1341584049}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 12
+    OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -217,9 +217,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3064316983218144132, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 968
+      objectReference: {fileID: 0}
     - target: {fileID: 4801379275016198123, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4892683692271134652, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 618
       objectReference: {fileID: 0}
     - target: {fileID: 8762714436167307075, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
       propertyPath: m_Pivot.x
@@ -569,6 +577,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 674940522568364867, guid: fe04f297af1535447952f167a40f94ef, type: 3}
+      propertyPath: _inventory
+      value: 
+      objectReference: {fileID: 2028536702}
+    - target: {fileID: 674940522568364867, guid: fe04f297af1535447952f167a40f94ef, type: 3}
       propertyPath: _playerCamera
       value: 
       objectReference: {fileID: 90859553}
@@ -624,6 +636,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerModel
       objectReference: {fileID: 0}
+    - target: {fileID: 8671184970882902211, guid: fe04f297af1535447952f167a40f94ef, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -637,6 +653,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1567460961}
     m_Modifications:
+    - target: {fileID: 26196842917254778, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 26196842917254778, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af284bad76ff3514ebeb77d9e30b79ae, type: 2}
+    - target: {fileID: 3237474673972870236, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808967137426761402, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5808967137426761402, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 7407955993408656607, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
       propertyPath: m_Name
       value: MapOutline
@@ -1355,8 +1391,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1688127108}
   - {fileID: 2028536699}
+  - {fileID: 1688127108}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1790817725
@@ -1537,7 +1573,7 @@ Camera:
   far clip plane: 5000
   field of view: 60
   orthographic: 1
-  orthographic size: 12
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1712,6 +1748,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorkBench
       objectReference: {fileID: 0}
+    - target: {fileID: 7950134984957074165, guid: 7b5a82e839075cd4091a7a1445977abd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1720,6 +1760,11 @@ PrefabInstance:
 --- !u!224 &2028536699 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8762714436167307075, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
+  m_PrefabInstance: {fileID: 365001506}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &2028536702 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 4801379275016198123, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
   m_PrefabInstance: {fileID: 365001506}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807

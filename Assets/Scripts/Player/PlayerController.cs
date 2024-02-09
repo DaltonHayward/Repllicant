@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private Animator _animator;
 
-    private enum State {MOVING, DODGING, INTERACTING, ATTACKING, IS_CRAFTING, INVENTORY};
+    private enum State {MOVING, STANDING, DODGING, INTERACTING, ATTACKING, INVENTORY};
     private State _playerState;
 
 
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     {
         // _anim = GetComponentInChildren<Animator>();
         GetComponent<SphereCollider>().radius = _interactRange;
-        _playerState = State.MOVING;
+        _playerState = State.STANDING;
         _previousPos = transform.position;
         _cameraYAngle = FIRST;
         _playerCamera.rotation = Quaternion.Euler(_playerCamera.localEulerAngles.x, _cameraYAngle, _playerCamera.localEulerAngles.z);
@@ -68,32 +68,39 @@ public class PlayerController : MonoBehaviour
     {
         switch (_playerState)
         {
+            case State.STANDING:
+            {
+                HandleMovement();
+                HandleInteract();
+                HandleDodge();
+                RotateCamera();
+                ToggleInventory();
+                LookAtMouse();
+                break;
+            }
             case State.MOVING:
-                {
-                    HandleMovement();
-                    LookAtMouse();
-                    HandleInteract();
-                    HandleDodge();
-                    RotateCamera();
-                    ToggleInventory();
-                    break;
-                    
-                }
+            {
+                HandleMovement();
+                HandleInteract();
+                HandleDodge();
+                RotateCamera();
+                ToggleInventory();
+                break;
+            }
             case State.DODGING:
-                {
-                    LookAtMouse();
-                    break;
-                }
+            {
+                break;
+            }
             case State.INTERACTING:
-                {
-                    HandleInteract();
-                    break;
-                }
+            {
+                HandleInteract();
+                break;
+            }
             case State.INVENTORY:
-                {
-                    ToggleInventory();
-                    break;
-                }
+            {
+                ToggleInventory();
+                break;
+            }
         }
     }
 
@@ -105,17 +112,15 @@ public class PlayerController : MonoBehaviour
 
         rb.MovePosition(rb.position + ConvertToCameraSpace(direction) * _movementSpeed * Time.deltaTime);
 
-        
-
-        Debug.Log(direction);
-
         if (direction != Vector3.zero)
         {
+            _playerState = State.MOVING;
             transform.forward = ConvertToCameraSpace(direction);
             _animator.SetBool("isMoving", true);
         }
         else
         {
+            _playerState = State.STANDING;
             _animator.SetBool("isMoving", false);
         }
     
@@ -222,9 +227,9 @@ public class PlayerController : MonoBehaviour
         
         while(elapsedTime < _dodgeDuration && !_isColliding)
         {
-            // float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / _dodgeDuration);
+            float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / _dodgeDuration);
 
-            rb.MovePosition(Vector3.Lerp(transform.position, newPosition, EaseOut(ratio)));
+            rb.MovePosition(Vector3.Lerp(transform.position, newPosition, ratio));
             elapsedTime += Time.deltaTime;
             ratio = elapsedTime / _dodgeDuration;
 

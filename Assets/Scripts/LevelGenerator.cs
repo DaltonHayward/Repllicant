@@ -185,12 +185,15 @@ public class LevelGenerator : MonoBehaviour
                 {
                     // Calculate the world position of the prop
                     Vector3 propWorldPosition = new Vector3(
-                        childProp.position.x ,
+                        childProp.position.x,
                         0,
                         childProp.position.y 
                     );
                     childProp.position = propWorldPosition;
+                    childProp.rotation = Quaternion.Euler(childProp.localEulerAngles.x, Random.Range(0, 360), childProp.localEulerAngles.z);
                     childProp.SetParent(props);
+
+                    
                 }
             }
 
