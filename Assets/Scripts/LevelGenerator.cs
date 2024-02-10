@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
@@ -17,10 +18,21 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] int width = 80;
     [SerializeField] int height = 50;
 
+    // ai
+    [SerializeField] private GameObject nav_Mesh;
+
     // Start is called before the first frame update
     void Start()
     {
         GenerateLevel();
+        StartCoroutine(DelayBake());
+    }
+
+    // Delay bake till after level gen
+    private IEnumerator DelayBake()
+    {
+        yield return new WaitForSeconds(0.5f);
+        nav_Mesh.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
 
