@@ -17,19 +17,19 @@ public class Enemy : MonoBehaviour
         float randomValue = Random.value;
         if (randomValue < commonItemProbability)
         {
-            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
+            //Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
         }
         else if (randomValue < commonItemProbability + uncommonItemsProbability)
         {
-            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
+            //Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
         }
         else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
         {
-            Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
+            //Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
         }
         else
         {
-            Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
+            //Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
         }
     }
     public void Die()
