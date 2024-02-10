@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
     private Animator _animator;
 
-    private enum State {MOVING, STANDING, DODGING, INTERACTING, ATTACKING, INVENTORY};
+    public enum State {MOVING, STANDING, DODGING, INTERACTING, ATTACKING, INVENTORY};
     private State _playerState;
 
 
@@ -66,6 +67,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(_playerState);
+        /*if (_animator.GetCurrentAnimatorStateInfo(1).IsTag("Attack"))
+        {
+            Debug.Log("YUP");
+            _playerState = State.ATTACKING;
+        }*/
+
         switch (_playerState)
         {
             case State.STANDING:
@@ -87,6 +95,11 @@ public class PlayerController : MonoBehaviour
                 ToggleInventory();
                 break;
             }
+            case State.ATTACKING:
+            {
+                    HandleAttackMovement();
+                break;
+            }
             case State.DODGING:
             {
                 break;
@@ -103,6 +116,10 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    public void SetState(State state) { _playerState = state; }
+
+    public State GetState() { return _playerState; }
 
     private void HandleMovement() 
     {
@@ -124,6 +141,20 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("isMoving", false);
         }
     
+    }
+
+    private void HandleAttackMovement()
+    {
+        Vector3 direction = new Vector3(InputManager.instance.MoveInput.x, 0, InputManager.instance.MoveInput.y);
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        rb.MovePosition(rb.position + ConvertToCameraSpace(direction) * _movementSpeed * Time.deltaTime);
+
+        if (direction != Vector3.zero)
+        {
+            _animator.SetBool("isMoving", true);
+        }
     }
 
     private void HandleInteract()
@@ -152,9 +183,6 @@ public class PlayerController : MonoBehaviour
                         _playerState = State.MOVING;
                         break;
                     }
-                }
-                if (c.CompareTag("Siren")) {
-                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
                 }
             }
         }
@@ -248,7 +276,7 @@ public class PlayerController : MonoBehaviour
         _isDodging = false;
     }
 
-    private Vector3 ConvertToCameraSpace(Vector3 vectorToRotate) 
+    public Vector3 ConvertToCameraSpace(Vector3 vectorToRotate) 
     {
         // store current Y value from original vector
         float currentYValue = vectorToRotate.y;
