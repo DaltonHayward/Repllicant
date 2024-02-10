@@ -3,7 +3,47 @@ guid: a9fd8abc7bba0204aa724c0f21b416cc
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bull_Eyes.001
+    second: {fileID: 2100000, guid: d64ee346b92a55a49841017f49b6baaf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullskin_Body.001
+    second: {fileID: 2100000, guid: bc991c3fcb8d79d4baa4ed2dc02d98f8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullskin_Ears.001
+    second: {fileID: 2100000, guid: bfad85f5fc249294cb7b096ae61bbfd5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullskin_Face.001
+    second: {fileID: 2100000, guid: 78ba81eba37445a419f53c916dadec18, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullskin_Head.001
+    second: {fileID: 2100000, guid: ca2f660fd58ef4f499fe5658b674ef60, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bullskin_Horns.001
+    second: {fileID: 2100000, guid: 4df82ddc405ba494d826d5f226437c15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: belt.001
+    second: {fileID: 2100000, guid: f6708bb2c10a8a0479469abe7e4adeca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: clothing.001
+    second: {fileID: 2100000, guid: 122dbd8cba6d5cc41b848384b988dbca, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -99,7 +139,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

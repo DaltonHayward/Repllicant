@@ -3,7 +3,32 @@ guid: 52c2bc2db1a99e244b84bacdf41c42f7
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: medusa_eyes
+    second: {fileID: 2100000, guid: e0ebc0edfcf33bb40a09b02b24dcea8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: medusa_lips
+    second: {fileID: 2100000, guid: 7ac0805d6ce674f44b81bcecb0fb6d7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: medusa_skin
+    second: {fileID: 2100000, guid: 0ca0eb959a88dd64b98f00d0f0ad6d24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: snake hair
+    second: {fileID: 2100000, guid: c6c155ccd8fde1e4fbdd7fdcd48dd03d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: snake_eyes
+    second: {fileID: 2100000, guid: c7f67970b0d4c7f46a11dad2c7eda91d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -99,7 +124,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
