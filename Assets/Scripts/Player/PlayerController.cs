@@ -5,7 +5,7 @@ using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ISubscriber
 {
     [SerializeField] private Transform _playerCamera;
     [Header("Player")]
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     private enum State {MOVING, STANDING, DODGING, INTERACTING, ATTACKING, INVENTORY};
     private State _playerState;
 
-    private Canvas _effectCanvas;
+    public Canvas _effectCanvas;
 
 
     // Start is called before the first frame update

@@ -27,8 +27,8 @@ public class Siren : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        navMeshAgent.speed = speed;
+        /*navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        navMeshAgent.speed = speed;*/
     }
 
     // Update is called once per frame
@@ -46,7 +46,8 @@ public class Siren : MonoBehaviour
         }
         if (Vector3.Distance(player.transform.position, transform.position) < chaseRange)
         {
-            navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized);
+            HandleLure();
+            //navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized);
         }
 
     }
@@ -72,21 +73,19 @@ public class Siren : MonoBehaviour
 
     private void HandleLure()
     {
-        if (UserInput.instance.InteractInput)
-        {
-            Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
+        Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
 
-            foreach (Collider c in targets)
+        foreach (Collider c in targets)
+        {
+            if (c.CompareTag("Player") || c.CompareTag("Enemy"))
             {
-                if (c.CompareTag("Player") || c.CompareTag("Enemy"))
+                Debug.Log("Player in bounds");
+                ISubscriber subscriber = c.GetComponent<ISubscriber>();
+                if (subscriber != null)
                 {
-                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                    if (subscriber != null)
-                    {
-                        subscriber.ReceiveMessage("Frequency");
-                        _isLuring = true;
-                        break;
-                    }
+                    subscriber.ReceiveMessage("Frequency");
+                    _isLuring = true;
+                    break;
                 }
             }
         }
