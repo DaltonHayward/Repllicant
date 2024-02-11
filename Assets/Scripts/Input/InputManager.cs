@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
     public static InputManager instance;
 
     public Vector2 MoveInput { get; private set; }
+    public bool SprintInput { get; private set; }
     public bool DodgeInput { get; private set; }
     public bool AttackInput {  get; private set; }
     public bool InteractInput {  get; private set; }
@@ -21,6 +22,7 @@ public class InputManager : MonoBehaviour
     private PlayerInput _playerInput;
 
     private InputAction _moveAction;
+    private InputAction _sprintAcion;
     private InputAction _dodgeAction;
     private InputAction _attackAction;
     private InputAction _interactAction;
@@ -53,6 +55,7 @@ public class InputManager : MonoBehaviour
     private void SetupInputActions()
     {
         _moveAction = _playerInput.actions["Move"];
+        _sprintAcion = _playerInput.actions["Sprint"];
         _dodgeAction = _playerInput.actions["Dodge"];
         _attackAction = _playerInput.actions["Attack"];
         _interactAction = _playerInput.actions["Interact"];
@@ -65,6 +68,7 @@ public class InputManager : MonoBehaviour
     private void UpdateInputs()
     {
         MoveInput = _moveAction.ReadValue<Vector2>();
+        SprintInput = _sprintAcion.IsPressed();
         DodgeInput = _dodgeAction.WasPressedThisFrame();
         AttackInput = _attackAction.WasPressedThisFrame();
         InteractInput = _interactAction.WasPressedThisFrame();
