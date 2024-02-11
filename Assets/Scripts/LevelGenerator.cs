@@ -9,10 +9,13 @@ using Random = UnityEngine.Random;
 
 public class LevelGenerator : MonoBehaviour
 {
+    // structures to place
     [SerializeField] private List<Structure> structures;
+    // where structures are placed in scene
     [SerializeField] private Tilemap walls;
     [SerializeField] private Tilemap ground;
     [SerializeField] private Transform props;
+    // base tileset
     [SerializeField] private BaseLevelTiles baseLevelTiles;
     // level dimensions
     [SerializeField] int width = 80;
@@ -28,7 +31,7 @@ public class LevelGenerator : MonoBehaviour
         StartCoroutine(DelayBake());
     }
 
-    // Delay bake till after level gen
+    // Delay navmesh rebuild till after level gen
     private IEnumerator DelayBake()
     {
         yield return new WaitForSeconds(0.5f);
@@ -93,7 +96,6 @@ public class LevelGenerator : MonoBehaviour
                 borders.Add(borderRect);
             }
         }
-
         partitions = AddBufferToAreas(partitions);
         return (partitions, borders);
     }
@@ -195,26 +197,27 @@ public class LevelGenerator : MonoBehaviour
             {
                 foreach (Transform childProp in structProps)
                 {
-                    // Calculate the world position of the prop
+                    // Choose offsets to randomize the placement of the prop in the area
+                    int xOffset = Random.Range(0, (int)(structureToGen.width-1));
+                    int zOffset = Random.Range(-(int)(structureToGen.height-1), 0); 
+
+                    // set the world position of the prop
                     Vector3 propWorldPosition = new Vector3(
-                        childProp.position.x,
+                        childProp.position.x + xOffset,
                         0,
-                        childProp.position.y
+                        childProp.position.y + zOffset
                     );
                     childProp.position = propWorldPosition;
+
+                    // randomize the rotation of the prop
                     childProp.rotation = Quaternion.Euler(childProp.localEulerAngles.x, Random.Range(0, 360), childProp.localEulerAngles.z);
                     childProp.SetParent(props);
-
-                    
                 }
             }
-
             Destroy(structure);
         }
-
         return GetRemainingAreas(partitionedArea, structureToGen, widthOffset, heightOffset);
     }
-
 
 
     // Get the remaining areas in a partitioned room after placing a structure inside of it with a given width and
@@ -255,7 +258,6 @@ public class LevelGenerator : MonoBehaviour
                 validStructs.Add(structures[i]);
             }
         }
-
         if (validStructs.Count > 0)
         {
             return validStructs[Random.Range(0, validStructs.Count)];
