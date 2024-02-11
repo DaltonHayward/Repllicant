@@ -13,19 +13,19 @@ public class minotaurTest : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Q))
+        if (Input.GetKeyUp(KeyCode.UpArrow))
         {
             animator.SetTrigger("basicAtk");
         }
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.DownArrow))
         {
             animator.SetTrigger("heavyAtk");
         }
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
             animator.SetTrigger("comboAtk");
         }
-        if (Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.RightArrow))
         {
             animator.SetTrigger("warcry");
         }
