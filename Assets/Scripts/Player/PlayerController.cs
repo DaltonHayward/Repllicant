@@ -64,7 +64,9 @@ public class PlayerController : MonoBehaviour
     public float AttackSpeed;
     private float _lastClickedTime;
     private float _lastComboEnd;
-    private int _comboCounter = 0;
+    private int _comboCounter;
+    private float _windowUntilCanBuffer = 0.4f;
+    private bool _bufferNextAttack = false;
 
     [SerializeField]
     private float _timeBetweenCombos = 0.2f;
@@ -77,10 +79,12 @@ public class PlayerController : MonoBehaviour
     private Canvas _inventory;
     private bool _inInventory = false;
 
+    [Header("Interact")]
     [SerializeField] private float _interactRange = 3f;
     // const float GOLDEN_RATIO = .54f;
     private bool _isCrafting = false;
 
+    [Header("Animator")]
     // animation IDs
     private Animator _animator;
     private int _animIDSpeed;
@@ -225,8 +229,7 @@ public class PlayerController : MonoBehaviour
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
         // move the player
-        _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                         new Vector3(0.0f, 0, 0.0f) * Time.deltaTime);
+        _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, 0, 0.0f) * Time.deltaTime);
 
         // update animator if using character
         if (_animator)
@@ -241,32 +244,42 @@ public class PlayerController : MonoBehaviour
     #region - Combat -
     private void HandleAttack()
     {
-        if (Time.time - _lastComboEnd > _timeBetweenCombos && _comboCounter < Combo.Count && InputManager.instance.AttackInput)
+        if (Time.time - _lastComboEnd > _timeBetweenCombos && _comboCounter < Combo.Count && (InputManager.instance.AttackInput || _bufferNextAttack))
         {
             CancelInvoke("EndCombo");
             _stateBeforeAttacking = (_playerState != State.ATTACKING) ? _playerState : _stateBeforeAttacking;
             _playerState = State.ATTACKING;
 
-            // if a click happens 70% of the way throug an attack animation
-            if (Time.time - _lastClickedTime >= (Combo[_comboCounter].AttackLength()/AttackSpeed * 0.7f))
+            if (Time.time - _lastClickedTime > _windowUntilCanBuffer && InputManager.instance.AttackInput && Time.time - _lastClickedTime < _windowBetweenComboAttacks)
             {
-                Debug.Log(_comboCounter + " " + Combo[_comboCounter].AttackLength() + " " + (Combo[_comboCounter].AttackLength() / AttackSpeed * 0.7f));
-                // overide current attack animation
-                _animator.runtimeAnimatorController = Combo[_comboCounter].AnimatorOV;
-                // play new animation
-                _animator.Play("Attack", 0, 0);
+                _bufferNextAttack = true;
+            }
 
-                // handle dmg, visual effect-----------------
-
-                _comboCounter++;
-                _lastClickedTime = Time.time;
-
-                if (_comboCounter > Combo.Count)
-                {
-                    _comboCounter = 0;
-                }
+            
+            //Debug.Log(Combo[_comboCounter].AttackLength);
+            if (Time.time - _lastClickedTime >= _windowBetweenComboAttacks || (_bufferNextAttack && Time.time - _lastClickedTime >= _windowBetweenComboAttacks))
+            {
+                FireAttack();
+                _bufferNextAttack = false;
             }
             
+        }
+    }
+
+    private void FireAttack()
+    {
+        // overide current attack animation
+        _animator.runtimeAnimatorController = Combo[_comboCounter].AnimatorOV;
+        // play new animation
+        _animator.Play("Attack", 0, 0);
+
+        // handle dmg, visual effect-----------------
+
+        _comboCounter++;
+        _lastClickedTime = Time.time;
+        if (_comboCounter > Combo.Count)
+        {
+            _comboCounter = 0;
         }
     }
 
@@ -283,6 +296,7 @@ public class PlayerController : MonoBehaviour
         _comboCounter = 0;
         _lastComboEnd = Time.time;
         _playerState = _stateBeforeAttacking;
+        _bufferNextAttack = false;
     }
 
     #endregion
@@ -351,22 +365,6 @@ public class PlayerController : MonoBehaviour
          if (!other.collider.CompareTag("Ground"))
         {
             _isColliding = false;
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Interactable"))
-        {
-            other.GetComponent<Renderer>().material.SetColor("_OutlineColor", Color.yellow);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Interactable")) 
-        {
-            other.GetComponent<Renderer>().material.SetColor("_OutlineColor", other.GetComponent<CraftingTable>().GetOriginalOutline());
         }
     }
 

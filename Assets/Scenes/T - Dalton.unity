@@ -322,37 +322,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 227743787661815056, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
-      propertyPath: MoveSpeed
-      value: 2.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 227743787661815056, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
       propertyPath: _inventory
       value: 
       objectReference: {fileID: 988269512}
     - target: {fileID: 227743787661815056, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
-      propertyPath: AttackSpeed
-      value: 2
+      propertyPath: _windowBetweenComboAttacks
+      value: 0.79
       objectReference: {fileID: 0}
-    - target: {fileID: 227743787661815056, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
-      propertyPath: SprintSpeed
-      value: 6.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 227743787661815056, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
-      propertyPath: _playerCamera
-      value: 
-      objectReference: {fileID: 1481051829}
-    - target: {fileID: 227743787661815056, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
-      propertyPath: Combo.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 227743787661815056, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
-      propertyPath: Combo.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3fcd2bd62dece204ba89674177454d69, type: 2}
-    - target: {fileID: 227743787661815056, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
-      propertyPath: Combo.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 2b63c7d13303d2f48bb250d28b16cc62, type: 2}
     - target: {fileID: 4673957188746505513, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -397,12 +373,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Y Bot
       objectReference: {fileID: 0}
-    - target: {fileID: 5446800147464730515, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8312851685076901391, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

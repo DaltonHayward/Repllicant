@@ -6,10 +6,5 @@ using UnityEngine;
 public class AttackSO : ScriptableObject
 {
     public AnimatorOverrideController AnimatorOV;
-    public AnimationClip AttackAnimation;
-
-    public float AttackLength()
-    {
-        return AttackAnimation.length;
-    }
+    public float AttackLength;
 }
