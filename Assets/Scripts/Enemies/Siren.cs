@@ -44,11 +44,8 @@ public class Siren : MonoBehaviour
             }
             return;
         }
-        if (Vector3.Distance(player.transform.position, transform.position) < chaseRange)
-        {
-            HandleLure();
-            //navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized);
-        }
+        HandleLure();
+        //navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized);
 
     }
 
@@ -79,12 +76,17 @@ public class Siren : MonoBehaviour
         {
             if (c.CompareTag("Player") || c.CompareTag("Enemy"))
             {
-                Debug.Log("Player in bounds");
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                if (subscriber != null)
+                if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < chaseRange)
                 {
                     subscriber.ReceiveMessage("Frequency");
+                    Debug.Log("Distance: " + Vector3.Distance(player.transform.position, transform.position));
                     _isLuring = true;
+                    break;
+                }
+                else if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) >= chaseRange) {
+                    subscriber.ReceiveMessage("Quiet");
+                    _isLuring = false;
                     break;
                 }
             }
