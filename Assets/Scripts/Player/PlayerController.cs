@@ -292,6 +292,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void EndCombo()
+    {
+        _comboCounter = 0;
+        _lastComboEnd = Time.time;
+        _playerState = _stateBeforeAttacking;
+        _bufferNextAttack = false;
+    }
+
     public void BeginCollison()
     {
         CurrentWeapon.BeginCollision();
@@ -302,12 +310,13 @@ public class PlayerController : MonoBehaviour
         CurrentWeapon.EndCollision();
     }
 
-    void EndCombo()
+    public void BeginTrail()
     {
-        _comboCounter = 0;
-        _lastComboEnd = Time.time;
-        _playerState = _stateBeforeAttacking;
-        _bufferNextAttack = false;
+        CurrentWeapon.BeginTrail();
+    }
+    public void EndTrail()
+    {
+        CurrentWeapon.EndTrail();
     }
 
     #endregion

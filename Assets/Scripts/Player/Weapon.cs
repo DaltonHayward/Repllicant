@@ -27,4 +27,14 @@ public class Weapon : MonoBehaviour
     {
         GetComponent<CapsuleCollider>().enabled = false;
     }
+
+    public void BeginTrail()
+    {
+        GetComponentInChildren<TrailRenderer>().enabled = true;
+    }
+
+    public void EndTrail()
+    {
+        GetComponentInChildren<TrailRenderer>().enabled = false;
+    }
 }
