@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
     [Header("Combat")]
     public List<AttackSO> Combo;
     public float AttackSpeed;
+    public Weapon CurrentWeapon;
     private float _lastClickedTime;
     private float _lastComboEnd;
     private int _comboCounter;
@@ -289,6 +290,16 @@ public class PlayerController : MonoBehaviour
         {
             Invoke("EndCombo", 0);
         }
+    }
+
+    public void BeginCollison()
+    {
+        CurrentWeapon.BeginCollision();
+    }
+
+    public void EndCollision()
+    {
+        CurrentWeapon.EndCollision();
     }
 
     void EndCombo()

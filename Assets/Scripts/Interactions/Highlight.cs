@@ -9,7 +9,6 @@ public class Highlight : MonoBehaviour
         if (other.CompareTag("Interactable"))
         {
             other.GetComponent<Renderer>().material.SetColor("_OutlineColor", Color.yellow);
-            Debug.Log("HOHo");
         }
     }
 
