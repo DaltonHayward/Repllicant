@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6831224793682822092}
   - component: {fileID: 550705398781760701}
+  - component: {fileID: 1342684297665861254}
   m_Layer: 0
   m_Name: Rock1
   m_TagString: Untagged
@@ -59,6 +60,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.141815, y: 1.0829867, z: 3.0142035}
   m_Center: {x: 1.0865173, y: 0.6, z: -0.45449233}
+--- !u!114 &1342684297665861254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906242868798283780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e3056974a94fe449af22b621a63f5de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  sureToDrop: {fileID: 0}
+  DropItemAndProbability_List: []
+  hardnessPercent: 0.2
 --- !u!1 &2416114916730200979
 GameObject:
   m_ObjectHideFlags: 0
