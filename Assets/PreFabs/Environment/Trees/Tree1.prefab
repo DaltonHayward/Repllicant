@@ -63,6 +63,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6451316426262277186}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4121117414067798150}
   m_SourcePrefab: {fileID: 100100000, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
 --- !u!1 &4359158100973675858 stripped
 GameObject:
@@ -90,3 +93,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7327471, y: 0.62299466, z: 2.0231886}
   m_Center: {x: 0.004943937, y: 0.016525239, z: 1.0115547}
+--- !u!114 &4121117414067798150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359158100973675858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303d6180d30ffee4ba521870241ea0ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  sureToDrop: {fileID: 0}
+  DropItemAndProbability_List: []
+  dropWhenStoned: {fileID: 0}
+  dropItemStart: {fileID: 0}
+  isStoned: 0
+  stoneMaterial: {fileID: 2100000, guid: 8bce7657afa6fc043ba231185c5a0d7d, type: 2}
+  woodMaterial: {fileID: 2100000, guid: 19fa4063a714d034386abb7533e7fe76, type: 2}
