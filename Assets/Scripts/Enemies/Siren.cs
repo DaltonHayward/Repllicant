@@ -74,17 +74,32 @@ public class Siren : MonoBehaviour
 
         foreach (Collider c in targets)
         {
-            if (c.CompareTag("Player") || c.CompareTag("Enemy"))
+            if (c.CompareTag("Player"))
             {
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
                 if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < chaseRange)
                 {
                     subscriber.ReceiveMessage("Frequency");
-                    Debug.Log("Distance: " + Vector3.Distance(player.transform.position, transform.position));
                     _isLuring = true;
                     break;
                 }
                 else if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) >= chaseRange) {
+                    subscriber.ReceiveMessage("Quiet");
+                    _isLuring = false;
+                    break;
+                }
+            }
+            if (c.CompareTag("Enemy")) {
+                ISubscriber subscriber = c.GetComponent<ISubscriber>();
+                if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < chaseRange)
+                {
+                    Debug.Log("Enemy");
+                    subscriber.ReceiveMessage("Frequency");
+                    _isLuring = true;
+                    break;
+                }
+                else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) >= chaseRange)
+                {
                     subscriber.ReceiveMessage("Quiet");
                     _isLuring = false;
                     break;

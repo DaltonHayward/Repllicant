@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
         _playerCamera.rotation = Quaternion.Euler(_playerCamera.localEulerAngles.x, _cameraYAngle, _playerCamera.localEulerAngles.z);
         _animator = GetComponent<Animator>();
         _effectCanvas.enabled = false;
-
     }
 
     void Update()
@@ -105,8 +104,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 break;
             }
         }
-
-        Debug.Log(_effectCanvas.enabled);
     }
 
     private void HandleMovement() 
@@ -388,12 +385,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
      public void ReceiveMessage(string channel)
     {
-
-        Debug.Log(channel);
         if (channel.Equals("Frequency"))
         {
             _effectCanvas.enabled = true;
-            //Debug.Log("Lure caught");
         } else {
             _effectCanvas.enabled = false;
         }
