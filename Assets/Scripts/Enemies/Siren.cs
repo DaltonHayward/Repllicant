@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
+using UnityEngine.AI;
+[RequireComponent(typeof(NavMeshAgent))]
 
 public class Siren : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class Siren : MonoBehaviour
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed;
     [SerializeField]
     float lastAttackTime;
+
+    NavMeshAgent navMeshAgent;
 
     NavMeshAgent navMeshAgent;
 
@@ -24,6 +28,8 @@ public class Siren : MonoBehaviour
     private enum State { EMITTING, NOT_EMITTING };
     private State _playerState;
     private bool _isLuring;
+
+    private IEnumerator damageCoroutine;
 
     private IEnumerator damageCoroutine;
 
@@ -80,8 +86,10 @@ public class Siren : MonoBehaviour
             {
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
                 if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
+                if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
                 {
                     subscriber.ReceiveMessage("Frequency");
+                    StartCoroutine(damageCoroutine);
                     _isLuring = true;
                     break;
                 }
@@ -96,11 +104,13 @@ public class Siren : MonoBehaviour
             {
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
                 if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < _lureRange)
+                if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < _lureRange)
                 {
                     subscriber.ReceiveMessage("Frequency");
                     _isLuring = true;
                     break;
                 }
+                else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) >= _lureRange)
                 else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) >= _lureRange)
                 {
                     subscriber.ReceiveMessage("Quiet");
