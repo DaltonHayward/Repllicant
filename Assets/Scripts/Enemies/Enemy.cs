@@ -75,8 +75,10 @@ public class Enemy : MonoBehaviour, ISubscriber
         }
         if (Vector3.Distance(player.position, transform.position) < chaseRange)
         {
-            navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized);
+            Debug.DrawLine(transform.position, player.position - (player.position - transform.position).normalized * attackRange);
+            navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized * attackRange);
         }
+
 
     }
 
