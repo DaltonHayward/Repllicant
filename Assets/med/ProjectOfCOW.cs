@@ -1,10 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectilesOfMedusa : MonoBehaviour
+public class ProjectOfCOW : MonoBehaviour
 {
-    public float damageAmount = 10f;
-
     public Mesh mesh;
+    public bool isCharge;
     private void Start()
     {
         mesh = new Mesh();
@@ -14,36 +15,41 @@ public class ProjectilesOfMedusa : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        // Check if it is a resource type of object, like trees
-        if (other.GetComponent<Wood>() != null)
+        if (isCharge)
         {
-            Wood wood = other.GetComponent<Wood>();
-            wood.sureToDrop = wood.dropWhenStoned;
-        }
-        // Marked as stoned
-        else if (other.CompareTag("Player") && Vector3.Angle(other.transform.forward, transform.parent.position) < 90)
-        {
-            Debug.Log("????");
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+
+            //是冲刺
+            if (other.GetComponent<Wood>() != null)//根据是否有wood组件判断是不是树
             {
-                playerHealth.TakeDamage(damageAmount);
+                Wood wood = other.GetComponent<Wood>();
+                wood.sureToDrop = wood.dropWhenStoned;
+                Destroy(other.gameObject);
+            }
+            else if (other.GetComponent<Collectible>() != null)
+            {
+                Destroy(other.gameObject);
             }
         }
-    }
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<Wood>() != null)
+        else
         {
-            Wood wood = other.GetComponent<Wood>();
-            wood.sureToDrop = wood.dropItemStart;
-        }
-        else if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player unstoned");
-        }
+            //波
 
+            //敌人收到伤害和减速
+        }
     }
+    //public void OnTriggerExit(Collider other)
+    //{
+    //    if (other.GetComponent<Wood>() != null)
+    //    {
+    //        Wood wood = other.GetComponent<Wood>();
+    //        wood.sureToDrop = wood.dropItemStart;
+    //    }
+    //    else if (other.CompareTag("Player"))
+    //    {
+    //        Debug.Log("解除石化");
+    //    }
+
+    //}
     void DrawHalfCycle(float radius, float innerRadius, int segments, float angleDegree, Vector3 centerCircle)
     {
         //顶点
