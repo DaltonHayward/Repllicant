@@ -17,8 +17,7 @@ public class InputManager : MonoBehaviour
     public bool CameraLeftInput {  get; private set; }
     public bool CameraRightInput {  get; private set; }
     public bool MenuOpenCloseInput { get; private set; }
-    public bool EquipedItemForward { get; private set; }
-    public bool EquipedItemBack { get; private set; }
+    public float ScrollInput { get; private set; }
 
     private PlayerInput _playerInput;
 
@@ -31,8 +30,7 @@ public class InputManager : MonoBehaviour
     private InputAction _cameraLeftAction;
     private InputAction _cameraRightAction;
     private InputAction _menuOpenCloseAction;
-    private InputAction _equipedItemForwardAction;
-    private InputAction _equipedItemBackAction;
+    private InputAction _scrollAction;
 
     private void Awake()
     {
@@ -66,8 +64,7 @@ public class InputManager : MonoBehaviour
         _cameraLeftAction = _playerInput.actions["RotateCameraLeft"];
         _cameraRightAction = _playerInput.actions["RotateCameraRight"];
         _menuOpenCloseAction = _playerInput.actions["MenuOpenClose"];
-        _equipedItemForwardAction = _playerInput.actions["EquipeditemForward"];
-        _equipedItemBackAction = _playerInput.actions["EquipedItemBack"];
+        _scrollAction = _playerInput.actions["Scroll"];
     }
 
     private void UpdateInputs()
@@ -81,7 +78,6 @@ public class InputManager : MonoBehaviour
         CameraLeftInput = _cameraLeftAction.WasPressedThisFrame();
         CameraRightInput = _cameraRightAction.WasPressedThisFrame();
         MenuOpenCloseInput = _menuOpenCloseAction.WasPressedThisFrame();
-        EquipedItemForward = _equipedItemForwardAction.WasPressedThisFrame();
-        EquipedItemBack = _equipedItemBackAction.WasPressedThisFrame();
+        ScrollInput = _scrollAction.ReadValue<float>();
     }
 }
