@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+[RequireComponent(typeof(NavMeshAgent))]
+using UnityEngine.AI;
+[RequireComponent(typeof(NavMeshAgent))]
 
 public class Siren : MonoBehaviour
 {
@@ -9,7 +13,10 @@ public class Siren : MonoBehaviour
     [SerializeField]
     float lastAttackTime;
 
-    UnityEngine.AI.NavMeshAgent navMeshAgent;
+    NavMeshAgent navMeshAgent;
+
+    NavMeshAgent navMeshAgent;
+
 
     public GameObject player;
     public bool closePlayer = false;
@@ -22,31 +29,31 @@ public class Siren : MonoBehaviour
     private State _playerState;
     private bool _isLuring;
 
+    private IEnumerator damageCoroutine;
+
+    private IEnumerator damageCoroutine;
+
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        /*navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        navMeshAgent.speed = speed;*/
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = speed;
+        _isLuring = false;
+
+        damageCoroutine = GiveDamageCoroutine();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Vector3.Distance(player.transform.position, transform.position) < attackRange)
+        if (Vector3.Distance(transform.position, player.transform.position) < chaseRange) 
         {
-            if (Time.time - lastAttackTime > attackSpeed)
-            {
-                Debug.Log("attack");
-                lastAttackTime = Time.time;
-            }
-            return;
+            Debug.DrawLine(transform.position, player.transform.position - (player.transform.position - transform.position).normalized);
+            navMeshAgent.SetDestination(player.transform.position);
         }
         HandleLure();
-        //navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized);
-
     }
 
     public void TakeDamage(float damage)
@@ -56,7 +63,7 @@ public class Siren : MonoBehaviour
             Die();
     }
 
-    private void OnCollisionEnter(Collision collision)
+/*    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
             closePlayer = true;
@@ -66,10 +73,11 @@ public class Siren : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
             closePlayer = false;
-    }
+    }*/
 
     private void HandleLure()
     {
+        StartCoroutine(damageCoroutine);
         Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
 
         foreach (Collider c in targets)
@@ -77,27 +85,33 @@ public class Siren : MonoBehaviour
             if (c.CompareTag("Player"))
             {
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < chaseRange)
+                if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
+                if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
                 {
                     subscriber.ReceiveMessage("Frequency");
+                    StartCoroutine(damageCoroutine);
                     _isLuring = true;
                     break;
                 }
-                else if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) >= chaseRange) {
+                else if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) >= _lureRange) 
+                {
                     subscriber.ReceiveMessage("Quiet");
                     _isLuring = false;
                     break;
                 }
             }
-            if (c.CompareTag("Enemy")) {
+            if (c.CompareTag("Enemy")) 
+            {
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < chaseRange)
+                if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < _lureRange)
+                if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < _lureRange)
                 {
                     subscriber.ReceiveMessage("Frequency");
                     _isLuring = true;
                     break;
                 }
-                else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) >= chaseRange)
+                else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) >= _lureRange)
+                else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) >= _lureRange)
                 {
                     subscriber.ReceiveMessage("Quiet");
                     _isLuring = false;
@@ -130,5 +144,26 @@ public class Siren : MonoBehaviour
     public void Die()
     {
         Destroy(gameObject);
+    }
+
+    private IEnumerator GiveDamageCoroutine()
+    {
+        Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
+        foreach (Collider c in targets)
+        {
+            if (c.CompareTag("Player"))
+            {
+                ISubscriber subscriber = c.GetComponent<ISubscriber>();
+                if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
+                {
+                    Debug.Log(c.GetComponent<Health>().Hp);
+                    // Damages player more as they get closer to the siren
+                    c.GetComponent<Health>().TakeDamage(30 / Vector3.Distance(player.transform.position, transform.position));
+                    yield return new WaitForSeconds(5);
+                    //GiveDamage();
+                    //Debug.Log(c.GetComponent<Health>().Hp);
+                }
+            }
+        }
     }
 }

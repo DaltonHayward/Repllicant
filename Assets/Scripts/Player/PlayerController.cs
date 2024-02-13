@@ -1,53 +1,98 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, ISubscriber
 {
-    [SerializeField] private Transform _playerCamera;
+    private Transform _playerCamera;
     [Header("Player")]
-    [SerializeField] private float _movementSpeed;
+    [Tooltip("Move speed of the character in m/s")]
+    public float MoveSpeed = 2.0f;
 
+    [Tooltip("Sprint speed of the character in m/s")]
+    public float SprintSpeed = 5.335f;
+
+    [Tooltip("How fast the character turns to face movement direction")]
+    [Range(0.0f, 0.3f)]
+    public float RotationSmoothTime = 0.12f;
+    private CharacterController _controller;
+    private float _speed;
+    private float _animationBlend;
+    private float _targetRotation = 0.0f;
+    private float _rotationVelocity;
+
+    [Tooltip("Acceleration and deceleration")]
+    public float SpeedChangeRate = 10.0f;
+
+    [Header("Camera Rotation")]
+    [SerializeField][Range(0.1f, 5f)]
+    private float _rotationSpeed = 1;
+    private Vector3 _lookDirection;
+    private Quaternion _rotationGoal;
+    private bool _isRotating = false;
+    private float _cameraYAngle;
     const float FIRST = 0f;
     const float SECOND = 90f;
     const float THIRD = 180f;
     const float FOURTH = 270f;
-    private float _cameraYAngle;
-    [Header("Camera Rotation")]
-    [SerializeField][Range(0.1f, 5f)]
-    private float _rotationSpeed = 1;
-    private bool _isRotating = false;
-
+    
     [Header("Dodge")]
     [SerializeField][Range(1f, 10f)]
     private float _dodgeDistance = 5f;
     [SerializeField][Range(0.1f, 2f)]
     private float _dodgeDuration = 1;
-    private bool _isDodging = false;
     private Vector3 _previousPos;
-
     [SerializeField][Range(0f, 1f)]
     private float _delayBeforeInvinsible = 0.2f;
     [SerializeField][Range(0f, 2f)]
     private float _invinsibleDuration = 1f;
     [SerializeField][Range(0f, 5f)]   
     private float _dodgeCooldown = 1;
+    private bool _isDodging = false;
     private bool _isColliding = false;
 
+    [Header("Combat/Equipment")]
+    // Combat
+    public List<AttackSO> Combo;
+    public float AttackSpeed;
+    private float _lastClickedTime;
+    private float _lastComboEnd;
+    private int _comboCounter;
+    private float _windowUntilCanBuffer = 0.4f;
+    private bool _bufferNextAttack = false;
+    [SerializeField]
+    private float _timeBetweenCombos = 0.2f;
+    [SerializeField]
+    private float _windowBetweenComboAttacks = 0.3f;
+    private State _stateBeforeAttacking;
+
+    // Equipment
+    private enum Equipment { WEAPON, PICKAXE, AXE };
+    private Equipment _currentEquipment;
+    private int _currentTool;
+    public Tool[] Tools;
+    public GameObject ToolHolder;
+
+    [Header("Inventory")]
     [SerializeField]
     private Canvas _inventory;
     private bool _inInventory = false;
 
+    [Header("Interact")]
     [SerializeField] private float _interactRange = 3f;
     // const float GOLDEN_RATIO = .54f;
     private bool _isCrafting = false;
 
+    [Header("Animator")]
+    // animation IDs
     private Animator _animator;
-
-    private enum State {MOVING, STANDING, DODGING, INTERACTING, ATTACKING, INVENTORY};
+    private int _animIDSpeed;
+    private int _animIDMotionSpeed;
+    private int _animIDAttackSpeed;
+    
+    // State
+    public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY};
     private State _playerState;
 
     public Canvas _effectCanvas;
@@ -55,15 +100,30 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     // Start is called before the first frame update
     void Awake()
-    {
-        // _anim = GetComponentInChildren<Animator>();
-        GetComponent<SphereCollider>().radius = _interactRange;
+    {;
+        GetComponentInChildren<SphereCollider>().radius = _interactRange;
         _playerState = State.STANDING;
+        _currentEquipment = Equipment.WEAPON;
+        _currentTool = 0;
         _previousPos = transform.position;
+        _playerCamera = GameObject.FindGameObjectWithTag("VirtualCamera").transform;
         _cameraYAngle = FIRST;
         _playerCamera.rotation = Quaternion.Euler(_playerCamera.localEulerAngles.x, _cameraYAngle, _playerCamera.localEulerAngles.z);
         _animator = GetComponent<Animator>();
+        _controller = GetComponent<CharacterController>();
+
+        AssignAnimationIDs();
+
+        _animator.SetFloat(_animIDAttackSpeed, AttackSpeed);
+
         _effectCanvas.enabled = false;
+    }
+
+    private void AssignAnimationIDs()
+    {
+        _animIDSpeed = Animator.StringToHash("Speed");
+        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+        _animIDAttackSpeed = Animator.StringToHash("AttackSpeed");
     }
 
     void Update()
@@ -75,18 +135,27 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 HandleMovement();
                 HandleInteract();
                 HandleDodge();
+                HandleClick();
                 RotateCamera();
                 ToggleInventory();
-                LookAtMouse();
+                HandleEquipedItemChange();
+                //LookAtMouse();
                 break;
             }
             case State.MOVING:
             {
                 HandleMovement();
                 HandleInteract();
+                HandleClick();
                 HandleDodge();
                 RotateCamera();
                 ToggleInventory();
+                HandleEquipedItemChange();
+                break;
+            }
+            case State.SWINGING:
+            {
+                HandleClick();
                 break;
             }
             case State.DODGING:
@@ -104,30 +173,196 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 break;
             }
         }
+        ExitAttack();
     }
+
+    public void SetState(State state)
+    {
+        _playerState = state;
+    }
+
+    #region - Movement -
 
     private void HandleMovement() 
     {
-        Vector3 direction = new Vector3(InputManager.instance.MoveInput.x, 0, InputManager.instance.MoveInput.y);
+        // set target speed based on move speed, sprint speed and if sprint is pressed
+        float targetSpeed = InputManager.instance.SprintInput ? SprintSpeed : MoveSpeed;
 
-        Rigidbody rb = GetComponent<Rigidbody>();
+        // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
-        rb.MovePosition(rb.position + ConvertToCameraSpace(direction) * _movementSpeed * Time.deltaTime);
+        // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+        // if there is no input, set the target speed to 0
+        if (InputManager.instance.MoveInput == Vector2.zero) targetSpeed = 0.0f;
 
-        if (direction != Vector3.zero)
+        // a reference to the players current horizontal velocity
+        float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+
+        float speedOffset = 0.1f;
+        //float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+        float inputMagnitude = 1f;
+
+        // accelerate or decelerate to target speed
+        if (currentHorizontalSpeed < targetSpeed - speedOffset ||
+            currentHorizontalSpeed > targetSpeed + speedOffset)
+        {
+            // creates curved result rather than a linear one giving a more organic speed change
+            // note T in Lerp is clamped, so we don't need to clamp our speed
+            _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
+                Time.deltaTime * SpeedChangeRate);
+
+            // round speed to 3 decimal places
+            _speed = Mathf.Round(_speed * 1000f) / 1000f;
+        }
+        else
+        {
+            _speed = targetSpeed;
+        }
+
+        _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+        if (_animationBlend < 0.01f) _animationBlend = 0f;
+
+        // normalise input direction
+        Vector3 inputDirection = new Vector3(InputManager.instance.MoveInput.x, 0.0f, InputManager.instance.MoveInput.y).normalized;
+
+        // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+        // if there is a move input rotate player when the player is moving
+        if (InputManager.instance.MoveInput != Vector2.zero)
         {
             _playerState = State.MOVING;
-            transform.forward = ConvertToCameraSpace(direction);
-            _animator.SetBool("isMoving", true);
+            _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _playerCamera.transform.eulerAngles.y;
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+
+            // rotate to face input direction relative to camera position
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
         else
         {
             _playerState = State.STANDING;
-            _animator.SetBool("isMoving", false);
         }
-    
+
+        Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+
+        // move the player
+        _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, 0, 0.0f) * Time.deltaTime);
+
+        // update animator if using character
+        if (_animator)
+        {
+            _animator.SetFloat(_animIDSpeed, _animationBlend);
+            _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+        }
     }
 
+    #endregion
+
+    #region - Combat/Equipment -
+    private void HandleClick()
+    {
+        if (_currentEquipment == Equipment.WEAPON)
+        {
+            if (Time.time - _lastComboEnd > _timeBetweenCombos && _comboCounter < Combo.Count && (InputManager.instance.AttackInput || _bufferNextAttack))
+            {
+                CancelInvoke("EndCombo");
+                //_stateBeforeAttacking = (_playerState != State.SWINGING) ? _playerState : _stateBeforeAttacking;
+                _playerState = State.SWINGING;
+
+
+                if (Time.time - _lastClickedTime > _windowUntilCanBuffer && InputManager.instance.AttackInput && Time.time - _lastClickedTime < _windowBetweenComboAttacks)
+                {
+                    _bufferNextAttack = true;
+                }
+
+
+                //Debug.Log(Combo[_comboCounter].AttackLength);
+                if (Time.time - _lastClickedTime >= _windowBetweenComboAttacks || (_bufferNextAttack && Time.time - _lastClickedTime >= _windowBetweenComboAttacks))
+                {
+                    FireAttack();
+                    _bufferNextAttack = false;
+                }
+
+            }
+        }
+
+        // If pickaxe equiped
+        if (_currentEquipment == Equipment.PICKAXE && InputManager.instance.AttackInput && _playerState != State.SWINGING)
+        {
+            _animator.SetTrigger("isMining");
+            _animator.SetFloat("Speed", 0);
+            _playerState = State.SWINGING;
+            StartCoroutine(ResetStateAfterSeconds(2.4f / AttackSpeed));
+        }
+
+        // If axe equiped
+        if (_currentEquipment == Equipment.AXE && InputManager.instance.AttackInput && _playerState != State.SWINGING)
+        {
+            _animator.SetTrigger("isChopping");
+            _animator.SetFloat("Speed", 0);
+            _playerState = State.SWINGING;
+            StartCoroutine(ResetStateAfterSeconds(2.4f/AttackSpeed));
+        }
+    }
+
+    private void FireAttack()
+    {
+        // overide current attack animation
+        _animator.runtimeAnimatorController = Combo[_comboCounter].AnimatorOV;
+        // play new animation
+        _animator.Play("Attack", 0, 0);
+
+        // handle dmg, visual effect-----------------
+
+        _comboCounter++;
+        _lastClickedTime = Time.time;
+        if (_comboCounter > Combo.Count)
+        {
+            _comboCounter = 0;
+        }
+    }
+
+    void ExitAttack()
+    {
+        if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9 && _animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        {
+            Invoke("EndCombo", 0);
+        }
+    }
+
+    void EndCombo()
+    {
+        _comboCounter = 0;
+        _lastComboEnd = Time.time;
+        _playerState = State.STANDING;
+        _bufferNextAttack = false;
+    }
+
+    IEnumerator ResetStateAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        _playerState = State.STANDING;
+    }
+
+    public void BeginCollison()
+    {
+        Tools[_currentTool].BeginCollision();
+    }
+
+    public void EndCollision()
+    {
+        Tools[_currentTool].EndCollision();
+    }
+
+    public void BeginTrail()
+    {
+        Tools[_currentTool].BeginTrail();
+    }
+    public void EndTrail()
+    {
+        Tools[_currentTool].EndTrail();
+    }
+
+    #endregion
+
+    #region - Interact -
     private void HandleInteract()
     {
         if (InputManager.instance.InteractInput)
@@ -138,8 +373,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
             {
                 if (c.CompareTag("Interactable"))
                 {
-                    Debug.Log("Here");
+                    // check for subscriber interface on collided object
                     ISubscriber subscriber = c.GetComponent<ISubscriber>();
+                    // send approriate signal if they are a subscriber
                     if (subscriber != null && !_isCrafting)
                     {
                         subscriber.ReceiveMessage("OpenMenu");
@@ -158,11 +394,14 @@ public class PlayerController : MonoBehaviour, ISubscriber
             }
         }
     }
-    
+
+    #endregion
+
+    #region - Dodge -
+    // This will need to be changed to work with a character controller
     private void HandleDodge() 
     {
         Vector3 direction = new Vector3(InputManager.instance.MoveInput.x, transform.position.y, InputManager.instance.MoveInput.y);
-        // Debug.Log(direction);
 
         if (InputManager.instance.DodgeInput && !_isDodging && direction != Vector3.zero)
         {
@@ -190,32 +429,18 @@ public class PlayerController : MonoBehaviour, ISubscriber
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Interactable"))
-        {
-            other.GetComponent<Renderer>().material.SetColor("_OutlineColor", Color.yellow);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Interactable")) 
-        {
-            other.GetComponent<Renderer>().material.SetColor("_OutlineColor", other.GetComponent<CraftingTable>().GetOriginalOutline());
-        }
-    }
-
     static float Flip(float x)
     {
         return 1 - x;
     }
 
+    // used with lerp fucntion, changes lerp from linear to ease out curve
     public static float EaseOut(float t)
     {
         return Flip(Flip(t) * Flip(t));
     }
 
+    // allows dodge to take place outside of update loop, moves the player from one position to another specified position
     IEnumerator Dodge(Vector3 newPosition)
     {
         _playerState = State.DODGING;
@@ -247,7 +472,12 @@ public class PlayerController : MonoBehaviour, ISubscriber
         _isDodging = false;
     }
 
-    private Vector3 ConvertToCameraSpace(Vector3 vectorToRotate) 
+    #endregion
+
+    #region - Camera -
+
+    // not needed anymore
+    public Vector3 ConvertToCameraSpace(Vector3 vectorToRotate) 
     {
         // store current Y value from original vector
         float currentYValue = vectorToRotate.y;
@@ -274,6 +504,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         return vectorRotatedToCameraSpace;
     }
 
+    // Logic for rotating the camera based on current rotation and user input
     private void RotateCamera() 
     {
         if (!_isRotating && (InputManager.instance.CameraLeftInput || InputManager.instance.CameraRightInput))
@@ -322,11 +553,14 @@ public class PlayerController : MonoBehaviour, ISubscriber
                     break;
             }
 
+            Debug.Log(_cameraYAngle);
+
             StartCoroutine(LerpRotation(_cameraYAngle));
         }
         
     }
 
+    // Smooth rotation of camera
     IEnumerator LerpRotation(float cameraYAngle)
     {
         _isRotating = true;
@@ -355,14 +589,16 @@ public class PlayerController : MonoBehaviour, ISubscriber
         for (int i = 0; i < hits.Length; i++)
         {
             if (hits[i].collider.tag == "Ground")
-            { // check that the ray collides with the ground and only the ground
-                Debug.DrawRay(hits[i].transform.position, hits[i].transform.forward, Color.green);
+            {   // check that the ray collides with the ground and only the ground
                 transform.LookAt(hits[i].point); // Look at the point
                 transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0)); // Clamp the x and z rotation
             }
         }
     }
 
+    #endregion
+
+    #region - Inventory -
     public void ToggleInventory()
     {
         if (InputManager.instance.InventoryInput)
@@ -371,17 +607,98 @@ public class PlayerController : MonoBehaviour, ISubscriber
             {
                 _inInventory = false;
                 _inventory.enabled = false;
-                _playerState = State.MOVING;
+                _playerState = State.STANDING;
             }
             else
             {
                 _inInventory = true;
                 _inventory.enabled = true;
                 _playerState = State.INVENTORY;
-                _animator.SetBool("isMoving", false);
+                StartCoroutine(SlowDown());
+                
             }
         }
     }
+
+    IEnumerator SlowDown()
+    {
+        float elapsedTime = 0f;
+        float ratio = elapsedTime / 0.2f;
+
+        while (_animator.GetFloat(_animIDSpeed) > 0.01f)
+        {
+            _animator.SetFloat(_animIDSpeed, Mathf.Lerp(_animator.GetFloat(_animIDSpeed), 0, ratio));
+            elapsedTime += Time.deltaTime;
+            ratio = elapsedTime / _dodgeDuration;
+
+            yield return null;
+        }
+
+        _animator.SetFloat(_animIDSpeed, 0);
+    }
+
+    #endregion
+
+    #region - Equipment -
+
+    private void HandleEquipedItemChange()
+    {
+        
+        if (InputManager.instance.ScrollInput > 0)
+        {
+            if (_currentEquipment == Equipment.WEAPON)
+            {
+                _currentEquipment = Equipment.PICKAXE;
+                ToolHolder.transform.GetChild(0).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(1).gameObject.SetActive(true);
+                _currentTool = 1;
+            }
+            else if (_currentEquipment == Equipment.PICKAXE)
+            {
+                _currentEquipment = Equipment.AXE;
+                ToolHolder.transform.GetChild(1).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(2).gameObject.SetActive(true);
+                _currentTool = 2;
+            }
+            else if (_currentEquipment == Equipment.AXE)
+            {
+                _currentEquipment = Equipment.WEAPON;
+                ToolHolder.transform.GetChild(2).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(0).gameObject.SetActive(true);
+                _currentTool = 0;
+            }
+            //Debug.Log(_currentEquipment);
+            //Debug.Log(InputManager.instance.ScrollInput);
+        }
+        if (InputManager.instance.ScrollInput < 0)
+        {
+            if (_currentEquipment == Equipment.WEAPON)
+            {
+                _currentEquipment = Equipment.AXE;
+                ToolHolder.transform.GetChild(0).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(2).gameObject.SetActive(true);
+                _currentTool = 2;
+            }
+            else if (_currentEquipment == Equipment.PICKAXE)
+            {
+                _currentEquipment = Equipment.WEAPON;
+                ToolHolder.transform.GetChild(1).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(0).gameObject.SetActive(true);
+                _currentTool = 0;
+            }
+            else if (_currentEquipment == Equipment.AXE)
+            {
+                _currentEquipment = Equipment.PICKAXE;
+                ToolHolder.transform.GetChild(2).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(1).gameObject.SetActive(true);
+                _currentTool = 1;
+            }
+            //Debug.Log(_currentEquipment);
+            //Debug.Log(InputManager.instance.ScrollInput);
+        }
+    }
+
+    #endregion
 
      public void ReceiveMessage(string channel)
     {
