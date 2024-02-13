@@ -1,13 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.Intrinsics;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
@@ -43,7 +37,6 @@ public class PlayerController : MonoBehaviour
     const float THIRD = 180f;
     const float FOURTH = 270f;
     
-
     [Header("Dodge")]
     [SerializeField][Range(1f, 10f)]
     private float _dodgeDistance = 5f;
@@ -59,21 +52,27 @@ public class PlayerController : MonoBehaviour
     private bool _isDodging = false;
     private bool _isColliding = false;
 
-    [Header("Combat")]
+    [Header("Combat/Equipment")]
+    // Combat
     public List<AttackSO> Combo;
     public float AttackSpeed;
-    public Weapon CurrentWeapon;
     private float _lastClickedTime;
     private float _lastComboEnd;
     private int _comboCounter;
     private float _windowUntilCanBuffer = 0.4f;
     private bool _bufferNextAttack = false;
-
     [SerializeField]
     private float _timeBetweenCombos = 0.2f;
     [SerializeField]
     private float _windowBetweenComboAttacks = 0.3f;
     private State _stateBeforeAttacking;
+
+    // Equipment
+    private enum Equipment { WEAPON, PICKAXE, AXE };
+    private Equipment _currentEquipment;
+    private int _currentTool;
+    public Tool[] Tools;
+    public GameObject ToolHolder;
 
     [Header("Inventory")]
     [SerializeField]
@@ -91,8 +90,9 @@ public class PlayerController : MonoBehaviour
     private int _animIDSpeed;
     private int _animIDMotionSpeed;
     private int _animIDAttackSpeed;
-
-    public enum State {MOVING, STANDING, DODGING, INTERACTING, ATTACKING, INVENTORY};
+    
+    // State
+    public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY};
     private State _playerState;
 
 
@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour
     {;
         GetComponentInChildren<SphereCollider>().radius = _interactRange;
         _playerState = State.STANDING;
+        _currentEquipment = Equipment.WEAPON;
+        _currentTool = 0;
         _previousPos = transform.position;
         _playerCamera = GameObject.FindGameObjectWithTag("VirtualCamera").transform;
         _cameraYAngle = FIRST;
@@ -129,9 +131,10 @@ public class PlayerController : MonoBehaviour
                 HandleMovement();
                 HandleInteract();
                 HandleDodge();
-                HandleAttack();
+                HandleClick();
                 RotateCamera();
                 ToggleInventory();
+                HandleEquipedItemChange();
                 //LookAtMouse();
                 break;
             }
@@ -139,15 +142,16 @@ public class PlayerController : MonoBehaviour
             {
                 HandleMovement();
                 HandleInteract();
-                HandleAttack();
+                HandleClick();
                 HandleDodge();
                 RotateCamera();
                 ToggleInventory();
+                HandleEquipedItemChange();
                 break;
             }
-            case State.ATTACKING:
+            case State.SWINGING:
             {
-                HandleAttack();
+                HandleClick();
                 break;
             }
             case State.DODGING:
@@ -242,28 +246,50 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    #region - Combat -
-    private void HandleAttack()
+    #region - Combat/Equipment -
+    private void HandleClick()
     {
-        if (Time.time - _lastComboEnd > _timeBetweenCombos && _comboCounter < Combo.Count && (InputManager.instance.AttackInput || _bufferNextAttack))
+        if (_currentEquipment == Equipment.WEAPON)
         {
-            CancelInvoke("EndCombo");
-            _stateBeforeAttacking = (_playerState != State.ATTACKING) ? _playerState : _stateBeforeAttacking;
-            _playerState = State.ATTACKING;
-
-            if (Time.time - _lastClickedTime > _windowUntilCanBuffer && InputManager.instance.AttackInput && Time.time - _lastClickedTime < _windowBetweenComboAttacks)
+            if (Time.time - _lastComboEnd > _timeBetweenCombos && _comboCounter < Combo.Count && (InputManager.instance.AttackInput || _bufferNextAttack))
             {
-                _bufferNextAttack = true;
-            }
+                CancelInvoke("EndCombo");
+                //_stateBeforeAttacking = (_playerState != State.SWINGING) ? _playerState : _stateBeforeAttacking;
+                _playerState = State.SWINGING;
 
-            
-            //Debug.Log(Combo[_comboCounter].AttackLength);
-            if (Time.time - _lastClickedTime >= _windowBetweenComboAttacks || (_bufferNextAttack && Time.time - _lastClickedTime >= _windowBetweenComboAttacks))
-            {
-                FireAttack();
-                _bufferNextAttack = false;
+
+                if (Time.time - _lastClickedTime > _windowUntilCanBuffer && InputManager.instance.AttackInput && Time.time - _lastClickedTime < _windowBetweenComboAttacks)
+                {
+                    _bufferNextAttack = true;
+                }
+
+
+                //Debug.Log(Combo[_comboCounter].AttackLength);
+                if (Time.time - _lastClickedTime >= _windowBetweenComboAttacks || (_bufferNextAttack && Time.time - _lastClickedTime >= _windowBetweenComboAttacks))
+                {
+                    FireAttack();
+                    _bufferNextAttack = false;
+                }
+
             }
-            
+        }
+
+        // If pickaxe equiped
+        if (_currentEquipment == Equipment.PICKAXE && InputManager.instance.AttackInput && _playerState != State.SWINGING)
+        {
+            _animator.SetTrigger("isMining");
+            _animator.SetFloat("Speed", 0);
+            _playerState = State.SWINGING;
+            StartCoroutine(ResetStateAfterSeconds(2.4f / AttackSpeed));
+        }
+
+        // If axe equiped
+        if (_currentEquipment == Equipment.AXE && InputManager.instance.AttackInput && _playerState != State.SWINGING)
+        {
+            _animator.SetTrigger("isChopping");
+            _animator.SetFloat("Speed", 0);
+            _playerState = State.SWINGING;
+            StartCoroutine(ResetStateAfterSeconds(2.4f/AttackSpeed));
         }
     }
 
@@ -296,27 +322,33 @@ public class PlayerController : MonoBehaviour
     {
         _comboCounter = 0;
         _lastComboEnd = Time.time;
-        _playerState = _stateBeforeAttacking;
+        _playerState = State.STANDING;
         _bufferNextAttack = false;
+    }
+
+    IEnumerator ResetStateAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        _playerState = State.STANDING;
     }
 
     public void BeginCollison()
     {
-        CurrentWeapon.BeginCollision();
+        Tools[_currentTool].BeginCollision();
     }
 
     public void EndCollision()
     {
-        CurrentWeapon.EndCollision();
+        Tools[_currentTool].EndCollision();
     }
 
     public void BeginTrail()
     {
-        CurrentWeapon.BeginTrail();
+        Tools[_currentTool].BeginTrail();
     }
     public void EndTrail()
     {
-        CurrentWeapon.EndTrail();
+        Tools[_currentTool].EndTrail();
     }
 
     #endregion
@@ -594,6 +626,67 @@ public class PlayerController : MonoBehaviour
         }
 
         _animator.SetFloat(_animIDSpeed, 0);
+    }
+
+    #endregion
+
+    #region - Equipment -
+
+    private void HandleEquipedItemChange()
+    {
+        
+        if (InputManager.instance.ScrollInput > 0)
+        {
+            if (_currentEquipment == Equipment.WEAPON)
+            {
+                _currentEquipment = Equipment.PICKAXE;
+                ToolHolder.transform.GetChild(0).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(1).gameObject.SetActive(true);
+                _currentTool = 1;
+            }
+            else if (_currentEquipment == Equipment.PICKAXE)
+            {
+                _currentEquipment = Equipment.AXE;
+                ToolHolder.transform.GetChild(1).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(2).gameObject.SetActive(true);
+                _currentTool = 2;
+            }
+            else if (_currentEquipment == Equipment.AXE)
+            {
+                _currentEquipment = Equipment.WEAPON;
+                ToolHolder.transform.GetChild(2).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(0).gameObject.SetActive(true);
+                _currentTool = 0;
+            }
+            //Debug.Log(_currentEquipment);
+            //Debug.Log(InputManager.instance.ScrollInput);
+        }
+        if (InputManager.instance.ScrollInput < 0)
+        {
+            if (_currentEquipment == Equipment.WEAPON)
+            {
+                _currentEquipment = Equipment.AXE;
+                ToolHolder.transform.GetChild(0).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(2).gameObject.SetActive(true);
+                _currentTool = 2;
+            }
+            else if (_currentEquipment == Equipment.PICKAXE)
+            {
+                _currentEquipment = Equipment.WEAPON;
+                ToolHolder.transform.GetChild(1).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(0).gameObject.SetActive(true);
+                _currentTool = 0;
+            }
+            else if (_currentEquipment == Equipment.AXE)
+            {
+                _currentEquipment = Equipment.PICKAXE;
+                ToolHolder.transform.GetChild(2).gameObject.SetActive(false);
+                ToolHolder.transform.GetChild(1).gameObject.SetActive(true);
+                _currentTool = 1;
+            }
+            //Debug.Log(_currentEquipment);
+            //Debug.Log(InputManager.instance.ScrollInput);
+        }
     }
 
     #endregion
