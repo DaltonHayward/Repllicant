@@ -1,21 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; // Player Max health
-    private float currentHealth; // Player current health
+    public float currentHealth; // Player current health
+    public Slider hpSlider;
 
     void Start()
     {
         currentHealth = maxHealth; // At start, full health
+        hpSlider.maxValue = maxHealth;
     }
 
     public void TakeDamage(float damage)
     {
         currentHealth -= damage; // Reduce HP when take damage
         Debug.Log("Player health is now " + currentHealth); // Print current HP
+        hpSlider.value = currentHealth;
 
         if (currentHealth <= 0)
         {

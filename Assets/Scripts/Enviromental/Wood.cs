@@ -22,14 +22,14 @@ public class Wood : Collectible
     {
         isStoned = true;
         sureToDrop = dropWhenStoned;
-        GetComponent<Renderer>().material = stoneMaterial;
+        GetComponent<MeshRenderer>().material = stoneMaterial;
     }
 
     public void UnStoned() // changes tree back to normal
     {
         isStoned = false;
         sureToDrop = dropItemStart;
-        GetComponent<Renderer>().material = woodMaterial;
+        GetComponent<MeshRenderer>().material = woodMaterial;
     }
 
 }
