@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapon : Tool
 {
-    public override void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {

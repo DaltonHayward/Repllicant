@@ -68,11 +68,12 @@ public class PlayerController : MonoBehaviour
     private State _stateBeforeAttacking;
 
     // Equipment
-    private enum Equipment { WEAPON, PICKAXE, AXE };
+    public enum Equipment { WEAPON, PICKAXE, AXE };
     private Equipment _currentEquipment;
     private int _currentTool;
     public Tool[] Tools;
     public GameObject ToolHolder;
+    public IEnumerator Reset;
 
     [Header("Inventory")]
     [SerializeField]
@@ -175,6 +176,11 @@ public class PlayerController : MonoBehaviour
     public void SetState(State state)
     {
         _playerState = state;
+    }
+
+    public Equipment GetCurrentEquipment()
+    {
+        return _currentEquipment;
     }
 
     #region - Movement -
@@ -280,21 +286,23 @@ public class PlayerController : MonoBehaviour
         }
 
         // If pickaxe equiped
-        if (_currentEquipment == Equipment.PICKAXE && InputManager.instance.AttackInput && _playerState != State.SWINGING)
+        if (_playerState != State.SWINGING && _currentEquipment == Equipment.PICKAXE && InputManager.instance.AttackInput)
         {
+            _playerState = State.SWINGING;
             _animator.SetTrigger("isMining");
             _animator.SetFloat("Speed", 0);
-            _playerState = State.SWINGING;
-            StartCoroutine(ResetStateAfterSeconds(2.4f / AttackSpeed));
+            Reset = ResetStateAfterSeconds(2.4f / AttackSpeed);
+            StartCoroutine(Reset);
         }
 
         // If axe equiped
-        if (_currentEquipment == Equipment.AXE && InputManager.instance.AttackInput && _playerState != State.SWINGING)
+        if (_playerState != State.SWINGING && _currentEquipment == Equipment.AXE && InputManager.instance.AttackInput)
         {
+            _playerState = State.SWINGING;
             _animator.SetTrigger("isChopping");
             _animator.SetFloat("Speed", 0);
-            _playerState = State.SWINGING;
-            StartCoroutine(ResetStateAfterSeconds(2.4f/AttackSpeed));
+            Reset = ResetStateAfterSeconds(2.4f/AttackSpeed);
+            StartCoroutine(Reset);
         }
     }
 
@@ -334,6 +342,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator ResetStateAfterSeconds(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        Debug.Log("Coroutine");
         _playerState = State.STANDING;
     }
 
