@@ -3,10 +3,12 @@ using UnityEngine;
 public class Tool : MonoBehaviour
 {
     private Animator _animator;
+    private PlayerController _playerController;
 
     private void Awake()
     {
         _animator = GetComponentInParent<Animator>();
+        _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
     public virtual void OnTriggerEnter(Collider other)
     {
@@ -17,7 +19,8 @@ public class Tool : MonoBehaviour
             if (subscriber != null)
             {
                 subscriber.ReceiveMessage("Tool");
-                _animator.Play("Blend Tree", 0, 0);
+                _animator.CrossFade("Blend Tree", 0.07f, 0);
+                _playerController.SetState(PlayerController.State.STANDING);
             }
         }
     }

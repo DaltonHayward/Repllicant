@@ -172,6 +172,11 @@ public class PlayerController : MonoBehaviour
         ExitAttack();
     }
 
+    public void SetState(State state)
+    {
+        _playerState = state;
+    }
+
     #region - Movement -
 
     private void HandleMovement() 
