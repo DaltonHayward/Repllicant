@@ -18,6 +18,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    #region - Colliders -
     public void BeginCollision()
     {
         GetComponent<CapsuleCollider>().enabled = true;
@@ -27,7 +28,9 @@ public class Weapon : MonoBehaviour
     {
         GetComponent<CapsuleCollider>().enabled = false;
     }
+    #endregion
 
+    #region - Trail -
     public void BeginTrail()
     {
         GetComponentInChildren<TrailRenderer>().enabled = true;
@@ -37,4 +40,5 @@ public class Weapon : MonoBehaviour
     {
         GetComponentInChildren<TrailRenderer>().enabled = false;
     }
+    #endregion
 }
