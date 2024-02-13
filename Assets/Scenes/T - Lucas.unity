@@ -200,6 +200,11 @@ Transform:
   - {fileID: 1222765795}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+--- !u!1 &92003115 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3852720026325554112, guid: fe04f297af1535447952f167a40f94ef, type: 3}
+  m_PrefabInstance: {fileID: 880106696}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &126046441 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8088840187210354184, guid: 586a8f0a569819f4e80abc88b23a3afd, type: 3}
@@ -580,6 +585,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 674940522568364867, guid: fe04f297af1535447952f167a40f94ef, type: 3}
+      propertyPath: ToolHolder
+      value: 
+      objectReference: {fileID: 92003115}
     - target: {fileID: 674940522568364867, guid: fe04f297af1535447952f167a40f94ef, type: 3}
       propertyPath: _inventory
       value: 

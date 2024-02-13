@@ -28,7 +28,10 @@ public class Siren : MonoBehaviour
 
     private IEnumerator damageCoroutine;
 
-
+    void Awake()
+    {
+        damageCoroutine = GiveDamageCoroutine();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -38,13 +41,15 @@ public class Siren : MonoBehaviour
         navMeshAgent.speed = speed;
         _isLuring = false;
 
-        damageCoroutine = GiveDamageCoroutine();
+        //damageCoroutine = GiveDamageCoroutine();
+
+        StartCoroutine(damageCoroutine);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < chaseRange) 
+        if (Vector3.Distance(transform.position, player.transform.position) < chaseRange)
         {
             Debug.DrawLine(transform.position, player.transform.position - (player.transform.position - transform.position).normalized);
             navMeshAgent.SetDestination(player.transform.position);
@@ -59,21 +64,20 @@ public class Siren : MonoBehaviour
             Die();
     }
 
-/*    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-            closePlayer = true;
-    }
+    /*    private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+                closePlayer = true;
+        }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-            closePlayer = false;
-    }*/
+        private void OnCollisionExit(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+                closePlayer = false;
+        }*/
 
     private void HandleLure()
     {
-        StartCoroutine(damageCoroutine);
         Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
 
         foreach (Collider c in targets)
@@ -84,18 +88,17 @@ public class Siren : MonoBehaviour
                 if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
                 {
                     subscriber.ReceiveMessage("Frequency");
-                    StartCoroutine(damageCoroutine);
                     _isLuring = true;
                     break;
                 }
-                else if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) >= _lureRange) 
+                else if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) >= _lureRange)
                 {
                     subscriber.ReceiveMessage("Quiet");
                     _isLuring = false;
                     break;
                 }
             }
-            if (c.CompareTag("Enemy")) 
+            if (c.CompareTag("Enemy"))
             {
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
                 if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < _lureRange)
@@ -142,19 +145,20 @@ public class Siren : MonoBehaviour
     private IEnumerator GiveDamageCoroutine()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
-        foreach (Collider c in targets)
+        while (true)
         {
-            if (c.CompareTag("Player"))
+            foreach (Collider c in targets)
             {
-                ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
+                if (c.CompareTag("Player"))
                 {
-                    Debug.Log(c.GetComponent<Health>().Hp);
-                    // Damages player more as they get closer to the siren
-                    c.GetComponent<Health>().TakeDamage(30 / Vector3.Distance(player.transform.position, transform.position));
-                    yield return new WaitForSeconds(5);
-                    //GiveDamage();
-                    //Debug.Log(c.GetComponent<Health>().Hp);
+                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
+                    if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
+                    {
+                        // Damages player more as they get closer to the siren
+                        c.GetComponent<Health>().TakeDamage(_lureRange / Vector3.Distance(player.transform.position, transform.position));
+                        yield return new WaitForSeconds(5);
+                        Debug.Log(c.GetComponent<Health>().Hp);
+                    }
                 }
             }
         }
