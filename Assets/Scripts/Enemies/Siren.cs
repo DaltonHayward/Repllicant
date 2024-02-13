@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+[RequireComponent(typeof(NavMeshAgent))]
 
 public class Siren : MonoBehaviour
 {
@@ -9,7 +11,8 @@ public class Siren : MonoBehaviour
     [SerializeField]
     float lastAttackTime;
 
-    UnityEngine.AI.NavMeshAgent navMeshAgent;
+    NavMeshAgent navMeshAgent;
+
 
     public GameObject player;
     public bool closePlayer = false;
@@ -22,31 +25,27 @@ public class Siren : MonoBehaviour
     private State _playerState;
     private bool _isLuring;
 
+    private IEnumerator damageCoroutine;
+
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        /*navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        navMeshAgent.speed = speed;*/
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = speed;
+
+        damageCoroutine = GiveDamage();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Vector3.Distance(player.transform.position, transform.position) < attackRange)
-        {
-            if (Time.time - lastAttackTime > attackSpeed)
-            {
-                Debug.Log("attack");
-                lastAttackTime = Time.time;
-            }
-            return;
+        if (Vector3.Distance(transform.position, player.transform.position) < chaseRange) {
+            Debug.DrawLine(transform.position, player.transform.position - (player.transform.position - transform.position).normalized);
+            navMeshAgent.SetDestination(player.transform.position);
         }
         HandleLure();
-        //navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized);
-
     }
 
     public void TakeDamage(float damage)
@@ -77,13 +76,14 @@ public class Siren : MonoBehaviour
             if (c.CompareTag("Player"))
             {
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < chaseRange)
+                if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
                 {
                     subscriber.ReceiveMessage("Frequency");
+                    StartCoroutine(damageCoroutine);
                     _isLuring = true;
                     break;
                 }
-                else if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) >= chaseRange) {
+                else if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) >= _lureRange) {
                     subscriber.ReceiveMessage("Quiet");
                     _isLuring = false;
                     break;
@@ -91,13 +91,13 @@ public class Siren : MonoBehaviour
             }
             if (c.CompareTag("Enemy")) {
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < chaseRange)
+                if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < _lureRange)
                 {
                     subscriber.ReceiveMessage("Frequency");
                     _isLuring = true;
                     break;
                 }
-                else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) >= chaseRange)
+                else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) >= _lureRange)
                 {
                     subscriber.ReceiveMessage("Quiet");
                     _isLuring = false;
@@ -130,5 +130,11 @@ public class Siren : MonoBehaviour
     public void Die()
     {
         Destroy(gameObject);
+    }
+
+    private IEnumerator GiveDamage()
+    {
+        Debug.Log("Test");
+        yield return new WaitForSeconds(5f);
     }
 }
