@@ -82,8 +82,6 @@ public class Enemy : MonoBehaviour, ISubscriber
 
     public void ReceiveMessage(string channel)
     {
-
-        Debug.Log(channel);
         if (channel.Equals("Frequency"))
         {
             Debug.Log("Enemy in siren range");

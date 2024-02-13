@@ -93,7 +93,6 @@ public class Siren : MonoBehaviour
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
                 if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < chaseRange)
                 {
-                    Debug.Log("Enemy");
                     subscriber.ReceiveMessage("Frequency");
                     _isLuring = true;
                     break;
