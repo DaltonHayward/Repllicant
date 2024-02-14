@@ -1,29 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
-
 [RequireComponent(typeof(NavMeshAgent))]
-public class Medusa : MonoBehaviour
+public class Medusa : Enemy
 {
-    public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
-    float lastAttackTime, lastSkillTime;
-    Transform player;
-    NavMeshAgent navMeshAgent;
-    public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
-    public float commonItemProbability, uncommonItemProbability, rareItemProbability, legendaryItemProbability;
-
+    public float skillSpeed;
     public GameObject projectilePrefab; // Assign this in the Inspector with your projectile prefab
     public Transform projectileSpawnPoint;
 
-    private void Start()
+    // for turn red when dmg taken effect
+    private Color _originalMaterialColor;
+
+    public void Awake()
     {
+        _originalMaterialColor = GetComponentInChildren<SkinnedMeshRenderer>().materials[0].GetColor("_BaseColor");
         player = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = speed; 
+        navMeshAgent.speed = speed;
     }
 
-    private void Update()
+    void Update()
+    {
+        if (Vector3.Distance(player.position, transform.position) <= attackRange)
+        {
+            transform.LookAt(player.position);
+            if (Time.time - lastAttackTime > attackSpeed)
+            {
+                Debug.Log("attack");
+                lastAttackTime = Time.time;
+            }
+            if (Time.time - lastSkillTime > skillSpeed)
+            {
+                StartCoroutine(Skill());
+                lastSkillTime = Time.time;
+            }
+            return;
+        }
+        if (Vector3.Distance(player.position, transform.position) < chaseRange)
+        {
+            Debug.DrawLine(transform.position, player.position - (player.position - transform.position).normalized * attackRange);
+            navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized * attackRange);
+        }
+    }
+
+
+    public override void UpdateLogic()
     {
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
         if (distanceToPlayer <= attackRange)
@@ -49,6 +72,19 @@ public class Medusa : MonoBehaviour
         {
             navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized * attackRange);
         }
+    }
+
+    public override void Hurt()
+    {
+        GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", Color.red);
+        StartCoroutine(Timeout(0.1f));
+    }
+
+
+    IEnumerator Timeout(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", _originalMaterialColor);
     }
 
     void Attack()
@@ -91,45 +127,5 @@ public class Medusa : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        DropLoot();
-    }
-
-    void DropLoot()
-    {
-        float randomValue = Random.value;
-        if (randomValue < commonItemProbability && commonItems.Count != 0)
-        {
-            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemProbability && uncommonItems.Count != 0)
-        {
-            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability && rareItems.Count != 0)
-        {
-            Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability + legendaryItemProbability && legendaryItems.Count != 0)
-        {
-            Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
-        }
-    }
-
-    public void TakeDamage(float damage)
-    {
-        hp -= damage;
-        if (hp <= 0)
-        {
-            Die();
-        }
-    }
-
-    public void Die()
-    {
-        Destroy(gameObject);
     }
 }

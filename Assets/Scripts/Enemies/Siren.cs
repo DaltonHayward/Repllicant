@@ -161,9 +161,9 @@ public class Siren : MonoBehaviour
 
     public void ReceiveMessage(string channel)
     {
-        /*if (channel.Equals("Attack"))
+        if (channel.Equals("Attack"))
         {
-            TakeDamage();
-        }*/
+            //TakeDamage(Damage);
+        }
     }
 }

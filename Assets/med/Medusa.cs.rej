@@ -1,0 +1,10 @@
+diff a/Assets/med/Medusa.cs b/Assets/med/Medusa.cs	(rejected hunks)
+@@ -7,7 +7,7 @@
+ public class Medusa : MonoBehaviour
+ {
+     public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
+-    float lastAttackTime = -100, lastSkillTime = -100;
++    float lastAttackTime, lastSkillTime;
+     Transform player;
+     NavMeshAgent navMeshAgent;
+     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;

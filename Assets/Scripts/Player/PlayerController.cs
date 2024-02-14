@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, ISubscriber
+
 {
     private Transform _playerCamera;
     [Header("Player")]
@@ -104,13 +105,16 @@ public class PlayerController : MonoBehaviour, ISubscriber
     public Canvas _effectCanvas;
 
 
+
     // Start is called before the first frame update
     void Awake()
     {;
         // Interact range
         GetComponentInChildren<SphereCollider>().radius = _interactRange;
 
+
         // Initialize states
+
         _playerState = State.STANDING;
         _currentEquipment = Equipment.WEAPON;
 
@@ -157,6 +161,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 RotateCamera();
                 ToggleInventory();
                 HandleEquipedItemChange();
+
                 break;
             }
             case State.MOVING:
@@ -189,10 +194,12 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 ToggleInventory();
                 break;
             }
+
             case State.PETRIFIED:
             {
                 break;
             }
+
         }
         ExitAttack();
     }
@@ -432,7 +439,13 @@ public class PlayerController : MonoBehaviour, ISubscriber
     {
         if (InputManager.instance.DodgeInput && InputDirection != Vector3.zero)
         {
-            StartCoroutine(Dodge());
+
+            //StartCoroutine(Dodge());
+
+           // GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
+            //StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
+            //StartCoroutine(DodgeCooldown());
+
         }
 
         
