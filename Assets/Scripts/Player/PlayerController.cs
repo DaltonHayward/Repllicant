@@ -709,7 +709,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     #endregion
 
-     public void ReceiveMessage(string channel)
+    public void ReceiveMessage(string channel)
     {
         if (channel.Equals("Frequency"))
         {

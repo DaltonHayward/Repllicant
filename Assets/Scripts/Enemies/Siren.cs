@@ -35,7 +35,7 @@ public class Siren : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
         _isLuring = false;
-        //StartCoroutine(damageCoroutine);
+        StartCoroutine(damageCoroutine);
     }
 
     // Update is called once per frame
@@ -43,6 +43,7 @@ public class Siren : MonoBehaviour
     {
         Movement();
         HandleLure();
+        Attract();
     }
 
     public void TakeDamage(float damage)
@@ -54,6 +55,7 @@ public class Siren : MonoBehaviour
 
     private void Movement() 
     {
+        // calculate the distance bewteen the enemy and the player and 
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
         if (distanceToPlayer <= _lureRange)
         {
@@ -72,23 +74,7 @@ public class Siren : MonoBehaviour
 
         foreach (Collider c in targets)
         {
-            if (c.CompareTag("Player"))
-            {
-                ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
-                {
-                    subscriber.ReceiveMessage("Frequency");
-                    _isLuring = true;
-                    break;
-                }
-                else if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) >= _lureRange)
-                {
-                    subscriber.ReceiveMessage("Quiet");
-                    _isLuring = false;
-                    break;
-                }
-            }
-            if (c.CompareTag("Enemy"))
+            if (c.CompareTag("Player") || c.CompareTag("Enemy"))
             {
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
                 if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) < _lureRange)
@@ -135,23 +121,23 @@ public class Siren : MonoBehaviour
 
     private IEnumerator GiveDamageCoroutine()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
+        //Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
         while (true)
         {
-            foreach (Collider c in targets)
+            /*foreach (Collider c in targets)
             {
                 if (c.CompareTag("Player"))
                 {
                     ISubscriber subscriber = c.GetComponent<ISubscriber>();
                     if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
-                    {
+                    {*/
                         // Damages player more as they get closer to the siren
-                        c.GetComponent<Health>().TakeDamage(_lureRange / Vector3.Distance(player.transform.position, transform.position));
+                        player.GetComponent<Health>().TakeDamage(_lureRange / Vector3.Distance(player.transform.position, transform.position));
                         yield return new WaitForSeconds(5);
-                        Debug.Log(c.GetComponent<Health>().Hp);
-                    }
+                        Debug.Log(player.GetComponent<Health>().Hp);
+           /*         }
                 }
-            }
+            }*/
         }
     }
 
@@ -160,17 +146,18 @@ public class Siren : MonoBehaviour
         Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
         foreach (Collider c in targets)
         {
-            if (c.CompareTag("Player"))
-            {
-                Rigidbody rb = c.GetComponent<Rigidbody>();
-                Vector3 direction = (transform.position - c.gameObject.transform.position).normalized;
-                //Debug.Log(direction);
-                //rb.AddForce(direction * attractionForce * Time.deltaTime);
-            }
-            if (c.CompareTag("Enemy"))
-            {
-                
-            }
+            Rigidbody rb = c.GetComponent<Rigidbody>();
+            Vector3 direction = (transform.position - c.gameObject.transform.position).normalized;
+            //Debug.Log(direction);
+            //rb.AddForce(direction * attractionForce * Time.deltaTime);
+        }
+    }
+
+    public void ReceiveMessage(string channel)
+    {
+        if (channel.Equals("Attack"))
+        {
+            TakeDamage(Damage);
         }
     }
 }
