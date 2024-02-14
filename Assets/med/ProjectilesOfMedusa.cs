@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class ProjectilesOfMedusa : MonoBehaviour
 {
+<<<<<<< HEAD
     public float damageAmount = 10f;
     private PlayerController _playerController;
 
+=======
+>>>>>>> parent of f0a100f (no message)
     public Mesh mesh;
     private void Start()
     {
@@ -15,15 +18,14 @@ public class ProjectilesOfMedusa : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        // Check if it is a resource type of object, like trees
-        if (other.GetComponent<Wood>() != null)
+        if (other.GetComponent<Wood>() != null)//根据是否有wood组件判断是不是树
         {
             Wood wood = other.GetComponent<Wood>();
             wood.Stoned();
         }
-        // Marked as stoned
-        else if (other.CompareTag("Player") && Vector3.Angle(other.transform.forward, transform.parent.position) < 90)
+        else if (other.CompareTag("Player") && Vector3.Angle(other.transform.forward, transform.parent.position) < 90)//判断是否朝向
         {
+<<<<<<< HEAD
             Debug.Log("????");
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
@@ -31,6 +33,9 @@ public class ProjectilesOfMedusa : MonoBehaviour
                 playerHealth.TakeDamage(damageAmount);
 
             }
+=======
+            Debug.Log("石化玩家");
+>>>>>>> parent of f0a100f (no message)
         }
     }
     public void OnTriggerExit(Collider other)
@@ -42,7 +47,7 @@ public class ProjectilesOfMedusa : MonoBehaviour
         }
         else if (other.CompareTag("Player"))
         {
-            Debug.Log("Player unstoned");
+            Debug.Log("解除石化");
         }
 
     }

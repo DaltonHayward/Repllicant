@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+<<<<<<< HEAD
 public class PlayerController : MonoBehaviour, ISubscriber
+=======
+public class PlayerController : MonoBehaviour
+>>>>>>> parent of f0a100f (no message)
 {
     private Transform _playerCamera;
     [Header("Player")]
@@ -98,10 +102,15 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private int _animIDAttackSpeed;
     
     // State
+<<<<<<< HEAD
     public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED};
     private State _playerState;
 
     public Canvas _effectCanvas;
+=======
+    public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY};
+    private State _playerState;
+>>>>>>> parent of f0a100f (no message)
 
 
     // Start is called before the first frame update
@@ -109,8 +118,11 @@ public class PlayerController : MonoBehaviour, ISubscriber
     {;
         // Interact range
         GetComponentInChildren<SphereCollider>().radius = _interactRange;
+<<<<<<< HEAD
 
         // Initialize states
+=======
+>>>>>>> parent of f0a100f (no message)
         _playerState = State.STANDING;
         _currentEquipment = Equipment.WEAPON;
 
@@ -157,6 +169,10 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 RotateCamera();
                 ToggleInventory();
                 HandleEquipedItemChange();
+<<<<<<< HEAD
+=======
+                //LookAtMouse();
+>>>>>>> parent of f0a100f (no message)
                 break;
             }
             case State.MOVING:
@@ -189,10 +205,13 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 ToggleInventory();
                 break;
             }
+<<<<<<< HEAD
             case State.PETRIFIED:
             {
                 break;
             }
+=======
+>>>>>>> parent of f0a100f (no message)
         }
         ExitAttack();
     }
@@ -432,7 +451,13 @@ public class PlayerController : MonoBehaviour, ISubscriber
     {
         if (InputManager.instance.DodgeInput && InputDirection != Vector3.zero)
         {
+<<<<<<< HEAD
             StartCoroutine(Dodge());
+=======
+            GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
+            StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
+            StartCoroutine(DodgeCooldown());
+>>>>>>> parent of f0a100f (no message)
         }
 
         
