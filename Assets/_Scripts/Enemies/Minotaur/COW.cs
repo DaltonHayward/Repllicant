@@ -61,7 +61,7 @@ public class COW : MonoBehaviour
     public void TakeDamage(float damage)
     {
         hp -= damage;
-        if (hp < -0)
+        if (hp <= 0)
             Die();
     }
     public void LookAround()

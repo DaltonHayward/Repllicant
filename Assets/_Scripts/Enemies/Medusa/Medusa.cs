@@ -18,7 +18,7 @@ public class Medusa : Enemy
         _originalMaterialColor = GetComponentInChildren<SkinnedMeshRenderer>().materials[0].GetColor("_BaseColor");
     }
 
-    void Update()
+    /*void Update()
     {
         if (Vector3.Distance(player.position, transform.position) <= attackRange)
         {
@@ -40,7 +40,7 @@ public class Medusa : Enemy
             Debug.DrawLine(transform.position, player.position - (player.position - transform.position).normalized * attackRange);
             navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized * attackRange);
         }
-    }
+    }*/
 
 
     public override void UpdateLogic()
@@ -90,6 +90,7 @@ public class Medusa : Enemy
         {
             // Instantiate the projectile at the spawn point
             GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+            projectile.transform.LookAt(player);
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
 
             if (rb)
@@ -120,7 +121,20 @@ public class Medusa : Enemy
                 ISubscriber subscriber = target.GetComponent<ISubscriber>();
                 if (subscriber != null)
                 {
-                    subscriber.ReceiveMessage("Petrified");
+                    // get the direction we are facing 
+                    Vector3 direction = (transform.position - player.transform.position);
+
+                    // returns the angle (from, to)
+                    float angleToMedusa = Vector3.Angle(direction, player.transform.forward);
+
+                    // when the angle is at -90 or +90, then it is in view (180º FOV)
+                    CharacterController cc = player.GetComponent<CharacterController>();
+                    if (angleToMedusa >= -90 && angleToMedusa <= 90)
+                    {
+                        Debug.Log("looking at medusa");
+                        subscriber.ReceiveMessage("Petrified");
+                    }
+                    Debug.Log("not looking at medusa");
                 }
             }
         }
