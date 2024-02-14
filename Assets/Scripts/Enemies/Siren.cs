@@ -77,7 +77,6 @@ public class Siren : MonoBehaviour
         if (Vector3.Distance(player.transform.position, transform.position) <= attackRange)
         {
             transform.LookAt(player.transform.position);
-            return;
         }
         if (Vector3.Distance(player.transform.position, transform.position) < chaseRange)
         {
