@@ -123,7 +123,7 @@ public class Siren : MonoBehaviour
     private IEnumerator GiveDamageCoroutine()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
-        Debug.Log(Vector3.Distance(player.transform.position, transform.position) <= _lureRange);
+        Movement();
         while (Vector3.Distance(player.transform.position, transform.position) <= _lureRange)
         {
             foreach (Collider c in targets)
