@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+<<<<<<< HEAD
+public enum State { MOVING, STANDING, DODGING, INTERACTING, ATTACKING, INVENTORY, stone ,strokeBack};
+
+public class PlayerController : MonoBehaviour
+=======
 public class PlayerController : MonoBehaviour, ISubscriber
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
 {
     private Transform _playerCamera;
     [Header("Player")]
@@ -94,8 +100,11 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private int _animIDAttackSpeed;
     
     // State
+<<<<<<< HEAD
+=======
     public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED};
     private State _playerState;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
 
     public Canvas _effectCanvas;
 
@@ -105,9 +114,12 @@ public class PlayerController : MonoBehaviour, ISubscriber
     {;
         // Interact range
         GetComponentInChildren<SphereCollider>().radius = _interactRange;
+<<<<<<< HEAD
+=======
 
         // Initialize states
         _playerState = State.STANDING;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
         _currentEquipment = Equipment.WEAPON;
 
         // set current tool as weapon
@@ -143,33 +155,37 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     void Update()
     {
+        void Update()
+    {
+        attaclkTimer += Time.deltaTime;
         switch (_playerState)
         {
+            case State.stone:
+                break;
             case State.STANDING:
+               
             {
+                    Attack();
                 HandleMovement();
                 HandleInteract();
                 HandleDodge();
-                HandleClick();
                 RotateCamera();
                 ToggleInventory();
+<<<<<<< HEAD
+                LookAtMouse();
+=======
                 HandleEquipedItemChange();
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
                 break;
             }
             case State.MOVING:
             {
-                HandleMovement();
+                    Attack();
+                    HandleMovement();
                 HandleInteract();
-                HandleClick();
                 HandleDodge();
                 RotateCamera();
                 ToggleInventory();
-                HandleEquipedItemChange();
-                break;
-            }
-            case State.SWINGING:
-            {
-                HandleClick();
                 break;
             }
             case State.DODGING:
@@ -186,12 +202,26 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 ToggleInventory();
                 break;
             }
+<<<<<<< HEAD
+                //击退状态
+            case State.strokeBack:
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, strokeBackTargetPosition,5*Time.deltaTime);
+                    if (Vector3.Distance(transform.position, strokeBackTargetPosition)<0.2f)
+                    {
+                     
+                        _playerState = State.MOVING;
+                    }
+                    break;
+                }
+=======
             case State.PETRIFIED:
             {
                 break;
             }
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
         }
-        ExitAttack();
+    }
     }
 
     public void SetState(State state)
@@ -429,7 +459,12 @@ public class PlayerController : MonoBehaviour, ISubscriber
     {
         if (InputManager.instance.DodgeInput && InputDirection != Vector3.zero)
         {
+<<<<<<< HEAD
+            StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
+            StartCoroutine(DodgeCooldown());
+=======
             StartCoroutine(Dodge());
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
         }
     }
 

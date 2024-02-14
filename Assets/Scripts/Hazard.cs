@@ -9,9 +9,9 @@ public class Hazard : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<Health>()) 
+        if(other.GetComponent<PlayerHealth>()) 
         {
-            other.GetComponent<Health>().TakeDamage(Damage);
+            other.GetComponent<PlayerHealth>().TakeDamage(Damage);
         }
     }
 }
