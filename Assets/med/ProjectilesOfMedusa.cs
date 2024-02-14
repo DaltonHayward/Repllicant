@@ -4,7 +4,10 @@ public class ProjectilesOfMedusa : MonoBehaviour
 {
 <<<<<<< HEAD
     public float damageAmount = 10f;
+<<<<<<< HEAD
+=======
     private PlayerController _playerController;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
 
 =======
 >>>>>>> parent of f0a100f (no message)
@@ -31,7 +34,10 @@ public class ProjectilesOfMedusa : MonoBehaviour
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damageAmount);
+<<<<<<< HEAD
+=======
 
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
             }
 =======
             Debug.Log("Ê¯»¯Íæ¼Ò");

@@ -7,7 +7,15 @@ public class Medusa : MonoBehaviour
 {
 <<<<<<< HEAD
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
+<<<<<<< HEAD
     float lastAttackTime = -100, lastSkillTime = -100;
+=======
+<<<<<<< HEAD
+    float lastAttackTime = -100, lastSkillTime = -100;
+=======
+    float lastAttackTime, lastSkillTime;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
+>>>>>>> b8779168c47a5b519ff55258e747bba22ad93baa
     Transform player;
     NavMeshAgent navMeshAgent;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
@@ -20,7 +28,11 @@ public class Medusa : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
+<<<<<<< HEAD
+        navMeshAgent.speed = speed;
+=======
         navMeshAgent.speed = speed; 
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
     }
 
     private void Update()
@@ -32,8 +44,13 @@ public class Medusa : MonoBehaviour
             if (Time.time - lastAttackTime > attackSpeed)
             {
                 Debug.Log("Attacking");
+<<<<<<< HEAD
+                lastAttackTime = Time.time;
+                Attack();
+=======
                 Attack();
                 lastAttackTime = Time.time;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
                 // Implement attack logic here (e.g., reduce player HP)
             }
 
@@ -72,9 +89,16 @@ public class Medusa : MonoBehaviour
 
     public IEnumerator Skill()
     {
+<<<<<<< HEAD
+        yield return new WaitForSeconds(1); // Skill preparation time
+        Debug.Log("Using Skill");
+        PetrifyTargetsInRange();
+        yield return new WaitForSeconds(3); // Duration before skill effect wears off
+=======
         Debug.Log("Using Skill");
         PetrifyTargetsInRange();
         yield return new WaitForSeconds(skillSpeed); // cooldown
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
     }
 
     void PetrifyTargetsInRange()
@@ -84,15 +108,20 @@ public class Medusa : MonoBehaviour
         {
             if (target.gameObject != gameObject) // Avoid self-petrification
             {
+<<<<<<< HEAD
+                PetrifyTarget(target.gameObject);
+=======
                 ISubscriber subscriber = target.GetComponent<ISubscriber>();
                 if (subscriber != null)
                 {
                     subscriber.ReceiveMessage("Petrified");
                 }
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
             }
         }
     }
 
+<<<<<<< HEAD
 =======
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed,skillSpeed;
     float lastAttackTime=-100,lastSkillTime=-100;
@@ -101,9 +130,63 @@ public class Medusa : MonoBehaviour
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;//每种物品概率，加起来要等于1
 >>>>>>> parent of f0a100f (no message)
+=======
+<<<<<<< HEAD
+    void PetrifyTarget(GameObject target)
+    {
+        StartCoroutine(PetrifyTargetCoroutine(target));
+    }
+
+    IEnumerator PetrifyTargetCoroutine(GameObject target)
+    {
+        var controller = target.GetComponent<CharacterController>();
+        if (controller != null)
+        {
+            controller.enabled = false;
+            GetComponent<Animator>().enabled = false;
+        }
+
+        var rb = target.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+
+        yield return new WaitForSeconds(2); // Petrification duration
+
+        // Restore target's movement capability
+        if (controller != null)
+        {
+            controller.enabled = true;
+        }
+
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+        }
+    }
+
+=======
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
+>>>>>>> b8779168c47a5b519ff55258e747bba22ad93baa
     private void OnDestroy()
     {
         float randomValue = Random.value;
+<<<<<<< HEAD
+        if (randomValue < commonItemProbability)
+        {
+            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemProbability)
+        {
+            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability)
+        {
+            Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
+        }
+        else
+=======
         if (randomValue < commonItemProbability && commonItems.Count != 0)
         {
             Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
@@ -125,6 +208,7 @@ public class Medusa : MonoBehaviour
             Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
         }
         else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability + legendaryItemProbability && legendaryItems.Count != 0)
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
         {
             Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
         }

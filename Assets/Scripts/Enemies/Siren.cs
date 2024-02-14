@@ -60,7 +60,6 @@ public class Siren : MonoBehaviour
         if (distanceToPlayer <= _lureRange)
         {
             transform.LookAt(player.transform.position);
-            return;
         }
         if (distanceToPlayer < chaseRange)
         {
