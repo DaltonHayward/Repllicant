@@ -102,36 +102,10 @@ public class Medusa : MonoBehaviour
 
     IEnumerator PetrifyTargetCoroutine(GameObject target)
     {
-        /* var controller = target.GetComponent<CharacterController>();
-         if (controller != null)
-         {
-             controller.enabled = false;
-             target.GetComponent<Animator>().enabled = false;
-         }
-
-         var rb = target.GetComponent<Rigidbody>();
-         if (rb != null)
-         {
-             rb.isKinematic = true;
-         }*/
-
         _playerController.SetState(PlayerController.State.PETRIFIED);
         _playerAnimator.enabled = false;
 
-
         yield return new WaitForSeconds(2); // Petrification duration
-
-        /*// Restore target's movement capability
-        if (controller != null)
-        {
-            controller.enabled = true;
-            target.GetComponent<Animator>().enabled = true;
-        }
-
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-        }*/
 
         _playerController.SetState(PlayerController.State.STANDING);
         _playerAnimator.enabled = true;
@@ -146,19 +120,19 @@ public class Medusa : MonoBehaviour
     void DropLoot()
     {
         float randomValue = Random.value;
-        if (randomValue < commonItemProbability)
+        if (randomValue < commonItemProbability && commonItems.Count != 0)
         {
             Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
         }
-        else if (randomValue < commonItemProbability + uncommonItemProbability)
+        else if (randomValue < commonItemProbability + uncommonItemProbability && uncommonItems.Count != 0)
         {
             Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
         }
-        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability)
+        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability && rareItems.Count != 0)
         {
             Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
         }
-        else
+        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability + legendaryItemProbability && legendaryItems.Count != 0)
         {
             Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
         }
