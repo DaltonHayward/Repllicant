@@ -18,7 +18,7 @@ public class ProjectilesOfMedusa : MonoBehaviour
         if (other.GetComponent<Wood>() != null)
         {
             Wood wood = other.GetComponent<Wood>();
-            wood.sureToDrop = wood.dropWhenStoned;
+            wood.Stoned();
         }
         // Marked as stoned
         else if (other.CompareTag("Player") && Vector3.Angle(other.transform.forward, transform.parent.position) < 90)
@@ -36,7 +36,7 @@ public class ProjectilesOfMedusa : MonoBehaviour
         if (other.GetComponent<Wood>() != null)
         {
             Wood wood = other.GetComponent<Wood>();
-            wood.sureToDrop = wood.dropItemStart;
+            //wood.UnStoned();
         }
         else if (other.CompareTag("Player"))
         {

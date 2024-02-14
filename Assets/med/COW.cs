@@ -15,18 +15,17 @@ public enum  CowState
 public class COW : MonoBehaviour
 {
  
-    [Header("冲刺速度")]
+    
     public float chargespeed;
-    [Header("冲刺距离")]
     public float chargedistance;
 
     CowState state;
-    public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
+    public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed, waveDamage;
     float lastAttackTime = -100, lastSkillTime = -100;
     Transform player;
     NavMeshAgent navMeshAgent;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
-    public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;//每种物品概率，加起来要等于1
+    public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
     private void OnDestroy()
     {
         float randomValue = Random.value;
@@ -57,6 +56,17 @@ public class COW : MonoBehaviour
         if (hp < -0)
             Die();
     }
+    void MeleeAttack()
+    {
+        // Detect targets within the range
+        Collider[] hitPlayers = Physics.OverlapSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
+        foreach (var hitPlayer in hitPlayers)
+        {
+            Debug.Log("Hit " + hitPlayer.name);
+            hitPlayer.GetComponent<PlayerHealth>().TakeDamage(attack);
+        }
+    }
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -112,6 +122,7 @@ public class COW : MonoBehaviour
                 if (Time.time - lastAttackTime > attackSpeed)
                 {
                     Debug.Log("attack");
+                    MeleeAttack();
                     lastAttackTime = Time.time;
                 }
                 if (Time.time - lastSkillTime > skillSpeed)
@@ -139,7 +150,7 @@ public class COW : MonoBehaviour
                     GetComponentInChildren<ProjectOfCOW>().enabled = false;
                     return;
                 }
-                GetComponentInChildren<    ProjectOfCOW>().enabled = true;
+                GetComponentInChildren<ProjectOfCOW>().enabled = true;
                 GetComponentInChildren<ProjectOfCOW>().isCharge = true;
                 transform.Translate(chargeDir* chargespeed*Time.deltaTime,Space.World);
                 Debug.Log(1);
@@ -154,10 +165,19 @@ public class COW : MonoBehaviour
 
         SKillIsdoing = true;
         GetComponentInChildren<ProjectOfCOW>().isCharge = false;
-        yield return new WaitForSeconds(1);//前摇一秒
+        yield return new WaitForSeconds(1);
         Debug.Log("Skilling");
+        Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
+        foreach (var hitEnemy in hitEnemies)
+        {
+            // Applies damage and slowing effects to each enemy hit
+            Debug.Log("Shockwave hits " + hitEnemy.name);
+            hitEnemy.GetComponent<PlayerHealth>().TakeDamage(waveDamage);
+        }
+
+
         GetComponentInChildren<ProjectOfCOW>().enabled = true;
-        yield return new WaitForSeconds(3);//3秒后取消投射物,所以skillspeed要大于3秒，不然会一直放
+         yield return new WaitForSeconds(3);
         GetComponentInChildren<ProjectOfCOW>().enabled = true;
         SKillIsdoing = false;
         
