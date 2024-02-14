@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum State { MOVING, STANDING, DODGING, INTERACTING, ATTACKING, INVENTORY, stone ,strokeBack};
+
 public class PlayerController : MonoBehaviour
 {
     private Transform _playerCamera;
@@ -93,15 +95,12 @@ public class PlayerController : MonoBehaviour
     private int _animIDAttackSpeed;
     
     // State
-    public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY};
-    private State _playerState;
 
 
     // Start is called before the first frame update
     void Awake()
     {;
         GetComponentInChildren<SphereCollider>().radius = _interactRange;
-        _playerState = State.STANDING;
         _currentEquipment = Equipment.WEAPON;
         _currentTool = 0;
         _previousPos = transform.position;
@@ -125,34 +124,33 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        void Update()
+    {
+        attaclkTimer += Time.deltaTime;
         switch (_playerState)
         {
+            case State.stone:
+                break;
             case State.STANDING:
+               
             {
+                    Attack();
                 HandleMovement();
                 HandleInteract();
                 HandleDodge();
-                HandleClick();
                 RotateCamera();
                 ToggleInventory();
-                HandleEquipedItemChange();
-                //LookAtMouse();
+                LookAtMouse();
                 break;
             }
             case State.MOVING:
             {
-                HandleMovement();
+                    Attack();
+                    HandleMovement();
                 HandleInteract();
-                HandleClick();
                 HandleDodge();
                 RotateCamera();
                 ToggleInventory();
-                HandleEquipedItemChange();
-                break;
-            }
-            case State.SWINGING:
-            {
-                HandleClick();
                 break;
             }
             case State.DODGING:
@@ -169,8 +167,19 @@ public class PlayerController : MonoBehaviour
                 ToggleInventory();
                 break;
             }
+                //击退状态
+            case State.strokeBack:
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, strokeBackTargetPosition,5*Time.deltaTime);
+                    if (Vector3.Distance(transform.position, strokeBackTargetPosition)<0.2f)
+                    {
+                     
+                        _playerState = State.MOVING;
+                    }
+                    break;
+                }
         }
-        ExitAttack();
+    }
     }
 
     public void SetState(State state)
@@ -410,7 +419,6 @@ public class PlayerController : MonoBehaviour
 
         if (InputManager.instance.DodgeInput && !_isDodging && direction != Vector3.zero)
         {
-            GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
             StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
             StartCoroutine(DodgeCooldown());
         }
