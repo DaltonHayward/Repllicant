@@ -17,6 +17,16 @@ public class Wood : Collectible
         dropItemStart = sureToDrop;
     }
 
+    new public void TakeDamage(float damage)
+    {
+
+        hp -= damage;
+        
+        if (hp <= 0)
+            Destroy(gameObject);
+        instantiateLoot();
+    }
+
     // change tree to stoned; changes drop and material
     public void Stoned()
     {

@@ -19,9 +19,9 @@ public class RockProjectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+     void OnTriggerEnter(Collider collision)
     {
-
+        Debug.Log("Collision for stone");
         if (collision.gameObject.CompareTag("Player"))
         {
             var playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
@@ -29,12 +29,11 @@ public class RockProjectile : MonoBehaviour
             {
                 playerHealth.TakeDamage(damage);
             }
-
             Destroy(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
