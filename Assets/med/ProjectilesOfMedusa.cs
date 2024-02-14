@@ -3,6 +3,10 @@ using UnityEngine;
 public class ProjectilesOfMedusa : MonoBehaviour
 {
     public float damageAmount = 10f;
+<<<<<<< HEAD
+=======
+    private PlayerController _playerController;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
 
     public Mesh mesh;
     private void Start()
@@ -18,7 +22,7 @@ public class ProjectilesOfMedusa : MonoBehaviour
         if (other.GetComponent<Wood>() != null)
         {
             Wood wood = other.GetComponent<Wood>();
-            wood.sureToDrop = wood.dropWhenStoned;
+            wood.Stoned();
         }
         // Marked as stoned
         else if (other.CompareTag("Player") && Vector3.Angle(other.transform.forward, transform.parent.position) < 90)
@@ -28,6 +32,10 @@ public class ProjectilesOfMedusa : MonoBehaviour
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damageAmount);
+<<<<<<< HEAD
+=======
+
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
             }
         }
     }
@@ -36,7 +44,7 @@ public class ProjectilesOfMedusa : MonoBehaviour
         if (other.GetComponent<Wood>() != null)
         {
             Wood wood = other.GetComponent<Wood>();
-            wood.sureToDrop = wood.dropItemStart;
+            //wood.UnStoned();
         }
         else if (other.CompareTag("Player"))
         {

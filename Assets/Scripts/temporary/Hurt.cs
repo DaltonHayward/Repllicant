@@ -12,7 +12,7 @@ public class Hurt : MonoBehaviour, ISubscriber
     }
     public void ReceiveMessage(string channel)
     {
-        if (channel.Equals("Attacked"))
+        if (channel.StartsWith("Attacked"))
         {
             GetComponent<Renderer>().material.SetColor("_BaseColor", Color.red);
             StartCoroutine(Timeout(0.1f));

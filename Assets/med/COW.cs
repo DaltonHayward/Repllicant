@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 using System.Collections;
+=======
+﻿using System.Collections;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,12 +13,17 @@ public enum  CowState
     charge,
     attack,
     wave,
+<<<<<<< HEAD
     chase,
     stone
+=======
+    chase
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
 }
 [RequireComponent(typeof(NavMeshAgent))]
 public class COW : MonoBehaviour
 {
+<<<<<<< HEAD
     [Header("Charge knockback distance")]
     public float strokeBackDistance;
     [Header("Shockwave damage")]
@@ -26,11 +35,33 @@ public class COW : MonoBehaviour
 
    public CowState state;
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
+=======
+ 
+    
+    public float chargespeed;
+    public float chargedistance;
+
+    CowState state;
+    public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed, waveDamage;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
     float lastAttackTime = -100, lastSkillTime = -100;
     Transform player;
     NavMeshAgent navMeshAgent;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
+<<<<<<< HEAD
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;//The probabilities of each item must add up to 1
+=======
+    public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = speed;
+    }
+
+
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
     private void OnDestroy()
     {
         float randomValue = Random.value;
@@ -51,6 +82,7 @@ public class COW : MonoBehaviour
             Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
         }
     }
+<<<<<<< HEAD
     public void Die()
     {
         Destroy(gameObject);
@@ -108,11 +140,14 @@ public class COW : MonoBehaviour
     Vector3 chargeDir;
     bool playerIsDamageByCharge=false;
     bool meduIsDamageByCharge = false;
+=======
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
     void Update()
     {
         switch (state)
         {
             case CowState.idle:
+<<<<<<< HEAD
 
                 playerIsDamageByCharge = false;
                 if (Vector3.Distance(player.position, transform.position) < chaseRange)
@@ -122,10 +157,19 @@ public class COW : MonoBehaviour
                 }
                
                 break;
+=======
+                if (Vector3.Distance(player.position, transform.position) < chaseRange)
+                {
+                    state = CowState.chase;
+                }
+                break; 
+
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
             case CowState.chase:
                 if (Vector3.Distance(player.position, transform.position) <= attackRange)
                 {
                     state = CowState.attack;
+<<<<<<< HEAD
                     navMeshAgent.enabled=false;
                     return;
                 }
@@ -152,10 +196,43 @@ public class COW : MonoBehaviour
                 {
                     Debug.Log($"Player taken damage from minotaur{attack}");
                     player.gameObject.GetComponent<PlayerHealth>().currentHealth -= attack;
+=======
+                    navMeshAgent.enabled = false;
+                }
+                if (Vector3.Distance(player.position, transform.position) > chaseRange)
+                {
+                    state = CowState.idle;
+                    navMeshAgent.enabled = false;
+                }
+                navMeshAgent.enabled = true;
+                Vector3 targetPos = player.position - (player.position - transform.position).normalized * (attackRange - 1);
+                targetPos.y = transform.position.y;
+                navMeshAgent.SetDestination(targetPos);
+                break;
+                
+            case CowState.attack:
+
+                if (SKillIsdoing == true)
+                {
+                    break;
+                }
+                if (Vector3.Distance(player.position, transform.position) > attackRange)
+                {
+                    state = CowState.chase;
+                    break;
+                }
+
+                transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+                if (Time.time - lastAttackTime > attackSpeed)
+                {
+                    Debug.Log("attack");
+                    MeleeAttack();
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
                     lastAttackTime = Time.time;
                 }
                 if (Time.time - lastSkillTime > skillSpeed)
                 {
+<<<<<<< HEAD
                     int i = Random.Range(0,2);
                     if(i==0)
                     {
@@ -169,12 +246,26 @@ public class COW : MonoBehaviour
                         //Shock wave
                         LookAround();
                     
+=======
+                    int i = Random.Range(0, 1);
+                    if (i == 0)
+                    {
+                        state = CowState.charge;
+                        chargeDir = new Vector3((player.position - transform.position).normalized.x, 0, (player.position - transform.position).normalized.z);
+
+
+                    }
+                    else if (i == 1)
+                    {
+                        StartCoroutine(SKill());
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
                     }
 
                     lastSkillTime = Time.time;
                 }
                 break;
             case CowState.charge:
+<<<<<<< HEAD
             
                 if (Vector3.Distance(transform.position,player.position)> chargedistance)
                 {
@@ -206,12 +297,26 @@ public class COW : MonoBehaviour
                 }
                 break;
             case CowState.stone:
+=======
+
+                if (Vector3.Distance(transform.position, player.position) > chargedistance)
+                {
+                    state = CowState.idle;
+                    GetComponentInChildren<ProjectOfCOW>().enabled = false;
+                    break;
+                }
+                GetComponentInChildren<ProjectOfCOW>().enabled = true;
+                GetComponentInChildren<ProjectOfCOW>().isCharge = true;
+                transform.Translate(chargeDir * chargespeed * Time.deltaTime, Space.World);
+                Debug.Log(1);
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
                 break;
             default:
                 break;
         }
     }
 
+<<<<<<< HEAD
     public IEnumerator Wave(GameObject player)
     {
 
@@ -235,6 +340,53 @@ public class COW : MonoBehaviour
         }
       
       
+=======
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        hp -= damage;
+        if (hp < -0)
+            Die();
+    }
+    void MeleeAttack()
+    {
+        // Detect targets within the range
+        Collider[] hitPlayers = Physics.OverlapSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
+        foreach (var hitPlayer in hitPlayers)
+        {
+            Debug.Log("Hit " + hitPlayer.name);
+            hitPlayer.GetComponent<PlayerHealth>().TakeDamage(attack);
+        }
+    }
+    bool SKillIsdoing=false;
+
+    Vector3 chargeDir;
+
+    public IEnumerator SKill()
+    {
+
+        SKillIsdoing = true;
+        GetComponentInChildren<ProjectOfCOW>().isCharge = false;
+        yield return new WaitForSeconds(1);
+        Debug.Log("Skilling");
+        Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
+        foreach (var hitEnemy in hitEnemies)
+        {
+            // Applies damage and slowing effects to each enemy hit
+            Debug.Log("Shockwave hits " + hitEnemy.name);
+            hitEnemy.GetComponent<PlayerHealth>().TakeDamage(waveDamage);
+        }
+
+
+        GetComponentInChildren<ProjectOfCOW>().enabled = true;
+         yield return new WaitForSeconds(3);
+        GetComponentInChildren<ProjectOfCOW>().enabled = true;
+        SKillIsdoing = false;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
         
     }
 
@@ -243,4 +395,8 @@ public class COW : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position,chaseRange);
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0

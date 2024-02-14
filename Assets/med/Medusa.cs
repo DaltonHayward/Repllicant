@@ -7,7 +7,11 @@ using UnityEngine.AI;
 public class Medusa : MonoBehaviour
 {
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
+<<<<<<< HEAD
     float lastAttackTime = -100, lastSkillTime = -100;
+=======
+    float lastAttackTime, lastSkillTime;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
     Transform player;
     NavMeshAgent navMeshAgent;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
@@ -20,7 +24,11 @@ public class Medusa : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
+<<<<<<< HEAD
         navMeshAgent.speed = speed;
+=======
+        navMeshAgent.speed = speed; 
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
     }
 
     private void Update()
@@ -32,8 +40,13 @@ public class Medusa : MonoBehaviour
             if (Time.time - lastAttackTime > attackSpeed)
             {
                 Debug.Log("Attacking");
+<<<<<<< HEAD
                 lastAttackTime = Time.time;
                 Attack();
+=======
+                Attack();
+                lastAttackTime = Time.time;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
                 // Implement attack logic here (e.g., reduce player HP)
             }
 
@@ -72,10 +85,16 @@ public class Medusa : MonoBehaviour
 
     public IEnumerator Skill()
     {
+<<<<<<< HEAD
         yield return new WaitForSeconds(1); // Skill preparation time
         Debug.Log("Using Skill");
         PetrifyTargetsInRange();
         yield return new WaitForSeconds(3); // Duration before skill effect wears off
+=======
+        Debug.Log("Using Skill");
+        PetrifyTargetsInRange();
+        yield return new WaitForSeconds(skillSpeed); // cooldown
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
     }
 
     void PetrifyTargetsInRange()
@@ -85,11 +104,20 @@ public class Medusa : MonoBehaviour
         {
             if (target.gameObject != gameObject) // Avoid self-petrification
             {
+<<<<<<< HEAD
                 PetrifyTarget(target.gameObject);
+=======
+                ISubscriber subscriber = target.GetComponent<ISubscriber>();
+                if (subscriber != null)
+                {
+                    subscriber.ReceiveMessage("Petrified");
+                }
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
             }
         }
     }
 
+<<<<<<< HEAD
     void PetrifyTarget(GameObject target)
     {
         StartCoroutine(PetrifyTargetCoroutine(target));
@@ -124,6 +152,8 @@ public class Medusa : MonoBehaviour
         }
     }
 
+=======
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
     private void OnDestroy()
     {
         DropLoot();
@@ -132,6 +162,7 @@ public class Medusa : MonoBehaviour
     void DropLoot()
     {
         float randomValue = Random.value;
+<<<<<<< HEAD
         if (randomValue < commonItemProbability)
         {
             Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
@@ -145,6 +176,21 @@ public class Medusa : MonoBehaviour
             Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
         }
         else
+=======
+        if (randomValue < commonItemProbability && commonItems.Count != 0)
+        {
+            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemProbability && uncommonItems.Count != 0)
+        {
+            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability && rareItems.Count != 0)
+        {
+            Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability + legendaryItemProbability && legendaryItems.Count != 0)
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
         {
             Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
         }

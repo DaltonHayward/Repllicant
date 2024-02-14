@@ -12,7 +12,7 @@ public class Weapon : Tool
             ISubscriber subscriber = other.GetComponent<ISubscriber>();
             if (subscriber != null)
             {
-                subscriber.ReceiveMessage("Attacked");
+                subscriber.ReceiveMessage("Attacked:" + Damage);
             }
         }
     }

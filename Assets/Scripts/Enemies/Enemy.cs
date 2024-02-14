@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, ISubscriber
 {
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed;
     float lastAttackTime;
@@ -64,8 +64,9 @@ public class Enemy : MonoBehaviour
     void Update()
     {
 
-        if (Vector3.Distance(player.position, transform.position) < attackRange)
+        if (Vector3.Distance(player.position, transform.position) <= attackRange)
         {
+            transform.LookAt(player.position);
             if (Time.time - lastAttackTime > attackSpeed)
             {
                 Debug.Log("attack");
@@ -75,8 +76,22 @@ public class Enemy : MonoBehaviour
         }
         if (Vector3.Distance(player.position, transform.position) < chaseRange)
         {
-            navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized);
+            Debug.DrawLine(transform.position, player.position - (player.position - transform.position).normalized * attackRange);
+            //navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized * attackRange);
         }
 
+
+    }
+
+    public void ReceiveMessage(string channel)
+    {
+        if (channel.Equals("Frequency"))
+        {
+            Debug.Log("Enemy in siren range");
+        }
+        else
+        {
+            
+        }
     }
 }
