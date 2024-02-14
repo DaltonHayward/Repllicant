@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; // Player Max health
     public float CurrentHealth; // Player current health
+
     private float _invinsibleDuration;
     public Slider hpSlider;
 

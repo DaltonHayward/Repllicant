@@ -10,8 +10,8 @@ public class ProjectOfCOW : MonoBehaviour
     {
         mesh = new Mesh();
         DrawHalfCycle(10, 1, 100, 90, transform.position);
-        GetComponent<MeshFilter>().mesh = mesh;
-        GetComponent<MeshCollider>().sharedMesh = mesh;
+        //GetComponent<MeshFilter>().mesh = mesh;
+        //GetComponent<MeshCollider>().sharedMesh = mesh;
     }
     private void OnTriggerEnter(Collider other)
     {
