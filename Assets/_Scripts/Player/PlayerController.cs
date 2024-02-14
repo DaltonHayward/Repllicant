@@ -122,8 +122,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
         _currentTool = 0;
 
         // Inital dodge setup
-        Keyframe dodge_lastFrame = _dodgeCurve[_dodgeCurve.length - 1];
-        _dodgeTimer = dodge_lastFrame.time;
+        //Keyframe dodge_lastFrame = _dodgeCurve[_dodgeCurve.length - 1];
+        //_dodgeTimer = dodge_lastFrame.time;
 
         // Set up camera
         _playerCamera = GameObject.FindGameObjectWithTag("VirtualCamera").transform;
@@ -772,15 +772,17 @@ public class PlayerController : MonoBehaviour, ISubscriber
         {
             _effectCanvas.enabled = true;
         }
+        else
+        {
+            _effectCanvas.enabled = false;
+        }
+
         if (channel.Equals("Petrified"))
         {
             PetrifyCooldownCoroutine = PetrifyCooldown(2f);
             StartCoroutine(PetrifyCooldownCoroutine);
         }
-        else
-        {
-            _effectCanvas.enabled = false;
-        }
+        
     }
 
     IEnumerator PetrifyCooldown(float seconds)
