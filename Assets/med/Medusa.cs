@@ -1,28 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
-public class Medusa : MonoBehaviour
+public class Medusa : Enemy
 {
-    public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
-    float lastAttackTime = -100, lastSkillTime = -100;
-    Transform player;
-    NavMeshAgent navMeshAgent;
-    public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
-    public float commonItemProbability, uncommonItemProbability, rareItemProbability, legendaryItemProbability;
-
+    public float skillSpeed;
     public GameObject projectilePrefab; // Assign this in the Inspector with your projectile prefab
     public Transform projectileSpawnPoint;
 
-    private void Start()
+    // for turn red when dmg taken effect
+    private Color _originalMaterialColor;
+
+    public void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = speed; 
+        _originalMaterialColor = GetComponentInChildren<SkinnedMeshRenderer>().materials[0].GetColor("_BaseColor");
     }
 
-    private void Update()
+
+    public override void UpdateLogic()
     {
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
         if (distanceToPlayer <= attackRange)
@@ -48,6 +45,19 @@ public class Medusa : MonoBehaviour
         {
             navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized * attackRange);
         }
+    }
+
+    public override void Hurt()
+    {
+        GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", Color.red);
+        StartCoroutine(Timeout(0.1f));
+    }
+
+
+    IEnumerator Timeout(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", _originalMaterialColor);
     }
 
     void Attack()
@@ -76,6 +86,16 @@ public class Medusa : MonoBehaviour
         yield return new WaitForSeconds(skillSpeed); // cooldown
     }
 
+    /*public IEnumerator SKill()
+    {
+        yield return new WaitForSeconds(1);//前摇一秒
+        Debug.Log("Skilling");
+        MeshCollider meshCollider = transform.GetChild(0).GetComponent<MeshCollider>();
+        meshCollider.isTrigger = true;
+        yield return new WaitForSeconds(3);//3秒后取消投射物,所以skillspeed要大于3秒，不然会一直放
+        meshCollider.isTrigger = false;
+    }*/
+
     void PetrifyTargetsInRange()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, attackRange);
@@ -100,44 +120,8 @@ public class Medusa : MonoBehaviour
     //public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     //public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;//每种物品概率，加起来要等于1
 
-    private void OnDestroy()
-    {
-        float randomValue = Random.value;
-        if (randomValue < commonItemProbability && commonItems.Count != 0)
-        {
-            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
-        }
-
-        else if (randomValue < commonItemProbability + uncommonItemProbability && uncommonItems.Count != 0)
-        {
-            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability && rareItems.Count != 0)
-
-        /*else if (randomValue < commonItemProbability + uncommonItemsProbability)
-        {
-            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)*/
-
-        {
-            Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability + legendaryItemProbability && legendaryItems.Count != 0)
-        {
-            Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
-        }
-    }
-    public void Die()
-    {
-        Destroy(gameObject);
-    }
-    public void TakeDamage(float damage)
-    {
-        hp -= damage;
-        if (hp < -0)
-            Die();
-    }
+    
+    
     /*void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -167,13 +151,4 @@ public class Medusa : MonoBehaviour
             navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized*attackRange);
         }
     }*/
-    public IEnumerator SKill()
-    {
-        yield return new WaitForSeconds(1);//前摇一秒
-        Debug.Log("Skilling");
-        MeshCollider meshCollider = transform.GetChild(0).GetComponent<MeshCollider>();
-        meshCollider.isTrigger=true;
-        yield return new WaitForSeconds(3);//3秒后取消投射物,所以skillspeed要大于3秒，不然会一直放
-        meshCollider.isTrigger = false;
-    }
 }

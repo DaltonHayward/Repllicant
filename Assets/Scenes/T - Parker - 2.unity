@@ -564,7 +564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 440802f4e46c9ed438719fedae5d7418, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 440802f4e46c9ed438719fedae5d7418, type: 3}
       propertyPath: m_TagString
@@ -1071,9 +1071,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52c2bc2db1a99e244b84bacdf41c42f7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 608977459}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52c2bc2db1a99e244b84bacdf41c42f7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 608977460}
   m_SourcePrefab: {fileID: 100100000, guid: 52c2bc2db1a99e244b84bacdf41c42f7, type: 3}
 --- !u!1 &608977453 stripped
 GameObject:
@@ -1098,15 +1095,20 @@ MonoBehaviour:
   attackRange: 10
   speed: 5
   attackSpeed: 1
-  skillSpeed: 10
+  lastAttackTime: -100
+  lastSkillTime: -100
+  player: {fileID: 189117433}
+  navMeshAgent: {fileID: 608977455}
+  closePlayer: 0
   commonItems: []
   uncommonItems: []
   rareItems: []
   legendaryItems: []
   commonItemProbability: 0
-  uncommonItemProbability: 0
-  rareItemProbability: 0
-  legendaryItemProbability: 0
+  uncommonItemsProbability: 0
+  rareItemsProbability: 0
+  legendaryItemsProbability: 0
+  skillSpeed: 10
   projectilePrefab: {fileID: 3238252477249893804, guid: c822fef3ff9b9ad4a94969cb6248c10b, type: 3}
   projectileSpawnPoint: {fileID: 608977458}
 --- !u!195 &608977455
@@ -1186,18 +1188,6 @@ CapsuleCollider:
   m_Height: 3.7985697
   m_Direction: 1
   m_Center: {x: 0, y: 1.6826925, z: 0}
---- !u!114 &608977460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608977453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18bcef440a73d3f42a0d260bdad1e122, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &696294909
 GameObject:
   m_ObjectHideFlags: 0
