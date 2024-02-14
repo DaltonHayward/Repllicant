@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+/// <summary>
+/// bridge class for any time UI elements
+/// </summary>
 
-// bridge class for UI clock
 public class TimeBridge_Clock : TimeBridge_Base
 {
     [SerializeField] TextMeshProUGUI TimeDisplay;

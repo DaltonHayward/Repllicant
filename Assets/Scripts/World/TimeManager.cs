@@ -1,25 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    #region Serialized Fields
     // serialized fields for easier editing via inspector
     [Tooltip("Length of a day in hours")]
-    [SerializeField] float DayLength = 24f;
+    [SerializeField] float _DayLength = 24f;
 
     [Tooltip("Starting time in hours relative to midnight")]
-    [SerializeField] float StartingTime = 0f;
+    [SerializeField] float _StartingTime = 6f;
 
     [Tooltip("Controls how fast time advances (eg. 60 = 1 irl second = 1 game minute)")]
 
-    [SerializeField] float TimeFactor = 60f;
+    [SerializeField] float _TimeFactor = 60f;
 
     [Tooltip("Time bridges to send data to")]
     [SerializeField] List<TimeBridge_Base> Bridges;
-    #endregion
-    public static TimeManager Instance { get; private set;} = null;
+
+    private readonly DateTime _startDate = new DateTime(2024, 1, 1);
+    public float DayLength => _DayLength;
+
+    public float DeltaTime => Time.deltaTime * _TimeFactor;
+
+    private float _elapsedTime;
+
+    public DateTime CurrentDate { get; private set; }
+
+
+    public static TimeManager Instance { get; private set; } = null;
 
     // this variable is public for testing but should probably be private in the future
     public float CurrentTime = 0f;
@@ -35,18 +45,20 @@ public class TimeManager : MonoBehaviour
         }
         Instance = this;
 
-        CurrentTime = StartingTime;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        CurrentTime = _StartingTime;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        CurrentTime = (DayLength + CurrentTime + Time.deltaTime * TimeFactor / 3600f) % DayLength;
+        
+        CurrentTime = (DayLength + CurrentTime + Time.deltaTime * _TimeFactor / 3600f) % DayLength;
+        _elapsedTime += (DeltaTime / DayLength);
+        var elapsedDays = _elapsedTime / _TimeFactor;
+        var elapsedTimeSpan = TimeSpan.FromDays(elapsedDays);
+        CurrentDate = _startDate.Add(elapsedTimeSpan);
+        Debug.Log(CurrentTime);
         foreach (var bridge in Bridges)
         {
             bridge.OnTick(CurrentTime);

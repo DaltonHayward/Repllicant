@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/// <summary>
+/// base abstract class for other bridge classes
+/// </summary>
 
-// base class for other bridge classes
 public abstract class TimeBridge_Base : MonoBehaviour
 {
-    public abstract void OnTick(float currentTime);
+    public abstract void OnTick(float CurrentTime);
     
 }
