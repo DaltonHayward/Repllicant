@@ -563,6 +563,10 @@ PrefabInstance:
       value: Minotaur_Alpha_Ver_downsized
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 440802f4e46c9ed438719fedae5d7418, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 440802f4e46c9ed438719fedae5d7418, type: 3}
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
@@ -714,6 +718,30 @@ PrefabInstance:
       propertyPath: _inventory
       value: 
       objectReference: {fileID: 988269512}
+    - target: {fileID: 6665864865654652904, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
+      propertyPath: _effectCanvas
+      value: 
+      objectReference: {fileID: 7616732907050718639, guid: e646c4d00229e954b86806a953a2abc4, type: 3}
+    - target: {fileID: 6665864865654652904, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
+      propertyPath: _dodgeCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6665864865654652904, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
+      propertyPath: _dodgeCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6665864865654652904, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
+      propertyPath: _dodgeCurve.m_Curve.Array.data[1].value
+      value: 0.004711151
+      objectReference: {fileID: 0}
+    - target: {fileID: 6665864865654652904, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
+      propertyPath: _dodgeCurve.m_Curve.Array.data[0].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6665864865654652904, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
+      propertyPath: _dodgeCurve.m_Curve.Array.data[0].outSlope
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5554333935943415899, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
     m_RemovedGameObjects: []
@@ -2764,7 +2792,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1000
-  currentHealth: 0
   hpSlider: {fileID: 696294911}
 --- !u!136 &1933264792
 CapsuleCollider:

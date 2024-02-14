@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Medusa : MonoBehaviour
 {
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
-    float lastAttackTime = -100, lastSkillTime = -100;
+    float lastAttackTime, lastSkillTime;
     Transform player;
     NavMeshAgent navMeshAgent;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
@@ -16,16 +16,11 @@ public class Medusa : MonoBehaviour
     public GameObject projectilePrefab; // Assign this in the Inspector with your projectile prefab
     public Transform projectileSpawnPoint;
 
-    private PlayerController _playerController;
-    private Animator _playerAnimator;
-
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = speed;
-        _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        _playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
+        navMeshAgent.speed = speed; 
     }
 
     private void Update()
@@ -37,8 +32,8 @@ public class Medusa : MonoBehaviour
             if (Time.time - lastAttackTime > attackSpeed)
             {
                 Debug.Log("Attacking");
-                lastAttackTime = Time.time;
                 Attack();
+                lastAttackTime = Time.time;
                 // Implement attack logic here (e.g., reduce player HP)
             }
 
@@ -77,10 +72,9 @@ public class Medusa : MonoBehaviour
 
     public IEnumerator Skill()
     {
-        yield return new WaitForSeconds(1); // Skill preparation time
         Debug.Log("Using Skill");
         PetrifyTargetsInRange();
-        yield return new WaitForSeconds(3); // Duration before skill effect wears off
+        yield return new WaitForSeconds(skillSpeed); // cooldown
     }
 
     void PetrifyTargetsInRange()
@@ -90,26 +84,13 @@ public class Medusa : MonoBehaviour
         {
             if (target.gameObject != gameObject) // Avoid self-petrification
             {
-                PetrifyTarget(target.gameObject);
+                ISubscriber subscriber = target.GetComponent<ISubscriber>();
+                if (subscriber != null)
+                {
+                    subscriber.ReceiveMessage("Petrified");
+                }
             }
         }
-    }
-
-    void PetrifyTarget(GameObject target)
-    {
-        StartCoroutine(PetrifyTargetCoroutine(target));
-    }
-
-    IEnumerator PetrifyTargetCoroutine(GameObject target)
-    {
-        _playerController.SetState(PlayerController.State.PETRIFIED);
-        _playerAnimator.enabled = false;
-
-        yield return new WaitForSeconds(2); // Petrification duration
-
-        _playerController.SetState(PlayerController.State.STANDING);
-        _playerAnimator.enabled = true;
-
     }
 
     private void OnDestroy()

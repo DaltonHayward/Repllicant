@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     [SerializeField]
     private float _windowBetweenComboAttacks = 0.3f;
     private State _stateBeforeAttacking;
+    public IEnumerator PetrifyCooldownCoroutine;
 
     // Equipment
     public enum Equipment { WEAPON, PICKAXE, AXE };
@@ -751,13 +752,31 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     #endregion
 
-     public void ReceiveMessage(string channel)
+    #region ISubscriber
+    public void ReceiveMessage(string channel)
     {
         if (channel.Equals("Frequency"))
         {
             _effectCanvas.enabled = true;
-        } else {
+        }
+        if (channel.Equals("Petrified"))
+        {
+            PetrifyCooldownCoroutine = PetrifyCooldown(2f);
+            StartCoroutine(PetrifyCooldownCoroutine);
+        }
+        else
+        {
             _effectCanvas.enabled = false;
         }
     }
+
+    IEnumerator PetrifyCooldown(float seconds)
+    {
+        _playerState = State.PETRIFIED;
+        _animator.enabled = false;
+        yield return new WaitForSeconds(seconds);
+        _playerState = State.STANDING;
+        _animator.enabled = true;
+    }
+    #endregion
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wood : Collectible
+public class Wood : Collectible, ISubscriber
 {
     public GameObject dropWhenStoned; // drops when tree is stoned
     [HideInInspector]public GameObject dropItemStart; // drops when tree isn't stoned
@@ -42,4 +42,11 @@ public class Wood : Collectible
         GetComponent<MeshRenderer>().material = woodMaterial;
     }
 
+    public void ReceiveMessage(string channel)
+    {
+        if (channel.Equals("Petrified"))
+        {
+            Stoned();
+        }
+    }
 }
