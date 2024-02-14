@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private State _stateBeforeAttacking;
     public IEnumerator PetrifyCooldownCoroutine;
 
+    public Vector3 strokeBackTargetPosition;
+
     // Equipment
     public enum Equipment { WEAPON, PICKAXE, AXE };
     private Equipment _currentEquipment;
@@ -99,8 +101,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private int _animIDAttackSpeed;
     
     // State
-    public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED};
-    private State _playerState;
+    public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, strokeBack};
+    public State _playerState;
 
     public Canvas _effectCanvas;
 
@@ -199,6 +201,17 @@ public class PlayerController : MonoBehaviour, ISubscriber
             {
                 break;
             }
+
+            case State.strokeBack:
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, strokeBackTargetPosition, 5 * Time.deltaTime);
+                    if (Vector3.Distance(transform.position, strokeBackTargetPosition) < 0.2f)
+                    {
+
+                        _playerState = State.MOVING;
+                    }
+                    break;
+                }
 
         }
         ExitAttack();

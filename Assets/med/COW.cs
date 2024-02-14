@@ -88,7 +88,7 @@ public class COW : MonoBehaviour
         }
         for (int j = 0; j < target.Count; j++)
         {
-            if (target[j].tag == "Player"|| target[j].tag == "Medu")
+            if (target[j].tag == "Player"|| target[j].tag == "Enemy")
             {
                 StartCoroutine(Wave(target[j]));
 
@@ -118,7 +118,7 @@ public class COW : MonoBehaviour
                 if (Vector3.Distance(player.position, transform.position) < chaseRange)
                 {
                     state = CowState.chase;
-                    return;
+                    
                 }
                
                 break;
@@ -127,13 +127,13 @@ public class COW : MonoBehaviour
                 {
                     state = CowState.attack;
                     navMeshAgent.enabled=false;
-                    return;
+                    
                 }
                 if(Vector3.Distance(player.position, transform.position) > chaseRange)
                 {
                     state = CowState.idle;
                     navMeshAgent.enabled = false;
-                    return;
+                    
                 }
                 navMeshAgent.enabled = true;
                 Vector3 targetPos = player.position - (player.position - transform.position).normalized * (attackRange-1);
@@ -145,13 +145,13 @@ public class COW : MonoBehaviour
                 if (Vector3.Distance(player.position, transform.position) > attackRange)
                 {
                     state = CowState.chase;
-                    return;
+                    
                 }
                 transform.LookAt( new Vector3(player.position.x,transform.position.y, player.position.z)  );
                 if (Time.time - lastAttackTime > attackSpeed)
                 {
                     Debug.Log($"Player taken damage from minotaur{attack}");
-                    player.gameObject.GetComponent<Health>().Hp -= attack;
+                    player.gameObject.GetComponent<PlayerHealth>().currentHealth -= attack;
                     lastAttackTime = Time.time;
                 }
                 if (Time.time - lastSkillTime > skillSpeed)
@@ -180,7 +180,6 @@ public class COW : MonoBehaviour
                 {
                     state = CowState.idle;
               
-                    return;
                 }
                 Collider[] target ;
                 transform.Translate(chargeDir* chargespeed*Time.deltaTime,Space.World);
@@ -191,23 +190,20 @@ public class COW : MonoBehaviour
                     {
                         Debug.Log($"Player taken charge damage{attack}");
                         ISubscriber sub = target[i].GetComponent<ISubscriber>();
-                        target[i].gameObject.GetComponent<Health>().Hp -= attack;
-                        if (sub != null)
-                        {
-                            sub.ReceiveMessage("Knockback");
-                        }
-                        //target[i].gameObject.GetComponent<PlayerController>()._playerState = State.strokeBack;
-                        //target[i].gameObject.GetComponent<PlayerController>().strokeBackTargetPosition = target[i].transform.position+ new Vector3(   (Quaternion.Euler(0,30f,0)* (target[i].transform.position-transform.position).normalized* strokeBackDistance).x, 0, (Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized* strokeBackDistance).z);
+                        target[i].gameObject.GetComponent<PlayerHealth>().currentHealth -= attack;
+
+                        target[i].gameObject.GetComponent<PlayerController>().SetState(PlayerController.State.strokeBack);
+                        target[i].gameObject.GetComponent<PlayerController>().strokeBackTargetPosition = target[i].transform.position+ new Vector3(   (Quaternion.Euler(0,30f,0)* (target[i].transform.position-transform.position).normalized* strokeBackDistance).x, 0, (Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized* strokeBackDistance).z);
                         playerIsDamageByCharge = true;
                     }
-                    if (target[i].tag == "Medu" && meduIsDamageByCharge == false)
-                    {
-                        Debug.Log($"Medusa taken charge damage{attack}");
-                        //target[i].gameObject.GetComponent<Medusa>().hp -= attack;
-                        //target[i].gameObject.GetComponent<Medusa>().isStrokeBack =true;
-                        //target[i].gameObject.GetComponent<Medusa>().strokeBackTargetPosition = target[i].transform.position + new Vector3((Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized * strokeBackDistance).x, 0, (Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized * strokeBackDistance).z);
-                        meduIsDamageByCharge = true;
-                    }
+                    //if (target[i].tag == "Enemy" && meduIsDamageByCharge == false)
+                    //{
+                    //    Debug.Log($"Medusa taken charge damage{attack}");
+                    //    target[i].gameObject.GetComponent<Medusa>().hp -= attack;
+                    //    target[i].gameObject.GetComponent<Medusa>().isStrokeBack =true;
+                    //    target[i].gameObject.GetComponent<Medusa>().strokeBackTargetPosition = target[i].transform.position + new Vector3((Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized * strokeBackDistance).x, 0, (Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized * strokeBackDistance).z);
+                    //    meduIsDamageByCharge = true;
+                    //}
                 }
                 break;
             case CowState.stone:
@@ -224,7 +220,7 @@ public class COW : MonoBehaviour
 
         yield return new WaitForSeconds(1);//Delay before cast 1 sec
         Debug.Log($"The shock wave causes {WaveAttack} damage and slows down by 30%");
-        if(player.tag=="Medu")
+        if(player.tag=="Enemy")
         {
             player.GetComponent<NavMeshAgent>().speed *= 0.7f;
             player.GetComponent<Medusa>().hp -= WaveAttack;
@@ -234,7 +230,7 @@ public class COW : MonoBehaviour
         else if(player.tag == "Player")
         {
             player.GetComponent<PlayerController>().MoveSpeed *= 0.7f;
-            player.GetComponent<Health>().Hp -= WaveAttack;
+            player.GetComponent<PlayerHealth>().currentHealth -= WaveAttack;
             yield return new WaitForSeconds(3);//The projectile will be removed after 3 seconds, so the skillspeed must be greater than 3 seconds, otherwise it will keep firing.
             player.GetComponent<PlayerController>().MoveSpeed *= 10f / 7;
         }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; // Player Max health
-    private float currentHealth; // Player current health
+    public float currentHealth; // Player current health
     private float _invinsibleDuration;
     public Slider hpSlider;
 
