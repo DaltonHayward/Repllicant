@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Medusa : MonoBehaviour
 {
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
-    float lastAttackTime = -100, lastSkillTime = -100;
+    float lastAttackTime, lastSkillTime;
     Transform player;
     NavMeshAgent navMeshAgent;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
@@ -20,7 +20,7 @@ public class Medusa : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = speed;
+        navMeshAgent.speed = speed; 
     }
 
     private void Update()
@@ -32,8 +32,8 @@ public class Medusa : MonoBehaviour
             if (Time.time - lastAttackTime > attackSpeed)
             {
                 Debug.Log("Attacking");
-                lastAttackTime = Time.time;
                 Attack();
+                lastAttackTime = Time.time;
                 // Implement attack logic here (e.g., reduce player HP)
             }
 
@@ -72,10 +72,9 @@ public class Medusa : MonoBehaviour
 
     public IEnumerator Skill()
     {
-        yield return new WaitForSeconds(1); // Skill preparation time
         Debug.Log("Using Skill");
         PetrifyTargetsInRange();
-        yield return new WaitForSeconds(3); // Duration before skill effect wears off
+        yield return new WaitForSeconds(skillSpeed); // cooldown
     }
 
     void PetrifyTargetsInRange()
@@ -85,41 +84,12 @@ public class Medusa : MonoBehaviour
         {
             if (target.gameObject != gameObject) // Avoid self-petrification
             {
-                PetrifyTarget(target.gameObject);
+                ISubscriber subscriber = target.GetComponent<ISubscriber>();
+                if (subscriber != null)
+                {
+                    subscriber.ReceiveMessage("Petrified");
+                }
             }
-        }
-    }
-
-    void PetrifyTarget(GameObject target)
-    {
-        StartCoroutine(PetrifyTargetCoroutine(target));
-    }
-
-    IEnumerator PetrifyTargetCoroutine(GameObject target)
-    {
-        var controller = target.GetComponent<CharacterController>();
-        if (controller != null)
-        {
-            controller.enabled = false;
-        }
-
-        var rb = target.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = true;
-        }
-
-        yield return new WaitForSeconds(2); // Petrification duration
-
-        // Restore target's movement capability
-        if (controller != null)
-        {
-            controller.enabled = true;
-        }
-
-        if (rb != null)
-        {
-            rb.isKinematic = false;
         }
     }
 
@@ -131,19 +101,19 @@ public class Medusa : MonoBehaviour
     void DropLoot()
     {
         float randomValue = Random.value;
-        if (randomValue < commonItemProbability)
+        if (randomValue < commonItemProbability && commonItems.Count != 0)
         {
             Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
         }
-        else if (randomValue < commonItemProbability + uncommonItemProbability)
+        else if (randomValue < commonItemProbability + uncommonItemProbability && uncommonItems.Count != 0)
         {
             Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
         }
-        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability)
+        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability && rareItems.Count != 0)
         {
             Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
         }
-        else
+        else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability + legendaryItemProbability && legendaryItems.Count != 0)
         {
             Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
         }

@@ -17,5 +17,6 @@ public class Stone : Collectible
 
         if (hp <= 0)
             Destroy(gameObject);
+            instantiateLoot();
     }
 }
