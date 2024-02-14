@@ -844,11 +844,6 @@ Tilemap:
   m_CorrespondingSourceObject: {fileID: 3241624917700529676, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
   m_PrefabInstance: {fileID: 910949250}
   m_PrefabAsset: {fileID: 0}
---- !u!195 &1032268566 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 5453407069262700062, guid: 57433c07a797fd34fb180da013c39791, type: 3}
-  m_PrefabInstance: {fileID: 7945823563877234653}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1049873652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2154,11 +2149,7 @@ PrefabInstance:
     - target: {fileID: 781980565973942222, guid: 57433c07a797fd34fb180da013c39791, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 1341584049}
-    - target: {fileID: 781980565973942222, guid: 57433c07a797fd34fb180da013c39791, type: 3}
-      propertyPath: navMeshAgent
-      value: 
-      objectReference: {fileID: 1032268566}
+      objectReference: {fileID: 509638964}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

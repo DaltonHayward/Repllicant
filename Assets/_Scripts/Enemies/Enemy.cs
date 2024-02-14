@@ -90,8 +90,8 @@ public class Enemy : MonoBehaviour, ISubscriber
         }
         else
         {
-            //if (legendaryItems != null)
-            //    Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
+            if (legendaryItems != null)
+                Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
         }
     }
 
@@ -106,7 +106,6 @@ public class Enemy : MonoBehaviour, ISubscriber
     public virtual void TakeDamage(float damage)
     {
         hp -= damage;
-        Debug.Log("Enemy Health: " + hp);
         if (hp <= 0)
             Die();
     }
