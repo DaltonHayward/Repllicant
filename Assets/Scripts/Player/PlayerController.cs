@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ISubscriber
 {
     private Transform _playerCamera;
     [Header("Player")]
@@ -96,6 +96,8 @@ public class PlayerController : MonoBehaviour
     public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY};
     private State _playerState;
 
+    public Canvas _effectCanvas;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -114,6 +116,8 @@ public class PlayerController : MonoBehaviour
         AssignAnimationIDs();
 
         _animator.SetFloat(_animIDAttackSpeed, AttackSpeed);
+
+        _effectCanvas.enabled = false;
     }
 
     private void AssignAnimationIDs()
@@ -704,4 +708,14 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
+     public void ReceiveMessage(string channel)
+    {
+        if (channel.Equals("Frequency"))
+        {
+            _effectCanvas.enabled = true;
+        } else {
+            _effectCanvas.enabled = false;
+        }
+    }
 }
