@@ -6,10 +6,16 @@ public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; // Player Max health
     private float currentHealth; // Player current health
+    private float _invinsibleDuration;
 
     void Start()
     {
         currentHealth = maxHealth; // At start, full health
+
+        if (_invinsibleDuration > 0)
+        {
+            _invinsibleDuration -= Time.deltaTime;
+        }
     }
 
     public void TakeDamage(float damage)
@@ -35,5 +41,24 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player is dead!"); // Death logic
         // 这里可以添加重启游戏或者显示游戏结束界面的逻辑
         //You can add game over scene logic here
+    }
+
+    public void Invinsible(float delay, float invinsibleLength)
+    {
+        if (delay > 0)
+        {
+            StartCoroutine(StartInvinsible(delay, invinsibleLength));
+        }
+        else
+        {
+            _invinsibleDuration = invinsibleLength;
+        }
+    }
+
+    IEnumerator StartInvinsible(float dly, float invsLength)
+    {
+        yield return new WaitForSeconds(dly);
+        Debug.Log("Invinsible");
+        _invinsibleDuration = invsLength;
     }
 }
