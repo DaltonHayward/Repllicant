@@ -16,9 +16,6 @@ public class Medusa : Enemy
     public void Awake()
     {
         _originalMaterialColor = GetComponentInChildren<SkinnedMeshRenderer>().materials[0].GetColor("_BaseColor");
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = speed;
     }
 
     void Update()
