@@ -25,10 +25,14 @@ public class Collectible : MonoBehaviour
             Destroy(gameObject);
     }
 
+    public void instantiateLoot()
+    {
+        Instantiate(sureToDrop, transform.position, Quaternion.identity);
+    }
+
     private void OnDestroy()
     {
         // drop guaranteed item
-        Instantiate(sureToDrop,transform.position,Quaternion.identity);
         // rolls for each possible drop
         foreach (var item in DropItemAndProbability_List)
         {

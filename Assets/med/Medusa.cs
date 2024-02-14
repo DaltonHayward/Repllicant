@@ -101,6 +101,7 @@ public class Medusa : MonoBehaviour
         if (controller != null)
         {
             controller.enabled = false;
+            target.GetComponent<Animator>().enabled = false;
         }
 
         var rb = target.GetComponent<Rigidbody>();
@@ -115,6 +116,7 @@ public class Medusa : MonoBehaviour
         if (controller != null)
         {
             controller.enabled = true;
+            target.GetComponent<Animator>().enabled = true;
         }
 
         if (rb != null)
