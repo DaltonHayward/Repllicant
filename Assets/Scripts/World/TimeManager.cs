@@ -24,9 +24,9 @@ public class TimeManager : MonoBehaviour
 
     public float DeltaTime => Time.deltaTime * _TimeFactor;
 
-    //private float _elapsedTime;
+    private float _elapsedTime;
 
-    //public DateTime CurrentDate { get; private set; }
+    public DateTime CurrentDate { get; private set; }
 
 
     public static TimeManager Instance { get; private set; } = null;
@@ -52,12 +52,12 @@ public class TimeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // calculate current time (note that we divide by 3600 to convert secs to hours)
         CurrentTime = (DayLength + CurrentTime + Time.deltaTime * _TimeFactor / 3600f) % DayLength;
-        //_elapsedTime += (DeltaTime / DayLength);
-        //var elapsedDays = _elapsedTime / _TimeFactor;
-        //var elapsedTimeSpan = TimeSpan.FromDays(elapsedDays);
-        // CurrentDate = _startDate.Add(elapsedTimeSpan);
+        _elapsedTime += (DeltaTime / DayLength);
+        float elapsedDays = _elapsedTime / _TimeFactor;
+        var elapsedTimeSpan = TimeSpan.FromDays(elapsedDays);
+        CurrentDate = _startDate.Add(elapsedTimeSpan);
         
         foreach (var bridge in Bridges)
         {
