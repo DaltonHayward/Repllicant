@@ -6,26 +6,19 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; // Player Max health
-<<<<<<< HEAD
     private float currentHealth; // Player current health
     private float _invinsibleDuration;
-=======
-    public float currentHealth; // Player current health
     public Slider hpSlider;
->>>>>>> 6e8e32d52365221ead0429774604cfa82760cd67
 
     void Start()
     {
         currentHealth = maxHealth; // At start, full health
-<<<<<<< HEAD
 
         if (_invinsibleDuration > 0)
         {
             _invinsibleDuration -= Time.deltaTime;
         }
-=======
         hpSlider.maxValue = maxHealth;
->>>>>>> 6e8e32d52365221ead0429774604cfa82760cd67
     }
 
     public void TakeDamage(float damage)

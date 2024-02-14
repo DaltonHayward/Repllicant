@@ -16,11 +16,16 @@ public class Medusa : MonoBehaviour
     public GameObject projectilePrefab; // Assign this in the Inspector with your projectile prefab
     public Transform projectileSpawnPoint;
 
+    private PlayerController _playerController;
+    private Animator _playerAnimator;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
+        _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        _playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
     }
 
     private void Update()
@@ -97,22 +102,26 @@ public class Medusa : MonoBehaviour
 
     IEnumerator PetrifyTargetCoroutine(GameObject target)
     {
-        var controller = target.GetComponent<CharacterController>();
-        if (controller != null)
-        {
-            controller.enabled = false;
-            target.GetComponent<Animator>().enabled = false;
-        }
+        /* var controller = target.GetComponent<CharacterController>();
+         if (controller != null)
+         {
+             controller.enabled = false;
+             target.GetComponent<Animator>().enabled = false;
+         }
 
-        var rb = target.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = true;
-        }
+         var rb = target.GetComponent<Rigidbody>();
+         if (rb != null)
+         {
+             rb.isKinematic = true;
+         }*/
+
+        _playerController.SetState(PlayerController.State.PETRIFIED);
+        _playerAnimator.enabled = false;
+
 
         yield return new WaitForSeconds(2); // Petrification duration
 
-        // Restore target's movement capability
+        /*// Restore target's movement capability
         if (controller != null)
         {
             controller.enabled = true;
@@ -122,7 +131,11 @@ public class Medusa : MonoBehaviour
         if (rb != null)
         {
             rb.isKinematic = false;
-        }
+        }*/
+
+        _playerController.SetState(PlayerController.State.STANDING);
+        _playerAnimator.enabled = true;
+
     }
 
     private void OnDestroy()

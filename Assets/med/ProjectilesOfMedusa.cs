@@ -3,6 +3,7 @@ using UnityEngine;
 public class ProjectilesOfMedusa : MonoBehaviour
 {
     public float damageAmount = 10f;
+    private PlayerController _playerController;
 
     public Mesh mesh;
     private void Start()
@@ -28,6 +29,7 @@ public class ProjectilesOfMedusa : MonoBehaviour
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damageAmount);
+
             }
         }
     }
