@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+<<<<<<< HEAD
+public enum State { MOVING, STANDING, DODGING, INTERACTING, ATTACKING, INVENTORY, stone ,strokeBack};
+
+public class PlayerController : MonoBehaviour
+=======
 public class PlayerController : MonoBehaviour, ISubscriber
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
 {
     private Transform _playerCamera;
     [Header("Player")]
@@ -27,8 +33,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     [Header("Camera Rotation")]
     [SerializeField][Range(0.1f, 5f)]
     private float _rotationSpeed = 1;
-    private Vector3 _lookDirection;
-    private Quaternion _rotationGoal;
     private bool _isRotating = false;
     private float _cameraYAngle;
     const float FIRST = 0f;
@@ -41,7 +45,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private AnimationCurve _dodgeCurve;
     private bool _isDodging;
     private float _dodgeTimer;
-
 
     [SerializeField][Range(1f, 10f)]
     private float _dodgeDistance = 5f;
@@ -69,7 +72,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private float _timeBetweenCombos = 0.2f;
     [SerializeField]
     private float _windowBetweenComboAttacks = 0.3f;
-    private State _stateBeforeAttacking;
     public IEnumerator PetrifyCooldownCoroutine;
 
     // Equipment
@@ -98,8 +100,11 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private int _animIDAttackSpeed;
     
     // State
+<<<<<<< HEAD
+=======
     public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED};
     private State _playerState;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
 
     public Canvas _effectCanvas;
 
@@ -109,9 +114,12 @@ public class PlayerController : MonoBehaviour, ISubscriber
     {;
         // Interact range
         GetComponentInChildren<SphereCollider>().radius = _interactRange;
+<<<<<<< HEAD
+=======
 
         // Initialize states
         _playerState = State.STANDING;
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
         _currentEquipment = Equipment.WEAPON;
 
         // set current tool as weapon
@@ -137,6 +145,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         _effectCanvas.enabled = false;
     }
 
+
     private void AssignAnimationIDs()
     {
         _animIDSpeed = Animator.StringToHash("Speed");
@@ -146,33 +155,37 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     void Update()
     {
+        void Update()
+    {
+        attaclkTimer += Time.deltaTime;
         switch (_playerState)
         {
+            case State.stone:
+                break;
             case State.STANDING:
+               
             {
+                    Attack();
                 HandleMovement();
                 HandleInteract();
                 HandleDodge();
-                HandleClick();
                 RotateCamera();
                 ToggleInventory();
+<<<<<<< HEAD
+                LookAtMouse();
+=======
                 HandleEquipedItemChange();
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
                 break;
             }
             case State.MOVING:
             {
-                HandleMovement();
+                    Attack();
+                    HandleMovement();
                 HandleInteract();
-                HandleClick();
                 HandleDodge();
                 RotateCamera();
                 ToggleInventory();
-                HandleEquipedItemChange();
-                break;
-            }
-            case State.SWINGING:
-            {
-                HandleClick();
                 break;
             }
             case State.DODGING:
@@ -189,12 +202,26 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 ToggleInventory();
                 break;
             }
+<<<<<<< HEAD
+                //击退状态
+            case State.strokeBack:
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, strokeBackTargetPosition,5*Time.deltaTime);
+                    if (Vector3.Distance(transform.position, strokeBackTargetPosition)<0.2f)
+                    {
+                     
+                        _playerState = State.MOVING;
+                    }
+                    break;
+                }
+=======
             case State.PETRIFIED:
             {
                 break;
             }
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
         }
-        ExitAttack();
+    }
     }
 
     public void SetState(State state)
@@ -293,11 +320,11 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 _playerState = State.SWINGING;
 
 
+                // check for click in the buffer window
                 if (Time.time - _lastClickedTime > _windowUntilCanBuffer && InputManager.instance.AttackInput && Time.time - _lastClickedTime < _windowBetweenComboAttacks)
                 {
                     _bufferNextAttack = true;
                 }
-
 
                 //Debug.Log(Combo[_comboCounter].AttackLength);
                 if (Time.time - _lastClickedTime >= _windowBetweenComboAttacks || (_bufferNextAttack && Time.time - _lastClickedTime >= _windowBetweenComboAttacks))
@@ -432,17 +459,13 @@ public class PlayerController : MonoBehaviour, ISubscriber
     {
         if (InputManager.instance.DodgeInput && InputDirection != Vector3.zero)
         {
-            StartCoroutine(Dodge());
-        }
-
-        
-
-        /*if (InputManager.instance.DodgeInput && _canDodge && direction != Vector3.zero)
-        {
-            GetComponent<PlayerHealth>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
+<<<<<<< HEAD
             StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
             StartCoroutine(DodgeCooldown());
-        }*/
+=======
+            StartCoroutine(Dodge());
+>>>>>>> a82d40860757cf7b06239cb4def209837df81af0
+        }
     }
 
     IEnumerator Dodge()
@@ -490,32 +513,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     {
         return Flip(Flip(t) * Flip(t));
     }
-
-    // allows dodge to take place outside of update loop, moves the player from one position to another specified position
-    /*IEnumerator Dodge(Vector3 newPosition)
-    {
-        _playerState = State.DODGING;
-        _animator.SetBool("isDodging", true);
-
-        float elapsedTime = 0f;
-        float ratio = elapsedTime / _dodgeDuration;
-        
-        while(elapsedTime < _dodgeDuration && !_isColliding)
-        {
-            float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / _dodgeDuration);
-
-            //_controller.Move(Vector3.Lerp(transform.position, newPosition, ratio));
-            elapsedTime += Time.deltaTime;
-            ratio = elapsedTime / _dodgeDuration;
-
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(_dodgeDuration - elapsedTime);
-
-        _playerState = State.MOVING;
-        _animator.SetBool("isDodging", false);
-    }*/
 
     IEnumerator DodgeCooldown()
     {
