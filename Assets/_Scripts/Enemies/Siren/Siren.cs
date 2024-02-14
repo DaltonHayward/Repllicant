@@ -132,9 +132,9 @@ public class Siren : MonoBehaviour
                     if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) < _lureRange)
                     {*/
                         // Damages player more as they get closer to the siren
-                        player.GetComponent<Health>().TakeDamage(_lureRange / Vector3.Distance(player.transform.position, transform.position));
+                        player.GetComponent<PlayerHealth>().TakeDamage(_lureRange / Vector3.Distance(player.transform.position, transform.position));
                         yield return new WaitForSeconds(5);
-                        Debug.Log(player.GetComponent<Health>().Hp);
+                        Debug.Log(player.GetComponent<PlayerHealth>().CurrentHealth);
            /*         }
                 }
             }*/

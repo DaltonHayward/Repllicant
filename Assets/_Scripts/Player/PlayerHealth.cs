@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 100f; // Player Max health
-    private float currentHealth; // Player current health
+    public float CurrentHealth; // Player current health
     private float _invinsibleDuration;
     public Slider hpSlider;
 
     void Start()
     {
-        currentHealth = maxHealth; // At start, full health
+        CurrentHealth = maxHealth; // At start, full health
 
         if (_invinsibleDuration > 0)
         {
@@ -23,11 +23,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage; // Reduce HP when take damage
-        Debug.Log("Player health is now " + currentHealth); // Print current HP
-        hpSlider.value = currentHealth;
+        CurrentHealth -= damage; // Reduce HP when take damage
+        Debug.Log("Player health is now " + CurrentHealth); // Print current HP
+        hpSlider.value = CurrentHealth;
 
-        if (currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             Die(); // Excute dealth logic when HP reach 0
         }
@@ -35,9 +35,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(float amount)
     {
-        currentHealth += amount; // Restore HP
-        currentHealth = Mathf.Min(currentHealth, maxHealth); // Make sure that the current hp wont above MAX HP
-        Debug.Log("Player healed, health is now " + currentHealth); // Print current HP
+        CurrentHealth += amount; // Restore HP
+        CurrentHealth = Mathf.Min(CurrentHealth, maxHealth); // Make sure that the current hp wont above MAX HP
+        Debug.Log("Player healed, health is now " + CurrentHealth); // Print current HP
     }
 
     void Die()
