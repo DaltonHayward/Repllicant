@@ -10,6 +10,7 @@ public class Siren : MonoBehaviour
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed;
     [SerializeField]
     float lastAttackTime;
+    public float attractionForce = 20f;
 
     NavMeshAgent navMeshAgent;
 
@@ -43,17 +44,13 @@ public class Siren : MonoBehaviour
 
         //damageCoroutine = GiveDamageCoroutine();
 
-        StartCoroutine(damageCoroutine);
+        //StartCoroutine(damageCoroutine);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) < chaseRange)
-        {
-            Debug.DrawLine(transform.position, player.transform.position - (player.transform.position - transform.position).normalized);
-            navMeshAgent.SetDestination(player.transform.position);
-        }
+        Movement();
         HandleLure();
     }
 
@@ -75,6 +72,19 @@ public class Siren : MonoBehaviour
             if (collision.gameObject.CompareTag("Player"))
                 closePlayer = false;
         }*/
+
+    private void Movement() {
+        if (Vector3.Distance(player.transform.position, transform.position) <= attackRange)
+        {
+            transform.LookAt(player.transform.position);
+            return;
+        }
+        if (Vector3.Distance(player.transform.position, transform.position) < chaseRange)
+        {
+            Debug.DrawLine(transform.position, player.transform.position - (player.transform.position - transform.position).normalized * attackRange);
+            navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized * attackRange);
+        }
+    }
 
     private void HandleLure()
     {
@@ -113,6 +123,13 @@ public class Siren : MonoBehaviour
                     _isLuring = false;
                     break;
                 }
+            }
+            Rigidbody rb = c.GetComponent<Rigidbody>();
+            if ((c.CompareTag("Player") || c.CompareTag("Enemy")) && rb != null)
+            {
+                Vector3 direction = (transform.position - c.gameObject.transform.position).normalized;
+                //rb.AddForce(direction * attractionForce * Time.deltaTime);
+                //c.transform.LookAt(this.transform);
             }
         }
     }

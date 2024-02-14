@@ -64,8 +64,9 @@ public class Enemy : MonoBehaviour, ISubscriber
     void Update()
     {
 
-        if (Vector3.Distance(player.position, transform.position) < attackRange)
+        if (Vector3.Distance(player.position, transform.position) <= attackRange)
         {
+            transform.LookAt(player.position);
             if (Time.time - lastAttackTime > attackSpeed)
             {
                 Debug.Log("attack");
@@ -76,7 +77,7 @@ public class Enemy : MonoBehaviour, ISubscriber
         if (Vector3.Distance(player.position, transform.position) < chaseRange)
         {
             Debug.DrawLine(transform.position, player.position - (player.position - transform.position).normalized * attackRange);
-            navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized * attackRange);
+            //navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized * attackRange);
         }
 
 
