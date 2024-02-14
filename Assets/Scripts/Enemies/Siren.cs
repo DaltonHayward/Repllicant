@@ -7,25 +7,19 @@ using UnityEngine.AI;
 public class Siren : MonoBehaviour
 {
     [SerializeField]
-    public float hp, attack, chaseRange, attackRange, speed, attackSpeed;
+    public float hp, attack, chaseRange, speed;
     [SerializeField]
-    float lastAttackTime;
     public float attractionForce = 20f;
 
     NavMeshAgent navMeshAgent;
 
-
-
-    public GameObject player;
-    public bool closePlayer = false;
     [SerializeField] private float _lureRange = 30f;
 
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
 
-    private enum State { EMITTING, NOT_EMITTING };
-    private State _playerState;
     private bool _isLuring;
+    public GameObject player;
 
     private IEnumerator damageCoroutine;
 
@@ -41,9 +35,6 @@ public class Siren : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
         _isLuring = false;
-
-        //damageCoroutine = GiveDamageCoroutine();
-
         //StartCoroutine(damageCoroutine);
     }
 
@@ -61,28 +52,17 @@ public class Siren : MonoBehaviour
             Die();
     }
 
-    /*    private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.CompareTag("Player"))
-                closePlayer = true;
-        }
-
-        private void OnCollisionExit(Collision collision)
-        {
-            if (collision.gameObject.CompareTag("Player"))
-                closePlayer = false;
-        }*/
-
-    private void Movement() {
-        if (Vector3.Distance(player.transform.position, transform.position) <= attackRange)
+    private void Movement() 
+    {
+        float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
+        if (distanceToPlayer <= _lureRange)
         {
             transform.LookAt(player.transform.position);
             return;
         }
-        if (Vector3.Distance(player.transform.position, transform.position) < chaseRange)
+        if (distanceToPlayer < chaseRange)
         {
-            Debug.DrawLine(transform.position, player.transform.position - (player.transform.position - transform.position).normalized * attackRange);
-            navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized * attackRange);
+            navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized * _lureRange);
         }
     }
 
@@ -124,13 +104,6 @@ public class Siren : MonoBehaviour
                     break;
                 }
             }
-            Rigidbody rb = c.GetComponent<Rigidbody>();
-            if ((c.CompareTag("Player") || c.CompareTag("Enemy")) && rb != null)
-            {
-                Vector3 direction = (transform.position - c.gameObject.transform.position).normalized;
-                //rb.AddForce(direction * attractionForce * Time.deltaTime);
-                //c.transform.LookAt(this.transform);
-            }
         }
     }
 
@@ -154,6 +127,7 @@ public class Siren : MonoBehaviour
             Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
         }*/
     }
+
     public void Die()
     {
         Destroy(gameObject);
@@ -177,6 +151,25 @@ public class Siren : MonoBehaviour
                         Debug.Log(c.GetComponent<Health>().Hp);
                     }
                 }
+            }
+        }
+    }
+
+    private void Attract() 
+    {
+        Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
+        foreach (Collider c in targets)
+        {
+            if (c.CompareTag("Player"))
+            {
+                Rigidbody rb = c.GetComponent<Rigidbody>();
+                Vector3 direction = (transform.position - c.gameObject.transform.position).normalized;
+                //Debug.Log(direction);
+                //rb.AddForce(direction * attractionForce * Time.deltaTime);
+            }
+            if (c.CompareTag("Enemy"))
+            {
+                
             }
         }
     }
