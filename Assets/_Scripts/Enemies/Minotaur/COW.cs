@@ -146,7 +146,7 @@ public class COW : MonoBehaviour
                 if (Time.time - lastAttackTime > attackSpeed)
                 {
                     Debug.Log($"Player taken damage from minotaur{attack}");
-                    player.gameObject.GetComponent<Health>().Hp -= attack;
+                    player.gameObject.GetComponent<PlayerHealth>().CurrentHealth -= attack;
                     lastAttackTime = Time.time;
                 }
                 if (Time.time - lastSkillTime > skillSpeed)
@@ -186,7 +186,7 @@ public class COW : MonoBehaviour
                     {
                         Debug.Log($"Player taken charge damage{attack}");
                         ISubscriber sub = target[i].GetComponent<ISubscriber>();
-                        target[i].gameObject.GetComponent<Health>().Hp -= attack;
+                        target[i].gameObject.GetComponent<PlayerHealth>().CurrentHealth -= attack;
                         if (sub != null)
                         {
                             sub.ReceiveMessage("Knockback");
@@ -229,7 +229,7 @@ public class COW : MonoBehaviour
         else if(player.tag == "Player")
         {
             player.GetComponent<PlayerController>().MoveSpeed *= 0.7f;
-            player.GetComponent<Health>().Hp -= WaveAttack;
+            player.GetComponent<PlayerHealth>().CurrentHealth -= WaveAttack;
             yield return new WaitForSeconds(3);//The projectile will be removed after 3 seconds, so the skillspeed must be greater than 3 seconds, otherwise it will keep firing.
             player.GetComponent<PlayerController>().MoveSpeed *= 10f / 7;
         }
