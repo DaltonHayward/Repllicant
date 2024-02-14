@@ -5,7 +5,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Medusa : MonoBehaviour
 {
-<<<<<<< HEAD
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
     float lastAttackTime = -100, lastSkillTime = -100;
     Transform player;
@@ -93,14 +92,14 @@ public class Medusa : MonoBehaviour
         }
     }
 
-=======
-    public float hp, attack, chaseRange, attackRange, speed, attackSpeed,skillSpeed;
-    float lastAttackTime=-100,lastSkillTime=-100;
-    Transform player;
-    NavMeshAgent navMeshAgent;
-    public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
-    public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;//每种物品概率，加起来要等于1
->>>>>>> parent of f0a100f (no message)
+
+    //public float hp, attack, chaseRange, attackRange, speed, attackSpeed,skillSpeed;
+    //float lastAttackTime=-100,lastSkillTime=-100;
+    //Transform player;
+    //NavMeshAgent navMeshAgent;
+    //public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
+    //public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;//每种物品概率，加起来要等于1
+
     private void OnDestroy()
     {
         float randomValue = Random.value;
@@ -108,19 +107,19 @@ public class Medusa : MonoBehaviour
         {
             Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
         }
-<<<<<<< HEAD
+
         else if (randomValue < commonItemProbability + uncommonItemProbability && uncommonItems.Count != 0)
         {
             Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
         }
         else if (randomValue < commonItemProbability + uncommonItemProbability + rareItemProbability && rareItems.Count != 0)
-=======
-        else if (randomValue < commonItemProbability + uncommonItemsProbability)
+
+        /*else if (randomValue < commonItemProbability + uncommonItemsProbability)
         {
             Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
         }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
->>>>>>> parent of f0a100f (no message)
+        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)*/
+
         {
             Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
         }
@@ -139,13 +138,13 @@ public class Medusa : MonoBehaviour
         if (hp < -0)
             Die();
     }
-    void Start()
+    /*void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
-    }
-    void Update()
+    }*/
+    /*void Update()
     {
         if (Vector3.Distance(player.position, transform.position) <= attackRange)
         {
@@ -167,7 +166,7 @@ public class Medusa : MonoBehaviour
             Debug.DrawLine(transform.position, player.position - (player.position - transform.position).normalized * attackRange);
             navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized*attackRange);
         }
-    }
+    }*/
     public IEnumerator SKill()
     {
         yield return new WaitForSeconds(1);//前摇一秒

@@ -157,7 +157,7 @@ public class Siren : MonoBehaviour
     {
         if (channel.Equals("Attack"))
         {
-            TakeDamage(Damage);
+            //TakeDamage(Damage);
         }
     }
 }

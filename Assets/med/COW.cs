@@ -125,11 +125,11 @@ public class COW : MonoBehaviour
                 if (Vector3.Distance(transform.position, player.position) > chargedistance)
                 {
                     state = CowState.idle;
-                    GetComponentInChildren<ProjectOfCOW>().enabled = false;
+                    //GetComponentInChildren<ProjectOfCOW>().enabled = false;
                     break;
                 }
-                GetComponentInChildren<ProjectOfCOW>().enabled = true;
-                GetComponentInChildren<ProjectOfCOW>().isCharge = true;
+                //GetComponentInChildren<ProjectOfCOW>().enabled = true;
+                //GetComponentInChildren<ProjectOfCOW>().isCharge = true;
                 transform.Translate(chargeDir * chargespeed * Time.deltaTime, Space.World);
                 Debug.Log(1);
                 break;
@@ -167,7 +167,7 @@ public class COW : MonoBehaviour
     {
 
         SKillIsdoing = true;
-        GetComponentInChildren<ProjectOfCOW>().isCharge = false;
+        //GetComponentInChildren<ProjectOfCOW>().isCharge = false;
         yield return new WaitForSeconds(1);
         Debug.Log("Skilling");
         Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange, LayerMask.GetMask("Player"));
@@ -179,9 +179,9 @@ public class COW : MonoBehaviour
         }
 
 
-        GetComponentInChildren<ProjectOfCOW>().enabled = true;
+        //GetComponentInChildren<ProjectOfCOW>().enabled = true;
          yield return new WaitForSeconds(3);
-        GetComponentInChildren<ProjectOfCOW>().enabled = true;
+        //GetComponentInChildren<ProjectOfCOW>().enabled = true;
         SKillIsdoing = false;
         
     }
