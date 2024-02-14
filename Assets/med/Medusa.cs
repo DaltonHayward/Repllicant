@@ -16,6 +16,33 @@ public class Medusa : Enemy
     public void Awake()
     {
         _originalMaterialColor = GetComponentInChildren<SkinnedMeshRenderer>().materials[0].GetColor("_BaseColor");
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = speed;
+    }
+
+    void Update()
+    {
+        if (Vector3.Distance(player.position, transform.position) <= attackRange)
+        {
+            transform.LookAt(player.position);
+            if (Time.time - lastAttackTime > attackSpeed)
+            {
+                Debug.Log("attack");
+                lastAttackTime = Time.time;
+            }
+            if (Time.time - lastSkillTime > skillSpeed)
+            {
+                StartCoroutine(Skill());
+                lastSkillTime = Time.time;
+            }
+            return;
+        }
+        if (Vector3.Distance(player.position, transform.position) < chaseRange)
+        {
+            Debug.DrawLine(transform.position, player.position - (player.position - transform.position).normalized * attackRange);
+            navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized * attackRange);
+        }
     }
 
 
@@ -86,16 +113,6 @@ public class Medusa : Enemy
         yield return new WaitForSeconds(skillSpeed); // cooldown
     }
 
-    /*public IEnumerator SKill()
-    {
-        yield return new WaitForSeconds(1);//前摇一秒
-        Debug.Log("Skilling");
-        MeshCollider meshCollider = transform.GetChild(0).GetComponent<MeshCollider>();
-        meshCollider.isTrigger = true;
-        yield return new WaitForSeconds(3);//3秒后取消投射物,所以skillspeed要大于3秒，不然会一直放
-        meshCollider.isTrigger = false;
-    }*/
-
     void PetrifyTargetsInRange()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, attackRange);
@@ -111,44 +128,4 @@ public class Medusa : Enemy
             }
         }
     }
-
-
-    //public float hp, attack, chaseRange, attackRange, speed, attackSpeed,skillSpeed;
-    //float lastAttackTime=-100,lastSkillTime=-100;
-    //Transform player;
-    //NavMeshAgent navMeshAgent;
-    //public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
-    //public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;//每种物品概率，加起来要等于1
-
-    
-    
-    /*void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = speed;
-    }*/
-    /*void Update()
-    {
-        if (Vector3.Distance(player.position, transform.position) <= attackRange)
-        {
-            transform.LookAt(player.position);
-            if (Time.time - lastAttackTime > attackSpeed)
-            {
-                Debug.Log("attack");
-                lastAttackTime = Time.time;
-            }
-            if (Time.time - lastSkillTime > skillSpeed)
-            {
-                StartCoroutine(SKill());
-                lastSkillTime = Time.time;
-            }
-            return;
-        }
-        if (Vector3.Distance(player.position, transform.position) < chaseRange)
-        {
-            Debug.DrawLine(transform.position, player.position - (player.position - transform.position).normalized * attackRange);
-            navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized*attackRange);
-        }
-    }*/
 }
