@@ -60,11 +60,10 @@ public class Siren : MonoBehaviour
         if (distanceToPlayer <= _lureRange)
         {
             transform.LookAt(player.transform.position);
-            return;
         }
         if (distanceToPlayer < chaseRange)
         {
-            navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized * _lureRange);
+            navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * _lureRange);
         }
     }
     
@@ -97,22 +96,26 @@ public class Siren : MonoBehaviour
     private void OnDestroy()
     {
         float randomValue = Random.value;
-        /*if (randomValue < commonItemProbability)
+        if (randomValue < commonItemProbability)
         {
-            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
+            if (commonItems != null)
+                Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
         }
         else if (randomValue < commonItemProbability + uncommonItemsProbability)
         {
-            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
+            if (uncommonItems != null)
+                Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
         }
         else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
         {
-            Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
+            if (rareItems != null)
+                Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
         }
         else
         {
-            Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
-        }*/
+            if (legendaryItems != null)
+                Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
+        }
     }
 
     public void Die()
@@ -123,7 +126,6 @@ public class Siren : MonoBehaviour
     private IEnumerator GiveDamageCoroutine()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
-        Movement();
         while (Vector3.Distance(player.transform.position, transform.position) <= _lureRange)
         {
             foreach (Collider c in targets)
@@ -134,9 +136,9 @@ public class Siren : MonoBehaviour
                     if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) <= _lureRange)
                     {
                         // Damages player more as they get closer to the siren
-                        player.GetComponent<Health>().TakeDamage(_lureRange / Vector3.Distance(player.transform.position, transform.position));
+                        player.GetComponent<PlayerHealth>().TakeDamage(_lureRange / Vector3.Distance(player.transform.position, transform.position));
                         yield return new WaitForSeconds(5);
-                        Debug.Log(player.GetComponent<Health>().Hp);
+                        Debug.Log(player.GetComponent<PlayerHealth>().CurrentHealth);
                     }
                 }
             }
@@ -151,19 +153,29 @@ public class Siren : MonoBehaviour
         {
             if (c.CompareTag("Player"))
             {
-                Rigidbody rb = player.GetComponent<Rigidbody>();
+                CharacterController cc = player.GetComponent<CharacterController>();
                 Vector3 direction = (transform.position - player.transform.position).normalized;
-                //Debug.Log(direction);
-                rb.AddForce(direction * attractionForce * Time.deltaTime);
+                cc.Move(direction * attractionForce * Time.deltaTime);
             }
         }
     }
 
+
     public void ReceiveMessage(string channel)
     {
-        if (channel.Equals("Attack"))
+        // split message into parts
+        string[] parts = channel.Split(':');
+
+        // handles attack message
+        if (channel.StartsWith("Attacked"))
         {
-            //TakeDamage(Damage);
+            // apply damage from message
+            float damage;
+            if (float.TryParse(parts[1].Trim(), out damage))
+            {
+                TakeDamage(damage);
+                
+            }
         }
     }
 }

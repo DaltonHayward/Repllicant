@@ -761,11 +761,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4121117414067798150, guid: 3e3244d47e6522743abd62e5b3e23c52, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4359158100973675858, guid: 3e3244d47e6522743abd62e5b3e23c52, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1236438915616286060}
   m_SourcePrefab: {fileID: 100100000, guid: 3e3244d47e6522743abd62e5b3e23c52, type: 3}
+--- !u!1 &4973299634809472218 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4359158100973675858, guid: 3e3244d47e6522743abd62e5b3e23c52, type: 3}
+  m_PrefabInstance: {fileID: 8753417237134270856}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1236438915616286060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4973299634809472218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c033f70b1b219fc4eafb5873bbb62fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  sureToDrop: {fileID: 0}
+  DropItemAndProbability_List: []
+  dropWhenStoned: {fileID: 0}
+  dropItemStart: {fileID: 0}
+  isStoned: 0
+  stoneMaterial: {fileID: 2100000, guid: ca472933d062e0441b06f0c979647fef, type: 2}
+  woodMaterial: {fileID: 2100000, guid: 19fa4063a714d034386abb7533e7fe76, type: 2}
 --- !u!4 &5642839941354774112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3978094224980393960, guid: 3e3244d47e6522743abd62e5b3e23c52, type: 3}
