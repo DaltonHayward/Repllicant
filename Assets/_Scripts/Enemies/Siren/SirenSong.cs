@@ -30,12 +30,15 @@ public class SirenSong : MonoBehaviour
             Collider[] targets = Physics.OverlapSphere(transform.position, broadcastRange);
             foreach (Collider c in targets)
             {
-                ISubscriber sub = c.GetComponent<ISubscriber>();
-                if (sub != null)
+                ISubscriber[] subs = c.GetComponents<ISubscriber>();
+                if (subs != null)
                 {
-                    sub.ReceiveMessage(channel);
-                    if (c.gameObject.GetComponent<Charmable>() != null)
-                        c.gameObject.GetComponent<Charmable>().Siren = transform;
+                    foreach (ISubscriber sub in subs)
+                    {
+                        sub.ReceiveMessage(channel);
+                        if (c.gameObject.GetComponent<Charmable>() != null)
+                            c.gameObject.GetComponent<Charmable>().Siren = transform;
+                    }
                 }
             }
 
