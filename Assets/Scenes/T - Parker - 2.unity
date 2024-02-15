@@ -1946,11 +1946,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81f5823fc298463bb82bf4e770a0641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 0}
   items:
   - {fileID: 11400000, guid: 44875252c2f144905a2c784e26df3793, type: 2}
   - {fileID: 11400000, guid: bdee928372e9741fd887d06a324fd2a1, type: 2}
   itemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 988269515}
+  staticPlayerInventory: {fileID: 0}
 --- !u!1 &1481051827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,15 +2635,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4445149175975935785, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 99.5
+      value: 65.5
       objectReference: {fileID: 0}
     - target: {fileID: 4445149175975935785, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -27.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4445149175975935785, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.5
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 4445149175975935785, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2685,15 +2687,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8665482352110682842, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
       propertyPath: skillSpeed
-      value: 0.7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8665482352110682842, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
       propertyPath: attackRange
-      value: 1
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665482352110682842, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
+      propertyPath: chargeRange
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665482352110682842, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
+      propertyPath: chargeclock
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8665482352110682842, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
+      propertyPath: chargeInternal
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8665482352110682842, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
       propertyPath: chargedistance
-      value: 21
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8665482352110682842, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
       propertyPath: strokeBackDistance
@@ -2778,7 +2792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416279877729648696, guid: f5af98e4885749b4ca28e9d2acab3c82, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 2416279877729648696, guid: f5af98e4885749b4ca28e9d2acab3c82, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2815,6 +2829,10 @@ PrefabInstance:
     - target: {fileID: 5173600092177826108, guid: f5af98e4885749b4ca28e9d2acab3c82, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8801013169850744735, guid: f5af98e4885749b4ca28e9d2acab3c82, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

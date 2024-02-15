@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum  CowState
+public enum CowState
 {
     idle,
     charge,
@@ -21,10 +21,23 @@ public class COW : MonoBehaviour
     public float WaveAttack;
     [Header("Charge speed")]
     public float chargespeed;
-    [Header("Charge distance")]
-    public float chargedistance;
+    //Charge distance
+    float chargedistance;
 
-   public CowState state;
+
+
+    [Header("chargeRange")]
+    public float chargeRange;
+    [Header("chargeInternal")]
+    public float chargeInternal;
+    [Header("chargeclock")]
+    public float chargeclock;
+    [Header("chargeTargetPosition")]
+    public Vector3 chargeTargetPosition;
+
+
+
+    public CowState state;
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed, skillSpeed;
     float lastAttackTime = -100, lastSkillTime = -100;
     Transform player;
@@ -84,12 +97,12 @@ public class COW : MonoBehaviour
         }
         for (int j = 0; j < target.Count; j++)
         {
-            if (target[j].tag == "Player"|| target[j].tag == "Enemy")
+            if (target[j].tag == "Player" || target[j].tag == "Enemy")
             {
                 StartCoroutine(Wave(target[j]));
 
             }
-          
+
         }
     }
     void Start()
@@ -102,10 +115,25 @@ public class COW : MonoBehaviour
 
 
     Vector3 chargeDir;
-    bool playerIsDamageByCharge=false;
+    bool playerIsDamageByCharge = false;
     bool meduIsDamageByCharge = false;
     void Update()
     {
+
+        if (Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(transform.position.x, 0, transform.position.z)) < chargeRange)
+        {
+            chargeclock += Time.deltaTime;
+            if (chargeclock > chargeInternal)
+            {
+                chargeTargetPosition = player.position;
+                state = CowState.charge;
+                chargeclock = 0;
+                chargeDir = new Vector3((player.position - transform.position).normalized.x, 0, (player.position - transform.position).normalized.z);
+                chargedistance = Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(transform.position.x, 0, transform.position.z));
+            }
+        }
+
+
         switch (state)
         {
             case CowState.idle:
@@ -114,7 +142,7 @@ public class COW : MonoBehaviour
                 if (Vector3.Distance(player.position, transform.position) < chaseRange)
                 {
                     state = CowState.chase;
-                    
+
                     break;
                 }
                 break;
@@ -122,31 +150,31 @@ public class COW : MonoBehaviour
                 if (Vector3.Distance(player.position, transform.position) <= attackRange)
                 {
                     state = CowState.attack;
-                    navMeshAgent.enabled=false;
+                    navMeshAgent.enabled = false;
 
-                    break ;
+                    break;
                 }
-                if(Vector3.Distance(player.position, transform.position) > chaseRange)
+                if (Vector3.Distance(player.position, transform.position) > chaseRange)
                 {
                     state = CowState.idle;
                     navMeshAgent.enabled = false;
-                    
+
                     break;
                 }
                 navMeshAgent.enabled = true;
-                Vector3 targetPos = player.position - (player.position - transform.position).normalized * (attackRange-1);
+                Vector3 targetPos = player.position - (player.position - transform.position).normalized * (attackRange - 1);
                 targetPos.y = transform.position.y;
-                navMeshAgent.SetDestination( targetPos  );
-            
+                navMeshAgent.SetDestination(targetPos);
+
                 break;
             case CowState.attack:
                 if (Vector3.Distance(player.position, transform.position) > attackRange)
                 {
                     state = CowState.chase;
-                    
+
                     break;
                 }
-                transform.LookAt( new Vector3(player.position.x,transform.position.y, player.position.z)  );
+                transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
                 if (Time.time - lastAttackTime > attackSpeed)
                 {
                     Debug.Log($"Player taken damage from minotaur{attack}");
@@ -156,45 +184,35 @@ public class COW : MonoBehaviour
                 }
                 if (Time.time - lastSkillTime > skillSpeed)
                 {
-                    int i = Random.Range(0,2);
-                    if(i==0)
-                    {
-                        state = CowState.charge;
-                        chargeDir = new  Vector3((player.position - transform.position).normalized.x,0, (player.position - transform.position).normalized.z)  ;
-               
-                       
-                    }
-                    else if (i == 1)
-                    {
-                        //Shock wave
-                        LookAround();
-                    
-                    }
+
+                    //Shock wave
+                    LookAround();
+
 
                     lastSkillTime = Time.time;
                 }
                 break;
             case CowState.charge:
-            
-                if (Vector3.Distance(transform.position,player.position)> chargedistance)
+
+                if (Vector3.Distance(new Vector3(chargeTargetPosition.x, 0, chargeTargetPosition.z), new Vector3(transform.position.x, 0, transform.position.z)) < 0.2f)
                 {
                     state = CowState.idle;
-              
-                    break;
+
+                    return;
                 }
-                Collider[] target ;
-                transform.Translate(chargeDir* chargespeed*Time.deltaTime,Space.World);
+                Collider[] target;
+                transform.Translate(chargeDir * chargespeed * Time.deltaTime, Space.World);
                 target = Physics.OverlapSphere(transform.position, 0.6f);
                 for (int i = 0; i < target.Length; i++)
                 {
-                    if(target[i].tag== "Player"&& playerIsDamageByCharge==false)
+                    if (target[i].tag == "Player" && playerIsDamageByCharge == false)
                     {
                         Debug.Log($"Player taken charge damage{attack}");
 
                         target[i].gameObject.GetComponent<PlayerController>().SetState(PlayerController.State.KNOCKBACK);
-                        target[i].gameObject.GetComponent<PlayerController>().strokeBackTargetPosition = target[i].transform.position+ new Vector3(   (Quaternion.Euler(0,30f,0)* (target[i].transform.position-transform.position).normalized* strokeBackDistance).x, 0, (Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized* strokeBackDistance).z);
+                        target[i].gameObject.GetComponent<PlayerController>().strokeBackTargetPosition = target[i].transform.position + new Vector3((Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized * strokeBackDistance).x, 0, (Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized * strokeBackDistance).z);
                         target[i].gameObject.GetComponent<PlayerHealth>().CurrentHealth -= attack;
-                        
+
                         playerIsDamageByCharge = true;
                     }
                     //if (target[i].tag == "Enemy" && meduIsDamageByCharge == false)
@@ -217,32 +235,32 @@ public class COW : MonoBehaviour
     public IEnumerator Wave(GameObject player)
     {
 
-   
+
 
         yield return new WaitForSeconds(1);//Delay before cast 1 sec
         Debug.Log($"The shock wave causes {WaveAttack} damage and slows down by 30%");
-        if(player.tag=="Enemy")
+        if (player.tag == "Enemy")
         {
             player.GetComponent<NavMeshAgent>().speed *= 0.7f;
             player.GetComponent<Medusa>().hp -= WaveAttack;
             yield return new WaitForSeconds(3);//The projectile will be removed after 3 seconds, so the skillspeed must be greater than 3 seconds, otherwise it will keep firing.
             player.GetComponent<NavMeshAgent>().speed *= 10f / 7;
         }
-        else if(player.tag == "Player")
+        else if (player.tag == "Player")
         {
             player.GetComponent<PlayerController>().MoveSpeed *= 0.7f;
             player.GetComponent<PlayerHealth>().CurrentHealth -= WaveAttack;
             yield return new WaitForSeconds(3);//The projectile will be removed after 3 seconds, so the skillspeed must be greater than 3 seconds, otherwise it will keep firing.
             player.GetComponent<PlayerController>().MoveSpeed *= 10f / 7;
         }
-      
-      
-        
+
+
+
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position,chaseRange);
+        Gizmos.DrawWireSphere(transform.position, chaseRange);
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

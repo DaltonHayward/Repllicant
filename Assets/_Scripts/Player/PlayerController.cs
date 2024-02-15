@@ -833,8 +833,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
         if (channel.Equals("Petrified"))
         {
+            Debug.Log("petrified");
             PetrifyCooldownCoroutine = PetrifyCooldown(2f);
-            GetComponent<Charmable>().ResetCharm();
+            //GetComponent<Charmable>().ResetCharm();
             StartCoroutine(PetrifyCooldownCoroutine);
         }
         
