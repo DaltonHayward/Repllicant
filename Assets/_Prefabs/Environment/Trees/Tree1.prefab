@@ -65,7 +65,10 @@ PrefabInstance:
       addedObject: {fileID: 6451316426262277186}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4121117414067798150}
+      addedObject: {fileID: 775460763877421745}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1559605528710352611}
   m_SourcePrefab: {fileID: 100100000, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
 --- !u!1 &4359158100973675858 stripped
 GameObject:
@@ -93,7 +96,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7327471, y: 0.62299466, z: 2.0231886}
   m_Center: {x: 0.004943937, y: 0.016525239, z: 1.0115547}
---- !u!114 &4121117414067798150
+--- !u!114 &775460763877421745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,14 +105,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 4359158100973675858}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 303d6180d30ffee4ba521870241ea0ec, type: 3}
+  m_Script: {fileID: 11500000, guid: c033f70b1b219fc4eafb5873bbb62fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
-  sureToDrop: {fileID: 4409983238352069845, guid: 5248c68ec0b00ab4a9a7a3b812cd2b4f, type: 3}
+  sureToDrop: {fileID: 0}
   DropItemAndProbability_List: []
-  dropWhenStoned: {fileID: 2023517905, guid: 1d7cf80ff985b3d4da86a46d77ed1a1e, type: 3}
+  dropWhenStoned: {fileID: 0}
   dropItemStart: {fileID: 0}
   isStoned: 0
-  stoneMaterial: {fileID: 2100000, guid: 8bce7657afa6fc043ba231185c5a0d7d, type: 2}
+  stoneMaterial: {fileID: 2100000, guid: d2fd4d71edd84d847abfac1d74b92941, type: 2}
   woodMaterial: {fileID: 2100000, guid: 19fa4063a714d034386abb7533e7fe76, type: 2}
+--- !u!54 &1559605528710352611
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4359158100973675858}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

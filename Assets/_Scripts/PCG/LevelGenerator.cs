@@ -35,7 +35,7 @@ public class LevelGenerator : MonoBehaviour
     private IEnumerator DelayBake()
     {
         yield return new WaitForSeconds(0.5f);
-        //nav_Mesh.GetComponent<NavMeshSurface>().BuildNavMesh();
+        nav_Mesh.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
 
