@@ -10,9 +10,10 @@ public class Charmable : MonoBehaviour, ISubscriber
 
     [SerializeField] private int maxCharmedHP = 50;
     private int charmedHP;
-    public bool isCharmed = false;
+    private bool isCharmed = false;
     private float ResetCooldown;
     private Color baseColor;
+    public float charmedCooldown = 5;
     public Transform Siren;
     private PlayerController _playerController;
 
@@ -26,7 +27,9 @@ public class Charmable : MonoBehaviour, ISubscriber
     {
         if (isCharmed && _playerController != null)
         {
+            StartCoroutine(CharmedCooldown());
             _playerController.MoveTowardsTarget(Siren.position);
+
         }
         else
         {
@@ -40,6 +43,13 @@ public class Charmable : MonoBehaviour, ISubscriber
 
         //Debug.Log(charmedHP);
     }
+
+    IEnumerator CharmedCooldown()
+    {
+        yield return new WaitForSeconds(charmedCooldown);
+        ResetCharm();
+    }
+
 
     public void ReceiveMessage(string s)
     {
@@ -90,6 +100,12 @@ public class Charmable : MonoBehaviour, ISubscriber
         {
 
         }
+    }
+
+    public void ResetCharm()
+    {
+        isCharmed = false;
+        charmedHP = maxCharmedHP;
     }
 
 }
