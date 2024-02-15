@@ -357,7 +357,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
                     FireAttack();
                     _bufferNextAttack = false;
                 }
-
             }
         }
 
