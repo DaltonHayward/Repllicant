@@ -6,6 +6,8 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
    [SerializeField] EventReference FootStepEvent;
+
+   
     // Update is called once per frame
     void Update()
     {
