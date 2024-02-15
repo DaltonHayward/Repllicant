@@ -106,6 +106,7 @@ public class Charmable : MonoBehaviour, ISubscriber
     {
         isCharmed = false;
         charmedHP = maxCharmedHP;
+        _playerController.SetState(PlayerController.State.STANDING);
     }
 
 }
