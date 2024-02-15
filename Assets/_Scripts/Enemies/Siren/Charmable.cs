@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class Charmable : MonoBehaviour, ISubscriber
 {
     private string emissionChannel = "Singing";
 
-    private int maxCharmedHP = 50;
+    [SerializeField] private int maxCharmedHP = 50;
     private int charmedHP;
     private bool isCharmed = false;
     private float ResetCooldown;
     private Color baseColor;
+    public Transform Siren;
+    private PlayerController _playerController;
 
     private void Awake()
     {
@@ -21,6 +24,15 @@ public class Charmable : MonoBehaviour, ISubscriber
 
     private void Update()
     {
+        if (isCharmed && _playerController != null)
+        {
+            _playerController.MoveTowardsTarget(Siren.position);
+        }
+        else
+        {
+
+        }
+
         if (Time.time - ResetCooldown > 3)
         {
             charmedHP = maxCharmedHP;
@@ -31,8 +43,9 @@ public class Charmable : MonoBehaviour, ISubscriber
 
     public void ReceiveMessage(string s)
     {
+        // handles attack message
         if (s.Equals(emissionChannel))
-        {
+        { 
             ResetCooldown = Time.time;
             TickCharm(1);
         }
@@ -67,6 +80,17 @@ public class Charmable : MonoBehaviour, ISubscriber
     private void Charm()
     {
         isCharmed = true;
+        _playerController = GetComponent<PlayerController>();
+
+        if (_playerController != null)
+        {
+            _playerController.SetState(PlayerController.State.CHARMED);
+        }
+
+        else
+        {
+
+        }
     }
 
 }

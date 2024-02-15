@@ -41,7 +41,7 @@ public class Siren : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Movement();
+        Movement();
         //HandleLure();
         //Attract();
     }
@@ -60,7 +60,7 @@ public class Siren : MonoBehaviour
         // calc distance to player
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
-        if (distanceToPlayer < chaseRange && distanceToPlayer > 1.0f)
+        if (distanceToPlayer < chaseRange && distanceToPlayer > 2f)
         {
             transform.LookAt(player.transform.position);
             navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);

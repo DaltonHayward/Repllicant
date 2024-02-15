@@ -756,9 +756,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7c57f7facf094b3499e392e339164b36, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6665864865654652904}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7c57f7facf094b3499e392e339164b36, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5554333935943415899}
   m_SourcePrefab: {fileID: 100100000, guid: 7c57f7facf094b3499e392e339164b36, type: 3}
 --- !u!4 &4673957188746505513 stripped
 Transform:
@@ -810,9 +807,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 2.4
   SprintSpeed: 5.335
+  Speed: 0
   RotationSmoothTime: 0.12
+  InputDirection: {x: 0, y: 0, z: 0}
   SpeedChangeRate: 10
   _rotationSpeed: 1
+  _dodgeCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _dodgeDistance: 5
   _dodgeDuration: 1
   _delayBeforeInvinsible: 0.2
@@ -825,6 +830,7 @@ MonoBehaviour:
   AttackSpeed: 2
   _timeBetweenCombos: 0.2
   _windowBetweenComboAttacks: 0.9
+  strokeBackTargetPosition: {x: 0, y: 0, z: 0}
   Tools:
   - {fileID: 5749599807388344685}
   - {fileID: 8257069299961068031}
@@ -832,19 +838,8 @@ MonoBehaviour:
   ToolHolder: {fileID: 2688467165322857277}
   _inventory: {fileID: 0}
   _interactRange: 3
---- !u!114 &5554333935943415899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5446800147464730515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06f73472d196abc489d3a8042e5bd6d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hp: 100
+  _playerState: 0
+  _effectCanvas: {fileID: 0}
 --- !u!4 &6837078842512307466 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: 7c57f7facf094b3499e392e339164b36, type: 3}

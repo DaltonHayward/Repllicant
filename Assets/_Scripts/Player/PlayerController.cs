@@ -102,11 +102,10 @@ public class PlayerController : MonoBehaviour
     private int _animIDAttackSpeed;
     
     // State
-    public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, STROKEBACK};
+    public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, KNOCKBACK, CHARMED};
     public State _playerState;
 
     public Canvas _effectCanvas;
-
 
 
     // Start is called before the first frame update
@@ -115,9 +114,7 @@ public class PlayerController : MonoBehaviour
         // Interact range
         GetComponentInChildren<SphereCollider>().radius = _interactRange;
 
-
         // Initialize states
-
         _playerState = State.STANDING;
         _currentEquipment = Equipment.WEAPON;
 
@@ -156,7 +153,6 @@ public class PlayerController : MonoBehaviour
         switch (_playerState)
         {
             case State.STANDING:
-            {
                 HandleMovement();
                 HandleInteract();
                 HandleDodge();
@@ -164,11 +160,9 @@ public class PlayerController : MonoBehaviour
                 RotateCamera();
                 ToggleInventory();
                 HandleEquipedItemChange();
-
                 break;
-            }
+
             case State.MOVING:
-            {
                 HandleMovement();
                 HandleInteract();
                 HandleClick();
@@ -177,37 +171,31 @@ public class PlayerController : MonoBehaviour
                 ToggleInventory();
                 HandleEquipedItemChange();
                 break;
-            }
+
             case State.SWINGING:
-            {
                 HandleClick();
                 break;
-            }
+
             case State.DODGING:
-            {
                 break;
-            }
+            
             case State.INTERACTING:
-            {
                 HandleInteract();
                 break;
-            }
+
             case State.INVENTORY:
-            {
                 ToggleInventory();
                 break;
-            }
-
+            
             case State.PETRIFIED:
-            {
                 break;
-            }
+            
+            case State.KNOCKBACK:
+                Knockback();
+                break;
 
-            case State.STROKEBACK:
-                {
-                    Knockback();
-                    break;
-                }
+            case State.CHARMED:
+                break;
 
         }
         ExitAttack();
@@ -292,6 +280,46 @@ public class PlayerController : MonoBehaviour
         {
             _animator.SetFloat(_animIDSpeed, _animationBlend);
             _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+        }
+    }
+
+    public void MoveTowardsTarget(Vector3 target)
+    {
+        var offset = target - transform.position;
+        
+        //Get the difference.
+        if (offset.magnitude > 3f)
+        {
+
+            _targetRotation = Mathf.Atan2(target.x, target.z) * Mathf.Rad2Deg + _playerCamera.transform.eulerAngles.y;
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+
+            // rotate to face input direction relative to camera position
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+
+            //If we're further away than .1 unit, move towards the target.
+            //The minimum allowable tolerance varies with the speed of the object and the framerate. 
+            // 2 * tolerance must be >= moveSpeed / framerate or the object will jump right over the stop.
+
+            offset = offset.normalized * MoveSpeed;
+            //normalize it and account for movement speed.
+            Speed = MoveSpeed;
+            _controller.Move(offset * Time.deltaTime);
+            //actually move the character.
+
+            if (_animator)
+            {
+                _animator.SetFloat(_animIDSpeed, Speed);
+                _animator.SetFloat(_animIDMotionSpeed, 1f);
+            }
+        }
+        else
+        {
+            if (_animator)
+            {
+                _animator.SetFloat(_animIDSpeed, 0);
+                _animator.SetFloat(_animIDMotionSpeed, 1f);
+            }
         }
     }
 

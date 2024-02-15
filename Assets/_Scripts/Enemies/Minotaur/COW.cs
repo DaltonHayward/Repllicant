@@ -191,7 +191,7 @@ public class COW : MonoBehaviour
                     {
                         Debug.Log($"Player taken charge damage{attack}");
 
-                        target[i].gameObject.GetComponent<PlayerController>().SetState(PlayerController.State.strokeBack);
+                        target[i].gameObject.GetComponent<PlayerController>().SetState(PlayerController.State.KNOCKBACK);
                         target[i].gameObject.GetComponent<PlayerController>().strokeBackTargetPosition = target[i].transform.position+ new Vector3(   (Quaternion.Euler(0,30f,0)* (target[i].transform.position-transform.position).normalized* strokeBackDistance).x, 0, (Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized* strokeBackDistance).z);
                         target[i].gameObject.GetComponent<PlayerHealth>().CurrentHealth -= attack;
                         
