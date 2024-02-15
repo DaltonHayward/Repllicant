@@ -447,6 +447,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (Vector3.Distance(transform.position, strokeBackTargetPosition) < 0.2f)
         {
             _playerState = State.STANDING;
+            GetComponent<Charmable>().isCharmed = false;
         }
     }
 
