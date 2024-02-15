@@ -1019,6 +1019,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7473749150894951669, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
   m_PrefabInstance: {fileID: 519021742}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &714664504 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5078754905527251149, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
+  m_PrefabInstance: {fileID: 1078108990}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &735393737
 GameObject:
   m_ObjectHideFlags: 0
@@ -1952,7 +1957,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bdee928372e9741fd887d06a324fd2a1, type: 2}
   itemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 988269515}
-  staticPlayerInventory: {fileID: 0}
+  staticPlayerInventory: {fileID: 714664504}
 --- !u!1 &1481051827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2625,6 +2630,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1301926885007665741, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
+      propertyPath: m_Drag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301926885007665741, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
+      propertyPath: m_Mass
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1855916466459074694, guid: 88ad9489d053b9b4eb671dfcbbc4f4c9, type: 3}
       propertyPath: m_IsTrigger
       value: 1
