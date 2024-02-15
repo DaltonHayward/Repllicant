@@ -10,7 +10,7 @@ public class Charmable : MonoBehaviour, ISubscriber
 
     [SerializeField] private int maxCharmedHP = 50;
     private int charmedHP;
-    private bool isCharmed = false;
+    public bool isCharmed = false;
     private float ResetCooldown;
     private Color baseColor;
     public Transform Siren;
@@ -86,7 +86,6 @@ public class Charmable : MonoBehaviour, ISubscriber
         {
             _playerController.SetState(PlayerController.State.CHARMED);
         }
-
         else
         {
 

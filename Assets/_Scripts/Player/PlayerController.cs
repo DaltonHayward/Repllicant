@@ -834,6 +834,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (channel.Equals("Petrified"))
         {
             PetrifyCooldownCoroutine = PetrifyCooldown(2f);
+            GetComponent<Charmable>().isCharmed = false;
             StartCoroutine(PetrifyCooldownCoroutine);
         }
         
