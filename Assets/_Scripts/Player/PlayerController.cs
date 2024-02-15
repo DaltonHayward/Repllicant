@@ -447,7 +447,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (Vector3.Distance(transform.position, strokeBackTargetPosition) < 0.2f)
         {
             _playerState = State.STANDING;
-            GetComponent<Charmable>().isCharmed = false;
+            GetComponent<Charmable>().ResetCharm();
         }
     }
 
@@ -835,7 +835,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (channel.Equals("Petrified"))
         {
             PetrifyCooldownCoroutine = PetrifyCooldown(2f);
-            GetComponent<Charmable>().isCharmed = false;
+            GetComponent<Charmable>().ResetCharm();
             StartCoroutine(PetrifyCooldownCoroutine);
         }
         
