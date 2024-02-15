@@ -14,12 +14,12 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         CurrentHealth = maxHealth; // At start, full health
+        hpSlider.maxValue = CurrentHealth;
 
         if (_invinsibleDuration > 0)
         {
             _invinsibleDuration -= Time.deltaTime;
         }
-        hpSlider.maxValue = maxHealth;
     }
 
     public void TakeDamage(float damage)

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.XR;
 [RequireComponent(typeof(NavMeshAgent))]
 
 public class Siren : MonoBehaviour
@@ -13,7 +15,7 @@ public class Siren : MonoBehaviour
 
     NavMeshAgent navMeshAgent;
 
-    [SerializeField] private float _lureRange = 30f;
+    [SerializeField] private float _songRange = 30f;
 
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
@@ -25,25 +27,23 @@ public class Siren : MonoBehaviour
 
     void Awake()
     {
-        damageCoroutine = GiveDamageCoroutine();
         _isLuring = false;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         player = GameObject.FindGameObjectWithTag("Player");
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
-        StartCoroutine(damageCoroutine);
+        //damageCoroutine = GiveDamageCoroutine();
+        //StartCoroutine(damageCoroutine);
+
+        SirenSong ss = GetComponent<SirenSong>();
+        ss.SetParameters(0.5f, _songRange, "Singing");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
-        HandleLure();
-        Attract();
+        //Movement();
+        //HandleLure();
+        //Attract();
     }
 
     public void TakeDamage(float damage)
@@ -53,23 +53,24 @@ public class Siren : MonoBehaviour
             Die();
     }
 
-    private void Movement() 
+    public void Movement()
     {
-        // calculate the distance bewteen the enemy and the player and move towards them
+       
+        // only check for new position every 5 seconds
+        // calc distance to player
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-        if (distanceToPlayer <= _lureRange)
+
+        if (distanceToPlayer < chaseRange && distanceToPlayer > 1.0f)
         {
             transform.LookAt(player.transform.position);
+            navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
         }
-        if (distanceToPlayer < chaseRange)
-        {
-            navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * _lureRange);
-        }
+        
     }
-    
-    private void HandleLure()
+
+    /*private void HandleLure()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
+        Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
 
         foreach (Collider c in targets)
         {
@@ -77,21 +78,19 @@ public class Siren : MonoBehaviour
             if (c.CompareTag("Player") || c.CompareTag("Enemy"))
             {
                 ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) <= _lureRange)
+                if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) <= _songRange)
                 {
                     subscriber.ReceiveMessage("Frequency");
                     _isLuring = true;
-                    //break;
                 }
-                else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) > _lureRange)
+                else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) > _songRange)
                 {
                     subscriber.ReceiveMessage("Quiet");
                     _isLuring = false;
-                    //break;
                 }
             }
         }
-    }
+    }*/
 
     private void OnDestroy()
     {
@@ -123,20 +122,20 @@ public class Siren : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private IEnumerator GiveDamageCoroutine()
+    /*private IEnumerator GiveDamageCoroutine()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
-        while (Vector3.Distance(player.transform.position, transform.position) <= _lureRange)
+        Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
+        while (Vector3.Distance(player.transform.position, transform.position) <= _songRange)
         {
             foreach (Collider c in targets)
             {
                 if (c.CompareTag("Player"))
                 {
                     ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                    if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) <= _lureRange)
+                    if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) <= _songRange)
                     {
                         // Damages player more as they get closer to the siren
-                        player.GetComponent<PlayerHealth>().TakeDamage(_lureRange / Vector3.Distance(player.transform.position, transform.position));
+                        player.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(player.transform.position, transform.position));
                         yield return new WaitForSeconds(5);
                         Debug.Log(player.GetComponent<PlayerHealth>().CurrentHealth);
                     }
@@ -145,20 +144,36 @@ public class Siren : MonoBehaviour
         }
     }
 
-    private void Attract() 
+    private void Attract()
     {
         // player should gravitate toward siren when in range
-        Collider[] targets = Physics.OverlapSphere(transform.position, _lureRange);
+        Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
         foreach (Collider c in targets)
         {
             if (c.CompareTag("Player"))
             {
+                // get the direction we are facing 
+                Vector3 direction = (transform.position - player.transform.position);
+
+                // returns the angle (from, to)
+                float angleToSiren = Vector3.Angle(direction, player.transform.forward);
+
+                // when the angle is at -90 or +90, then it is in view (180º FOV)
                 CharacterController cc = player.GetComponent<CharacterController>();
-                Vector3 direction = (transform.position - player.transform.position).normalized;
-                cc.Move(direction * attractionForce * Time.deltaTime);
+                if (angleToSiren >= -90 && angleToSiren <= 90)
+                {
+                    Debug.Log("looking at siren");
+                    cc.Move(direction.normalized * (attractionForce * Time.deltaTime));
+                }
+                else
+                {
+                    Debug.Log("looking away from siren");
+                    cc.Move(direction.normalized * (attractionForce + player.GetComponent<PlayerController>().Speed * Time.deltaTime));
+                }
+
             }
         }
-    }
+    }*/
 
 
     public void ReceiveMessage(string channel)
@@ -174,7 +189,7 @@ public class Siren : MonoBehaviour
             if (float.TryParse(parts[1].Trim(), out damage))
             {
                 TakeDamage(damage);
-                
+
             }
         }
     }

@@ -1,0 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SirenSong : MonoBehaviour
+{
+    [SerializeField] private float emitFrequency;
+    private float broadcastRange;
+    private string channel;
+
+    private IEnumerator emissionCoroutine;
+
+    private void Awake()
+    {
+        emissionCoroutine = CoEmit();
+    }
+
+    public void SetParameters(float freq, float range, string ch)
+    {
+        emitFrequency = freq;
+        broadcastRange = range;
+        channel = ch;
+        StartCoroutine(emissionCoroutine);
+    }
+
+    private IEnumerator CoEmit()
+    {
+        while (true)
+        {
+            Collider[] targets = Physics.OverlapSphere(transform.position, broadcastRange);
+            foreach (Collider c in targets)
+            {
+                ISubscriber sub = c.GetComponent<ISubscriber>();
+                if (sub != null)
+                {
+                    Debug.Log(sub);
+                    sub.ReceiveMessage(channel);
+                }
+            }
+
+            yield return new WaitForSeconds(emitFrequency);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, broadcastRange);
+    }
+}

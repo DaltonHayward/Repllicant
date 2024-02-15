@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, ISubscriber
+public class PlayerController : MonoBehaviour
 
 {
     private Transform _playerCamera;
@@ -14,10 +14,11 @@ public class PlayerController : MonoBehaviour, ISubscriber
     public float SprintSpeed = 5.335f;
     [Tooltip("How fast the character turns to face movement direction")]
     [Range(0.0f, 0.3f)]
+    public float Speed;
     public float RotationSmoothTime = 0.12f;
     public Vector3 InputDirection;
     private CharacterController _controller;
-    private float _speed;
+    //private float _speed;
     private float _animationBlend;
     private float _targetRotation = 0.0f;
     private float _rotationVelocity;
@@ -101,7 +102,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private int _animIDAttackSpeed;
     
     // State
-    public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, strokeBack};
+    public enum State {MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, STROKEBACK};
     public State _playerState;
 
     public Canvas _effectCanvas;
@@ -202,14 +203,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 break;
             }
 
-            case State.strokeBack:
+            case State.STROKEBACK:
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, strokeBackTargetPosition, 5 * Time.deltaTime);
-                    if (Vector3.Distance(transform.position, strokeBackTargetPosition) < 0.2f)
-                    {
-
-                        _playerState = State.MOVING;
-                    }
+                    Knockback();
                     break;
                 }
 
@@ -253,15 +249,15 @@ public class PlayerController : MonoBehaviour, ISubscriber
         {
             // creates curved result rather than a linear one giving a more organic speed change
             // note T in Lerp is clamped, so we don't need to clamp our speed
-            _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
+            Speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
                 Time.deltaTime * SpeedChangeRate);
 
             // round speed to 3 decimal places
-            _speed = Mathf.Round(_speed * 1000f) / 1000f;
+            Speed = Mathf.Round(Speed * 1000f) / 1000f;
         }
         else
         {
-            _speed = targetSpeed;
+            Speed = targetSpeed;
         }
 
         _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
@@ -289,7 +285,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
         // move the player
-        _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, 0, 0.0f) * Time.deltaTime);
+        _controller.Move(targetDirection.normalized * (Speed * Time.deltaTime) + new Vector3(0.0f, 0, 0.0f) * Time.deltaTime);
 
         // update animator if using character
         if (_animator)
@@ -407,6 +403,15 @@ public class PlayerController : MonoBehaviour, ISubscriber
     public void EndTrail()
     {
         Tools[_currentTool].EndTrail();
+    }
+
+    private void Knockback()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, strokeBackTargetPosition, 5 * Time.deltaTime);
+        if (Vector3.Distance(transform.position, strokeBackTargetPosition) < 0.2f)
+        {
+            _playerState = State.STANDING;
+        }
     }
 
     #endregion
@@ -778,7 +783,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     #endregion
 
-    #region ISubscriber
+    #region - ISubscriber -
     public void ReceiveMessage(string channel)
     {
         if (channel.Equals("Frequency"))
