@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.AI;
 public class ItemGrid : MonoBehaviour
 {
     public const float tileSizeWidth = 32;
@@ -11,19 +12,25 @@ public class ItemGrid : MonoBehaviour
     Vector2Int tileGridPosition = new Vector2Int();
 
     RectTransform rectTransform;
-    Inventory_Item[,] invItemSlots;
+    public Inventory_Item[,] invItemSlots;
     [SerializeField] public int InventoryWidth;
     [SerializeField] public int InventoryHeight;
     [SerializeField] GameObject itemPrefab;
 
-
+    /// <summary>
+    /// Grabs the component of the current item, and initializes the inventory grid.
+    /// </summary>
     private void Start(){
         rectTransform = GetComponent<RectTransform>();
         Init(InventoryWidth,InventoryHeight);
         
        
     }
-
+    /// <summary>
+    /// Initializes the inventory grid, sets the size of the grid and creates the inventory grid.
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
     private void Init(int width, int height)
     {
         invItemSlots = new Inventory_Item[width, height];
@@ -32,6 +39,11 @@ public class ItemGrid : MonoBehaviour
         rectTransform.sizeDelta = size;
     }
 
+    /// <summary>
+    /// Given the current Vector2 mouse position, it will return the grid position of the mouse.
+    /// </summary>
+    /// <param name="mousePosition"></param>
+    /// <returns>a Vector2Int that is the tileGridPosition </returns>
     public Vector2Int GetTileGridPosition(Vector2 mousePosition)
     {
 
@@ -44,10 +56,14 @@ public class ItemGrid : MonoBehaviour
         
     }
 
-    /*
-    Handles the storing of the item in the grid, checks if the item can be stored in the grid, if it can it will store the item in the grid and return true, 
-    if it can't it will return false
-    */
+    /// <summary>
+    /// Stores the item in the inventory grid, if there is an overlapping item it will return false, if there is no overlapping item it will return true.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="overLappingItem"></param>
+    /// <returns>true or false</returns>
     public bool storeItem(Inventory_Item item, int x, int y, ref Inventory_Item overLappingItem)
     {
 
@@ -61,13 +77,16 @@ public class ItemGrid : MonoBehaviour
         {
             CleanUpTiles(overLappingItem);
         }
+
         putItemInInventory(item, x, y);
         return true;
-
-
-
     }
-
+    /// <summary>
+    /// Just places the item in the inventory grid, used by the storeItem function.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
     public void putItemInInventory(Inventory_Item item, int x, int y)
     {
         RectTransform rectTransform = item.GetComponent<RectTransform>();
@@ -93,6 +112,15 @@ public class ItemGrid : MonoBehaviour
         Debug.Log("Item placed at " + x + " " + y);
     }
 
+    /// <summary>
+    /// Calculates the position of the item in the grid,
+    /// CURRENTLY CAUSING ISSUES WITH IMAGE ON ROTATION
+    /// ** maybe check the rotation of the item and adjust the position accordingly
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns>returns a Vector2 type</returns>
     public Vector2 CalculateItemPosition(Inventory_Item item, int x, int y)
     {
         Vector2 position = new Vector2();
@@ -101,9 +129,16 @@ public class ItemGrid : MonoBehaviour
         return position;
     }
 
-    /*
-    Checks if the item is overlapping with another item in the grid, if it is it will return false and set the overLappingItem to the item that is overlapping
-    */
+    /// <summary>
+    /// Checks to see if there is any overlapping items in the grid on placement, 
+    /// if there is it will return false, if there isn't it will return true.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <param name="overLappingItem"></param>
+    /// <returns>true or false</returns>
     private bool OverlapCheck(int x, int y, int width, int height, ref Inventory_Item overLappingItem)
     {
         if (BoundryCheck(x, y, width, height) == false) { return false; }
@@ -127,6 +162,15 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Checks if there is free space in the grid to store the item, by 
+    /// looping through the inventory grid and checking if there is a free space
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns>true if there is a free space, false if there is not</returns>
     private bool CheckFreeSpace(int x, int y, int width, int height)
         {
             if (BoundryCheck(x, y, width, height) == false) { return false; }
@@ -144,9 +188,12 @@ public class ItemGrid : MonoBehaviour
         }
 
     
-    /*
-    if the item is not null, it will remove the item from the grid and return the item
-    */
+    
+    /// <summary>
+    /// Just " picks up " the item in the incentory and cleans up the tiles afterwards, used by 
+    /// another function.
+    /// </summary>
+    /// <returns>The picked up item as type Inventory Item.</returns>
     public Inventory_Item PickUpItem(int x, int y)
     {
         Inventory_Item item = invItemSlots[x, y];
@@ -157,9 +204,13 @@ public class ItemGrid : MonoBehaviour
 
         invItemSlots[x, y] = null;
         return item;
-
     }
 
+    /// <summary>
+    /// Removes the item from the grid, going to be used in the inventory controller to remove the item from the grid.
+    /// just goes through the grid and sets the items to null
+    /// </summary>
+    /// <param name="item"></param>
     private void CleanUpTiles(Inventory_Item item)
     {
         for (int itemx = 0; itemx < item.WIDTH; itemx++)
@@ -170,7 +221,12 @@ public class ItemGrid : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// checks to make sure that the item is within the bounds of the grid, if it is it will return true, if it isn't it will return false
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     public bool CanStoreItem( int x, int y)
     {
         if (x < 0 || y < 0){
@@ -183,6 +239,14 @@ public class ItemGrid : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Checks if the item can be stored in the grid, if it can it will return true, if it can't it will return false
+    /// </summary>
+    /// <param name="origix"></param>
+    /// <param name="origiy"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns></returns>
     public bool BoundryCheck(int origix, int origiy, int width, int height)
     {
         if (CanStoreItem(origix, origiy) == false || CanStoreItem(origix + width, origiy + height) == false)
@@ -193,13 +257,23 @@ public class ItemGrid : MonoBehaviour
         
         return true;
     }
-
+    /// <summary>
+    /// returns the item that is located at x and y coordinates
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     internal Inventory_Item GetItem(int x, int y)
     {
         return invItemSlots[x, y];
     }
 
-    internal Vector2Int? FindSpace(Inventory_Item itemtoInsert)
+    /// <summary>
+    /// Finds a space in the inventory grid to store the item, if there is no space it will return null.
+    /// </summary>
+    /// <param name="itemtoInsert"></param>
+    /// <returns></returns>
+    public Vector2Int? FindSpace(Inventory_Item itemtoInsert)
     {
         int height= itemtoInsert.HEIGHT;
         int width = itemtoInsert.WIDTH;
@@ -214,6 +288,30 @@ public class ItemGrid : MonoBehaviour
             }
         }
         return null;
+    }
+
+    /// <summary>
+    /// Returns the item that is being hovered over, if there is no item being hovered over it will return null.
+    /// </summary>
+    /// <param name="mouseposition"></param>
+    /// <returns></returns>
+    public Inventory_Item ItemHovered(Vector2 mouseposition){
+        Vector2Int gridPosition = GetTileGridPosition(mouseposition);
+        Inventory_Item item = GetItem(gridPosition.x, gridPosition.y);
+        if (item != null){
+            return item;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// NOT IMPLEMENTED YET
+    /// Removes the item from the grid, going to be used in the inventory controller to remove the item from the grid.
+    /// </summary>
+    /// <param name="item"></param>
+    public void RemoveItem(Inventory_Item item)
+    {
+        CleanUpTiles(item);
     }
     
 }

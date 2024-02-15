@@ -9,23 +9,29 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     InventoryController invController;
     ItemGrid itemGrid;
-    
+    /// <summary>
+    /// finds type InventoryController, and also gets the item grid attached.
+    /// </summary>
     private void Awake(){
         //Optimize at some point
         invController = FindObjectOfType(typeof(InventoryController)) as InventoryController;
         itemGrid = GetComponent<ItemGrid>();
     }
-
+    /// <summary>
+    /// Sets the selected item grid to the item grid that the pointer is over.
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerEnter(PointerEventData eventData)
     {
         invController.SelectedItemGrid = itemGrid;
-        // throw new System.NotImplementedException();
     }
-
+    /// <summary>
+    /// Sets the selected item grid to null when the pointer exits the item grid.
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerExit(PointerEventData eventData)
     {
         invController.SelectedItemGrid = null;
-        // throw new System.NotImplementedException();
     }
 
   

@@ -1,18 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    private Boolean isPickedUp = false;
+    void Start()
+    {
+        
+    }
     void OnTriggerStay(Collider other)
     {
 
         if (other.transform.tag == "Player")
         {
             this.gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
-            if (Input.GetKey("f"))
+            if (Input.GetKey("l"))
+
             {
-                Destroy(this.gameObject);
+                if (!isPickedUp){
+                    isPickedUp = true;
+                    InventoryController.instance.InsertNewItem(this.gameObject.GetComponent<Inventory_Item>(),InventoryController.playerInventory);
+                    
+                    Destroy(this.gameObject);
+                }
+
             }
         }
         else
