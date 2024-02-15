@@ -21,7 +21,6 @@ public class RockProjectile : MonoBehaviour
 
      void OnTriggerEnter(Collider collision)
     {
-        Debug.Log("Collision for stone");
         if (collision.gameObject.CompareTag("Player"))
         {
             var playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
