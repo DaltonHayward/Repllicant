@@ -369,7 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _DayLength: 24
   _StartingTime: 6
-  _TimeFactor: 6000
+  _TimeFactor: 600
   Bridges:
   - {fileID: 1814792500}
   - {fileID: 444818393}
@@ -819,7 +819,7 @@ GameObject:
   - component: {fileID: 444818392}
   - component: {fileID: 444818393}
   m_Layer: 0
-  m_Name: Directional Light
+  m_Name: Sun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4385,7 +4385,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382440811}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 85a7ad6ef67fc3b41bf01919f4a0da53, type: 3}
+  m_Asset: {fileID: 0}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
