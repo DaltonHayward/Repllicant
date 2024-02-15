@@ -75,6 +75,10 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     public Vector3 strokeBackTargetPosition;
 
+    // for hurt/petrify color changes
+    private Color _originalMaterialColor;
+    private SkinnedMeshRenderer meshRenderer;
+
     // Equipment
     public enum Equipment { WEAPON, PICKAXE, AXE };
     private Equipment _currentEquipment;
@@ -122,6 +126,10 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
         // set current tool as weapon
         _currentTool = 0;
+
+        // set base color
+        meshRenderer = gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+        _originalMaterialColor = meshRenderer.materials[0].GetColor("_BaseColor");
 
         // Inital dodge setup
         //Keyframe dodge_lastFrame = _dodgeCurve[_dodgeCurve.length - 1];
@@ -800,11 +808,13 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     IEnumerator PetrifyCooldown(float seconds)
     {
+        meshRenderer.materials[0].SetColor("_BaseColor", Color.grey);
         _playerState = State.PETRIFIED;
         _animator.enabled = false;
         yield return new WaitForSeconds(seconds);
         _playerState = State.STANDING;
         _animator.enabled = true;
+        meshRenderer.materials[0].SetColor("_BaseColor", _originalMaterialColor);
     }
     #endregion
 }

@@ -10,39 +10,20 @@ public class Medusa : Enemy
     public GameObject projectilePrefab; // Assign this in the Inspector with your projectile prefab
     public Transform projectileSpawnPoint;
 
+    // reference to cone attack
+    public GameObject coneAttack;
+    public MeshRenderer coneMesh;
+
     // for turn red when dmg taken effect
     private Color _originalMaterialColor;
 
     public void Awake()
     {
         _originalMaterialColor = GetComponentInChildren<SkinnedMeshRenderer>().materials[0].GetColor("_BaseColor");
+        coneMesh = coneAttack.GetComponent<MeshRenderer>();
     }
 
-    /*void Update()
-    {
-        if (Vector3.Distance(player.position, transform.position) <= attackRange)
-        {
-            transform.LookAt(player.position);
-            if (Time.time - lastAttackTime > attackSpeed)
-            {
-                Debug.Log("attack");
-                lastAttackTime = Time.time;
-            }
-            if (Time.time - lastSkillTime > skillSpeed)
-            {
-                StartCoroutine(Skill());
-                lastSkillTime = Time.time;
-            }
-            return;
-        }
-        if (Vector3.Distance(player.position, transform.position) < chaseRange)
-        {
-            Debug.DrawLine(transform.position, player.position - (player.position - transform.position).normalized * attackRange);
-            navMeshAgent.SetDestination(player.position - (player.position - transform.position).normalized * attackRange);
-        }
-    }*/
-
-
+    // controls Medusa movement
     public override void UpdateLogic()
     {
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
@@ -54,7 +35,6 @@ public class Medusa : Enemy
                 Debug.Log("Attacking");
                 Attack();
                 lastAttackTime = Time.time;
-                // Implement attack logic here (e.g., reduce player HP)
             }
 
             if (Time.time - lastSkillTime > skillSpeed)
@@ -71,19 +51,20 @@ public class Medusa : Enemy
         }
     }
 
+    // changes medusa color to indicate she got damaged
     public override void Hurt()
     {
         GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", Color.red);
-        StartCoroutine(Timeout(0.1f));
+        StartCoroutine(HurtTimeout(0.1f));
     }
 
-
-    IEnumerator Timeout(float seconds)
+    IEnumerator HurtTimeout(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", _originalMaterialColor);
     }
 
+    // medusa spawns a snake that moves forward
     void Attack()
     {
         if (projectilePrefab && projectileSpawnPoint)
@@ -107,12 +88,13 @@ public class Medusa : Enemy
     public IEnumerator Skill()
     {
         Debug.Log("Using Skill");
-        PetrifyTargetsInRange();
+        StartCoroutine(SkillTimer(2));
         yield return new WaitForSeconds(skillSpeed); // cooldown
     }
 
     void PetrifyTargetsInRange()
     {
+        // grab references to all targets in range
         Collider[] targets = Physics.OverlapSphere(transform.position, attackRange);
         foreach (Collider target in targets)
         {
@@ -129,14 +111,31 @@ public class Medusa : Enemy
 
                     // when the angle is at -90 or +90, then it is in view (180º FOV)
                     CharacterController cc = player.GetComponent<CharacterController>();
-                    if (angleToMedusa >= -90 && angleToMedusa <= 90)
+                    if (target.tag == "Player")
                     {
-                        Debug.Log("looking at medusa");
+                        // if player is facing medusa, petrify them
+                        if (angleToMedusa >= -90 && angleToMedusa <= 90)
+                        {
+                            Debug.Log("looking at medusa");
+                            subscriber.ReceiveMessage("Petrified");
+                        }
+                        Debug.Log("not looking at medusa");
+                    }
+                    else
+                    {
                         subscriber.ReceiveMessage("Petrified");
                     }
-                    Debug.Log("not looking at medusa");
                 }
             }
         }
     }
-}
+
+    // enables visual cone for attack, then 2 seconds later petrifies targets in range
+    public IEnumerator SkillTimer(float seconds)
+    {
+        coneMesh.enabled = true;
+        yield return new WaitForSeconds(seconds);
+        PetrifyTargetsInRange();
+        coneMesh.enabled = false;
+    }
+    }
