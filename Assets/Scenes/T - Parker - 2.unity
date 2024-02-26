@@ -573,6 +573,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &275859567 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1549405492462902697, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
+  m_PrefabInstance: {fileID: 1078108990}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1839735485 &484051466 stripped
 Tilemap:
   m_CorrespondingSourceObject: {fileID: 5406432198460182352, guid: ece8cc41786be494fae1ee392ca174a6, type: 3}
@@ -1946,11 +1951,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81f5823fc298463bb82bf4e770a0641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 1933264787}
   items:
   - {fileID: 11400000, guid: 44875252c2f144905a2c784e26df3793, type: 2}
   - {fileID: 11400000, guid: bdee928372e9741fd887d06a324fd2a1, type: 2}
   itemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 988269515}
+  staticPlayerInventory: {fileID: 275859567}
 --- !u!1 &1481051827
 GameObject:
   m_ObjectHideFlags: 0
