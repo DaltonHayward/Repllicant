@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class ProjectilesOfMedusa : MonoBehaviour
 {
-    public float damageAmount = 10f;
-    private PlayerController _playerController;
     public Mesh mesh;
     private void Start()
     {
@@ -12,12 +10,24 @@ public class ProjectilesOfMedusa : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshCollider>().sharedMesh = mesh;
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<Wood>() != null)//根据是否有wood组件判断是不是树
+        {
+            Wood wood = other.GetComponent<Wood>();
+            wood.sureToDrop = wood.dropWhenStoned;
+        }
+        else if (other.CompareTag("Player") && Vector3.Angle(other.transform.forward, transform.parent.position) < 90)//判断是否朝向
+        {
+            Debug.Log("石化玩家");
+        }
+    }
     public void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<Wood>() != null)
         {
             Wood wood = other.GetComponent<Wood>();
+            wood.sureToDrop = wood.dropItemStart;
         }
         else if (other.CompareTag("Player"))
         {
@@ -25,7 +35,6 @@ public class ProjectilesOfMedusa : MonoBehaviour
         }
 
     }
-
     void DrawHalfCycle(float radius, float innerRadius, int segments, float angleDegree, Vector3 centerCircle)
     {
         //顶点
