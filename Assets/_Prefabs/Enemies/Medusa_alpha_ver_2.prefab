@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7903404527424385}
   - component: {fileID: 342555547684322803}
   - component: {fileID: 5173600092177826108}
-  - component: {fileID: 8394266528449013815}
   - component: {fileID: 8592965967292768048}
+  - component: {fileID: 1593232870468000586}
   m_Layer: 0
-  m_Name: HalfCircle
+  m_Name: AttackCone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4489863206902718272}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -85,20 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8394266528449013815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4489863206902718272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d10803b1717c342a18e122b4acdb44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageAmount: 10
-  mesh: {fileID: 0}
 --- !u!64 &8592965967292768048
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -121,6 +107,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &1593232870468000586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4489863206902718272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3d2087991468e478f26c875f10ecb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10
+  mesh: {fileID: 0}
 --- !u!1001 &2738998648577550291
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,7 +131,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 52c2bc2db1a99e244b84bacdf41c42f7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 42.33
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 52c2bc2db1a99e244b84bacdf41c42f7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -139,7 +139,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 52c2bc2db1a99e244b84bacdf41c42f7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 52c2bc2db1a99e244b84bacdf41c42f7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -251,7 +251,6 @@ MonoBehaviour:
   lastSkillTime: -100
   player: {fileID: 0}
   navMeshAgent: {fileID: 4434614880444801797}
-  closePlayer: 0
   commonItems: []
   uncommonItems: []
   rareItems: []
@@ -261,8 +260,10 @@ MonoBehaviour:
   rareItemsProbability: 0
   legendaryItemsProbability: 0
   skillSpeed: 10
-  projectilePrefab: {fileID: 3238252477249893804, guid: c822fef3ff9b9ad4a94969cb6248c10b, type: 3}
+  projectilePrefab: {fileID: 4735813760399160901, guid: f66373512c05dee499c54e8284cdfb8c, type: 3}
   projectileSpawnPoint: {fileID: 2416279877729648696}
+  coneAttack: {fileID: 4489863206902718272}
+  coneMesh: {fileID: 0}
 --- !u!54 &6496442721082624695
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -305,7 +306,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

@@ -24,7 +24,7 @@ public class Medusa : Enemy
     }
 
     // controls Medusa movement
-    public override void UpdateLogic()
+    public override void Update()
     {
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
         if (distanceToPlayer <= attackRange)
