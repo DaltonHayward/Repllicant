@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class ItemInstance : MonoBehaviour
 {
-    // Start is called before the first frame update
+    Item itemType;
+    int condition; 
+    int stackSize; 
+    bool onFire; 
+
     void Start()
     {
         

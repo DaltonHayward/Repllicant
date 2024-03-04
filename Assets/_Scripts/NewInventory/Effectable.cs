@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Effectable : MonoBehaviour
+public abstract class Effectable : MonoBehaviour
 {
     // Start is called before the first frame update
+    String emissionChannel;
+    bool isEffected;
     void Start()
     {
         
@@ -14,5 +17,8 @@ public class Effectable : MonoBehaviour
     void Update()
     {
         
+    }
+    void applyEffect(Effect effect)
+    {
     }
 }

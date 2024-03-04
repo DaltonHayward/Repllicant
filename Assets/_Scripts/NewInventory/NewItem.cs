@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class NewItem : MonoBehaviour
+[CreateAssetMenu(fileName = "NewItem", menuName = "ScriptableObjects/NewItem", order = 1)]
+public class NewItem : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    string ItemName;
+    string description;
+    GameObject envModel;
+    GameObject invModel;
+    int width;
+    int height;
+    bool canStack;
+    int maxStackSize;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

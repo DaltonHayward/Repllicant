@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class NewInventoryItem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    int onGridPositionX;
+    int onGridPositionY;
+    bool isRotated;
+    void Initialize(ItemData itemData){
+        //this.itemData = itemData;
+
+    }
+    void Rotate(){
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
