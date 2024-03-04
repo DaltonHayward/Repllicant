@@ -442,7 +442,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     private void Knockback()
     {
-        transform.position = Vector3.MoveTowards(transform.position, strokeBackTargetPosition, 5 * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, strokeBackTargetPosition, 30 * Time.deltaTime);
         if (Vector3.Distance(transform.position, strokeBackTargetPosition) < 0.2f)
         {
             _playerState = State.STANDING;
