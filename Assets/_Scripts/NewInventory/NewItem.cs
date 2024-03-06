@@ -7,9 +7,11 @@ public class NewItem : ScriptableObject
     string description;
     GameObject envModel;
     GameObject invModel;
+    Sprite invIcon;
     int width;
     int height;
     bool canStack;
     int maxStackSize;
+    
 
 }

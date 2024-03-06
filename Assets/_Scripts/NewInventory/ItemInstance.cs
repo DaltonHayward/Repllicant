@@ -9,14 +9,19 @@ public class ItemInstance : MonoBehaviour
     int stackSize; 
     bool onFire; 
 
-    void Start()
+    public ItemInstance(Item itemType, int condition, int stackSize, bool onFire)
     {
-        
+        this.itemType = itemType;
+        this.condition = condition;
+        this.stackSize = stackSize;
+        this.onFire = onFire;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void DamageItem(float amount)
     {
-        
+        condition -= (int)amount;
+        if (condition <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

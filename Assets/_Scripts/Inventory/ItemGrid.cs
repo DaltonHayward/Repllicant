@@ -16,6 +16,7 @@ public class ItemGrid : MonoBehaviour
     [SerializeField] public int InventoryWidth;
     [SerializeField] public int InventoryHeight;
     [SerializeField] GameObject itemPrefab;
+    public ItemInstance[,] StoredItems;
 
     /// <summary>
     /// Grabs the component of the current item, and initializes the inventory grid.
@@ -312,6 +313,15 @@ public class ItemGrid : MonoBehaviour
     public void RemoveItem(Inventory_Item item)
     {
         CleanUpTiles(item);
+    }
+
+    public void AddCollectable(CollectableItem item){
+        item.CollectItem();
+        
+
+    }
+    public void RemoveCollectable(CollectableItem item){
+
     }
     
 }

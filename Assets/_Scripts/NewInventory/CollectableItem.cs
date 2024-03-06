@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CollectableItem : MonoBehaviour
 {
-    ItemInstance itemInstance;
+    public ItemInstance itemInstance;
+
     void Start()
     {
         
@@ -15,15 +16,16 @@ public class CollectableItem : MonoBehaviour
     {
         
     }
-    ItemInstance CollectItem()
+    public ItemInstance CollectItem()
     {
-        return null;
+        return itemInstance;
     }
-    ItemInstance DropItem()
+    public ItemInstance DropItem()
     {
         return null;
     }
     void DamageItem(float amount){
+        itemInstance.DamageItem(amount);
 
     }
     void ApplyInventoryEffect(Effect effect){
