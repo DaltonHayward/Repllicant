@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7764270523526774434}
   - component: {fileID: 8348649774917983717}
   - component: {fileID: 6223024176077588355}
+  - component: {fileID: 6527050336567753331}
   m_Layer: 0
   m_Name: Tree3
   m_TagString: Untagged
@@ -105,6 +106,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7888603, y: 0.55394095, z: 2.6159961}
   m_Center: {x: -0.049345016, y: 0.051017344, z: -2.1604297}
+--- !u!114 &6527050336567753331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2291041904062072184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c033f70b1b219fc4eafb5873bbb62fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  sureToDrop: {fileID: 0}
+  DropItemAndProbability_List: []
+  dropWhenStoned: {fileID: 0}
+  dropItemStart: {fileID: 0}
+  isStoned: 0
+  stoneMaterial: {fileID: 0}
+  woodMaterial: {fileID: 0}
 --- !u!1 &8956234594410841806
 GameObject:
   m_ObjectHideFlags: 0
