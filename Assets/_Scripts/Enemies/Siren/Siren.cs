@@ -31,8 +31,8 @@ public class Siren : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
-        //damageCoroutine = GiveDamageCoroutine();
-        //StartCoroutine(damageCoroutine);
+        damageCoroutine = GiveDamageCoroutine();
+        StartCoroutine(damageCoroutine);
 
         SirenSong ss = GetComponent<SirenSong>();
         ss.SetParameters(0.5f, _songRange, "Singing");
@@ -43,7 +43,7 @@ public class Siren : MonoBehaviour
     {
         Movement();
         //HandleLure();
-        //Attract();
+        Attract();
     }
 
     public void TakeDamage(float damage)
@@ -122,7 +122,7 @@ public class Siren : MonoBehaviour
         Destroy(gameObject);
     }
 
-    /*private IEnumerator GiveDamageCoroutine()
+    private IEnumerator GiveDamageCoroutine()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
         while (Vector3.Distance(player.transform.position, transform.position) <= _songRange)
@@ -173,7 +173,7 @@ public class Siren : MonoBehaviour
 
             }
         }
-    }*/
+    }
 
 
     public void ReceiveMessage(string channel)
