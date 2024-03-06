@@ -3,22 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Effectable : MonoBehaviour
+public abstract class Effectable : MonoBehaviour, ISubscriber
 {
-    // Start is called before the first frame update
     String emissionChannel;
     bool isEffected;
-    void Start()
+   
+    void applyEffect()
     {
+
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReceiveMessage(string channel)
     {
-        
-    }
-    void applyEffect(Effect effect)
-    {
+        if (channel.Equals(emissionChannel))
+        {
+            applyEffect();
+        }
     }
 }

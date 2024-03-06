@@ -37,7 +37,7 @@ public abstract class Effect : MonoBehaviour
     {
         if (inInventory)
         {
-            //no logic yet
+            //no logic yet for inv yet 
         }
         else
         {
