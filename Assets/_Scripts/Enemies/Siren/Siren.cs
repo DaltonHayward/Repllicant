@@ -20,14 +20,12 @@ public class Siren : MonoBehaviour
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
 
-    private bool _isLuring;
     public GameObject player;
 
     private IEnumerator damageCoroutine;
 
     void Awake()
     {
-        _isLuring = false;
         player = GameObject.FindGameObjectWithTag("Player");
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
@@ -42,7 +40,6 @@ public class Siren : MonoBehaviour
     void Update()
     {
         Movement();
-        //HandleLure();
         Attract();
     }
 
@@ -64,33 +61,8 @@ public class Siren : MonoBehaviour
         {
             transform.LookAt(player.transform.position);
             navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
-        }
-        
+        }   
     }
-
-    /*private void HandleLure()
-    {
-        Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
-
-        foreach (Collider c in targets)
-        {
-            // send signals to the player and all enemies telling them that they're in range of the siren
-            if (c.CompareTag("Player") || c.CompareTag("Enemy"))
-            {
-                ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) <= _songRange)
-                {
-                    subscriber.ReceiveMessage("Frequency");
-                    _isLuring = true;
-                }
-                else if (subscriber != null && Vector3.Distance(c.gameObject.transform.position, transform.position) > _songRange)
-                {
-                    subscriber.ReceiveMessage("Quiet");
-                    _isLuring = false;
-                }
-            }
-        }
-    }*/
 
     private void OnDestroy()
     {
@@ -189,7 +161,6 @@ public class Siren : MonoBehaviour
             if (float.TryParse(parts[1].Trim(), out damage))
             {
                 TakeDamage(damage);
-
             }
         }
     }
