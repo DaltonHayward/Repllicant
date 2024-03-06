@@ -13,6 +13,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<Structure> structures;
     // where structures are placed in scene
     [SerializeField] private Tilemap ground;
+    [SerializeField] private Tilemap walls;
     [SerializeField] private Transform props;
     [SerializeField] private Transform enemies;
     // base tileset
@@ -52,7 +53,7 @@ public class LevelGenerator : MonoBehaviour
         (List<Rect>, List<Rect>) partitionedLevel = PartitionLevel();
         List<Rect> partitionedAreas = partitionedLevel.Item1;
         List<Rect> borders = partitionedLevel.Item2;
-        CreateBaseGroundTiles();
+        //CreateBaseGroundTiles();
         SpawnStructures(partitionedAreas);
         SpawnEnemiesInArea(level);
     }
@@ -164,8 +165,9 @@ public class LevelGenerator : MonoBehaviour
         if (structure != null)
         {
             Tilemap structGroundTilemap = structure.transform.Find("Ground").GetComponent<Tilemap>();
+            Tilemap structWallsTilemap = structure.transform.Find("Walls").GetComponent<Tilemap>();
 
-            if (structGroundTilemap != null)
+            if (structGroundTilemap != null && structWallsTilemap != null)
             {
                 // Copy the ground and wall tiles from the structure to corresponding tilemaps of the level generator
                 for (int i = 0; i < structureToGen.width; i++)
@@ -173,6 +175,7 @@ public class LevelGenerator : MonoBehaviour
                     for (int j = 0; j < structureToGen.height; j++)
                     {
                         TileBase groundTile = structGroundTilemap.GetTile(new Vector3Int(i, j, 0));
+                        TileBase wallTile = structWallsTilemap.GetTile(new Vector3Int(i, j, 0));
 
                         if (groundTile != null)
                         {
@@ -182,6 +185,16 @@ public class LevelGenerator : MonoBehaviour
                                 0
                             );
                             ground.SetTile(groundTilePosition, groundTile);
+                        }
+
+                        if (wallTile != null)
+                        {
+                            Vector3Int wallTilePosition = new Vector3Int(
+                                (int)(partitionedArea.x + i + widthOffset),
+                                (int)(partitionedArea.y + j + heightOffset),
+                                0
+                            );
+                            walls.SetTile(wallTilePosition, wallTile);
                         }
                     }
                 }
