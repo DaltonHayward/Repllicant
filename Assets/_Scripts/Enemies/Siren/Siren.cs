@@ -6,27 +6,18 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem.XR;
 [RequireComponent(typeof(NavMeshAgent))]
 
-public class Siren : MonoBehaviour
+public class Siren : Enemy
 {
-    [SerializeField]
-    public float hp, attack, chaseRange, speed;
     [SerializeField]
     public float attractionForce = 20f;
 
-    NavMeshAgent navMeshAgent;
-
     [SerializeField] private float _songRange = 30f;
-
-    public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
-    public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
-
-    public GameObject player;
 
     private IEnumerator damageCoroutine;
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        Debug.Log("Siren spawned");
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
         damageCoroutine = GiveDamageCoroutine();
@@ -37,61 +28,9 @@ public class Siren : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        Movement();
         Attract();
-    }
-
-    public void TakeDamage(float damage)
-    {
-        hp -= damage;
-        if (hp < -0)
-            Die();
-    }
-
-    public void Movement()
-    {
-       
-        // only check for new position every 5 seconds
-        // calc distance to player
-        float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
-
-        if (distanceToPlayer < chaseRange && distanceToPlayer > 2f)
-        {
-            transform.LookAt(player.transform.position);
-            navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
-        }   
-    }
-
-    private void OnDestroy()
-    {
-        float randomValue = Random.value;
-        if (randomValue < commonItemProbability)
-        {
-            if (commonItems != null)
-                Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability)
-        {
-            if (uncommonItems != null)
-                Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
-        {
-            if (rareItems != null)
-                Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
-        }
-        else
-        {
-            if (legendaryItems != null)
-                Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
-        }
-    }
-
-    public void Die()
-    {
-        Destroy(gameObject);
     }
 
     private IEnumerator GiveDamageCoroutine()
@@ -146,7 +85,6 @@ public class Siren : MonoBehaviour
             }
         }
     }
-
 
     public void ReceiveMessage(string channel)
     {

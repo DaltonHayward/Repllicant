@@ -93,7 +93,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 63bf646c72164294495a9e7cb0c32208, type: 3}
       propertyPath: m_Name
-      value: Siren_Alpha 1
+      value: Siren_Alpha
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 63bf646c72164294495a9e7cb0c32208, type: 3}
       propertyPath: m_IsActive
@@ -122,6 +122,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 63bf646c72164294495a9e7cb0c32208, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5453407069262700062}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 63bf646c72164294495a9e7cb0c32208, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2630377889105352968}
   m_SourcePrefab: {fileID: 100100000, guid: 63bf646c72164294495a9e7cb0c32208, type: 3}
 --- !u!4 &130311332651115496 stripped
 Transform:
@@ -146,11 +149,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 30
-  attack: 0
+  attack: 5
   chaseRange: 10
+  attackRange: 10
   speed: 2
-  attractionForce: 1000
-  _lureRange: 30
+  attackSpeed: 1
+  lastAttackTime: -100
+  lastSkillTime: -100
+  player: {fileID: 0}
+  navMeshAgent: {fileID: 0}
   commonItems: []
   uncommonItems: []
   rareItems: []
@@ -159,7 +166,8 @@ MonoBehaviour:
   uncommonItemsProbability: 0
   rareItemsProbability: 0
   legendaryItemsProbability: 0
-  player: {fileID: 0}
+  attractionForce: 0.5
+  _songRange: 30
 --- !u!54 &7619463547273630945
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -232,3 +240,16 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2630377889105352968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758053738808146258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17f317e593128c248a80dc13b88c733e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitFrequency: 5
