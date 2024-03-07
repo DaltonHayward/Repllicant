@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
-public class ItemGrid : MonoBehaviour
+
+public class Inventory : MonoBehaviour
 {
     public const float tileSizeWidth = 32;
     public const float tileSizeHeight = 32;
@@ -12,21 +11,19 @@ public class ItemGrid : MonoBehaviour
     Vector2Int tileGridPosition = new Vector2Int();
 
     RectTransform rectTransform;
-    public Inventory_Item[,] invItemSlots;
+    public NewInventoryItem[,] invItemSlots;
     [SerializeField] public int InventoryWidth;
     [SerializeField] public int InventoryHeight;
     [SerializeField] GameObject itemPrefab;
-    public ItemInstance[,] StoredItems;
 
     /// <summary>
     /// Grabs the component of the current item, and initializes the inventory grid.
     /// </summary>
     private void Start(){
         rectTransform = GetComponent<RectTransform>();
-        Init(InventoryWidth,InventoryHeight);
-        
-       
+        Init(InventoryWidth,InventoryHeight);  
     }
+
     /// <summary>
     /// Initializes the inventory grid, sets the size of the grid and creates the inventory grid.
     /// </summary>
@@ -34,7 +31,7 @@ public class ItemGrid : MonoBehaviour
     /// <param name="height"></param>
     private void Init(int width, int height)
     {
-        invItemSlots = new Inventory_Item[width, height];
+        invItemSlots = new NewInventoryItem[width, height];
         //creates the size for objects?
         Vector2 size = new Vector2(width * tileSizeWidth, height * tileSizeHeight);
         rectTransform.sizeDelta = size;
@@ -65,9 +62,9 @@ public class ItemGrid : MonoBehaviour
     /// <param name="y"></param>
     /// <param name="overLappingItem"></param>
     /// <returns>true or false</returns>
-    public bool storeItem(Inventory_Item item, int x, int y, ref Inventory_Item overLappingItem)
+    public bool storeItem(NewInventoryItem item, int x, int y, ref NewInventoryItem overLappingItem)
     {
-
+      
         if (BoundryCheck(x, y, item.WIDTH, item.HEIGHT) == false) { return false; }
         if (OverlapCheck(x, y, item.WIDTH, item.HEIGHT, ref overLappingItem) == false)
         {
@@ -88,8 +85,8 @@ public class ItemGrid : MonoBehaviour
     /// <param name="item"></param>
     /// <param name="x"></param>
     /// <param name="y"></param>
-    public void putItemInInventory(Inventory_Item item, int x, int y)
-    {
+    public void putItemInInventory(NewInventoryItem item, int x, int y)
+    {   
         RectTransform rectTransform = item.GetComponent<RectTransform>();
         rectTransform.SetParent(this.rectTransform);
 
@@ -103,8 +100,6 @@ public class ItemGrid : MonoBehaviour
 
             }
         }
-
-
         invItemSlots[x, y] = item;
         item.OnGridPositionX = x;
         item.OnGridPositionY = y;
@@ -122,7 +117,7 @@ public class ItemGrid : MonoBehaviour
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns>returns a Vector2 type</returns>
-    public Vector2 CalculateItemPosition(Inventory_Item item, int x, int y)
+    public Vector2 CalculateItemPosition(NewInventoryItem item, int x, int y)
     {
         Vector2 position = new Vector2();
         position.x = x * tileSizeWidth;
@@ -140,7 +135,7 @@ public class ItemGrid : MonoBehaviour
     /// <param name="height"></param>
     /// <param name="overLappingItem"></param>
     /// <returns>true or false</returns>
-    private bool OverlapCheck(int x, int y, int width, int height, ref Inventory_Item overLappingItem)
+    private bool OverlapCheck(int x, int y, int width, int height, ref NewInventoryItem overLappingItem)
     {
         if (BoundryCheck(x, y, width, height) == false) { return false; }
         for (int itemx = 0; itemx < width; itemx++)
@@ -195,9 +190,9 @@ public class ItemGrid : MonoBehaviour
     /// another function.
     /// </summary>
     /// <returns>The picked up item as type Inventory Item.</returns>
-    public Inventory_Item PickUpItem(int x, int y)
+    public NewInventoryItem PickUpItem(int x, int y)
     {
-        Inventory_Item item = invItemSlots[x, y];
+        NewInventoryItem item = invItemSlots[x, y];
 
         if (item == null) { return null; }
 
@@ -212,7 +207,7 @@ public class ItemGrid : MonoBehaviour
     /// just goes through the grid and sets the items to null
     /// </summary>
     /// <param name="item"></param>
-    private void CleanUpTiles(Inventory_Item item)
+    private void CleanUpTiles(NewInventoryItem item)
     {
         for (int itemx = 0; itemx < item.WIDTH; itemx++)
         {
@@ -264,7 +259,7 @@ public class ItemGrid : MonoBehaviour
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    internal Inventory_Item GetItem(int x, int y)
+    internal NewInventoryItem GetItem(int x, int y)
     {
         return invItemSlots[x, y];
     }
@@ -274,7 +269,7 @@ public class ItemGrid : MonoBehaviour
     /// </summary>
     /// <param name="itemtoInsert"></param>
     /// <returns></returns>
-    public Vector2Int? FindSpace(Inventory_Item itemtoInsert)
+    public Vector2Int? FindSpace(NewInventoryItem itemtoInsert)
     {
         int height= itemtoInsert.HEIGHT;
         int width = itemtoInsert.WIDTH;
@@ -296,9 +291,9 @@ public class ItemGrid : MonoBehaviour
     /// </summary>
     /// <param name="mouseposition"></param>
     /// <returns></returns>
-    public Inventory_Item ItemHovered(Vector2 mouseposition){
+    public NewInventoryItem ItemHovered(Vector2 mouseposition){
         Vector2Int gridPosition = GetTileGridPosition(mouseposition);
-        Inventory_Item item = GetItem(gridPosition.x, gridPosition.y);
+        NewInventoryItem item = GetItem(gridPosition.x, gridPosition.y);
         if (item != null){
             return item;
         }
@@ -310,7 +305,7 @@ public class ItemGrid : MonoBehaviour
     /// Removes the item from the grid, going to be used in the inventory controller to remove the item from the grid.
     /// </summary>
     /// <param name="item"></param>
-    public void RemoveItem(Inventory_Item item)
+    public void RemoveItem(NewInventoryItem item)
     {
         CleanUpTiles(item);
     }
@@ -323,7 +318,4 @@ public class ItemGrid : MonoBehaviour
     public void RemoveCollectable(CollectableItem item){
 
     }
-
-    
-    
 }
