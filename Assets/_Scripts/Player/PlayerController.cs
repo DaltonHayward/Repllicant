@@ -838,7 +838,11 @@ public class PlayerController : MonoBehaviour, ISubscriber
             //GetComponent<Charmable>().ResetCharm();
             StartCoroutine(PetrifyCooldownCoroutine);
         }
-        
+        if (channel.Split(':').Equals("DamageOnPlayer"))
+        {
+            GetComponent<PlayerHealth>().TakeDamage(float.Parse(channel.Split(':')[1]));
+        }
+
     }
 
     IEnumerator PetrifyCooldown(float seconds)
