@@ -22,7 +22,7 @@ public class CollectableItem : MonoBehaviour
     }
     public ItemInstance DropItem()
     {
-        return null;
+        return itemInstance;
     }
     void DamageItem(float amount){
         itemInstance.DamageItem(amount);
@@ -31,5 +31,29 @@ public class CollectableItem : MonoBehaviour
     void ApplyInventoryEffect(Effect effect){
 
     }
+
+    public class ItemInstance : MonoBehaviour
+{
+    NewItem itemType;
+    int condition; 
+    int stackSize; 
+    bool onFire; 
+
+    public ItemInstance(NewItem itemType, int condition, int stackSize)
+    {
+        this.itemType = itemType;
+        this.condition = condition;
+        this.stackSize = stackSize;
+    }
+    public void DamageItem(float amount)
+    {
+        condition -= (int)amount;
+        if (condition <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+}
+
     
 }

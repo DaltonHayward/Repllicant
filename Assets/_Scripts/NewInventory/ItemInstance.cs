@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ItemInstance : MonoBehaviour
 {
-    Item itemType;
+    public NewItem itemType;
     int condition; 
     int stackSize; 
     bool onFire; 
 
-    public ItemInstance(Item itemType, int condition, int stackSize, bool onFire)
+    public ItemInstance(NewItem itemType, int condition, int stackSize, bool onFire)
     {
         this.itemType = itemType;
         this.condition = condition;
@@ -23,5 +23,15 @@ public class ItemInstance : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public NewInventoryItem CollectItem(){
+        Destroy(itemType.envModel);
+
+        return itemType.invModel.GetComponent<NewInventoryItem>();
+    }
+    public GameObject DropItem(){
+        Destroy(itemType.invModel);
+        return itemType.envModel;
     }
 }

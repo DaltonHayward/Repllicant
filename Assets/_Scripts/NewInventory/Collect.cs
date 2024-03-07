@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.Build.Content;
 using UnityEngine;
 
-public class ItemPickup : MonoBehaviour
+public class Collect : MonoBehaviour
 {
-    private Boolean isPickedUp = false;
+  private bool isPickedUp = false;
     void Start()
     {
         
@@ -22,7 +20,7 @@ public class ItemPickup : MonoBehaviour
             {
                 if (!isPickedUp){
                     isPickedUp = true;
-                    InventoryController.instance.InsertNewItem(this.gameObject.GetComponent<Inventory_Item>(),InventoryController.playerInventory);
+                    InventoryManager.instance.InsertNewItem(this.gameObject.GetComponent<EnvItem>().itemType,InventoryManager.playerInventory);
                     
                     Destroy(this.gameObject);
                 }
