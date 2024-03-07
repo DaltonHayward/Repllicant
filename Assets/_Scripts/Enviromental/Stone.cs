@@ -8,15 +8,17 @@ public class Stone : Collectible
 
     // probably want some sort of way to penetrate hardness with a good pickaxe
 
-    new public void TakeDamage(float damage)
+    override public void TakeDamage(float damage)
     {
         if (hardnessPercent < 1) 
         {
             hp -= (damage - (damage * hardnessPercent));
         }
 
-        if (hp <= 0)
+        if (hp <= 0) 
+        {
+            InstantiateLoot();
             Destroy(gameObject);
-            instantiateLoot();
+        } 
     }
 }

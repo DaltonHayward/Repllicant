@@ -19,14 +19,14 @@ public class Collectible : MonoBehaviour
     // contains all possible item drops with probability
     public List<DropItemAndProbability> DropItemAndProbability_List;
 
-    public void TakeDamage(float damage)
+    virtual public void TakeDamage(float damage)
     {
         hp -= damage;
         if(hp <= 0)
             Destroy(gameObject);
     }
 
-    public void instantiateLoot()
+    public void InstantiateLoot()
     {
         Instantiate(sureToDrop, transform.position, Quaternion.identity);
     }
