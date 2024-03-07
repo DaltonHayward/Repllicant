@@ -17,7 +17,7 @@ public class InventoryManager : MonoBehaviour
     NewInventoryItem overLappingItem;
     RectTransform selectedItemTransform;    
 
-    [SerializeField] List<ItemData> items;
+    [SerializeField] List<NewItem> items;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] Transform canvasTransform;
     NewInvHighlight InventoryHighlight;
@@ -77,6 +77,7 @@ public class InventoryManager : MonoBehaviour
 
             CreateRandomItem();
             NewInventoryItem itemtoInsert = selectedItem;
+            Debug.Log("Item to insert: " + itemtoInsert);
             selectedItem=null;
             InsertItem(itemtoInsert);
         }
@@ -230,13 +231,28 @@ public class InventoryManager : MonoBehaviour
     /// <param name="staticselectedInventory">The selected item grid.</param>
     public void InsertNewItem(NewItem item, Inventory staticselectedInventory)
         {
-
+        item.construct();    
+        NewInventoryItem newItem= item.invModel.GetComponent<NewInventoryItem>();
+        selectedItem = newItem;
+        selectedItemTransform = newItem.GetComponent<RectTransform>();
+        selectedItemTransform.SetParent(canvasTransform);
+        Vector2Int? storePos = staticselectedInventory.FindSpace(newItem);
+        if (storePos != null)
+        {
+            staticselectedInventory.putItemInInventory(newItem, storePos.Value.x, storePos.Value.y);
+            Debug.Log("Called");
+            selectedItem=null;
+        }
+        else
+        {
+           return;
+        }
         // NewInventoryItem newItem= Instantiate(itemPrefab).GetComponent<NewInventoryItem>();
         // selectedItem = newItem;
         // selectedItemTransform = newItem.GetComponent<RectTransform>();
         // selectedItemTransform.SetParent(canvasTransform);
 
-        // ItemData item= new();
+        // NewItem item= new();
         // item.construct(itemtoInsert.width, itemtoInsert.height, itemtoInsert.itemIcon, itemtoInsert.thisItemFab);
         // newItem.Set(item);
         // newItem = selectedItem;
