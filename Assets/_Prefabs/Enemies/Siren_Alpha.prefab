@@ -148,16 +148,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a519d4960fe37b14aa110668e988fbfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 30
-  attack: 5
+  hp: 100
+  attack: 10
   chaseRange: 10
-  attackRange: 10
   speed: 2
-  attackSpeed: 1
-  lastAttackTime: -100
-  lastSkillTime: -100
-  player: {fileID: 0}
-  navMeshAgent: {fileID: 0}
+  attractionForce: 0.05
+  _songRange: 30
   commonItems: []
   uncommonItems: []
   rareItems: []
@@ -166,8 +162,7 @@ MonoBehaviour:
   uncommonItemsProbability: 0
   rareItemsProbability: 0
   legendaryItemsProbability: 0
-  attractionForce: 0.5
-  _songRange: 30
+  player: {fileID: 0}
 --- !u!54 &7619463547273630945
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -252,4 +247,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17f317e593128c248a80dc13b88c733e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emitFrequency: 5
+  emitFrequency: 1

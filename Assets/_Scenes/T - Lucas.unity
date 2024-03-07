@@ -273,6 +273,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5903923673407582243, guid: a223885692662be43b7875a2d5b63287, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -631,6 +655,10 @@ PrefabInstance:
       value: Y Bot
       objectReference: {fileID: 0}
     - target: {fileID: 6665864865654652904, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
+      propertyPath: Speed
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6665864865654652904, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
       propertyPath: MoveSpeed
       value: 6
       objectReference: {fileID: 0}
@@ -638,6 +666,10 @@ PrefabInstance:
       propertyPath: _inventory
       value: 
       objectReference: {fileID: 988269512}
+    - target: {fileID: 6665864865654652904, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
+      propertyPath: SprintSpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6665864865654652904, guid: 1ebff9d336c9df64d8da10b6c176d699, type: 3}
       propertyPath: _effectCanvas
       value: 
@@ -779,7 +811,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2246571589345548282, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: Space
+      value: Shift
       objectReference: {fileID: 0}
     - target: {fileID: 2299069537501253101, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_TextStyleHashCode
@@ -787,7 +819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3445292044834297771, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: Dodge
+      value: Sprint
       objectReference: {fileID: 0}
     - target: {fileID: 6680292650503350822, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_Name
@@ -1314,7 +1346,7 @@ PrefabInstance:
       objectReference: {fileID: 1743381049}
     - target: {fileID: 3106502204127017146, guid: 68cfefa73b026124da13a4d15bd4a9fc, type: 3}
       propertyPath: enemyMax
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3106502204127017146, guid: 68cfefa73b026124da13a4d15bd4a9fc, type: 3}
       propertyPath: enemyMin
