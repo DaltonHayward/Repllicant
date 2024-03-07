@@ -53,7 +53,7 @@ public class LevelGenerator : MonoBehaviour
         (List<Rect>, List<Rect>) partitionedLevel = PartitionLevel();
         List<Rect> partitionedAreas = partitionedLevel.Item1;
         List<Rect> borders = partitionedLevel.Item2;
-        //CreateBaseGroundTiles();
+        // spawns the structure (with props) and enemies
         SpawnStructures(partitionedAreas);
         SpawnEnemiesInArea(level);
     }
@@ -122,7 +122,8 @@ public class LevelGenerator : MonoBehaviour
     }
 
 
-    // Fills the ground in and around the level with random ground tiles
+    // NOT USED rn
+    // Fills the ground with random ground tiles from the base ground tile scriptable object
     private void CreateBaseGroundTiles()
     {
         for (int x = 0; x < width; x++)
@@ -207,8 +208,8 @@ public class LevelGenerator : MonoBehaviour
                 foreach (Transform childProp in structProps)
                 {
                     // Choose offsets to randomize the placement of the prop in the area
-                    int xOffset = Random.Range(0, (int)(structureToGen.width-1));
-                    int zOffset = Random.Range(-(int)(structureToGen.height-1), 0); 
+                    int xOffset = Random.Range(0, (int)(structureToGen.width - 1));
+                    int zOffset = Random.Range(-(int)(structureToGen.height - 1), 0);
 
                     // set the world position of the prop
                     Vector3 propWorldPosition = new Vector3(
@@ -216,11 +217,14 @@ public class LevelGenerator : MonoBehaviour
                         0,
                         childProp.position.y + zOffset
                     );
+                    // check for overlaps
+                    if (IsPositionValid(childProp.position)) {
                     childProp.position = propWorldPosition;
 
                     // randomize the rotation of the prop
                     childProp.rotation = Quaternion.Euler(childProp.localEulerAngles.x, Random.Range(0, 360), childProp.localEulerAngles.z);
                     childProp.SetParent(props);
+                    }
                 }
             }
             Destroy(structure);
@@ -274,9 +278,13 @@ public class LevelGenerator : MonoBehaviour
         return null;
     }
 
+
     private void SpawnEnemiesInArea(Rect area)
     {
-        for (int i = 0; i <= Random.Range(enemyMin, enemyMax); i++)
+        int maxEnemies = Random.Range(enemyMin, enemyMax + 1);
+        // ensure between enemyMin and enemyMax
+        int numEnemies = Mathf.Clamp(maxEnemies, enemyMin, enemyMax);
+        for (int i = 0; i < numEnemies; i++)
         {
             Vector3 enemyPosition = GetRandomPositionInArea(area);
             // Check if the enemy position is valid (not within props)
@@ -290,6 +298,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+
     // Get a random position within a given area
     private Vector3 GetRandomPositionInArea(Rect area)
     {
@@ -297,6 +306,7 @@ public class LevelGenerator : MonoBehaviour
         float y = Random.Range(area.yMin, area.yMax);
         return new Vector3(x, 0, y);
     }
+
 
     // Check if a position is valid for placing
     private bool IsPositionValid(Vector3 position)
@@ -322,5 +332,4 @@ public class LevelGenerator : MonoBehaviour
         }
         return true;
     }
-
 }
