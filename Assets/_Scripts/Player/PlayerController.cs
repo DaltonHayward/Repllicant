@@ -494,7 +494,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (InputManager.instance.DodgeInput && InputDirection != Vector3.zero)
         {
 
-            //StartCoroutine(Dodge());
+            StartCoroutine(Dodge());
 
            // GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
             //StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
