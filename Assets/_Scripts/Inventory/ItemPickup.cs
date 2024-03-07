@@ -4,7 +4,7 @@ using System.Collections.Generic;
 //using UnityEditor.Build.Content;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class ItemPickup : MonoBehaviour
 {
     private Boolean isPickedUp = false;
     void Start()

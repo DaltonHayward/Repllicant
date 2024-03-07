@@ -48,18 +48,19 @@ MonoBehaviour:
   structures:
   - {fileID: 11400000, guid: c29c37e2830145a4592173d98f3e5540, type: 2}
   - {fileID: 11400000, guid: 933498ef324185141bb7d53d2fbdce5b, type: 2}
-  - {fileID: 11400000, guid: c4121ddde2d44674093bee121d6f5ca9, type: 2}
-  - {fileID: 11400000, guid: 85c209a5caacf1b4f8ade20b25e0901e, type: 2}
-  - {fileID: 11400000, guid: f700bbdee2028844ab68eb9eb0dd3d48, type: 2}
   - {fileID: 11400000, guid: 5a368c5c2ebc0b94d8122b18b514a772, type: 2}
   - {fileID: 11400000, guid: 6107fa47cb0769843ac77f59d4d119cb, type: 2}
   - {fileID: 11400000, guid: 8d27818196be2c04cb3eed6ddf8137e9, type: 2}
-  walls: {fileID: 0}
   ground: {fileID: 0}
   props: {fileID: 0}
   baseLevelTiles: {fileID: 11400000, guid: 1fa2812f85981fc409a8a858b06de989, type: 2}
   width: 80
   height: 50
+  nav_Mesh: {fileID: 0}
+  enemiesSpawnable: 0
+  enemies: []
+  enemyMin: 0
+  enemyMax: 0
 --- !u!156049354 &5151363789958346902
 Grid:
   m_ObjectHideFlags: 0

@@ -12,17 +12,24 @@ public class LevelGenerator : MonoBehaviour
     // structures to place
     [SerializeField] private List<Structure> structures;
     // where structures are placed in scene
-    [SerializeField] private Tilemap walls;
     [SerializeField] private Tilemap ground;
+    [SerializeField] private Tilemap walls;
     [SerializeField] private Transform props;
+    [SerializeField] private Transform enemies;
     // base tileset
     [SerializeField] private BaseLevelTiles baseLevelTiles;
     // level dimensions
-    [SerializeField] int width = 80;
-    [SerializeField] int height = 50;
+    [SerializeField] public int width = 80;
+    [SerializeField] public int height = 50;
 
     // ai
     [SerializeField] private GameObject nav_Mesh;
+
+    // Enemy Spawning
+    [SerializeField] bool enemiesSpawnable = false;
+    [SerializeField] private List<GameObject> enemyPrefabs;
+    [SerializeField] int enemyMin = 0;
+    [SerializeField] int enemyMax = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -42,11 +49,13 @@ public class LevelGenerator : MonoBehaviour
     // Generate a complete level with structures
     private void GenerateLevel()
     {
+        Rect level = new Rect(transform.position.x, transform.position.z, width, height);
         (List<Rect>, List<Rect>) partitionedLevel = PartitionLevel();
         List<Rect> partitionedAreas = partitionedLevel.Item1;
         List<Rect> borders = partitionedLevel.Item2;
-        CreateBaseGroundTiles();
+        // spawns the structure (with props) and enemies
         SpawnStructures(partitionedAreas);
+        SpawnEnemiesInArea(level);
     }
 
 
@@ -113,7 +122,8 @@ public class LevelGenerator : MonoBehaviour
     }
 
 
-    // Fills the ground in and around the level with random ground tiles
+    // NOT USED rn
+    // Fills the ground with random ground tiles from the base ground tile scriptable object
     private void CreateBaseGroundTiles()
     {
         for (int x = 0; x < width; x++)
@@ -155,28 +165,18 @@ public class LevelGenerator : MonoBehaviour
 
         if (structure != null)
         {
-            Tilemap structWallsTilemap = structure.transform.Find("Walls").GetComponent<Tilemap>();
             Tilemap structGroundTilemap = structure.transform.Find("Ground").GetComponent<Tilemap>();
+            Tilemap structWallsTilemap = structure.transform.Find("Walls").GetComponent<Tilemap>();
 
-            if (structWallsTilemap != null && structGroundTilemap != null)
+            if (structGroundTilemap != null && structWallsTilemap != null)
             {
                 // Copy the ground and wall tiles from the structure to corresponding tilemaps of the level generator
                 for (int i = 0; i < structureToGen.width; i++)
                 {
                     for (int j = 0; j < structureToGen.height; j++)
                     {
-                        TileBase wallTile = structWallsTilemap.GetTile(new Vector3Int(i, j, 0));
                         TileBase groundTile = structGroundTilemap.GetTile(new Vector3Int(i, j, 0));
-
-                        if (wallTile != null)
-                        {
-                            Vector3Int wallTilePosition = new Vector3Int(
-                                (int)(partitionedArea.x + i + widthOffset),
-                                (int)(partitionedArea.y + j + heightOffset),
-                                0
-                            );
-                            walls.SetTile(wallTilePosition, wallTile);
-                        }
+                        TileBase wallTile = structWallsTilemap.GetTile(new Vector3Int(i, j, 0));
 
                         if (groundTile != null)
                         {
@@ -186,6 +186,16 @@ public class LevelGenerator : MonoBehaviour
                                 0
                             );
                             ground.SetTile(groundTilePosition, groundTile);
+                        }
+
+                        if (wallTile != null)
+                        {
+                            Vector3Int wallTilePosition = new Vector3Int(
+                                (int)(partitionedArea.x + i + widthOffset),
+                                (int)(partitionedArea.y + j + heightOffset),
+                                0
+                            );
+                            walls.SetTile(wallTilePosition, wallTile);
                         }
                     }
                 }
@@ -198,8 +208,8 @@ public class LevelGenerator : MonoBehaviour
                 foreach (Transform childProp in structProps)
                 {
                     // Choose offsets to randomize the placement of the prop in the area
-                    int xOffset = Random.Range(0, (int)(structureToGen.width-1));
-                    int zOffset = Random.Range(-(int)(structureToGen.height-1), 0); 
+                    int xOffset = Random.Range(0, (int)(structureToGen.width - 1));
+                    int zOffset = Random.Range(-(int)(structureToGen.height - 1), 0);
 
                     // set the world position of the prop
                     Vector3 propWorldPosition = new Vector3(
@@ -207,11 +217,14 @@ public class LevelGenerator : MonoBehaviour
                         0,
                         childProp.position.y + zOffset
                     );
+                    // check for overlaps
+                    if (IsPositionValid(childProp.position)) {
                     childProp.position = propWorldPosition;
 
                     // randomize the rotation of the prop
                     childProp.rotation = Quaternion.Euler(childProp.localEulerAngles.x, Random.Range(0, 360), childProp.localEulerAngles.z);
                     childProp.SetParent(props);
+                    }
                 }
             }
             Destroy(structure);
@@ -266,20 +279,57 @@ public class LevelGenerator : MonoBehaviour
     }
 
 
-    // Clear all existing tiles, props, and enemies from the level
-    private void ClearLevel()
+    private void SpawnEnemiesInArea(Rect area)
     {
-        walls.ClearAllTiles();
-        ground.ClearAllTiles();
-        List<Transform> propsInScene = new List<Transform>();
-        foreach (Transform prop in props)
+        int maxEnemies = Random.Range(enemyMin, enemyMax + 1);
+        // ensure between enemyMin and enemyMax
+        int numEnemies = Mathf.Clamp(maxEnemies, enemyMin, enemyMax);
+        for (int i = 0; i < numEnemies; i++)
         {
-            propsInScene.Add(prop);
-        }
-        foreach (Transform prop in propsInScene)
-        {
-            Destroy(prop.gameObject);
+            Vector3 enemyPosition = GetRandomPositionInArea(area);
+            // Check if the enemy position is valid (not within props)
+            if (IsPositionValid(enemyPosition))
+            {
+                // Instantiate enemy
+                GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+                GameObject enemy = Instantiate(enemyPrefab, enemyPosition, Quaternion.identity);
+                enemy.transform.SetParent(enemies);
+            }
         }
     }
 
+
+    // Get a random position within a given area
+    private Vector3 GetRandomPositionInArea(Rect area)
+    {
+        float x = Random.Range(area.xMin, area.xMax);
+        float y = Random.Range(area.yMin, area.yMax);
+        return new Vector3(x, 0, y);
+    }
+
+
+    // Check if a position is valid for placing
+    private bool IsPositionValid(Vector3 position)
+    {
+        int propsLayer = LayerMask.NameToLayer("Props");
+        int groundLayer = LayerMask.NameToLayer("Ground");
+
+        // check for colliders around position
+        Collider[] colliders = Physics.OverlapSphere(position, 3f);
+
+        foreach (Collider collider in colliders)
+        {
+            // Check for invalid pos
+            if (collider.gameObject.layer == propsLayer)
+            {
+                return false;
+            }
+            // Ignore ground
+            if (collider.gameObject.layer == groundLayer)
+            {
+                continue;
+            }
+        }
+        return true;
+    }
 }
