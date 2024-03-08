@@ -20,14 +20,12 @@ public class Siren : MonoBehaviour, ISubscriber
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
 
-    private bool _isLuring;
     public GameObject player;
 
     private IEnumerator damageCoroutine;
 
     void Awake()
     {
-        _isLuring = false;
         player = GameObject.FindGameObjectWithTag("Player");
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
@@ -42,7 +40,6 @@ public class Siren : MonoBehaviour, ISubscriber
     void Update()
     {
         Movement();
-        //HandleLure();
         Attract();
     }
 
@@ -54,8 +51,7 @@ public class Siren : MonoBehaviour, ISubscriber
     }
 
     public void Movement()
-    {
-       
+    { 
         // only check for new position every 5 seconds
         // calc distance to player
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
@@ -65,7 +61,6 @@ public class Siren : MonoBehaviour, ISubscriber
             transform.LookAt(player.transform.position);
             navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
         }
-        
     }
 
     private void OnDestroy()
@@ -113,7 +108,6 @@ public class Siren : MonoBehaviour, ISubscriber
                         // Damages player more as they get closer to the siren
                         player.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(player.transform.position, transform.position));
                         yield return new WaitForSeconds(5);
-                        Debug.Log(player.GetComponent<PlayerHealth>().CurrentHealth);
                     }
                 }
             }
@@ -136,15 +130,19 @@ public class Siren : MonoBehaviour, ISubscriber
 
                 // when the angle is at -90 or +90, then it is in view (180º FOV)
                 CharacterController cc = player.GetComponent<CharacterController>();
+                Debug.Log("Attraction Force: " + attractionForce);
+
                 if (angleToSiren >= -90 && angleToSiren <= 90)
                 {
-                    Debug.Log("looking at siren");
-                    cc.Move(direction.normalized * (attractionForce / player.GetComponent<PlayerController>().Speed * Time.deltaTime));
+                    //Debug.Log("looking at siren");
+                    attractionForce = _songRange / Vector3.Distance(player.transform.position, transform.position);
+                    cc.Move(direction.normalized * (attractionForce * Time.deltaTime));
                 }
                 else
                 {
-                    Debug.Log("looking away from siren");
-                    cc.Move(direction.normalized * (attractionForce / player.GetComponent<PlayerController>().Speed * Time.deltaTime));
+                    //Debug.Log("looking away from siren");
+                    attractionForce = Vector3.Distance(player.transform.position, transform.position) / _songRange;
+                    //cc.Move(direction.normalized * (attractionForce / player.GetComponent<PlayerController>().Speed) * Time.deltaTime);
                 }
 
             }
@@ -158,7 +156,6 @@ public class Siren : MonoBehaviour, ISubscriber
         string[] parts = channel.Split(':');
 
         // handles attack message
-        Debug.Log("Channel: " + channel);
         if (channel.StartsWith("Attacked"))
         {
             // apply damage from message

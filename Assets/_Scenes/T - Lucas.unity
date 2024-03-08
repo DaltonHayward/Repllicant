@@ -1276,10 +1276,14 @@ PrefabInstance:
     - target: {fileID: 781980565973942222, guid: 57433c07a797fd34fb180da013c39791, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 189117433}
+      objectReference: {fileID: 1933264787}
     - target: {fileID: 781980565973942222, guid: 57433c07a797fd34fb180da013c39791, type: 3}
       propertyPath: _songRange
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 781980565973942222, guid: 57433c07a797fd34fb180da013c39791, type: 3}
+      propertyPath: chaseRange
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 781980565973942222, guid: 57433c07a797fd34fb180da013c39791, type: 3}
       propertyPath: attractionForce
