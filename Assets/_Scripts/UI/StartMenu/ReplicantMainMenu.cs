@@ -13,8 +13,17 @@ public class ReplicantMainMenu : MenuWithProfiles
     }
 
     // Update is called once per frame
+<<<<<<< Updated upstream
     /*public override void StartGame()
     {
         SceneManager.LoadScene("T - Parker");
     }*/
+=======
+    /*
+    public override void StartGame()
+    {
+        SceneManager.LoadScene("Main");
+    }
+    */
+>>>>>>> Stashed changes
 }
