@@ -24,7 +24,7 @@ public class Wood : Collectible, ISubscriber
         
         if (hp <= 0)
             Destroy(gameObject);
-        instantiateLoot();
+        InstantiateLoot();
     }
 
     // change tree to stoned; changes drop and material

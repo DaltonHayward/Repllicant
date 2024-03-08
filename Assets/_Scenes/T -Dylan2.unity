@@ -193,10 +193,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1670017045}
     m_Modifications:
-    - target: {fileID: 4820257891867738212, guid: 058dcef059946294189527a2eb8e8272, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6325039596896389377, guid: 058dcef059946294189527a2eb8e8272, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -243,10 +239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6325039596896389377, guid: 058dcef059946294189527a2eb8e8272, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2012195734}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 058dcef059946294189527a2eb8e8272, type: 3}
 --- !u!1839735485 &161786452 stripped
@@ -1932,7 +1925,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 6.06
-    NearClipPlane: 0.1
+    NearClipPlane: -10
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
@@ -2526,37 +2519,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2012195733
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2012195734}
-  m_Layer: 0
-  m_Name: Enemies
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2012195734
+--- !u!4 &2012195734 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 5269547976395685458, guid: 058dcef059946294189527a2eb8e8272, type: 3}
+  m_PrefabInstance: {fileID: 151264684}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2012195733}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1359896068}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2080316373
 GameObject:
   m_ObjectHideFlags: 3
@@ -2903,7 +2870,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: -10
   far clip plane: 5000
   field of view: 60
   orthographic: 1

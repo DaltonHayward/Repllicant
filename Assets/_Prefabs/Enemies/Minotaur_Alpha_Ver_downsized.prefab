@@ -119,15 +119,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be28d2bce1b28b44189c88eb0710a0ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strokeBackDistance: 0
-  WaveAttack: 0
-  chargespeed: 30
-  chargedistance: 20
+  strokeBackDistance: 8
+  WaveAttack: 25
+  chargespeed: 23
+  chargeRange: 8
+  chargeInternal: 5
+  chargeclock: 10
+  chargeTargetPosition: {x: 0, y: 0, z: 0}
   state: 0
   hp: 100
   attack: 1
   chaseRange: 20
-  attackRange: 10
+  attackRange: 1
   speed: 5
   attackSpeed: 1
   skillSpeed: 10
