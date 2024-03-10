@@ -231,8 +231,9 @@ public class InventoryManager : MonoBehaviour
     /// <param name="staticselectedInventory">The selected item grid.</param>
     public void InsertNewItem(NewItem item, Inventory staticselectedInventory)
         {
-        item.construct();    
+            
         NewInventoryItem newItem= item.invModel.GetComponent<NewInventoryItem>();
+        newItem.Set(item);
         selectedItem = newItem;
         selectedItemTransform = newItem.GetComponent<RectTransform>();
         selectedItemTransform.SetParent(canvasTransform);

@@ -8,6 +8,7 @@ public class NewInventoryItem : MonoBehaviour
 {
   
     private NewItem itemData;
+    
     public int HEIGHT {
         get {
             if (rotated)
@@ -40,7 +41,7 @@ public class NewInventoryItem : MonoBehaviour
     public bool rotated = false;
 
     void Awake(){
-        
+
     }
 
     public void Construct(NewItem itemData){
