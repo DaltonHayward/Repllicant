@@ -170,39 +170,59 @@ public class LevelGenerator : MonoBehaviour
 
             if (structGroundTilemap != null && structWallsTilemap != null)
             {
-                // Copy the ground and wall tiles from the structure to corresponding tilemaps of the level generator
-                for (int i = 0; i < structureToGen.width; i++)
-                {
-                    for (int j = 0; j < structureToGen.height; j++)
-                    {
-                        TileBase groundTile = structGroundTilemap.GetTile(new Vector3Int(i, j, 0));
-                        TileBase wallTile = structWallsTilemap.GetTile(new Vector3Int(i, j, 0));
+                // Calculate the size of the area to check
+                int checkAreaWidth = structureToGen.width * 3;
+                int checkAreaHeight = structureToGen.height * 3;
 
+                // Calculate the offset to center the structure in the check area
+                int xOffset = (checkAreaWidth - structureToGen.width) / 2;
+                int yOffset = (checkAreaHeight - structureToGen.height) / 2;
+
+                // Copy the ground and wall tiles from the structure to corresponding tilemaps of the level generator
+                for (int i = 0; i < checkAreaWidth; i++)
+                {
+                    for (int j = 0; j < checkAreaHeight; j++)
+                    {
+                        // Calculate the position of the tile in the check area relative to the structure's position
+                        Vector3Int structureTilePos = new Vector3Int(i - xOffset, j - yOffset, 0);
+
+                        // Get the ground and wall tiles from the structure's tilemaps
+                        TileBase groundTile = structGroundTilemap.GetTile(structureTilePos);
+                        TileBase wallTile = structWallsTilemap.GetTile(structureTilePos);
+
+                        // Calculate the position of the tile in the level generator's tilemap
+                        Vector3Int groundTilePosition = new Vector3Int(
+                            Mathf.RoundToInt(structurePosition.x + structureTilePos.x),
+                            Mathf.RoundToInt(structurePosition.y + structureTilePos.y),
+                            0
+                        );
+
+                        // Place the ground tile if it exists
                         if (groundTile != null)
                         {
-                            Vector3Int groundTilePosition = new Vector3Int(
-                                (int)(partitionedArea.x + i + widthOffset + transform.position.x),
-                                (int)(partitionedArea.y + -j + heightOffset + transform.position.z),
-                                0
-                            );
                             ground.SetTile(groundTilePosition, groundTile);
                         }
 
+                        // Calculate the position of the wall tile in the level generator's tilemap
+                        Vector3Int wallTilePosition = new Vector3Int(
+                            Mathf.RoundToInt(structurePosition.x + structureTilePos.x),
+                            Mathf.RoundToInt(structurePosition.y + structureTilePos.y),
+                            0
+                        );
+
+                        // Place the wall tile if it exists
                         if (wallTile != null)
                         {
-                            Vector3Int wallTilePosition = new Vector3Int(
-                                (int)(partitionedArea.x + i + widthOffset),
-                                (int)(partitionedArea.y + j + heightOffset),
-                                0
-                            );
                             walls.SetTile(wallTilePosition, wallTile);
                         }
                     }
                 }
             }
+            else { Debug.Log("Failed to find Ground or Walls Tilemap in the structure.");}
+        
 
-            // Re-parent the props from the structure to the level generator
-            Transform structProps = structure.transform.Find("Props");
+        // Re-parent the props from the structure to the level generator
+        Transform structProps = structure.transform.Find("Props");
             if (structProps != null)
             {
                 foreach (Transform childProp in structProps)
