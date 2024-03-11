@@ -13,6 +13,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<Structure> structures;
     // where structures are placed in scene
     [SerializeField] private Tilemap ground;
+    [SerializeField] private Tilemap accents;
     [SerializeField] private Tilemap walls;
     [SerializeField] private Transform props;
     [SerializeField] private Transform enemies;
@@ -166,43 +167,78 @@ public class LevelGenerator : MonoBehaviour
         if (structure != null)
         {
             Tilemap structGroundTilemap = structure.transform.Find("Ground").GetComponent<Tilemap>();
+            Tilemap structAccentsTilemap = structure.transform.Find("Ground/Accents").GetComponent<Tilemap>();
             Tilemap structWallsTilemap = structure.transform.Find("Walls").GetComponent<Tilemap>();
 
-            if (structGroundTilemap != null && structWallsTilemap != null)
+            if (structGroundTilemap != null && structWallsTilemap != null && structAccentsTilemap != null)
             {
-                // Copy the ground and wall tiles from the structure to corresponding tilemaps of the level generator
-                for (int i = 0; i < structureToGen.width; i++)
-                {
-                    for (int j = 0; j < structureToGen.height; j++)
-                    {
-                        TileBase groundTile = structGroundTilemap.GetTile(new Vector3Int(i, j, 0));
-                        TileBase wallTile = structWallsTilemap.GetTile(new Vector3Int(i, j, 0));
+                // Calculate the size of the area to check
+                int checkAreaWidth = structureToGen.width * 3;
+                int checkAreaHeight = structureToGen.height * 3;
 
+                // Calculate the offset to center the structure in the check area
+                int xOffset = (checkAreaWidth - structureToGen.width) / 2;
+                int yOffset = (checkAreaHeight - structureToGen.height) / 2;
+
+                // Copy the ground and wall tiles from the structure to corresponding tilemaps of the level generator
+                for (int i = 0; i < checkAreaWidth; i++)
+                {
+                    for (int j = 0; j < checkAreaHeight; j++)
+                    {
+                        // Calculate the position of the tile in the check area relative to the structure's position
+                        Vector3Int structureTilePos = new Vector3Int(i - xOffset, j - yOffset, 0);
+
+                        // Get the ground and wall tiles from the structure's tilemaps
+                        TileBase groundTile = structGroundTilemap.GetTile(structureTilePos);
+                        TileBase accentsTile = structAccentsTilemap.GetTile(structureTilePos);
+                        TileBase wallTile = structWallsTilemap.GetTile(structureTilePos);
+
+                        // Calculate the position of the Ground tile in the level generator's tilemap
+                        Vector3Int groundTilePosition = new Vector3Int(
+                            Mathf.RoundToInt(structurePosition.x + structureTilePos.x),
+                            Mathf.RoundToInt(structurePosition.y + structureTilePos.y),
+                            0
+                        );
+
+                        // Place the ground tile if it exists
                         if (groundTile != null)
                         {
-                            Vector3Int groundTilePosition = new Vector3Int(
-                                (int)(partitionedArea.x + i + widthOffset + transform.position.x),
-                                (int)(partitionedArea.y + -j + heightOffset + transform.position.z),
-                                0
-                            );
                             ground.SetTile(groundTilePosition, groundTile);
                         }
 
+                        // Calculate the position of the Accents tile in the level generator's tilemap
+                        Vector3Int accentsTilePosition = new Vector3Int(
+                            Mathf.RoundToInt(structurePosition.x + structureTilePos.x),
+                            Mathf.RoundToInt(structurePosition.y + structureTilePos.y),
+                            0
+                        );
+
+                        // Place the accents tile if it exists
+                        if (accentsTile != null)
+                        {
+                            accents.SetTile(accentsTilePosition, accentsTile);
+                        }
+
+                        // Calculate the position of the wall tile in the level generator's tilemap
+                        Vector3Int wallTilePosition = new Vector3Int(
+                            Mathf.RoundToInt(structurePosition.x + structureTilePos.x),
+                            Mathf.RoundToInt(structurePosition.y + structureTilePos.y),
+                            0
+                        );
+
+                        // Place the wall tile if it exists
                         if (wallTile != null)
                         {
-                            Vector3Int wallTilePosition = new Vector3Int(
-                                (int)(partitionedArea.x + i + widthOffset),
-                                (int)(partitionedArea.y + j + heightOffset),
-                                0
-                            );
                             walls.SetTile(wallTilePosition, wallTile);
                         }
                     }
                 }
             }
+            else { Debug.Log("structGroundTilemap != null && structWallsTilemap != null && structAccentsTilemap != null check failed");}
+        
 
-            // Re-parent the props from the structure to the level generator
-            Transform structProps = structure.transform.Find("Props");
+        // Re-parent the props from the structure to the level generator
+        Transform structProps = structure.transform.Find("Props");
             if (structProps != null)
             {
                 foreach (Transform childProp in structProps)
@@ -218,12 +254,13 @@ public class LevelGenerator : MonoBehaviour
                         childProp.position.y + zOffset
                     );
                     // check for overlaps
-                    if (IsPositionValid(childProp.position)) {
+                    if (IsPositionValid(propWorldPosition)) {
                     childProp.position = propWorldPosition;
 
                     // randomize the rotation of the prop
                     childProp.rotation = Quaternion.Euler(childProp.localEulerAngles.x, Random.Range(0, 360), childProp.localEulerAngles.z);
                     childProp.SetParent(props);
+                    childProp.gameObject.layer = props.gameObject.layer;
                     }
                 }
             }
@@ -294,6 +331,7 @@ public class LevelGenerator : MonoBehaviour
                 GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
                 GameObject enemy = Instantiate(enemyPrefab, enemyPosition, Quaternion.identity);
                 enemy.transform.SetParent(enemies);
+                enemy.layer = enemies.gameObject.layer;
             }
         }
     }
@@ -312,7 +350,9 @@ public class LevelGenerator : MonoBehaviour
     private bool IsPositionValid(Vector3 position)
     {
         int propsLayer = LayerMask.NameToLayer("Props");
+        int mobsLayer = LayerMask.NameToLayer("Mobs");
         int groundLayer = LayerMask.NameToLayer("Ground");
+
 
         // check for colliders around position
         Collider[] colliders = Physics.OverlapSphere(position, 3f);
@@ -320,7 +360,7 @@ public class LevelGenerator : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             // Check for invalid pos
-            if (collider.gameObject.layer == propsLayer)
+            if ((collider.gameObject.layer == propsLayer) | ((collider.gameObject.layer == mobsLayer)))
             {
                 return false;
             }
