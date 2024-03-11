@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// OWNER: Spencer Martin
+/// Anything with this script attached to it can have effects applied to it
+/// To add new effect, copy from example effect and make sure to add a virtual method to BaseEffect
+/// Once this is done, you can create a scriptable object that will apply effect 
+/// NOTE: check Effect_Slow.cs for an example of this implementation
+/// </summary>
 public class EffectableObject : MonoBehaviour
 {
     List<BaseEffect> ActiveEffects = new List<BaseEffect>();

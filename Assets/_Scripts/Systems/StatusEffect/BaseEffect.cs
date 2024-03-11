@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// OWNER: Spencer Martin
+/// Base effect scriptable object, any effects will derive from this
+/// Add an effect here as a virtual if adding effect
+/// </summary>
 public class BaseEffect : ScriptableObject
 {
     [SerializeField] protected float Duration = 0f;
