@@ -9,7 +9,10 @@ public class ItemData : ScriptableObject
     public int width;
     public int height;
     public Sprite itemIcon;
-    public GameObject thisItemFab;
+    public GameObject envModel;
+    public GameObject invModel;
+
+    public string Name; 
 
     void Start()
     {
@@ -27,6 +30,6 @@ public class ItemData : ScriptableObject
         this.width = width;
         this.height = height;
         this.itemIcon = itemIcon;
-        this.thisItemFab = prefab;
+        this.envModel = prefab;
     }
 }

@@ -19,7 +19,7 @@ public class Collect : MonoBehaviour
             {
                 if (!isPickedUp){
                     isPickedUp = true;
-                    InventoryManager.instance.InsertNewItem(this.gameObject.GetComponent<EnvItem>().itemType,InventoryManager.playerInventory);
+                    // InventoryManager.instance.InsertNewItem(this.gameObject.GetComponent<EnvItem>().itemType,InventoryManager.playerInventory);
                     Destroy(this.gameObject);
                 }
 

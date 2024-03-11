@@ -4,8 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
 public class InventoryController : MonoBehaviour
 {
+    [System.Serializable]
+    public class ItemDataEntry{ 
+    public string Name; 
+    public ItemData itemData;
+    }
+
+
     [HideInInspector]
     private ItemGrid selectedItemGrid;
     public ItemGrid SelectedItemGrid { get => selectedItemGrid; set{
@@ -30,6 +38,12 @@ public class InventoryController : MonoBehaviour
     public static ItemGrid playerInventory;
     public static InventoryController instance;
 
+    [SerializeField] public List<ItemDataEntry> itemDataEntries;
+
+    public Dictionary<string, ItemData> itemDataDictionary;
+
+    // [SerializeField] public ItemDataEntry test;
+
 
     /// <summary>
     /// Called when the script instance is being loaded. Responsible for doing singleton logic.
@@ -47,6 +61,11 @@ public class InventoryController : MonoBehaviour
         }
         InventoryHighlight= GetComponent<InventoryHighlight>();
         playerInventory = staticPlayerInventory.GetComponent<ItemGrid>();
+        itemDataDictionary = new Dictionary<string, ItemData>();
+        
+        foreach(ItemDataEntry entry in itemDataEntries){
+            itemDataDictionary.Add(entry.Name, entry.itemData);
+        }
     }
 
     /// <summary>
@@ -252,6 +271,11 @@ public class InventoryController : MonoBehaviour
         {
            return;
         }           
+        }
+
+        public Inventory_Item LookUp(string name){
+
+            return itemDataDictionary[name].invModel.GetComponent<Inventory_Item>();
         }
 
 }
