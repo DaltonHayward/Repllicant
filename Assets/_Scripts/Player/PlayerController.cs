@@ -237,6 +237,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private void HandleMovement()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
+        // addition here to have Effectable affect move speed
         float targetSpeed = InputManager.instance.SprintInput ? SprintSpeed : MoveSpeed;
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
