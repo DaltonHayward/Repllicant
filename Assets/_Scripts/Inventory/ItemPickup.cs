@@ -18,11 +18,11 @@ public class ItemPickup : MonoBehaviour
         {
             this.gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
             if (Input.GetKey("l"))
-
             {
                 if (!isPickedUp){
                     isPickedUp = true;
-                    InventoryController.instance.InsertNewItem(this.gameObject.GetComponent<Inventory_Item>(),InventoryController.playerInventory);
+                    Inventory_Item item = InventoryController.instance.LookUp(this.gameObject.GetComponent<EnvItem>().Name);
+                    InventoryController.instance.InsertNewItem(item,InventoryController.playerInventory);
                     
                     Destroy(this.gameObject);
                 }
