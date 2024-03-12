@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
+/// <summary>
+/// OWNER: Spencer Martin
+/// Manager class for dialogue system
+/// </summary>
 public class DialogueManager : MonoBehaviour
 {
     [Header("Dialogue UI")]
@@ -66,6 +71,7 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         
+        
 
         ContinueStory();
     }
@@ -77,6 +83,7 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        
         
     }
 
@@ -115,5 +122,18 @@ public class DialogueManager : MonoBehaviour
         {
             choices[i].gameObject.SetActive(false);
         }
+    }
+
+    private IEnumerator SelectFirstChoice()
+    {
+        // Event system fuckery
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return new WaitForEndOfFrame();
+        EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+    }
+
+    public void MakeChoice(int choiceIndex)
+    {
+        currentStory.ChooseChoiceIndex(choiceIndex);
     }
 }
