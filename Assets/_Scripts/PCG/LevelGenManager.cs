@@ -12,10 +12,14 @@ public class LevelGenManager : MonoBehaviour
     // ai
     [SerializeField] private GameObject nav_Mesh;
 
+    // THIS SHOULD BE ADDED TO GAME MANAGER OR SOMETHING
+    [SerializeField] private GameObject ui;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        ui.SetActive(true);
         Generate();
         GenerateEnemies();
         StartCoroutine(DelayBake());
