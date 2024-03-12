@@ -5,18 +5,14 @@ using UnityEngine;
 public class EnvItem : MonoBehaviour 
 {
     // Start is called before the first frame update
-    public NewItem itemType;
-    
+    public string Name;    
 
     void Start()
     {
         
     }
 
-    public void Construct(NewItem itemType)
-    {
-        this.itemType = itemType;
-    }
+ 
 
 
     // Update is called once per frame
