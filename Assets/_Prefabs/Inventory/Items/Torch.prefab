@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4655466260463157460}
   - component: {fileID: 7301416651860682446}
   - component: {fileID: 4543929585457586039}
+  - component: {fileID: 7833997452351097734}
+  - component: {fileID: 2004565167302348500}
   - component: {fileID: 7061774237143096728}
-  - component: {fileID: 4440027171097458707}
   m_Layer: 0
   m_Name: Torch
   m_TagString: Untagged
@@ -86,6 +87,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7833997452351097734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8664498978427664153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101a981e7eb2f8b42b6689de8ac73f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2004565167302348500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8664498978427664153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c8a8f6542b046648dc1e59799a6fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Torch
 --- !u!65 &7061774237143096728
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -107,18 +133,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4440027171097458707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8664498978427664153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101a981e7eb2f8b42b6689de8ac73f68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6756082435518404045
 PrefabInstance:
   m_ObjectHideFlags: 0

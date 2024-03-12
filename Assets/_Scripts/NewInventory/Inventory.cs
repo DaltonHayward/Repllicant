@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -105,7 +106,6 @@ public class Inventory : MonoBehaviour
         item.OnGridPositionY = y;
         Vector2 position = CalculateItemPosition(item, x, y);
         rectTransform.localPosition = position;
-        Debug.Log("Item placed at " + x + " " + y);
     }
 
     /// <summary>
@@ -317,5 +317,20 @@ public class Inventory : MonoBehaviour
     }
     public void RemoveCollectable(CollectableItem item){
 
+    }
+    //create a function for printing the inventory grid
+    
+    void PrintInventoryGrid(){
+        String grid = "";
+        for (int y = 0; y < InventoryHeight; y++)
+        {
+            for (int x = 0; x < InventoryWidth; x++)
+            {
+                if (invItemSlots[x, y] != null)
+                {
+                    grid += x + " " + y + " " + invItemSlots[x, y]+ " ";
+                }
+            }
+        }
     }
 }

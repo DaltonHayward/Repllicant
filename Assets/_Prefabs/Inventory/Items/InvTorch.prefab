@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3511376626659980316}
   - component: {fileID: 2406728570632381854}
   - component: {fileID: 6115080076278346749}
-  - component: {fileID: 4144952148663609877}
+  - component: {fileID: 7294538178410336205}
   m_Layer: 5
   m_Name: InvTorch
   m_TagString: Untagged
@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1054, y: -456}
-  m_SizeDelta: {x: 32, y: 32}
+  m_AnchoredPosition: {x: 64, y: -0}
+  m_SizeDelta: {x: 32, y: 64}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &2406728570632381854
 CanvasRenderer:
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0e0fd00f9605d4de3b33295c80151b5c, type: 3}
+  m_Sprite: {fileID: 1869872207, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4144952148663609877
+--- !u!114 &7294538178410336205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,9 +85,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5408347633595325484}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e08031f4e70048769edcead7faf0216, type: 3}
+  m_Script: {fileID: 11500000, guid: d762c89f6dd6d4c6184440c6a1cdb854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  width: 1
+  height: 2
+  itemIcon: {fileID: 1869872207, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
+  itemData: {fileID: 0}
+  thisItemFab: {fileID: 0}
   OnGridPositionX: 0
   OnGridPositionY: 0
-  rotated: 0
+  rotated: 1
