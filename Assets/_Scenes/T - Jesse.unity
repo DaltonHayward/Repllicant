@@ -273,6 +273,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5032355029609824385, guid: a223885692662be43b7875a2d5b63287, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5903923673407582243, guid: a223885692662be43b7875a2d5b63287, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1266,6 +1290,24 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8762714436167307075, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
   m_PrefabInstance: {fileID: 1078108990}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1016125367 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1549405492462902697, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
+  m_PrefabInstance: {fileID: 1078108990}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1016125370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016125367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d948f645f99327a428b36c6c7337f5e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Canvas: {fileID: 988269512}
 --- !u!4 &1054622183 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8351443890970252124, guid: 13590d16c8862da489e5b2797450794b, type: 3}
@@ -1383,7 +1425,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1549405492462902697, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1016125370}
   m_SourcePrefab: {fileID: 100100000, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
 --- !u!850595691 &1113001711
 LightingSettings:
@@ -1864,6 +1909,9 @@ MonoBehaviour:
   itemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 988269515}
   staticPlayerInventory: {fileID: 714664504}
+  itemDataEntries:
+  - Name: Torch
+    itemData: {fileID: 11400000, guid: 4b8470ef1c6b744958daff1b7124e389, type: 2}
 --- !u!1 &1481051827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2378,6 +2426,24 @@ MonoBehaviour:
   maxCharmedHP: 50
   charmedCooldown: 5
   Siren: {fileID: 0}
+--- !u!1 &1947257890 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8664498978427664153, guid: e50cda3dc4fe54d4fa96850352faf642, type: 3}
+  m_PrefabInstance: {fileID: 6169949741047444783}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1947257892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947257890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c8a8f6542b046648dc1e59799a6fab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Torch
 --- !u!1839735485 &1985816735 stripped
 Tilemap:
   m_CorrespondingSourceObject: {fileID: 9048872745287950661, guid: af88359bdddc5cb4b967d9ed729a074a, type: 3}
@@ -2830,7 +2896,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4655466260463157460, guid: e50cda3dc4fe54d4fa96850352faf642, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 109.58
+      value: 110.82
       objectReference: {fileID: 0}
     - target: {fileID: 4655466260463157460, guid: e50cda3dc4fe54d4fa96850352faf642, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2872,10 +2938,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Torch
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1664453726639619044, guid: e50cda3dc4fe54d4fa96850352faf642, type: 3}
+    - {fileID: 2004565167302348500, guid: e50cda3dc4fe54d4fa96850352faf642, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8664498978427664153, guid: e50cda3dc4fe54d4fa96850352faf642, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1947257892}
   m_SourcePrefab: {fileID: 100100000, guid: e50cda3dc4fe54d4fa96850352faf642, type: 3}
 --- !u!114 &6633476301351071425
 MonoBehaviour:
