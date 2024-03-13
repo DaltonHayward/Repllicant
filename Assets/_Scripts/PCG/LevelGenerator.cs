@@ -301,9 +301,13 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnEnemiesInArea(Rect area)
     {
+        // prevent error
+        if (enemyPrefabs == null) { return; }
+        // randomize the number of enemies that can spawn, based on given min and max values
         int maxEnemies = Random.Range(enemyMin, enemyMax + 1);
-        // ensure between enemyMin and enemyMax
         int numEnemies = Mathf.Clamp(maxEnemies, enemyMin, enemyMax);
+
+        // check the placement area before placing the enemy
         for (int i = 0; i < numEnemies; i++)
         {
             Vector3 enemyPosition = GetRandomPositionInArea(area);
