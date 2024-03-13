@@ -139,16 +139,13 @@ public class Siren : MonoBehaviour, ISubscriber
                 if (angleToSiren >= -90 && angleToSiren <= 90 && dist < _songRange && dist > 3)
                 {
                     attractionForce = _songRange / dist;
-                    cc.Move(direction.normalized * (attractionForce / player.GetComponent<PlayerController>().MoveSpeed) * Time.deltaTime);
+                    cc.Move(direction.normalized * (attractionForce * 0.8f) * Time.deltaTime);
                 }
-                else
+                else if (angleToSiren <= -90 || angleToSiren >= 90 && dist < _songRange && dist > 3)
                 {
-                    //Debug.Log("looking away from siren");
-                    attractionForce = (dist / _songRange);
-                    cc.Move(direction.normalized * (attractionForce / player.GetComponent<PlayerController>().MoveSpeed) * Time.deltaTime);
+                    Debug.Log("Lookaway Force: " + (-dist / _songRange));
+                    cc.Move(direction.normalized * (-dist / _songRange) * Time.deltaTime);
                 }
-
-                Debug.Log("Attraction Force: " + attractionForce);
             }
         }
     }
