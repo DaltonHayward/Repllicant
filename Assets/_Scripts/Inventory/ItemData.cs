@@ -11,20 +11,15 @@ public class ItemData : ScriptableObject
     public Sprite itemIcon;
     public GameObject envModel;
     public GameObject invModel;
-
     public string Name; 
-
     void Start()
-    {
-        
+    {   
     }
-
     // Update is called once per frame
     void Update()
     {
 
     }
-
     public void construct(int width, int height, Sprite itemIcon, GameObject prefab)
     {
         this.width = width;

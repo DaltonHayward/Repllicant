@@ -1906,12 +1906,16 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: 1a4a37564692d417da749ed6f69f1862, type: 2}
   - {fileID: 11400000, guid: b10a5998c0949496eb7b7a6d9e126b25, type: 2}
+  - {fileID: 11400000, guid: 4b8470ef1c6b744958daff1b7124e389, type: 2}
+  - {fileID: 11400000, guid: 1848e0b2a6ec947668d75faf1417da33, type: 2}
   itemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 988269515}
   staticPlayerInventory: {fileID: 714664504}
   itemDataEntries:
   - Name: Torch
     itemData: {fileID: 11400000, guid: 4b8470ef1c6b744958daff1b7124e389, type: 2}
+  - Name: Sword
+    itemData: {fileID: 11400000, guid: ca2687dc6feef476ea736374d8ca0ba2, type: 2}
 --- !u!1 &1481051827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2809,6 +2813,75 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1001 &948165588000025211
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2183814897444906118, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_Radius
+      value: 0.6328577
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183814897444906118, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_Center.z
+      value: -0.13285768
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183814897444906118, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279267368808508562, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 111.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279267368808508562, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.825
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279267368808508562, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279267368808508562, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279267368808508562, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279267368808508562, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279267368808508562, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279267368808508562, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279267368808508562, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5279267368808508562, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7393819587006878227, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+      propertyPath: m_Name
+      value: Sword
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
 --- !u!1001 &3451271292825805190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3111,3 +3184,4 @@ SceneRoots:
   - {fileID: 232625914495605054}
   - {fileID: 851730797}
   - {fileID: 6169949741047444783}
+  - {fileID: 948165588000025211}

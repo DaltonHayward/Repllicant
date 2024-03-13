@@ -8,24 +8,30 @@ using UnityEngine.UIElements;
 public class InventoryController : MonoBehaviour
 {
     [System.Serializable]
-    public class ItemDataEntry{ 
-    public string Name; 
-    public ItemData itemData;
+    public class ItemDataEntry
+    {
+        public string Name;
+        public ItemData itemData;
     }
 
 
     [HideInInspector]
     private ItemGrid selectedItemGrid;
-    public ItemGrid SelectedItemGrid { get => selectedItemGrid; set{
-        selectedItemGrid = value;
-        InventoryHighlight.setParent(selectedItemGrid);
-    } }
-    
+    public ItemGrid SelectedItemGrid
+    {
+        get => selectedItemGrid; set
+        {
+            selectedItemGrid = value;
+            InventoryHighlight.setParent(selectedItemGrid);
+        }
+    }
+
     public GameObject Player;
+    public bool Droppable;
     Inventory_Item selectedItem;
 
     Inventory_Item overLappingItem;
-    RectTransform selectedItemTransform;    
+    RectTransform selectedItemTransform;
 
     [SerializeField] List<ItemData> items;
     [SerializeField] GameObject itemPrefab;
@@ -34,7 +40,7 @@ public class InventoryController : MonoBehaviour
     Inventory_Item itemToHighlight;
     Vector2 oldPosition;
     public GameObject staticPlayerInventory;
-   
+
     public static ItemGrid playerInventory;
     public static InventoryController instance;
 
@@ -49,7 +55,8 @@ public class InventoryController : MonoBehaviour
     /// Called when the script instance is being loaded. Responsible for doing singleton logic.
     /// sets inventory highlight and player inventory.
     /// </summary>
-    private void Awake() {
+    private void Awake()
+    {
 
         if (instance == null)
         {
@@ -59,11 +66,12 @@ public class InventoryController : MonoBehaviour
         {
             Destroy(this);
         }
-        InventoryHighlight= GetComponent<InventoryHighlight>();
+        InventoryHighlight = GetComponent<InventoryHighlight>();
         playerInventory = staticPlayerInventory.GetComponent<ItemGrid>();
         itemDataDictionary = new Dictionary<string, ItemData>();
-        
-        foreach(ItemDataEntry entry in itemDataEntries){
+
+        foreach (ItemDataEntry entry in itemDataEntries)
+        {
             itemDataDictionary.Add(entry.Name, entry.itemData);
         }
     }
@@ -77,35 +85,39 @@ public class InventoryController : MonoBehaviour
     {
 
         IconDrag();
-        
+
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
             CreateRandomItem();
         }
 
-        if (selectedItemGrid == null) { 
+        if (selectedItemGrid == null)
+        {
             InventoryHighlight.Display(false);
-            return; }
+            return;
+        }
         HandleHighlight();
 
-        if (Input.GetMouseButtonDown(0))
+        if (InputManager.instance.AttackInput)
         {
             PickUpandMove();
-
-       
-        } if(Input.GetKeyDown(KeyCode.F)){
-
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
             CreateRandomItem();
             Inventory_Item itemtoInsert = selectedItem;
-            selectedItem=null;
+            selectedItem = null;
             InsertItem(itemtoInsert);
         }
-        if(Input.GetKeyDown(KeyCode.R)){
-            if(selectedItem!=null){
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (selectedItem != null)
+            {
                 RotateItem();
             }
         }
+        
     }
     /// <summary>
     /// Rotates the selected item.
@@ -128,7 +140,7 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-           return;
+            return;
         }
     }
 
@@ -141,7 +153,7 @@ public class InventoryController : MonoBehaviour
         Vector2Int gridPosition = mouseToGridTranslation();
         if (gridPosition == oldPosition) { return; }
 
-        oldPosition=gridPosition;
+        oldPosition = gridPosition;
         if (selectedItem == null)
         {
             itemToHighlight = selectedItemGrid.GetItem(gridPosition.x, gridPosition.y);
@@ -151,16 +163,18 @@ public class InventoryController : MonoBehaviour
                 InventoryHighlight.Highlight(itemToHighlight);
                 InventoryHighlight.SetPosition(selectedItemGrid, itemToHighlight);
             }
-            else{
+            else
+            {
                 InventoryHighlight.Display(false);
             }
-            
+
         }
-        else{
+        else
+        {
             InventoryHighlight.Display(selectedItemGrid.BoundryCheck(gridPosition.x, gridPosition.y, selectedItem.WIDTH, selectedItem.HEIGHT));
             InventoryHighlight.Highlight(selectedItem);
             InventoryHighlight.SetPosition(selectedItemGrid, selectedItem, gridPosition.x, gridPosition.y);
-            
+
         }
     }
 
@@ -170,6 +184,7 @@ public class InventoryController : MonoBehaviour
     /// </summary>
     private void PickUpandMove()
     {
+
         Vector2Int gridPosition = mouseToGridTranslation();
         if (selectedItem == null)
         {
@@ -182,19 +197,27 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-            bool complete = selectedItemGrid.storeItem(selectedItem, gridPosition.x, gridPosition.y, ref overLappingItem);
-
-
-            if (complete)
+            if (selectedItemGrid == null)
             {
+                Debug.Log("No grid selected");
+                DropItem(selectedItem);
                 selectedItem = null;
-                if (overLappingItem != null)
+            }
+            else
+            {
+
+                bool complete = selectedItemGrid.storeItem(selectedItem, gridPosition.x, gridPosition.y, ref overLappingItem);
+                if (complete)
                 {
-                    selectedItem = overLappingItem;
-                    selectedItemTransform = selectedItem.GetComponent<RectTransform>();
-                    overLappingItem = null;
+                    selectedItem = null;
+                    if (overLappingItem != null)
+                    {
+                        selectedItem = overLappingItem;
+                        selectedItemTransform = selectedItem.GetComponent<RectTransform>();
+                        overLappingItem = null;
+                    }
+
                 }
-                
             }
 
         }
@@ -232,36 +255,39 @@ public class InventoryController : MonoBehaviour
     /// <summary>
     /// Creates a random item in the inventory ** TESTING PURPOSES **.
     /// </summary>
-    private void CreateRandomItem(){
-        Inventory_Item newItem= Instantiate(itemPrefab).GetComponent<Inventory_Item>();
+    private void CreateRandomItem()
+    {
+
+        Inventory_Item newItem = Instantiate(itemPrefab).GetComponent<Inventory_Item>();
+
         selectedItem = newItem;
 
         selectedItemTransform = newItem.GetComponent<RectTransform>();
         selectedItemTransform.SetParent(canvasTransform);
 
-        int selectedUID= Random.Range(0, items.Count);
+        int selectedUID = Random.Range(0, items.Count);
         newItem.Set(items[selectedUID]);
     }
 
-    
+
     /// <summary>
     /// @ OVERRIDE/OVERLOAD Inserts a new item into the inventory by instantiating the item prefab and setting the item data.
     /// </summary>
     /// <param name="itemtoInsert">The item to insert.</param>
     /// <param name="staticselectedItemGrid">The selected item grid.</param>
     public void InsertNewItem(Inventory_Item itemtoInsert, ItemGrid staticselectedItemGrid)
-        {
+    {
 
-        Inventory_Item newItem= Instantiate(itemPrefab).GetComponent<Inventory_Item>();
+        Inventory_Item newItem = Instantiate(itemPrefab).GetComponent<Inventory_Item>();
         selectedItem = newItem;
         selectedItemTransform = newItem.GetComponent<RectTransform>();
         selectedItemTransform.SetParent(canvasTransform);
 
-        ItemData item= new();
+        ItemData item = new();
         item.construct(itemtoInsert.width, itemtoInsert.height, itemtoInsert.itemIcon, itemtoInsert.thisItemFab);
         newItem.Set(item);
         newItem = selectedItem;
-        selectedItem=null;
+        selectedItem = null;
         Vector2Int? storePos = staticselectedItemGrid.FindSpace(newItem);
         if (storePos != null)
         {
@@ -269,13 +295,28 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-           return;
-        }           
+            return;
         }
+    }
 
-        public Inventory_Item LookUp(string name){
+    public Inventory_Item LookUpInv(string name)
+    {
 
-            return itemDataDictionary[name].invModel.GetComponent<Inventory_Item>();
-        }
+        return itemDataDictionary[name].invModel.GetComponent<Inventory_Item>();
+    }
+
+    public GameObject LookUpEnv(string name)
+    {
+
+        return itemDataDictionary[name].envModel;
+    }
+
+    public void DropItem(Inventory_Item item)
+    {
+        Debug.Log("Dropping item");
+        GameObject droppedItem = Instantiate(InventoryController.instance.LookUpEnv(item.itemName));
+        droppedItem.transform.position = Player.transform.position;
+        Destroy(item.gameObject);
+    }
 
 }

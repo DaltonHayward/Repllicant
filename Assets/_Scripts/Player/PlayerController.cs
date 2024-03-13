@@ -431,7 +431,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     IEnumerator ResetStateAfterSeconds(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        Debug.Log("Coroutine");
         _playerState = State.STANDING;
     }
 

@@ -42,6 +42,7 @@ public class Inventory_Item : MonoBehaviour
     public int OnGridPositionX;
     public int OnGridPositionY;
     public bool rotated = false;
+    public string itemName;
 
 
 
