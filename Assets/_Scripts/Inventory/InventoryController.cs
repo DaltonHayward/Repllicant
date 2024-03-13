@@ -197,15 +197,6 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-            if (selectedItemGrid == null)
-            {
-                Debug.Log("No grid selected");
-                DropItem(selectedItem);
-                selectedItem = null;
-            }
-            else
-            {
-
                 bool complete = selectedItemGrid.storeItem(selectedItem, gridPosition.x, gridPosition.y, ref overLappingItem);
                 if (complete)
                 {
@@ -221,7 +212,7 @@ public class InventoryController : MonoBehaviour
             }
 
         }
-    }
+    
 
     /// <summary>
     /// Translates the mouse position to grid position and returns it as a Vector2Int.
