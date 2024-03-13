@@ -1274,6 +1274,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 781980565973942222, guid: 57433c07a797fd34fb180da013c39791, type: 3}
+      propertyPath: speed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 781980565973942222, guid: 57433c07a797fd34fb180da013c39791, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1933264787}
@@ -1889,6 +1893,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 988269515}
   staticPlayerInventory: {fileID: 714664504}
+  itemDataEntries: []
 --- !u!1 &1481051827
 GameObject:
   m_ObjectHideFlags: 0

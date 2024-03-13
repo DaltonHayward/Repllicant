@@ -9,13 +9,11 @@ using UnityEngine.InputSystem.XR;
 public class Siren : MonoBehaviour, ISubscriber
 {
     [SerializeField]
-    public float hp, attack, chaseRange, speed;
-    [SerializeField]
-    public float attractionForce = 20f;
+    public float hp, attack, chaseRange, speed, attractionForce;
 
     NavMeshAgent navMeshAgent;
 
-    [SerializeField] private float _songRange = 30f;
+    [SerializeField] private float _songRange;
 
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
@@ -51,15 +49,19 @@ public class Siren : MonoBehaviour, ISubscriber
     }
 
     public void Movement()
-    { 
-        // only check for new position every 5 seconds
+    {
         // calc distance to player
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
         if (distanceToPlayer < chaseRange && distanceToPlayer > 2f)
         {
+            speed = 0.5f;
             transform.LookAt(player.transform.position);
             navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
+        }
+        else 
+        {
+            speed = 0f;
         }
     }
 
@@ -130,21 +132,23 @@ public class Siren : MonoBehaviour, ISubscriber
 
                 // when the angle is at -90 or +90, then it is in view (180º FOV)
                 CharacterController cc = player.GetComponent<CharacterController>();
-                Debug.Log("Attraction Force: " + attractionForce);
 
-                if (angleToSiren >= -90 && angleToSiren <= 90)
+                // get the distance between the player and the siren
+                float dist = Vector3.Distance(player.transform.position, transform.position);
+
+                if (angleToSiren >= -90 && angleToSiren <= 90 && dist < _songRange && dist > 3)
                 {
-                    //Debug.Log("looking at siren");
-                    attractionForce = _songRange / Vector3.Distance(player.transform.position, transform.position);
-                    cc.Move(direction.normalized * (attractionForce * Time.deltaTime));
+                    attractionForce = _songRange / dist;
+                    cc.Move(direction.normalized * (attractionForce / player.GetComponent<PlayerController>().MoveSpeed) * Time.deltaTime);
                 }
                 else
                 {
                     //Debug.Log("looking away from siren");
-                    attractionForce = Vector3.Distance(player.transform.position, transform.position) / _songRange;
-                    //cc.Move(direction.normalized * (attractionForce / player.GetComponent<PlayerController>().Speed) * Time.deltaTime);
+                    attractionForce = (dist / _songRange);
+                    cc.Move(direction.normalized * (attractionForce / player.GetComponent<PlayerController>().MoveSpeed) * Time.deltaTime);
                 }
 
+                Debug.Log("Attraction Force: " + attractionForce);
             }
         }
     }
