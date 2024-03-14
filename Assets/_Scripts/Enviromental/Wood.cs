@@ -17,14 +17,15 @@ public class Wood : Collectible, ISubscriber
         dropItemStart = sureToDrop;
     }
 
-    new public void TakeDamage(float damage)
+    override public void TakeDamage(float damage)
     {
 
         hp -= damage;
         
-        if (hp <= 0)
+        if (hp <= 0) {
             Destroy(gameObject);
-        InstantiateLoot();
+            InstantiateLoot();
+        }
     }
 
     // change tree to stoned; changes drop and material
