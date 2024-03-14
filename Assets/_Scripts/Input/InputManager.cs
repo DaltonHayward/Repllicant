@@ -80,4 +80,9 @@ public class InputManager : MonoBehaviour
         MenuOpenCloseInput = _menuOpenCloseAction.WasPressedThisFrame();
         ScrollInput = _scrollAction.ReadValue<float>();
     }
+
+    public String GetInteractKey()
+    {
+        return _interactAction.GetBindingDisplayString();
+    }
 }
