@@ -842,6 +842,10 @@ public class PlayerController : MonoBehaviour, ISubscriber
         {
             GetComponent<PlayerHealth>().TakeDamage(float.Parse(channel.Split(':')[1]));
         }
+        if (channel.Split(':')[0].Equals("SpeedChange"))
+        {
+            MoveSpeed *= float.Parse(channel.Split(':')[1]);
+        }
 
     }
 
