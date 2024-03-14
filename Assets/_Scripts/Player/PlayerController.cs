@@ -431,7 +431,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     IEnumerator ResetStateAfterSeconds(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        Debug.Log("Coroutine");
         _playerState = State.STANDING;
     }
 
@@ -855,6 +854,10 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (channel.Split(':').Equals("DamageOnPlayer"))
         {
             GetComponent<PlayerHealth>().TakeDamage(float.Parse(channel.Split(':')[1]));
+        }
+        if (channel.Split(':')[0].Equals("SpeedChange"))
+        {
+            MoveSpeed *= float.Parse(channel.Split(':')[1]);
         }
 
     }

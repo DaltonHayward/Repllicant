@@ -21,9 +21,8 @@ public class ItemPickup : MonoBehaviour
             {
                 if (!isPickedUp){
                     isPickedUp = true;
-                    Inventory_Item item = InventoryController.instance.LookUp(this.gameObject.GetComponent<EnvItem>().Name);
-                    InventoryController.instance.InsertNewItem(item,InventoryController.playerInventory);
-                    
+                    //ItemData item = InventoryController.instance.LookUpItem(this.gameObject.GetComponent<EnvItem>().Name);
+                    //InventoryController.instance.InsertNewItem(item, InventoryController.playerInventory);
                     Destroy(this.gameObject);
                 }
 

@@ -16,7 +16,6 @@ public class ItemGrid : MonoBehaviour
     [SerializeField] public int InventoryWidth;
     [SerializeField] public int InventoryHeight;
     [SerializeField] GameObject itemPrefab;
-    public ItemInstance[,] StoredItems;
 
     /// <summary>
     /// Grabs the component of the current item, and initializes the inventory grid.
@@ -98,12 +97,9 @@ public class ItemGrid : MonoBehaviour
         {
             for (int itemy = 0; itemy < item.HEIGHT; itemy++)
             {
-
                 invItemSlots[x + itemx, y + itemy] = item;
-
             }
         }
-
 
         invItemSlots[x, y] = item;
         item.OnGridPositionX = x;
@@ -173,20 +169,20 @@ public class ItemGrid : MonoBehaviour
     /// <param name="height"></param>
     /// <returns>true if there is a free space, false if there is not</returns>
     private bool CheckFreeSpace(int x, int y, int width, int height)
+    {
+        if (BoundryCheck(x, y, width, height) == false) { return false; }
+        for (int itemx = 0; itemx < width; itemx++)
         {
-            if (BoundryCheck(x, y, width, height) == false) { return false; }
-            for (int itemx = 0; itemx < width; itemx++)
+            for (int itemy = 0; itemy < height; itemy++)
             {
-                for (int itemy = 0; itemy < height; itemy++)
+                if (invItemSlots[x + itemx, y + itemy] != null)
                 {
-                    if (invItemSlots[x + itemx, y + itemy] != null)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
-            return true;
         }
+        return true;
+    }
 
     
     
@@ -282,13 +278,29 @@ public class ItemGrid : MonoBehaviour
         {
             for (int x = 0; x < InventoryWidth - width+ 1; x++)
             {
-                if(CheckFreeSpace(x, y, width, height)== true){
+                if(CheckFreeSpace(x, y, width, height) == true){
                     return new Vector2Int(x, y);
                 }
-
             }
         }
         return null;
+    }
+
+    public bool CheckForFreeSpace(ItemData itemtoInsert)
+    {
+        int height = itemtoInsert.height;
+        int width = itemtoInsert.width;
+        for (int y = 0; y < InventoryHeight - height + 1; y++)
+        {
+            for (int x = 0; x < InventoryWidth - width + 1; x++)
+            {
+                if (CheckFreeSpace(x, y, width, height) == true)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -315,15 +327,5 @@ public class ItemGrid : MonoBehaviour
         CleanUpTiles(item);
     }
 
-    public void AddCollectable(CollectableItem item){
-        item.CollectItem();
-        
-
-    }
-    public void RemoveCollectable(CollectableItem item){
-
-    }
-
-    
     
 }
