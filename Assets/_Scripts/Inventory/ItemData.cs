@@ -9,24 +9,14 @@ public class ItemData : ScriptableObject
     public int width;
     public int height;
     public Sprite itemIcon;
-    public GameObject thisItemFab;
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public GameObject envModel;
+    public string Name; 
 
     public void construct(int width, int height, Sprite itemIcon, GameObject prefab)
     {
         this.width = width;
         this.height = height;
         this.itemIcon = itemIcon;
-        this.thisItemFab = prefab;
+        this.envModel = prefab;
     }
 }

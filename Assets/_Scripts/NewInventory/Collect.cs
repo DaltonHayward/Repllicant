@@ -15,13 +15,11 @@ public class Collect : MonoBehaviour
         if (other.transform.tag == "Player")
         {
             this.gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
-            if (Input.GetKey("l"))
-
+            if (Input.GetKeyDown("l"))
             {
                 if (!isPickedUp){
                     isPickedUp = true;
-                    InventoryManager.instance.InsertNewItem(this.gameObject.GetComponent<EnvItem>().itemType,InventoryManager.playerInventory);
-                    
+                    // InventoryManager.instance.InsertNewItem(this.gameObject.GetComponent<EnvItem>().itemType,InventoryManager.playerInventory);
                     Destroy(this.gameObject);
                 }
 

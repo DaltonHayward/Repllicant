@@ -17,7 +17,7 @@ public class NewItem : ScriptableObject
 
     public void construct(){
         invModel.GetComponent<NewInventoryItem>().Construct(this);
-        envModel.GetComponent<EnvItem>().Construct(this);
+        // envModel.GetComponent<EnvItem>().Construct(this);
     }
     
 
