@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6115080076278346749}
   - component: {fileID: 897538710466332710}
   m_Layer: 5
-  m_Name: Item
+  m_Name: BaseItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 0}
   itemData: {fileID: 0}
+  itemName: 
   OnGridPositionX: 0
   OnGridPositionY: 0
-  rotated: 0
-  itemName: 
