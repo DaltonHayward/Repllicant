@@ -25,7 +25,6 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
 
         invController.SelectedItemGrid = itemGrid;
-        invController.Droppable = false;
     }
     /// <summary>
     /// Sets the selected item grid to null when the pointer exits the item grid.
@@ -34,7 +33,6 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerExit(PointerEventData eventData)
     {
         invController.SelectedItemGrid = null;
-        invController.Droppable = true; 
     }
 
   
