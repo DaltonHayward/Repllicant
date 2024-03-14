@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 5e85155974503d84eb6393db6085804f, type: 2}
     - target: {fileID: 919132149155446097, guid: 2f0cbad659620004eb370260035c883e, type: 3}
       propertyPath: m_Name
-      value: Mino
+      value: Tree1Mino
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -135,5 +135,5 @@ MonoBehaviour:
   dropWhenStoned: {fileID: 0}
   dropItemStart: {fileID: 0}
   isStoned: 0
-  stoneMaterial: {fileID: 0}
-  woodMaterial: {fileID: 0}
+  stoneMaterial: {fileID: 2100000, guid: d2fd4d71edd84d847abfac1d74b92941, type: 2}
+  woodMaterial: {fileID: 2100000, guid: 5e85155974503d84eb6393db6085804f, type: 2}
