@@ -34,9 +34,6 @@ public class ItemIdle : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-
-       
-        
         if(_isAnimated)
         {
             if(_isRotating)
@@ -47,7 +44,7 @@ public class ItemIdle : MonoBehaviour
             if(_isFloating)
             {
                 _floatTimer += Time.deltaTime;
-                Vector3 moveDir = new Vector3(0.0f, 0.0f, _floatSpeed);
+                Vector3 moveDir = new Vector3(0.0f, _floatSpeed, 0.0f);
                 transform.Translate(moveDir);
 
                 if (_goingUp && _floatTimer >= _floatRate)
