@@ -27,7 +27,6 @@ public class InventoryController : MonoBehaviour
     }
 
     public GameObject Player;
-    public bool Droppable;
     Inventory_Item selectedItem;
 
     Inventory_Item overLappingItem;
@@ -87,11 +86,6 @@ public class InventoryController : MonoBehaviour
     {
         IconDrag();
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            CreateRandomItem();
-        }
-
         if (selectedItemGrid == null)
         {
             InventoryHighlight.Display(false);
@@ -109,7 +103,7 @@ public class InventoryController : MonoBehaviour
             PickUpandMove();
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             CreateRandomItem();
             Inventory_Item itemtoInsert = selectedItem;
