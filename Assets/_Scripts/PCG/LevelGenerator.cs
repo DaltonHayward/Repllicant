@@ -23,32 +23,15 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] public int width = 80;
     [SerializeField] public int height = 50;
 
-    // ai
-    [SerializeField] private GameObject nav_Mesh;
-
     // Enemy Spawning
     [SerializeField] bool enemiesSpawnable = false;
     [SerializeField] private List<GameObject> enemyPrefabs;
     [SerializeField] int enemyMin = 0;
     [SerializeField] int enemyMax = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        GenerateLevel();
-        StartCoroutine(DelayBake());
-    }
-
-    // Delay navmesh rebuild till after level gen
-    private IEnumerator DelayBake()
-    {
-        yield return new WaitForSeconds(0.5f);
-        nav_Mesh.GetComponent<NavMeshSurface>().BuildNavMesh();
-    }
-
 
     // Generate a complete level with structures
-    private void GenerateLevel()
+    public void GenerateLevel()
     {
         Rect level = new Rect(transform.position.x, transform.position.z, width, height);
         (List<Rect>, List<Rect>) partitionedLevel = PartitionLevel();
@@ -318,9 +301,13 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnEnemiesInArea(Rect area)
     {
+        // prevent error
+        if (enemyPrefabs == null) { return; }
+        // randomize the number of enemies that can spawn, based on given min and max values
         int maxEnemies = Random.Range(enemyMin, enemyMax + 1);
-        // ensure between enemyMin and enemyMax
         int numEnemies = Mathf.Clamp(maxEnemies, enemyMin, enemyMax);
+
+        // check the placement area before placing the enemy
         for (int i = 0; i < numEnemies; i++)
         {
             Vector3 enemyPosition = GetRandomPositionInArea(area);
