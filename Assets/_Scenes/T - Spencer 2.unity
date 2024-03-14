@@ -8509,7 +8509,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
-  Droppable: 0
   items:
   - {fileID: 11400000, guid: 1a4a37564692d417da749ed6f69f1862, type: 2}
   - {fileID: 11400000, guid: b10a5998c0949496eb7b7a6d9e126b25, type: 2}
@@ -9410,6 +9409,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7008972252587874794, guid: 77daab9665debbf40910a901e7355d6b, type: 3}
+      propertyPath: m_SubmitAction
+      value: 
+      objectReference: {fileID: -4152073890388645499, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
