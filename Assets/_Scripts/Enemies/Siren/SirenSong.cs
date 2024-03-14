@@ -12,7 +12,7 @@ public class SirenSong : MonoBehaviour
 
     private void Awake()
     {
-        //emissionCoroutine = CoEmit();
+
     }
 
     public void SetParameters(float freq, float range, string ch)
