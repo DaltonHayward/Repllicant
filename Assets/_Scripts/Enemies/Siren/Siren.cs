@@ -17,6 +17,7 @@ public class Siren : MonoBehaviour, ISubscriber
 
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
+    private Color baseColor;
 
     public GameObject player;
 
@@ -32,6 +33,11 @@ public class Siren : MonoBehaviour, ISubscriber
 
         SirenSong ss = GetComponent<SirenSong>();
         ss.SetParameters(0.5f, _songRange, "Singing");
+
+        //for (int i = 1; i < gameObject.transform.childCount; i++) 
+        //{
+            baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
+        //}
     }
 
     // Update is called once per frame
@@ -143,8 +149,16 @@ public class Siren : MonoBehaviour, ISubscriber
                 }
                 else if (angleToSiren <= -90 || angleToSiren >= 90 && dist < _songRange && dist > 3)
                 {
-                    Debug.Log("Lookaway Force: " + (-dist / _songRange));
-                    cc.Move(direction.normalized * (-dist / _songRange) * Time.deltaTime);
+                    if (Input.anyKey)
+                    {
+                        // Weaken effect if player is trying to move away so player can escape if they want 
+                        cc.Move(direction.normalized * (-dist / _songRange) * Time.deltaTime);
+                    }
+                    else
+                    {
+                        // resume attract as normal otherwise
+                        cc.Move(direction.normalized * (attractionForce * 0.4f) * Time.deltaTime);
+                    }
                 }
             }
         }
@@ -164,7 +178,23 @@ public class Siren : MonoBehaviour, ISubscriber
             if (float.TryParse(parts[1].Trim(), out damage))
             {
                 TakeDamage(damage);
+                ChangeColor(Color.red);
+                StartCoroutine(ResetColor());
             }
         }
+    }
+
+    IEnumerator ResetColor()
+    {
+        yield return new WaitForSeconds(0.1f);
+        ChangeColor(baseColor);
+    }
+
+    private void ChangeColor(Color color)
+    {
+        //for (int i = 1; i < gameObject.transform.childCount; i++)
+        //{
+            gameObject.transform.GetChild(7).GetComponent<Renderer>().material.SetColor("_BaseColor", color);
+        //}
     }
 }
