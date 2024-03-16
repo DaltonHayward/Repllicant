@@ -68,11 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactMessage: 'Interact '
-  failedCheckText: Failed Check
+  failedCheckText: Cannot Interact
   interactText: {fileID: 929608898861955561}
-  interactCondition:
-    m_PersistentCalls:
-      m_Calls: []
+  interactable: 1
   interactBehaviour:
     m_PersistentCalls:
       m_Calls: []

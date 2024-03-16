@@ -7,9 +7,11 @@ using UnityEngine.Events;
 
 public class Interactor : MonoBehaviour
 {
+    // these are just the messages displayed during/failing an interaction
     [SerializeField] public String interactMessage = "Interact ";
-    [SerializeField] public String failedCheckText = "Failed Check";
+    [SerializeField] public String failedCheckText = "Cannot Interact";
     [SerializeField] TextMeshProUGUI interactText;
+    // this can be changed to prevent interactions
     [SerializeField] public bool interactable = true;
     // assign any behaviour on interaction
     [SerializeField] UnityEvent interactBehaviour;
@@ -36,6 +38,7 @@ public class Interactor : MonoBehaviour
         }
     }
 
+    // on fail
     IEnumerator DisplayFailedConditionalText()
     {
         interactText.text = failedCheckText;
