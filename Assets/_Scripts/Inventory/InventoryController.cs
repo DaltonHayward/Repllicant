@@ -195,6 +195,7 @@ public class InventoryController : MonoBehaviour
             if (selectedItem != null)
             {
                 selectedItemTransform = selectedItem.GetComponent<RectTransform>();
+                selectedItemTransform.SetAsLastSibling();
             }
         }
         else
@@ -208,6 +209,7 @@ public class InventoryController : MonoBehaviour
                     selectedItem = overLappingItem;
                     overLappingItem = null;
                     selectedItemTransform = selectedItem.GetComponent<RectTransform>();
+                    selectedItemTransform.SetAsLastSibling();
                 }
 
             }
@@ -254,6 +256,7 @@ public class InventoryController : MonoBehaviour
 
         selectedItemTransform = newItem.GetComponent<RectTransform>();
         selectedItemTransform.SetParent(canvasTransform);
+        selectedItemTransform.SetAsLastSibling();
 
         int selectedUID = Random.Range(0, items.Count);
         newItem.Set(items[selectedUID]);
