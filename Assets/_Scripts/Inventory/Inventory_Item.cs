@@ -68,6 +68,7 @@ public class Inventory_Item : MonoBehaviour
         size.x = itemData.width * ItemGrid.tileSizeWidth;
         size.y = itemData.height * ItemGrid.tileSizeHeight;
         GetComponent<RectTransform>().sizeDelta = size;
+        //GetComponent<Image>().SetNativeSize();
     }
 
    

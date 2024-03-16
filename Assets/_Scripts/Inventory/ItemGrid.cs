@@ -22,9 +22,7 @@ public class ItemGrid : MonoBehaviour
     /// </summary>
     private void Start(){
         rectTransform = GetComponent<RectTransform>();
-        Init(InventoryWidth,InventoryHeight);
-        
-       
+        Init(InventoryWidth, InventoryHeight);
     }
     /// <summary>
     /// Initializes the inventory grid, sets the size of the grid and creates the inventory grid.
@@ -92,7 +90,6 @@ public class ItemGrid : MonoBehaviour
         RectTransform rectTransform = item.GetComponent<RectTransform>();
         rectTransform.SetParent(this.rectTransform);
 
-
         for (int itemx = 0; itemx < item.WIDTH; itemx++)
         {
             for (int itemy = 0; itemy < item.HEIGHT; itemy++)
@@ -121,8 +118,8 @@ public class ItemGrid : MonoBehaviour
     public Vector2 CalculateItemPosition(Inventory_Item item, int x, int y)
     {
         Vector2 position = new Vector2();
-        position.x = x * tileSizeWidth;
-        position.y = -(y * tileSizeHeight);
+        position.x = x * tileSizeWidth + tileSizeWidth * item.WIDTH / 2;
+        position.y = -(y * tileSizeHeight + tileSizeHeight * item.HEIGHT / 2);
         return position;
     }
 
@@ -145,14 +142,17 @@ public class ItemGrid : MonoBehaviour
             {
                 if (invItemSlots[x + itemx, y + itemy] != null)
                 {
-                    if( overLappingItem == null){
+                    if( overLappingItem == null)
+                    {
                         overLappingItem = invItemSlots[x + itemx, y + itemy];
                     }
-                    else{
-                        if (overLappingItem != invItemSlots[x + itemx, y + itemy]){return false;}
-
-                        overLappingItem = invItemSlots[x + itemx, y + itemy];
-                        return false;}
+                    else
+                    {
+                        if (overLappingItem != invItemSlots[x + itemx, y + itemy]) 
+                        { 
+                            return false; 
+                        }
+                    }
                 }
             }
         }

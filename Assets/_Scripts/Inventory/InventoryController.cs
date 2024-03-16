@@ -96,6 +96,8 @@ public class InventoryController : MonoBehaviour
             return;
         }
 
+        Debug.Log(selectedItemGrid.GetTileGridPosition(Input.mousePosition));
+
         HandleHighlight();
         
         if (Input.GetMouseButtonDown(0))
@@ -152,7 +154,7 @@ public class InventoryController : MonoBehaviour
     private void HandleHighlight()
     {
         Vector2Int gridPosition = mouseToGridTranslation();
-        if (gridPosition == oldPosition && !Input.GetKeyDown(KeyCode.R)) { return; }
+        if (!Input.GetKeyDown(KeyCode.R) && gridPosition == oldPosition) { return; }
 
         oldPosition = gridPosition;
         if (selectedItem == null)
@@ -203,8 +205,8 @@ public class InventoryController : MonoBehaviour
                 if (overLappingItem != null)
                 {
                     selectedItem = overLappingItem;
-                    selectedItemTransform = selectedItem.GetComponent<RectTransform>();
                     overLappingItem = null;
+                    selectedItemTransform = selectedItem.GetComponent<RectTransform>();
                 }
 
             }
@@ -222,7 +224,7 @@ public class InventoryController : MonoBehaviour
         if (selectedItem != null)
         {
             mousePosition.x -= (selectedItem.WIDTH - 1) * ItemGrid.tileSizeWidth / 2;
-            mousePosition.y += (selectedItem.WIDTH - 1) * ItemGrid.tileSizeWidth / 2;
+            mousePosition.y += (selectedItem.HEIGHT - 1) * ItemGrid.tileSizeHeight / 2;
         }
         Vector2Int gridPosition = selectedItemGrid.GetTileGridPosition(mousePosition);
         return gridPosition;

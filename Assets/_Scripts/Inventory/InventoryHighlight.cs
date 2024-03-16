@@ -53,11 +53,8 @@ public class InventoryHighlight : MonoBehaviour
     /// <param name="target"></param>
     public void setParent(ItemGrid target)
     {
-        if(target == null)
-        {            return;
-        }
+        if(target == null){return;}
         highlighter.SetParent(target.GetComponent<RectTransform>());
-  
     }
 
 }
