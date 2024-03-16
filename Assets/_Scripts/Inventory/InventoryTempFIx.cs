@@ -18,4 +18,13 @@ public class InventoryTempFIx : MonoBehaviour{
 
     }
 
+    public void Open(){
+        Canvas.enabled= true; 
+
+    }
+    public void Close(){
+        Canvas.enabled= false; 
+
+    }
+
 }

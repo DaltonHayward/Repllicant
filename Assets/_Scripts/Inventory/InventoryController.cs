@@ -121,6 +121,7 @@ public class InventoryController : MonoBehaviour
             }
         }
         
+      
     }
     /// <summary>
     /// Rotates the selected item.
@@ -299,6 +300,10 @@ public class InventoryController : MonoBehaviour
         Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
         Instantiate(instance.LookUpItem(item.itemData.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f,1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
         Destroy(item.gameObject);
+    }
+
+    public void PlayerDeath(){
+        staticPlayerInventory.GetComponent<ItemGrid>().DeathDrop();
     }
 
 }

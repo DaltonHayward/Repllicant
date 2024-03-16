@@ -327,5 +327,22 @@ public class ItemGrid : MonoBehaviour
         CleanUpTiles(item);
     }
 
+
+    /// <summary>
+    /// Drops all the items in the inventory grid, used when the player dies.
+    /// </summary>
+    public void DeathDrop()
+    {
+        foreach (Inventory_Item item in invItemSlots)
+        {
+            if (item != null)
+            {
+                CleanUpTiles(item);
+                // invItemSlots.SetValue(null, item.OnGridPositionX, item.OnGridPositionY);
+                Destroy(item.gameObject);
+            }
+        }
+    }
+
     
 }
