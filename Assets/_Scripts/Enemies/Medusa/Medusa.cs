@@ -29,7 +29,7 @@ public class Medusa : Enemy
         float distanceToPlayer = Vector3.Distance(player.position, transform.position);
         if (distanceToPlayer <= attackRange)
         {
-            transform.LookAt(player.position);
+            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
             if (Time.time - lastAttackTime > attackSpeed)
             {
                 Debug.Log("Attacking");
