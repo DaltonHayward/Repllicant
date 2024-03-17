@@ -10,13 +10,7 @@ public class ItemData : ScriptableObject
     public int height;
     public Sprite itemIcon;
     public GameObject envModel;
-    public string Name; 
-
-    public void construct(int width, int height, Sprite itemIcon, GameObject prefab)
-    {
-        this.width = width;
-        this.height = height;
-        this.itemIcon = itemIcon;
-        this.envModel = prefab;
-    }
+    public string Name;
+    public string[] effects;
+    public int range;
 }

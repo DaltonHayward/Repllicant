@@ -15,7 +15,6 @@ public class Inventory_Item : MonoBehaviour
     public int OnGridPositionY;
     private bool rotated = false;
 
-
     public int HEIGHT {
         get {
             if (rotated)
@@ -68,6 +67,8 @@ public class Inventory_Item : MonoBehaviour
         size.x = itemData.width * ItemGrid.tileSizeWidth;
         size.y = itemData.height * ItemGrid.tileSizeHeight;
         GetComponent<RectTransform>().sizeDelta = size;
+        // add effect script
+        gameObject.AddComponent(Type.GetType(itemData.Name));
         //GetComponent<Image>().SetNativeSize();
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,7 +21,7 @@ public class ItemGrid : MonoBehaviour
     /// <summary>
     /// Grabs the component of the current item, and initializes the inventory grid.
     /// </summary>
-    private void Start(){
+    private void Start() {
         rectTransform = GetComponent<RectTransform>();
         Init(InventoryWidth, InventoryHeight);
     }
@@ -51,7 +52,7 @@ public class ItemGrid : MonoBehaviour
         tileGridPosition.y = (int)(poisitionOnTheGrid.y / tileSizeHeight);
 
         return tileGridPosition;
-        
+
     }
 
     /// <summary>
@@ -103,13 +104,11 @@ public class ItemGrid : MonoBehaviour
         item.OnGridPositionY = y;
         Vector2 position = CalculateItemPosition(item, x, y);
         rectTransform.localPosition = position;
-        Debug.Log("Item placed at " + x + " " + y);
+        //Debug.Log("Item placed at " + x + " " + y);
     }
 
     /// <summary>
-    /// Calculates the position of the item in the grid,
-    /// CURRENTLY CAUSING ISSUES WITH IMAGE ON ROTATION
-    /// ** maybe check the rotation of the item and adjust the position accordingly
+    /// Calculates the position of the item in the grid
     /// </summary>
     /// <param name="item"></param>
     /// <param name="x"></param>
@@ -121,6 +120,26 @@ public class ItemGrid : MonoBehaviour
         position.x = x * tileSizeWidth + tileSizeWidth * item.WIDTH / 2;
         position.y = -(y * tileSizeHeight + tileSizeHeight * item.HEIGHT / 2);
         return position;
+    }
+
+    /// <summary>
+    /// Calculates the grid positions being occupied by a given Inventory_Item
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public List<Vector2Int> CalculateGridPositions(Inventory_Item item)
+    {
+        List<Vector2Int> gridPositions = new List<Vector2Int>();
+
+        for (int i = item.OnGridPositionX; i < item.OnGridPositionX + item.WIDTH; i++)
+        {
+            for (int j = item.OnGridPositionY; j < item.OnGridPositionY + item.HEIGHT; j++)
+            {
+                gridPositions.Add(new Vector2Int(i, j));
+            }
+        }
+
+        return gridPositions;
     }
 
     /// <summary>
@@ -142,15 +161,15 @@ public class ItemGrid : MonoBehaviour
             {
                 if (invItemSlots[x + itemx, y + itemy] != null)
                 {
-                    if( overLappingItem == null)
+                    if (overLappingItem == null)
                     {
                         overLappingItem = invItemSlots[x + itemx, y + itemy];
                     }
                     else
                     {
-                        if (overLappingItem != invItemSlots[x + itemx, y + itemy]) 
-                        { 
-                            return false; 
+                        if (overLappingItem != invItemSlots[x + itemx, y + itemy])
+                        {
+                            return false;
                         }
                     }
                 }
@@ -184,8 +203,8 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
 
-    
-    
+
+
     /// <summary>
     /// Just " picks up " the item in the incentory and cleans up the tiles afterwards, used by 
     /// another function.
@@ -224,12 +243,12 @@ public class ItemGrid : MonoBehaviour
     /// <param name="x"></param>
     /// <param name="y"></param>
     /// <returns></returns>
-    public bool CanStoreItem( int x, int y)
+    public bool CanStoreItem(int x, int y)
     {
-        if (x < 0 || y < 0){
+        if (x < 0 || y < 0) {
             return false;
         }
-        if (x > InventoryWidth|| y > InventoryHeight){
+        if (x > InventoryWidth || y > InventoryHeight) {
             return false;
         }
         return true;
@@ -250,8 +269,8 @@ public class ItemGrid : MonoBehaviour
         {
             return false;
         }
-       
-        
+
+
         return true;
     }
     /// <summary>
@@ -272,13 +291,13 @@ public class ItemGrid : MonoBehaviour
     /// <returns></returns>
     public Vector2Int? FindSpace(Inventory_Item itemtoInsert)
     {
-        int height= itemtoInsert.HEIGHT;
+        int height = itemtoInsert.HEIGHT;
         int width = itemtoInsert.WIDTH;
-        for (int y =0 ; y < InventoryHeight-height +1; y++)
+        for (int y = 0; y < InventoryHeight - height + 1; y++)
         {
-            for (int x = 0; x < InventoryWidth - width+ 1; x++)
+            for (int x = 0; x < InventoryWidth - width + 1; x++)
             {
-                if(CheckFreeSpace(x, y, width, height) == true){
+                if (CheckFreeSpace(x, y, width, height) == true) {
                     return new Vector2Int(x, y);
                 }
             }
@@ -308,10 +327,10 @@ public class ItemGrid : MonoBehaviour
     /// </summary>
     /// <param name="mouseposition"></param>
     /// <returns></returns>
-    public Inventory_Item ItemHovered(Vector2 mouseposition){
+    public Inventory_Item ItemHovered(Vector2 mouseposition) {
         Vector2Int gridPosition = GetTileGridPosition(mouseposition);
         Inventory_Item item = GetItem(gridPosition.x, gridPosition.y);
-        if (item != null){
+        if (item != null) {
             return item;
         }
         return null;
@@ -343,6 +362,17 @@ public class ItemGrid : MonoBehaviour
             }
         }
     }
+
+    
+
+
+
+    public void BroadcastEffects()
+    {
+        
+    }
+
+
 
     
 }

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Progress;
 
 
 public class InventoryController : MonoBehaviour
@@ -42,7 +43,7 @@ public class InventoryController : MonoBehaviour
     Vector2 oldPosition;
 
     public GameObject staticPlayerInventory;
-    public static ItemGrid playerInventory; 
+    public static ItemGrid playerInventory;
     public static InventoryController instance;
 
     // look up table
@@ -65,7 +66,6 @@ public class InventoryController : MonoBehaviour
         {
             Destroy(this);
         }
-
 
         InventoryHighlight = GetComponent<InventoryHighlight>();
         playerInventory = staticPlayerInventory.GetComponent<ItemGrid>();
@@ -96,10 +96,8 @@ public class InventoryController : MonoBehaviour
             return;
         }
 
-        Debug.Log(selectedItemGrid.GetTileGridPosition(Input.mousePosition));
-
         HandleHighlight();
-        
+
         if (Input.GetMouseButtonDown(0))
         {
             PickUpandMove();
@@ -119,9 +117,10 @@ public class InventoryController : MonoBehaviour
             {
                 RotateItem();
             }
+            BroadcastEffects();
         }
-        
-      
+
+
     }
     /// <summary>
     /// Rotates the selected item.
@@ -215,7 +214,7 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
-    
+
 
     /// <summary>
     /// Translates the mouse position to grid position and returns it as a Vector2Int.
@@ -301,12 +300,62 @@ public class InventoryController : MonoBehaviour
     {
         Debug.Log("Dropping item");
         Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
-        Instantiate(instance.LookUpItem(item.itemData.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f,1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
+        Instantiate(instance.LookUpItem(item.itemData.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
         Destroy(item.gameObject);
     }
 
-    public void PlayerDeath(){
+    public void PlayerDeath() 
+    {
         staticPlayerInventory.GetComponent<ItemGrid>().DeathDrop();
+    }
+
+    private void BroadcastEffects()
+    {
+        for (int child = 1; child < staticPlayerInventory.transform.childCount; child++)
+        {
+            Inventory_Item broadcastingItem = staticPlayerInventory.transform.GetChild(child).GetComponent<Inventory_Item>();
+
+            List<Vector2Int> gridPositions = playerInventory.CalculateGridPositions(broadcastingItem);
+            List<Inventory_Item> receivingItems = new List<Inventory_Item>();
+
+            int radius = broadcastingItem.itemData.range;
+            int xCoord = broadcastingItem.OnGridPositionX;
+            int yCoord = broadcastingItem.OnGridPositionY;
+
+            for (int i = xCoord - radius; i < xCoord + broadcastingItem.WIDTH + radius; i++)
+            {
+                for (int j = yCoord - radius; j < yCoord + broadcastingItem.HEIGHT + radius; j++)
+                {
+                    // dont check area outside of grid
+                    if (!playerInventory.CanStoreItem(i, j)) { continue; }
+                    // dont check position of the current item
+                    if (gridPositions.Contains(new Vector2Int(i, j))) { continue; }
+
+                    Inventory_Item recievingItem = staticPlayerInventory.GetComponent<ItemGrid>().GetItem(i, j);
+                    if (recievingItem != null && !receivingItems.Contains(recievingItem))
+                    {
+                        receivingItems.Add(recievingItem);
+                    }
+                        
+                }
+            }
+
+            foreach (Inventory_Item receivingItem in receivingItems)
+            {
+                if (receivingItem != null && receivingItem != broadcastingItem)
+                {
+                    ISubscriber Isub = receivingItem.GetComponent<ISubscriber>();
+                    if (Isub != null)
+                    {
+                        foreach (string effect in broadcastingItem.itemData.effects)
+                        {
+                            Isub.ReceiveMessage(effect);
+                        }
+                    }
+                }
+            }
+            
+        }
     }
 
 }
