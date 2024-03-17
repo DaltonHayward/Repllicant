@@ -103,7 +103,6 @@ public class ItemGrid : MonoBehaviour
         item.OnGridPositionY = y;
         Vector2 position = CalculateItemPosition(item, x, y);
         rectTransform.localPosition = position;
-        Debug.Log("Item placed at " + x + " " + y);
     }
 
     /// <summary>

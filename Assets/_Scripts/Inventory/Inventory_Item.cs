@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory_Item : MonoBehaviour
+public class Inventory_Item : MonoBehaviour, ISubscriber
 {
     public Sprite itemIcon;
     public ItemData itemData;
@@ -41,7 +41,16 @@ public class Inventory_Item : MonoBehaviour
                 return itemData.width;
             }
         }
-    } 
+    }
+
+    public void ReceiveMessage(string channel)
+    {
+        if (channel == "Burning"){
+            Debug.Log("Item is burning");   
+            Destroy(this.gameObject);
+            InventoryController.instance.RemoveItem(this);
+        }
+    }
 
 
     /// <summary>
