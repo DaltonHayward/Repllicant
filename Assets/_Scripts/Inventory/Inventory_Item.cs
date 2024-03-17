@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,7 +60,7 @@ public class Inventory_Item : MonoBehaviour
     {
         this.itemData = itemData;
         itemName = itemData.Name;
-        itemIcon = itemData.itemIcon;
+        itemIcon = itemData.sprites[0].sprite;
         GetComponent<Image>().sprite = itemIcon;
         Vector2 size = new Vector2();
         size.x = itemData.width * ItemGrid.tileSizeWidth;
@@ -70,6 +69,11 @@ public class Inventory_Item : MonoBehaviour
         // add effect script
         gameObject.AddComponent(Type.GetType(itemData.Name));
         //GetComponent<Image>().SetNativeSize();
+    }
+
+    public void UpdateSprite(Sprite sprite)
+    {
+        GetComponent<Image>().sprite = sprite;
     }
 
    

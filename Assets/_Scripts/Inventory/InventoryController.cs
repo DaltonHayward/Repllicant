@@ -52,7 +52,7 @@ public class InventoryController : MonoBehaviour
     public Dictionary<string, ItemData> itemDataDictionary;
 
     [SerializeField]
-    private float _timeBetweenEffectApplication = 3;
+    private float _timeBetweenEffectApplication = 3f;
 
 
     /// <summary>

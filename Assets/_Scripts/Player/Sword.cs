@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class Sword : Tool, ISubscriber, Burnable
 {
     private bool isBurning = false;
+    private float burnTime = 15f;
 
     public void OnTriggerEnter(Collider other)
     {
@@ -23,8 +25,12 @@ public class Sword : Tool, ISubscriber, Burnable
     {
         if (channel == "Burning")
         {
-            TakeFireDamage();
-            Debug.Log("Sword");
+            if (!isBurning)
+            {
+                TakeFireDamage();
+                Debug.Log("Sword");
+            }
+            
         }
     }
 
@@ -34,7 +40,7 @@ public class Sword : Tool, ISubscriber, Burnable
 
         //Debug.Log(igniteChance);
 
-        if (igniteChance < 0.05)
+        if (igniteChance < 0.01)
         {
             Ignite();
         }
@@ -42,7 +48,16 @@ public class Sword : Tool, ISubscriber, Burnable
 
     public void Ignite()
     {
+        StartCoroutine(BurnTimer());
+    }
+
+    IEnumerator BurnTimer()
+    {
         isBurning = true;
-        //gameObject.GetComponent<Inventory_Item>().itemIcon
+        Inventory_Item item = GetComponent<Inventory_Item>();
+        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[1].sprite);
+        yield return new WaitForSeconds(burnTime);
+        isBurning = false;
+        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[0].sprite);
     }
 }
