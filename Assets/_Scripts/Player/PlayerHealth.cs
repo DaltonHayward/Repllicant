@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDataPersistance
 {
     public float maxHealth = 100f; // Player Max health
-    public float CurrentHealth; // Player current health
+    public float currentHealth; // Player current health
 
     private float _invinsibleDuration;
-    public Slider hpSlider;
+    public GameObject slider;
 
     void Start()
     {
-        CurrentHealth = maxHealth; // At start, full health
-        hpSlider.maxValue = CurrentHealth;
+        //CurrentHealth = maxHealth; // At start, full health
+        //hpSlider.maxValue = CurrentHealth;
 
         if (_invinsibleDuration > 0)
         {
@@ -24,11 +24,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        CurrentHealth -= damage; // Reduce HP when take damage
-        Debug.Log("Player health is now " + CurrentHealth); // Print current HP
-        hpSlider.value = CurrentHealth;
+        currentHealth -= damage; // Reduce HP when take damage
+        Debug.Log("Player health is now " + currentHealth); // Print current HP
+        slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
 
-        if (CurrentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Die(); // Excute dealth logic when HP reach 0
         }
@@ -36,9 +36,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(float amount)
     {
-        CurrentHealth += amount; // Restore HP
-        CurrentHealth = Mathf.Min(CurrentHealth, maxHealth); // Make sure that the current hp wont above MAX HP
-        Debug.Log("Player healed, health is now " + CurrentHealth); // Print current HP
+        currentHealth += amount; // Restore HP
+        currentHealth = Mathf.Min(currentHealth, maxHealth); // Make sure that the current hp wont above MAX HP
+        Debug.Log("Player healed, health is now " + currentHealth); // Print current HP
     }
 
     void Die()
@@ -65,5 +65,18 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(dly);
         Debug.Log("Invinsible");
         _invinsibleDuration = invsLength;
+    }
+
+    public void LoadData(GameData gameData)
+    {
+        this.currentHealth = gameData.currentHealth;
+        this.maxHealth = gameData.maxHealth;
+        slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        gameData.currentHealth = this.currentHealth;
+        gameData.maxHealth = this.maxHealth;
     }
 }

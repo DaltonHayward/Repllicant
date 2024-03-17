@@ -8,7 +8,8 @@ public class GameData
     // values to save are listed here
     public int testInt;
     public bool testBool;
-    //public Vector3 playerPosition;
+    public float currentHealth;
+    public float maxHealth;
 
     // the values defined in this constructor will be the default values when no data to load
     public GameData()
@@ -16,6 +17,7 @@ public class GameData
         // default values
         this.testInt = 0;
         this.testBool = false;
-        //playerPosition = new Vector3(151, 0, -93);
+        this.currentHealth = 500;
+        this.maxHealth = 500;
     }
 }
