@@ -10,6 +10,11 @@ public class GameData
     public bool testBool;
     public float currentHealth;
     public float maxHealth;
+    // npcs
+    public bool daltonNPC;
+    public bool techNPC;
+    public bool avNPC;
+    public bool scientistNPC;
 
     // the values defined in this constructor will be the default values when no data to load
     public GameData()
@@ -19,5 +24,9 @@ public class GameData
         this.testBool = false;
         this.currentHealth = 500;
         this.maxHealth = 500;
+        this.daltonNPC = false;
+        this.techNPC = false;
+        this.avNPC = false;
+        this.scientistNPC = false;
     }
 }
