@@ -245,14 +245,15 @@ public class ItemGrid : MonoBehaviour
     /// <returns></returns>
     public bool CanStoreItem(int x, int y)
     {
-        if (x < 0 || y < 0) {
+        if (x < 0 || y < 0) 
+        {
             return false;
         }
-        if (x > InventoryWidth || y > InventoryHeight) {
+        if (x > InventoryWidth || y > InventoryHeight) 
+        {
             return false;
         }
         return true;
-
     }
 
     /// <summary>

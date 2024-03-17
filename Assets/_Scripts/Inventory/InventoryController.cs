@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
@@ -50,6 +51,9 @@ public class InventoryController : MonoBehaviour
     [SerializeField] public List<ItemDataEntry> itemDataEntries;
     public Dictionary<string, ItemData> itemDataDictionary;
 
+    [SerializeField]
+    private float _timeBetweenEffectApplication = 3;
+
 
     /// <summary>
     /// Called when the script instance is being loaded. Responsible for doing singleton logic.
@@ -75,6 +79,8 @@ public class InventoryController : MonoBehaviour
         {
             itemDataDictionary.Add(entry.Name, entry.itemData);
         }
+
+        StartCoroutine(ApplyEffectsLoop());
     }
 
     /// <summary>
@@ -117,7 +123,7 @@ public class InventoryController : MonoBehaviour
             {
                 RotateItem();
             }
-            BroadcastEffects();
+            //BroadcastEffects();
         }
 
 
@@ -309,10 +315,15 @@ public class InventoryController : MonoBehaviour
         staticPlayerInventory.GetComponent<ItemGrid>().DeathDrop();
     }
 
+    /// <summary>
+    /// Loops through the inventory and applies each items effects to other items in its range
+    /// </summary>
     private void BroadcastEffects()
     {
+        float startTime = Time.time;
         for (int child = 1; child < staticPlayerInventory.transform.childCount; child++)
         {
+
             Inventory_Item broadcastingItem = staticPlayerInventory.transform.GetChild(child).GetComponent<Inventory_Item>();
 
             List<Vector2Int> gridPositions = playerInventory.CalculateGridPositions(broadcastingItem);
@@ -327,11 +338,12 @@ public class InventoryController : MonoBehaviour
                 for (int j = yCoord - radius; j < yCoord + broadcastingItem.HEIGHT + radius; j++)
                 {
                     // dont check area outside of grid
-                    if (!playerInventory.CanStoreItem(i, j)) { continue; }
+                    if (i < 0 || j < 0 || i > playerInventory.InventoryWidth-1 || j > playerInventory.InventoryHeight-1) { continue; }
                     // dont check position of the current item
                     if (gridPositions.Contains(new Vector2Int(i, j))) { continue; }
 
-                    Inventory_Item recievingItem = staticPlayerInventory.GetComponent<ItemGrid>().GetItem(i, j);
+                   
+                    Inventory_Item recievingItem = playerInventory.GetItem(i, j);
                     if (recievingItem != null && !receivingItems.Contains(recievingItem))
                     {
                         receivingItems.Add(recievingItem);
@@ -353,8 +365,17 @@ public class InventoryController : MonoBehaviour
                         }
                     }
                 }
-            }
-            
+            } 
+        }
+        //Debug.Log(Time.time - startTime);
+    }
+
+    IEnumerator ApplyEffectsLoop()
+    {
+        while (true)
+        {
+            BroadcastEffects();
+            yield return new WaitForSeconds(_timeBetweenEffectApplication);
         }
     }
 

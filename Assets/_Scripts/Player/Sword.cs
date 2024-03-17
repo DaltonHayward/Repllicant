@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword1 : Tool, ISubscriber
+public class Sword : Tool, ISubscriber, Burnable
 {
+    private bool isBurning = false;
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
@@ -21,7 +23,26 @@ public class Sword1 : Tool, ISubscriber
     {
         if (channel == "Burning")
         {
-            Debug.Log("sword sub");
+            TakeFireDamage();
+            Debug.Log("Sword");
         }
+    }
+
+    public void TakeFireDamage()
+    {
+        float igniteChance = Random.value;
+
+        //Debug.Log(igniteChance);
+
+        if (igniteChance < 0.05)
+        {
+            Ignite();
+        }
+    }
+
+    public void Ignite()
+    {
+        isBurning = true;
+        //gameObject.GetComponent<Inventory_Item>().itemIcon
     }
 }
