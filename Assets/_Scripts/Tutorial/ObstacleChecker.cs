@@ -2,26 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleChecker : MonoBehaviour
+public class ObstacleChecker : MonoBehaviour, IDataPersistance
 {
-    private int previousNumberOfChildren;
-
-    private void Start()
+    public void LoadData(GameData gameData)
     {
-        previousNumberOfChildren = this.transform.childCount;
+        
     }
+
+    public void SaveData(ref GameData gameData)
+    {
+        if (this.transform.childCount == 0) { gameData.daltonNPC = true; }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        int currentNumberOfChildren = this.transform.childCount;
-
-        if(currentNumberOfChildren == 0 && previousNumberOfChildren != 0)
+        if(this.transform.childCount == 0 )
         {
             Debug.Log("All obstacles are gone");
+            gameObject.SetActive(false);
         }
-
-        previousNumberOfChildren = currentNumberOfChildren;
-
-        
     }
 }
