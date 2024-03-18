@@ -20,4 +20,5 @@ public class ItemData : ScriptableObject
     public string Name;
     public string[] effects;
     public int range;
+    public bool isEquipable;
 }

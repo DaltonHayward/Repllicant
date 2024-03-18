@@ -662,6 +662,12 @@ public class PlayerController : MonoBehaviour, ISubscriber
             {
                 _inInventory = false;
                 _inventory.enabled = false;
+
+                if (DropdownController.instance.isActiveAndEnabled)
+                {
+                    InventoryController.instance.HideContextMenu();
+                }
+                    
                 _playerState = State.STANDING;
             }
             else

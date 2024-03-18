@@ -106,7 +106,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 2af0410df22867646902900534f51b26, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 158.371
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2af0410df22867646902900534f51b26, type: 3}
       propertyPath: m_LocalPosition.y
@@ -114,7 +114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2af0410df22867646902900534f51b26, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -88
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2af0410df22867646902900534f51b26, type: 3}
       propertyPath: m_LocalRotation.w
@@ -147,6 +147,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2af0410df22867646902900534f51b26, type: 3}
       propertyPath: m_Name
       value: MainCharBeta
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2af0410df22867646902900534f51b26, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 2af0410df22867646902900534f51b26, type: 3}
       propertyPath: m_Controller
@@ -236,33 +240,31 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   InputDirection: {x: 0, y: 0, z: 0}
   SpeedChangeRate: 10
-  _rotationSpeed: 1
+  _rotationSpeed: 1.45
   _dodgeCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: -0.07693814
+      outSlope: -0.07693814
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.17333274
     - serializedVersion: 3
-      time: 1
-      value: 0.004711151
-      inSlope: 0
-      outSlope: 0
+      time: 0.31625366
+      value: 0.0005607605
+      inSlope: -1.918057
+      outSlope: -1.918057
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.02666666
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _dodgeDistance: 5
-  _dodgeDuration: 1
   _delayBeforeInvinsible: 0.2
   _invinsibleDuration: 1
   Combo:
@@ -274,7 +276,7 @@ MonoBehaviour:
   _windowBetweenComboAttacks: 0.9
   strokeBackTargetPosition: {x: 0, y: 0, z: 0}
   Tools:
-  - {fileID: 5808787725663954444}
+  - {fileID: 1804119693540762369}
   - {fileID: 3422305789890725080}
   - {fileID: 1538240854734696551}
   ToolHolder: {fileID: 7333747722784592499}
@@ -295,7 +297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1000
-  CurrentHealth: 0
+  CurrentHealth: 1000
   hpSlider: {fileID: 0}
 --- !u!114 &2015218755923770508
 MonoBehaviour:
@@ -467,22 +469,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: add05c8206a7ed34f955f1ab96b44fbd, type: 3}
---- !u!4 &3970528172217043287 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 73481538429189391, guid: add05c8206a7ed34f955f1ab96b44fbd, type: 3}
-  m_PrefabInstance: {fileID: 3899881174766679128}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5808787725663954444 stripped
+--- !u!114 &1804119693540762369 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7386990724751430228, guid: add05c8206a7ed34f955f1ab96b44fbd, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3393088525568825177, guid: add05c8206a7ed34f955f1ab96b44fbd, type: 3}
   m_PrefabInstance: {fileID: 3899881174766679128}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7ded50b2b9643349a12a6ea814b373e, type: 3}
+  m_Script: {fileID: 11500000, guid: f7005941ec09d6c4f9d0dc6d990ffa10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &3970528172217043287 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 73481538429189391, guid: add05c8206a7ed34f955f1ab96b44fbd, type: 3}
+  m_PrefabInstance: {fileID: 3899881174766679128}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6797910139858139495
 PrefabInstance:
   m_ObjectHideFlags: 0

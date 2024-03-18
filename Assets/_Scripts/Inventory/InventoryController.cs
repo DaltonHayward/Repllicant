@@ -54,6 +54,8 @@ public class InventoryController : MonoBehaviour
     [SerializeField]
     private float _timeBetweenEffectApplication = 3f;
 
+    public bool DropdownHovered = false;
+
 
     /// <summary>
     /// Called when the script instance is being loaded. Responsible for doing singleton logic.
@@ -95,9 +97,15 @@ public class InventoryController : MonoBehaviour
         if (selectedItemGrid == null)
         {
             InventoryHighlight.Display(false);
+            // Clicked while droping
             if (Input.GetMouseButtonDown(0) && selectedItem != null)
             {
-                DropItem(selectedItem);
+                DropHeldItem(selectedItem);
+            }
+            // Click while context menu is open
+            if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && DropdownController.instance.DropdownEnabled() && !DropdownHovered)
+            {
+                HideContextMenu();
             }
             return;
         }
@@ -106,7 +114,30 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            // hide context menu if it is enabled and not hovered
+            if (DropdownController.instance.DropdownEnabled() && !DropdownHovered)
+            {
+                HideContextMenu();
+            }
+
             PickUpandMove();
+        }
+
+        // show context menu, hide it if it is open
+        if (Input.GetMouseButtonDown(1))
+        {
+            Vector2Int mouseGridPos = selectedItemGrid.GetTileGridPosition(Input.mousePosition);
+            Inventory_Item item = selectedItemGrid.GetItem(mouseGridPos.x, mouseGridPos.y);
+           
+            if (item != null )
+            {
+                SetClickedItem(item);
+                ShowContextMenu();
+            }
+            else if (item == null && DropdownController.instance.DropdownEnabled())
+            {
+                HideContextMenu();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -302,17 +333,48 @@ public class InventoryController : MonoBehaviour
         return itemDataDictionary[name];
     }
 
-    public void DropItem(Inventory_Item item)
+    public void DropHeldItem(Inventory_Item item)
     {
-        Debug.Log("Dropping item");
         Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
         Instantiate(instance.LookUpItem(item.itemData.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
         Destroy(item.gameObject);
     }
 
+    public void DropItem()
+    {
+        Inventory_Item item = DropdownController.instance.GetClickedOnItem();
+        Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
+        Instantiate(instance.LookUpItem(item.itemData.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
+        // clean up 
+        SetClickedItem(null);
+        HideContextMenu();
+        Destroy(item.gameObject);
+        selectedItemGrid.RemoveItem(item);
+    }
+
     public void PlayerDeath() 
     {
         staticPlayerInventory.GetComponent<ItemGrid>().DeathDrop();
+    }
+
+    public void ShowContextMenu()
+    {
+        DropdownController.instance.Show();
+    }
+
+    public void HideContextMenu()
+    {
+        DropdownController.instance.Hide();
+    }
+
+    public void SetClickedItem(Inventory_Item item)
+    {
+        DropdownController.instance.SetClickedItem(item);
+    }
+
+    public Inventory_Item GetClickedOnItem()
+    {
+        return DropdownController.instance.GetClickedOnItem();
     }
 
     /// <summary>
@@ -325,6 +387,8 @@ public class InventoryController : MonoBehaviour
         {
 
             Inventory_Item broadcastingItem = staticPlayerInventory.transform.GetChild(child).GetComponent<Inventory_Item>();
+
+            if (broadcastingItem.itemData.effects.Length == 0) { continue; }
 
             List<Vector2Int> gridPositions = playerInventory.CalculateGridPositions(broadcastingItem);
             List<Inventory_Item> receivingItems = new List<Inventory_Item>();
@@ -378,5 +442,4 @@ public class InventoryController : MonoBehaviour
             yield return new WaitForSeconds(_timeBetweenEffectApplication);
         }
     }
-
 }

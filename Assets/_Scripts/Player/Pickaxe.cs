@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Pickaxe : Tool
 {
+    public float Damage;
+
     public void OnTriggerEnter(Collider other)
     {
         Collectible c = other.GetComponent<Collectible>();

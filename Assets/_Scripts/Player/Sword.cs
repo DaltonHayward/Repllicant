@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class Sword : Tool, ISubscriber, Burnable
 {
+
     private bool isBurning = false;
     private float burnTime = 15f;
+
+    public static float Damage = 20;
 
     public void OnTriggerEnter(Collider other)
     {
@@ -25,10 +28,10 @@ public class Sword : Tool, ISubscriber, Burnable
     {
         if (channel == "Burning")
         {
+            Debug.Log(Damage);
             if (!isBurning)
             {
                 TakeFireDamage();
-                Debug.Log("Sword");
             }
             
         }
@@ -55,9 +58,18 @@ public class Sword : Tool, ISubscriber, Burnable
     {
         isBurning = true;
         Inventory_Item item = GetComponent<Inventory_Item>();
+        //Update sprite
         item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[1].sprite);
+        // Add dmg
+        float prevDmg = Damage;
+        Damage = prevDmg * 2;
+
         yield return new WaitForSeconds(burnTime);
+
         isBurning = false;
+        // reset dmg
+        Damage = prevDmg;
+        // reset sprite
         item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[0].sprite);
     }
 }

@@ -306,6 +306,11 @@ public class ItemGrid : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Check if the item grid has space for the item
+    /// </summary>
+    /// <param name="itemtoInsert"></param>
+    /// <returns></returns>
     public bool CheckForFreeSpace(ItemData itemtoInsert)
     {
         int height = itemtoInsert.height;
@@ -363,17 +368,4 @@ public class ItemGrid : MonoBehaviour
             }
         }
     }
-
-    
-
-
-
-    public void BroadcastEffects()
-    {
-        
-    }
-
-
-
-    
 }

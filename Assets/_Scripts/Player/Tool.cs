@@ -4,8 +4,6 @@ public class Tool: MonoBehaviour
 {
     protected Animator _animator;
     protected PlayerController _playerController;
-
-    public float Damage;
     
     private void Awake()
     {

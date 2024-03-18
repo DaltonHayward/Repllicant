@@ -14,8 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 1
   height: 2
-  itemIcon: {fileID: -846662441, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
+  sprites:
+  - spriteName: Base
+    sprite: {fileID: -846662441, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
+  - spriteName: Burning
+    sprite: {fileID: 735845046, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
   envModel: {fileID: 7393819587006878227, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
   Name: Sword
   effects: []
   range: 0
+  isEquipable: 1
