@@ -48,7 +48,6 @@ public class Charmable : MonoBehaviour, ISubscriber
 
     public void ReceiveMessage(string s)
     {
-        Debug.Log("Message: " + s);
         // handles attack message
         if (s.Equals(emissionChannel))
         { 

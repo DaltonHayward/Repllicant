@@ -20,13 +20,13 @@ public class SirenSong : MonoBehaviour
 
     private void Awake()
     {
-        CreateVisualCue();
+        //CreateVisualCue();
     }
 
     private void Update()
     {
-        PulseEffect();
-        UpdateColorBasedOnPlayerDistance();
+        //PulseEffect();
+        //UpdateColorBasedOnPlayerDistance();
     }
 
     public void SetParameters(float freq, float range, string ch)
@@ -79,31 +79,6 @@ public class SirenSong : MonoBehaviour
 
     void PulseEffect()
     {
-        /*float dist = Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
-
-        if (dist <= maxScale)
-        {
-            currentScale = dist;
-        }*/
-        /*if (isIncreasing)
-        {
-            //currentScale = dist;
-            if (dist >= maxScale)
-            {
-                currentScale = dist + 3;
-                isIncreasing = false;
-            }
-        }
-        else
-        {
-            currentScale -= pulseSpeed * Time.deltaTime;
-            if (dist <= maxScale)
-            {
-                currentScale = minScale;
-                isIncreasing = true;
-            }
-        }*/
-
         visualCueObject.transform.localScale = new Vector3(broadcastRange, 0.01f, broadcastRange);
     }
 

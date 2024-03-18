@@ -153,7 +153,8 @@ public class Siren : MonoBehaviour, ISubscriber
                 }
                 else if (angleToSiren <= -90 || angleToSiren >= 90 && dist < _songRange && dist > 3)
                 {
-                    if (e.isKey)
+                    // sometimes Input.anyKey || e.isKey works, sometimes only e.isKey does
+                    if (Input.anyKey || e.isKey)
                     {
                         // Weaken effect if player is trying to move away so player can escape if they want
                         cc.Move(direction.normalized * (-dist / _songRange) * Time.deltaTime);
@@ -196,9 +197,7 @@ public class Siren : MonoBehaviour, ISubscriber
 
     private void ChangeColor(Color color)
     {
-        //for (int i = 1; i < gameObject.transform.childCount; i++)
-        //{
-            gameObject.transform.GetChild(7).GetComponent<Renderer>().material.SetColor("_BaseColor", color);
-        //}
+        // siren body flashes red when hit
+        gameObject.transform.GetChild(7).GetComponent<Renderer>().material.SetColor("_BaseColor", color);
     }
 }
