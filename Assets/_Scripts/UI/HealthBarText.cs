@@ -12,17 +12,20 @@ public class HealthBarText : MonoBehaviour
     private float currentHealth;
     private float maxHealth;
 
-    // Start is called before the first frame update
-    void Start()
+    public void HealthBarTextChanged(float newHealth)
     {
-        currentHealth = healthSlider.value;
-        maxHealth = healthSlider.maxValue;
+        currentHealth = newHealth;
+        healthSlider.value = currentHealth;
+        healthSlider.maxValue = maxHealth;
         healthText.GetComponent<TextMeshProUGUI>().text = currentHealth + "";
     }
 
-    public void HealthBarTextChanged(float newHealth)
+    public void ChangeHealthSlider(float currentHP, float maxHP)
     {
-            currentHealth = newHealth;
-            healthText.GetComponent<TextMeshProUGUI>().text = currentHealth + "";
+        currentHealth = currentHP;
+        maxHealth = maxHP;
+        healthSlider.value = currentHealth;
+        healthSlider.maxValue = maxHealth;
+        healthText.GetComponent<TextMeshProUGUI>().text = currentHealth + "";
     }
 }

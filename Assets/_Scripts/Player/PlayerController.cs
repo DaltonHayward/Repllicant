@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using static UnityEditor.FilePathAttribute;
 
 public class PlayerController : MonoBehaviour, ISubscriber
 
@@ -21,7 +23,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     public float RotationSmoothTime = 0.12f;
     public Vector3 InputDirection;
     private CharacterController _controller;
-    //private float _speed;
     private float _animationBlend;
     private float _targetRotation = 0.0f;
     private float _rotationVelocity;
@@ -33,8 +34,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     [SerializeField]
     [Range(0.1f, 5f)]
     private float _rotationSpeed = 1;
-    private Vector3 _lookDirection;
-    private Quaternion _rotationGoal;
     private bool _isRotating = false;
     private float _cameraYAngle;
     const float FIRST = 0f;
@@ -45,16 +44,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
     [Header("Dodge")]
     [SerializeField]
     private AnimationCurve _dodgeCurve;
-    private bool _isDodging;
-    private float _dodgeTimer;
-
-
-    [SerializeField]
-    [Range(1f, 10f)]
-    private float _dodgeDistance = 5f;
-    [SerializeField]
-    [Range(0.1f, 2f)]
-    private float _dodgeDuration = 1;
+    private bool _canDodge = true;
+    private float _dodgeDuration;
+    private float _dodgeCooldown = 1;
     [SerializeField]
     [Range(0f, 1f)]
     private float _delayBeforeInvinsible = 0.2f;
@@ -63,9 +55,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private float _invinsibleDuration = 1f;
     [SerializeField]
     [Range(0f, 5f)]
-    private float _dodgeCooldown = 1;
-    private bool _canDodge = true;
-    private bool _isColliding = false;
 
     [Header("Combat/Equipment")]
     // Combat
@@ -80,7 +69,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private float _timeBetweenCombos = 0.2f;
     [SerializeField]
     private float _windowBetweenComboAttacks = 0.3f;
-    private State _stateBeforeAttacking;
     public IEnumerator PetrifyCooldownCoroutine;
 
     public Vector3 strokeBackTargetPosition;
@@ -123,8 +111,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     // Start is called before the first frame update
     void Awake()
-    {
-        
+    { 
         // retrieve effects
         Effectable = GetComponent<EffectableObject>();
 
@@ -143,8 +130,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
         _originalMaterialColor = meshRenderer.materials[0].GetColor("_BaseColor");
 
         // Inital dodge setup
-        //Keyframe dodge_lastFrame = _dodgeCurve[_dodgeCurve.length - 1];
-        //_dodgeTimer = dodge_lastFrame.time;
+        Keyframe dodge_lastFrame = _dodgeCurve[_dodgeCurve.length - 1];
+        _dodgeDuration = dodge_lastFrame.time;
 
         // Set up camera
         _playerCamera = GameObject.FindGameObjectWithTag("VirtualCamera").transform;
@@ -198,6 +185,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 break;
 
             case State.DODGING:
+                HandleMovement();
                 break;
 
             case State.INTERACTING:
@@ -401,7 +389,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         _animator.runtimeAnimatorController = Combo[_comboCounter].AnimatorOV;
         // play new animation
         _animator.Play("Attack", 0, 0);
-
+        
         // handle dmg, visual effect-----------------
 
         _comboCounter++;
@@ -504,98 +492,32 @@ public class PlayerController : MonoBehaviour, ISubscriber
     // This will need to be changed to work with a character controller
     private void HandleDodge()
     {
-        if (InputManager.instance.DodgeInput && InputDirection != Vector3.zero)
+        if (InputManager.instance.DodgeInput && InputDirection != Vector3.zero && _canDodge)
         {
-
             StartCoroutine(Dodge());
-
-            // GetComponent<Health>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
-            //StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
-            //StartCoroutine(DodgeCooldown());
-
-        }
-
-
-
-        /*if (InputManager.instance.DodgeInput && _canDodge && direction != Vector3.zero)
-        {
             GetComponent<PlayerHealth>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
-            StartCoroutine(Dodge(transform.position + ConvertToCameraSpace(direction) * _dodgeDistance));
             StartCoroutine(DodgeCooldown());
-        }*/
+        }
     }
 
     IEnumerator Dodge()
     {
-        _animator.SetTrigger("isDodging");
         _playerState = State.DODGING;
-        _isDodging = true;
         float timer = 0f;
+        _animator.SetTrigger("isDodging");
 
-        while (timer < _dodgeTimer)
+        Vector3 dir = transform.forward;
+
+        while (timer < _dodgeDuration)
         {
             float speed = _dodgeCurve.Evaluate(timer);
-            _controller.Move(InputDirection * Time.deltaTime * speed);
+            _controller.Move((dir * speed) * Time.deltaTime);
             timer += Time.deltaTime;
             yield return null;
         }
 
-        _isDodging = false;
         _playerState = State.STANDING;
     }
-
-    void OnCollisionEnter(Collision other)
-    {
-        if (!other.collider.CompareTag("Ground"))
-        {
-            _isColliding = true;
-        }
-    }
-
-    void OnCollisionExit(Collision other)
-    {
-        if (!other.collider.CompareTag("Ground"))
-        {
-            _isColliding = false;
-        }
-    }
-
-    static float Flip(float x)
-    {
-        return 1 - x;
-    }
-
-    // used with lerp fucntion, changes lerp from linear to ease out curve
-    public static float EaseOut(float t)
-    {
-        return Flip(Flip(t) * Flip(t));
-    }
-
-    // allows dodge to take place outside of update loop, moves the player from one position to another specified position
-    /*IEnumerator Dodge(Vector3 newPosition)
-    {
-        _playerState = State.DODGING;
-        _animator.SetBool("isDodging", true);
-
-        float elapsedTime = 0f;
-        float ratio = elapsedTime / _dodgeDuration;
-        
-        while(elapsedTime < _dodgeDuration && !_isColliding)
-        {
-            float lerpFactor = Mathf.SmoothStep(0f, 1f, elapsedTime / _dodgeDuration);
-
-            //_controller.Move(Vector3.Lerp(transform.position, newPosition, ratio));
-            elapsedTime += Time.deltaTime;
-            ratio = elapsedTime / _dodgeDuration;
-
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(_dodgeDuration - elapsedTime);
-
-        _playerState = State.MOVING;
-        _animator.SetBool("isDodging", false);
-    }*/
 
     IEnumerator DodgeCooldown()
     {
@@ -775,7 +697,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     private void HandleEquipedItemChange()
     {
-
         if (InputManager.instance.ScrollInput > 0)
         {
             if (_currentEquipment == Equipment.WEAPON)
@@ -799,8 +720,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 ToolHolder.transform.GetChild(0).gameObject.SetActive(true);
                 _currentTool = 0;
             }
-            //Debug.Log(_currentEquipment);
-            //Debug.Log(InputManager.instance.ScrollInput);
         }
         if (InputManager.instance.ScrollInput < 0)
         {
@@ -825,8 +744,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 ToolHolder.transform.GetChild(1).gameObject.SetActive(true);
                 _currentTool = 1;
             }
-            //Debug.Log(_currentEquipment);
-            //Debug.Log(InputManager.instance.ScrollInput);
         }
     }
 
