@@ -1,18 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
+using static InventoryController;
 
 public class CraftingManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static CraftingManager Instance { get; private set; }
+
+    [SerializeField] BaseItemRecipe[] recipes;
+    [SerializeField] GameObject recipePrefab;
+    [SerializeField] Transform recipeParent;
+
+    private List<InventoryController.ItemDataEntry> items = new List<InventoryController.ItemDataEntry>();
+
+    private void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        items = InventoryController.instance.itemDataEntries;
     }
+        
 }

@@ -7,17 +7,17 @@ public class BaseItemRecipe : ScriptableObject
 {
     public string recipeName;
 
-    public ItemTypeAndCount[] input;
-    public ItemTypeAndCount[] output;
+    public ItemCount[] input;
+    public ItemCount[] output;
 }
 
 [System.Serializable]
-public class ItemTypeAndCount
+public class ItemCount
 {
     public BaseItemRecipe item;
     public int count;
 
-    public ItemTypeAndCount(BaseItemRecipe i, int c)
+    public ItemCount(BaseItemRecipe i, int c)
     {
         item = i;
         count = c;
