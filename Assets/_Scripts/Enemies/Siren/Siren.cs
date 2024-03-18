@@ -20,6 +20,7 @@ public class Siren : MonoBehaviour, ISubscriber
     private Color baseColor;
 
     public GameObject player;
+    private Event e;
 
     private IEnumerator damageCoroutine;
 
@@ -34,10 +35,7 @@ public class Siren : MonoBehaviour, ISubscriber
         SirenSong ss = GetComponent<SirenSong>();
         ss.SetParameters(0.5f, _songRange, "Singing");
 
-        //for (int i = 1; i < gameObject.transform.childCount; i++) 
-        //{
-            baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
-        //}
+        baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
     }
 
     // Update is called once per frame
@@ -122,6 +120,11 @@ public class Siren : MonoBehaviour, ISubscriber
         }
     }
 
+    void OnGUI()
+    {
+        e = Event.current;
+    }
+
     private void Attract()
     {
         // player should gravitate toward siren when in range
@@ -149,15 +152,15 @@ public class Siren : MonoBehaviour, ISubscriber
                 }
                 else if (angleToSiren <= -90 || angleToSiren >= 90 && dist < _songRange && dist > 3)
                 {
-                    if (Input.anyKey)
+                    if (e.isKey)
                     {
-                        // Weaken effect if player is trying to move away so player can escape if they want 
+                        // Weaken effect if player is trying to move away so player can escape if they want
                         cc.Move(direction.normalized * (-dist / _songRange) * Time.deltaTime);
                     }
                     else
                     {
                         // resume attract as normal otherwise
-                        cc.Move(direction.normalized * (attractionForce * 0.4f) * Time.deltaTime);
+                        cc.Move(direction.normalized * (attractionForce * 0.2f) * Time.deltaTime);
                     }
                 }
             }

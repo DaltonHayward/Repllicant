@@ -9,9 +9,7 @@ public class SirenSong : MonoBehaviour
     private string channel;
 
     public Material areaEffectMaterial; // Assign a material with transparency
-    public float pulseSpeed = 2f; // Speed of the pulse effect
-    public float minScale = 0.9f; // Minimum scale of the effect
-    public float maxScale = 1.1f; // Maximum scale of the effect
+    public float maxScale; // Maximum scale of the effect
     public Color safeColor = Color.green; // Color when player is outside the charm's effect
     public Color dangerColor = Color.red; // Color when player is within the charm's effect
     private GameObject visualCueObject; // The object that will show the visual cue
@@ -35,6 +33,7 @@ public class SirenSong : MonoBehaviour
     {
         emitFrequency = freq;
         broadcastRange = range;
+        maxScale = range;
         channel = ch;
         emissionCoroutine = CoEmit();
         StartCoroutine(emissionCoroutine);
@@ -80,36 +79,41 @@ public class SirenSong : MonoBehaviour
 
     void PulseEffect()
     {
-        if (isIncreasing)
+        /*float dist = Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
+
+        if (dist <= maxScale)
         {
-            currentScale += pulseSpeed * Time.deltaTime;
-            if (currentScale >= maxScale)
+            currentScale = dist;
+        }*/
+        /*if (isIncreasing)
+        {
+            //currentScale = dist;
+            if (dist >= maxScale)
             {
-                currentScale = maxScale;
+                currentScale = dist + 3;
                 isIncreasing = false;
             }
         }
         else
         {
             currentScale -= pulseSpeed * Time.deltaTime;
-            if (currentScale <= minScale)
+            if (dist <= maxScale)
             {
                 currentScale = minScale;
                 isIncreasing = true;
             }
-        }
+        }*/
 
-        visualCueObject.transform.localScale = new Vector3(currentScale, 0.01f, currentScale);
+        visualCueObject.transform.localScale = new Vector3(broadcastRange, 0.01f, broadcastRange);
     }
 
     void UpdateColorBasedOnPlayerDistance()
     {
         float distance = Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
-        float effectRange = (maxScale - minScale) / 2.0f; // Assuming the effect range is related to the scale for simplicity
 
-        if (distance <= effectRange)
+        if (distance <= broadcastRange)
         {
-            visualCueObject.GetComponent<Renderer>().material.color = Color.Lerp(dangerColor, safeColor, distance / effectRange);
+            visualCueObject.GetComponent<Renderer>().material.color = Color.Lerp(dangerColor, safeColor, distance / broadcastRange);
         }
         else
         {

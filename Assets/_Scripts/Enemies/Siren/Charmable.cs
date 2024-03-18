@@ -29,8 +29,6 @@ public class Charmable : MonoBehaviour, ISubscriber
         if (Siren != null && isCharmed && _playerController != null)
         {
             StartCoroutine(CharmedCooldown());
-            _playerController.MoveTowardsTarget(Siren.position);
-
         }
 
         if (Time.time - ResetCooldown > 3)
