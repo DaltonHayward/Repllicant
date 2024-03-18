@@ -11,12 +11,10 @@ public class Gate : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OpenGate()
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player triggered gate to open.");
-            anim.SetBool("PlayerEnter", true);
-        }
+        Debug.Log("Player triggered gate to open.");
+        anim.SetBool("PlayerEnter", true);
+        GetComponentInChildren<Interactor>().gameObject.SetActive(false);
     }
 }
