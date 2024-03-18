@@ -26,6 +26,7 @@ public class Siren : MonoBehaviour, ISubscriber
 
     void Awake()
     {
+        transform.rotation = Quaternion.identity;
         player = GameObject.FindGameObjectWithTag("Player");
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;

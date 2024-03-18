@@ -72,7 +72,7 @@ public class SirenSong : MonoBehaviour
         visualCueObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         Destroy(visualCueObject.GetComponent<Collider>()); // We don't need the collider
         visualCueObject.transform.SetParent(transform, false);
-        visualCueObject.transform.localScale = new Vector3(maxScale, 0.01f, maxScale); // Flat cylinder
+        visualCueObject.transform.localScale = new Vector3(maxScale, 0.03f, maxScale); // Flat cylinder
         visualCueObject.transform.localPosition = Vector3.zero; // Centered on the Siren
         visualCueObject.GetComponent<Renderer>().material = areaEffectMaterial;
     }
