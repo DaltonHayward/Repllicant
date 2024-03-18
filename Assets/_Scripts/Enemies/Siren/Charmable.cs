@@ -26,7 +26,7 @@ public class Charmable : MonoBehaviour, ISubscriber
 
     private void Update()
     {
-        if (isCharmed && _playerController != null)
+        if (Siren != null && isCharmed && _playerController != null)
         {
             StartCoroutine(CharmedCooldown());
             _playerController.MoveTowardsTarget(Siren.position);

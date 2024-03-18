@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: f59021c375d02a440b807959a87291af, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.75
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f59021c375d02a440b807959a87291af, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.75
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f59021c375d02a440b807959a87291af, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.75
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f59021c375d02a440b807959a87291af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58,6 +58,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f59021c375d02a440b807959a87291af, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: f59021c375d02a440b807959a87291af, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f59021c375d02a440b807959a87291af, type: 3}
@@ -191,9 +195,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 4.0920568
+  m_Height: 2.1604674
   m_Direction: 1
-  m_Center: {x: 0, y: 1.5460229, z: 0}
+  m_Center: {x: 0, y: 0.91602266, z: 0}
 --- !u!195 &8213680849756305636
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -229,3 +233,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emitFrequency: 1
+  areaEffectMaterial: {fileID: 0}
+  pulseSpeed: 2
+  minScale: 0.9
+  maxScale: 1.1
+  safeColor: {r: 0, g: 1, b: 0, a: 1}
+  dangerColor: {r: 1, g: 0, b: 0, a: 1}
