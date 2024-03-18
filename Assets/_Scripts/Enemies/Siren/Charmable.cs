@@ -14,6 +14,7 @@ public class Charmable : MonoBehaviour, ISubscriber
     private float ResetCooldown;
     private Color baseColor;
     public float charmedCooldown = 5;
+
     public Transform Siren;
     private PlayerController _playerController;
 
