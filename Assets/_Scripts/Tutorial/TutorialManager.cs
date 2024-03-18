@@ -40,5 +40,6 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         gameData.techNPC = techNPC;
         gameData.avNPC = avNPC;
         gameData.scientistNPC = scientistNPC;
+        NPCCheck();
     }
 }

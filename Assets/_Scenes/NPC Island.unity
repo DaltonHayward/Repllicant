@@ -2201,6 +2201,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1286559963}
     m_Modifications:
+    - target: {fileID: 1703534998972378089, guid: 6caccc982f2050745bcb51f3e89cfea4, type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 116074615}
     - target: {fileID: 3445289181095782992, guid: 6caccc982f2050745bcb51f3e89cfea4, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2262,7 +2266,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2413859737473842210, guid: 6caccc982f2050745bcb51f3e89cfea4, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1782330521566560687, guid: 6caccc982f2050745bcb51f3e89cfea4, type: 3}
       insertIndex: 0
@@ -7736,7 +7741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac71fd1417621742978ff043f1fda66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: testData.game
+  fileName: testData2.game
 --- !u!1 &1345481528
 GameObject:
   m_ObjectHideFlags: 0
