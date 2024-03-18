@@ -15,6 +15,7 @@ public class Charmable : MonoBehaviour, ISubscriber
     private Color baseColor;
     public float charmedCooldown = 5;
 
+    public Transform Siren;
     private PlayerController _playerController;
 
     private void Awake()
@@ -28,7 +29,7 @@ public class Charmable : MonoBehaviour, ISubscriber
         if (isCharmed && _playerController != null)
         {
             StartCoroutine(CharmedCooldown());
-            //_playerController.MoveTowardsTarget(Siren.position);
+            _playerController.MoveTowardsTarget(Siren.position);
 
         }
 
