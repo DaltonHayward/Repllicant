@@ -33,6 +33,8 @@ public class DialogueManager : MonoBehaviour
 
     private bool canContinueToNextLine = false;
 
+    private PlayerController _playerController;
+
     private void Awake()
     {
         if (instance != null)
@@ -69,7 +71,9 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         // handle continuing to next line in the dialogue when submit is pressed
-        if (canContinueToNextLine && currentStory.currentChoices.Count == 0 && InputManager.instance.DodgeInput)
+        if (canContinueToNextLine 
+            && currentStory.currentChoices.Count == 0 
+            && InputManager.instance.InteractInput)
         {
             ContinueStory();
         }
@@ -80,10 +84,8 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
+        //_playerController.SetState(PlayerController.State.INTERACTING);
         
-
-
-
         ContinueStory();
     }
 
@@ -94,9 +96,8 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        //_playerController.SetState(PlayerController.State.STANDING);
         
-
-
     }
 
     private void ContinueStory()
@@ -119,7 +120,8 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator DisplayLine(string line)
     {
         // empty the dialogue text
-        dialogueText.text = "";
+        dialogueText.text = line;
+        dialogueText.maxVisibleCharacters = 0;
 
         // hide items while text is typing
         continueText.SetActive(false);
@@ -133,17 +135,17 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in line.ToCharArray())
         {
             // if the space bar is pressed, finish displaying the line right away
-            /*if (Input.GetKeyDown(KeyCode.Space))
+            if (InputManager.instance.DodgeInput)
             {
-                dialogueText.text = line;
+                dialogueText.maxVisibleCharacters = line.Length;
                 break;
             }
-            */
+            
             // check for rich text tag, if found, add it without waiting
             if (letter == '<' || isAddingRichTextTag)
             {
                 isAddingRichTextTag = true;
-                dialogueText.text += letter;
+                
                 if(letter == '>') 
                 {
                     isAddingRichTextTag = false;
@@ -152,10 +154,9 @@ public class DialogueManager : MonoBehaviour
 
             else
             {
-                dialogueText.text += letter;
+                dialogueText.maxVisibleCharacters++;
                 yield return new WaitForSeconds(typingSpeed);
             }
-
 
         }
 
