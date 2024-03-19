@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum MeleeMobState
+public enum MedusaMobState
 {
     idle,
     charge,
@@ -13,7 +13,7 @@ public enum MeleeMobState
     stone
 }
 [RequireComponent(typeof(NavMeshAgent))]
-public class MeleeMob : Enemy
+public class MedusaMob : Enemy
 
 {
     [Header("Charge knockback distance")]
@@ -147,6 +147,32 @@ public class MeleeMob : Enemy
 
 
                     lastSkillTime = Time.time;
+                }
+                break;
+            case BoarState.charge:
+
+                if (Vector3.Distance(new Vector3(chargeTargetPosition.x, 0, chargeTargetPosition.z), new Vector3(transform.position.x, 0, transform.position.z)) < 0.2f)
+                {
+                    state = BoarState.idle;
+
+                    return;
+                }
+                Collider[] target;
+                transform.Translate(chargeDir * chargespeed * Time.deltaTime, Space.World);
+                target = Physics.OverlapSphere(transform.position, 0.6f);
+                for (int i = 0; i < target.Length; i++)
+                {
+                    if (target[i].tag == "Player" && playerIsDamageByCharge == false)
+                    {
+                        Debug.Log($"Player taken charge damage{attack}");
+
+                        //target[i].gameObject.GetComponent<PlayerController>().SetState(PlayerController.State.KNOCKBACK);
+                        //target[i].gameObject.GetComponent<PlayerController>().strokeBackTargetPosition = target[i].transform.position + new Vector3((Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized * strokeBackDistance).x, 0, (Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized * strokeBackDistance).z);
+                        target[i].gameObject.GetComponent<PlayerController>().ReceiveMessage("DamageOnPlayer:" + attack.ToString());
+                        target[i].gameObject.GetComponent<PlayerHealth>().TakeDamage(attack);
+
+                        playerIsDamageByCharge = true;
+                    }
                 }
                 break;
             case BoarState.stone:

@@ -11,12 +11,14 @@ public class Bullet : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerController>().ReceiveMessage("DamageOnPlayer:" + attackDamage.ToString());
+            player.gameObject.GetComponent<PlayerController>().ReceiveMessage("DamageOnPlayer:" + attackDamage.ToString());
+            player.gameObject.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
+            Destroy(gameObject);
         }
     }
     void Update()
     {
         transform.LookAt(player);
-        transform.Translate(Vector3.MoveTowards(transform.position, player.position, speed));
+        transform.position = Vector3.MoveTowards(transform.position, player.position, speed);
     }
 }

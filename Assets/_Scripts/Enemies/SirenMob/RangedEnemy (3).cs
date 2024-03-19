@@ -9,23 +9,18 @@ public class RangedEnemy : Enemy
 {
     public float skillCD;
     bool canCopy = true;
-    float lastCopyTime = 0;
+    float lastCopyTime;
     public RangedEnemyState rangedEnemy;
     public GameObject bullet;
+    public override void Start()
+    {
+        base.Start();
+        lastCopyTime = -skillCD - 10;
+    }
 
     public override void Update()
     {
-        if (canCopy && Time.time - lastCopyTime > skillCD)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                Vector3 pos = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
-                RangedEnemy rangedEnemy = Instantiate(gameObject, pos, Quaternion.identity).GetComponent<RangedEnemy>();
-                rangedEnemy.hp = 1;
-                rangedEnemy.canCopy = false;
-            }
-            lastCopyTime = Time.time;
-        }
+
         if (Vector3.Distance(player.position, transform.position) > chaseRange)
         {
             rangedEnemy = RangedEnemyState.idle;
@@ -42,6 +37,7 @@ public class RangedEnemy : Enemy
         switch (rangedEnemy)
         {
             case RangedEnemyState.idle:
+                lastCopyTime = -skillCD - 10;
                 navMeshAgent.isStopped = true;
                 break;
             case RangedEnemyState.attack:
@@ -56,6 +52,17 @@ public class RangedEnemy : Enemy
             case RangedEnemyState.chase:
                 navMeshAgent.isStopped = false;
                 navMeshAgent.SetDestination(player.position);
+                if (canCopy && Time.time - lastCopyTime > skillCD)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Vector3 pos = transform.position + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+                        RangedEnemy rangedEnemy = Instantiate(gameObject, pos, Quaternion.identity).GetComponent<RangedEnemy>();
+                        rangedEnemy.hp = 1;
+                        rangedEnemy.canCopy = false;
+                    }
+                    lastCopyTime = Time.time;
+                }
                 break;
         }
     }
