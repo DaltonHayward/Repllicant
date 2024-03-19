@@ -104,7 +104,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     // State
     public enum State { MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, KNOCKBACK, CHARMED };
-    public State _playerState;
+    [SerializeField]
+    private State _playerState;
 
     public Canvas _effectCanvas;
 
@@ -661,6 +662,12 @@ public class PlayerController : MonoBehaviour, ISubscriber
             {
                 _inInventory = false;
                 _inventory.enabled = false;
+
+                if (DropdownController.instance.isActiveAndEnabled)
+                {
+                    InventoryController.instance.HideContextMenu();
+                }
+                    
                 _playerState = State.STANDING;
             }
             else
@@ -694,7 +701,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     #endregion
 
     #region - Equipment -
-
     private void HandleEquipedItemChange()
     {
         if (InputManager.instance.ScrollInput > 0)
@@ -745,6 +751,27 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 _currentTool = 1;
             }
         }
+    }
+
+    public void EquipTool(Equipment type, GameObject tool)
+    {
+        switch (type)
+        {
+            case Equipment.WEAPON:
+                Tools[0] = tool.GetComponent<Tool>();
+                break;
+            case Equipment.PICKAXE:
+                Tools[1] = tool.GetComponent<Tool>();
+                break;
+            case Equipment.AXE:
+                Tools[2] = tool.GetComponent<Tool>();
+                break;
+        }
+    }
+
+    public Tool[] GetTools()
+    {
+        return Tools;
     }
 
     #endregion

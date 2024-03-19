@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 528ac497870ac72489a123fa43e91b41, type: 3}
-  m_Name: Sword
+  m_Name: Axe
   m_EditorClassIdentifier: 
-  Name: Sword
-  width: 1
-  height: 2
+  Name: Axe
+  width: 2
+  height: 3
   sprites:
   - spriteName: Base
-    sprite: {fileID: -846662441, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
+    sprite: {fileID: 735845046, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
   - spriteName: Burning
-    sprite: {fileID: -2071988492, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
-  envModel: {fileID: 7393819587006878227, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
+    sprite: {fileID: 738372054, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
+  envModel: {fileID: 699386282119447561, guid: 5600fb6ab7186b346af872d99bab71f4, type: 3}
   effects: []
   range: 0
   isEquipable: 1
-  toolType: 0
+  toolType: 2

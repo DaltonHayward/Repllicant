@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Axe : Tool
+public class Axe : Tool, ISubscriber, Burnable
 {
     public void OnTriggerEnter(Collider other)
     {
