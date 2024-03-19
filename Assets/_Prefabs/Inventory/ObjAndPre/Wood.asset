@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528ac497870ac72489a123fa43e91b41, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
+  Name: Wood
   width: 1
   height: 2
-  itemIcon: {fileID: 21300000, guid: 2c85de3c5c76c4636b48d2105a83c46b, type: 3}
+  sprites:
+  - spriteName: Base
+    sprite: {fileID: -1540579854, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
   envModel: {fileID: 5370432301953082585, guid: eac811f6c02eb024b9655abc5f605ef0, type: 3}
-  Name: Wood
+  effects: []
+  range: 0
+  isEquipable: 0
+  toolType: 0
+  isEquipped: 0

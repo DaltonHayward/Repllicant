@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
 
 public class InventoryController : MonoBehaviour
 {
+    public static InventoryController instance;
+
     [System.Serializable]
     public class ItemDataEntry
     {
@@ -45,7 +48,6 @@ public class InventoryController : MonoBehaviour
 
     public GameObject staticPlayerInventory;
     public static ItemGrid playerInventory;
-    public static InventoryController instance;
 
     // look up table
     [SerializeField] public List<ItemDataEntry> itemDataEntries;
@@ -54,7 +56,14 @@ public class InventoryController : MonoBehaviour
     [SerializeField]
     private float _timeBetweenEffectApplication = 3f;
 
+    [HideInInspector]
     public bool DropdownHovered = false;
+
+    private PlayerController playerController;
+
+    Inventory_Item equippedWeapon;
+    Inventory_Item equippedPickaxe;
+    Inventory_Item equippedAxe;
 
 
     /// <summary>
@@ -75,7 +84,9 @@ public class InventoryController : MonoBehaviour
 
         InventoryHighlight = GetComponent<InventoryHighlight>();
         playerInventory = staticPlayerInventory.GetComponent<ItemGrid>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         itemDataDictionary = new Dictionary<string, ItemData>();
+       
 
         foreach (ItemDataEntry entry in itemDataEntries)
         {
@@ -314,6 +325,9 @@ public class InventoryController : MonoBehaviour
         selectedItemTransform.SetParent(canvasTransform);
 
         newItem.Set(LookUpItem(itemToInsert.Name));
+/*        Vector3 overlayPos = new Vector3((itemToInsert.width * ItemGrid.tileSizeWidth) - ItemGrid.tileSizeWidth, (itemToInsert.height * ItemGrid.tileSizeHeight / 2) - ItemGrid.tileSizeHeight / 2, 0);
+        Debug.Log(newItem.GetComponentInChildren<RectTransform>().transform.position);
+        newItem.GetComponentInChildren<RectTransform>().transform.position = overlayPos;*/
         selectedItem = null;
 
         Vector2Int? storePos = staticselectedItemGrid.FindSpace(newItem);
@@ -337,44 +351,8 @@ public class InventoryController : MonoBehaviour
     {
         Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
         Instantiate(instance.LookUpItem(item.itemData.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
+        if (item.isEquipped) { item.Unequip(); } 
         Destroy(item.gameObject);
-    }
-
-    public void DropItem()
-    {
-        Inventory_Item item = DropdownController.instance.GetClickedOnItem();
-        Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
-        Instantiate(instance.LookUpItem(item.itemData.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
-        // clean up 
-        SetClickedItem(null);
-        HideContextMenu();
-        Destroy(item.gameObject);
-        selectedItemGrid.RemoveItem(item);
-    }
-
-    public void PlayerDeath() 
-    {
-        staticPlayerInventory.GetComponent<ItemGrid>().DeathDrop();
-    }
-
-    public void ShowContextMenu()
-    {
-        DropdownController.instance.Show();
-    }
-
-    public void HideContextMenu()
-    {
-        DropdownController.instance.Hide();
-    }
-
-    public void SetClickedItem(Inventory_Item item)
-    {
-        DropdownController.instance.SetClickedItem(item);
-    }
-
-    public Inventory_Item GetClickedOnItem()
-    {
-        return DropdownController.instance.GetClickedOnItem();
     }
 
     /// <summary>
@@ -382,11 +360,10 @@ public class InventoryController : MonoBehaviour
     /// </summary>
     private void BroadcastEffects()
     {
-        float startTime = Time.time;
-        for (int child = 1; child < staticPlayerInventory.transform.childCount; child++)
+        for (int child = 1; child < playerInventory.transform.childCount; child++)
         {
 
-            Inventory_Item broadcastingItem = staticPlayerInventory.transform.GetChild(child).GetComponent<Inventory_Item>();
+            Inventory_Item broadcastingItem = playerInventory.transform.GetChild(child).GetComponent<Inventory_Item>();
 
             if (broadcastingItem.itemData.effects.Length == 0) { continue; }
 
@@ -431,7 +408,6 @@ public class InventoryController : MonoBehaviour
                 }
             } 
         }
-        //Debug.Log(Time.time - startTime);
     }
 
     IEnumerator ApplyEffectsLoop()
@@ -442,4 +418,101 @@ public class InventoryController : MonoBehaviour
             yield return new WaitForSeconds(_timeBetweenEffectApplication);
         }
     }
+
+    #region - Dropdown -
+    public void PlayerDeath()
+    {
+        staticPlayerInventory.GetComponent<ItemGrid>().DeathDrop();
+    }
+
+    public void ShowContextMenu()
+    {
+        DropdownController.instance.Show();
+    }
+
+    public void HideContextMenu()
+    {
+        DropdownController.instance.Hide();
+    }
+
+    public void SetClickedItem(Inventory_Item item)
+    {
+        DropdownController.instance.SetClickedItem(item);
+    }
+
+    public Inventory_Item GetClickedOnItem()
+    {
+        return DropdownController.instance.GetClickedOnItem();
+    }
+
+    public void DropItem()
+    {
+        Inventory_Item item = DropdownController.instance.GetClickedOnItem();
+        Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
+        Instantiate(instance.LookUpItem(item.itemData.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
+        // clean up 
+        SetClickedItem(null);
+        HideContextMenu();
+        if (item.isEquipped) { item.Unequip(); }
+        playerInventory.RemoveItem(item);
+        Destroy(item.gameObject);
+    }
+
+    public void EquipTool(Inventory_Item item)
+    {
+        switch (item.itemData.toolType)
+        {
+            case PlayerController.Equipment.WEAPON:
+                //remove outline from currently equipped item
+                if (equippedWeapon != null)
+                    equippedWeapon.Unequip();
+                equippedWeapon = item;
+                equippedWeapon.Equip();
+                break;
+
+            case PlayerController.Equipment.PICKAXE:
+                if (equippedPickaxe != null)
+                    equippedPickaxe.Unequip();
+                equippedPickaxe = item;
+                equippedPickaxe.Equip();
+                break;
+
+            case PlayerController.Equipment.AXE: 
+                if (equippedAxe != null)
+                    equippedAxe.Unequip();
+                equippedAxe = item;
+                equippedAxe.Equip();
+                break;
+        }
+        HideContextMenu();
+        playerController.EquipTool(item.itemData.toolType, item.itemData.envModel);
+    }
+
+    public void UnequipTool(Inventory_Item item)
+    {
+        switch (item.itemData.toolType)
+        {
+            case PlayerController.Equipment.WEAPON:
+                //remove outline from currently equipped item
+                if (equippedWeapon != null)
+                    equippedWeapon.Unequip();
+                equippedWeapon = null;
+                break;
+
+            case PlayerController.Equipment.PICKAXE:
+                if (equippedPickaxe != null)
+                    equippedPickaxe.Unequip();
+                equippedPickaxe = null;
+                break;
+
+            case PlayerController.Equipment.AXE:
+                if (equippedAxe != null)
+                    equippedAxe.Unequip();
+                equippedAxe = null;
+                break;
+        }
+
+        HideContextMenu();
+    }
+    #endregion
 }

@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Axe : Tool
+public class Axe : Tool, ISubscriber, Burnable
 {
-
-    public float Damage;
     public void OnTriggerEnter(Collider other)
     {
         Collectible c = other.GetComponent<Collectible>();

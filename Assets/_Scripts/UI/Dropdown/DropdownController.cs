@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +11,10 @@ public class DropdownController : MonoBehaviour
 
     private GameObject dropdown;
 
-    public GameObject equidButton;
-    public GameObject discardButton;
+    public GameObject buttonPrefab;
 
     private Inventory_Item _clickedOnItem; 
+
 
     public void Awake()
     {
@@ -41,14 +42,25 @@ public class DropdownController : MonoBehaviour
 
         RemoveChildren();
 
-        if (_clickedOnItem != null && _clickedOnItem.itemData.isEquipable)
+        
+
+        if (_clickedOnItem != null && _clickedOnItem.itemData.isEquipable && !_clickedOnItem.isEquipped)
         {
-            GameObject equipBtn = Instantiate(equidButton, dropdown.transform);
+            GameObject equipButton = Instantiate(buttonPrefab, dropdown.transform);
+            equipButton.GetComponent<Button>().onClick.AddListener(() => InventoryController.instance.EquipTool(_clickedOnItem));
+            equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "Equip";
+        }
+        else if (_clickedOnItem != null && _clickedOnItem.itemData.isEquipable && _clickedOnItem.isEquipped)
+        {
+            GameObject unequipButton = Instantiate(buttonPrefab, dropdown.transform);
+            unequipButton.GetComponent<Button>().onClick.AddListener(() => InventoryController.instance.UnequipTool(_clickedOnItem));
+            unequipButton.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip";
         }
 
-        GameObject discardBtn = Instantiate(discardButton, dropdown.transform);
-        discardBtn.GetComponent<Button>().onClick.AddListener(() => InventoryController.instance.DropItem());
-        
+        GameObject discardButton = Instantiate(buttonPrefab, dropdown.transform);
+        discardButton.GetComponent<Button>().onClick.AddListener(() => InventoryController.instance.DropItem());
+        discardButton.GetComponentInChildren<TextMeshProUGUI>().text = "Discard";
+
 
         Vector2 position = Input.mousePosition;
 
@@ -70,7 +82,6 @@ public class DropdownController : MonoBehaviour
         {
             for (int i = dropdown.transform.childCount - 1 ; i >= 0; i--)
             {
-                Debug.Log("trying");
                 Destroy(dropdown.transform.GetChild(i).gameObject);
             }
         }

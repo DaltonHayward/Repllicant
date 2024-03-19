@@ -13,12 +13,16 @@ public class ItemData : ScriptableObject
     }
 
     // Start is called before the first frame update
+    [Header("Inventory")]
+    public string Name;
     public int width;
     public int height;
     public List<ItemSprites> sprites;
     public GameObject envModel;
-    public string Name;
+    [Header("Effects")]
     public string[] effects;
     public int range;
+    [Header("Tools")]
     public bool isEquipable;
+    public PlayerController.Equipment toolType;
 }

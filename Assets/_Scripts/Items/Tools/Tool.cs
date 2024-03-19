@@ -1,39 +1,30 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : Tool, ISubscriber, Burnable
+public class Tool: MonoBehaviour, ISubscriber, Burnable
 {
-
     private bool isBurning = false;
     private float burnTime = 15f;
+    public float Damage;
 
-    public static float Damage = 20;
-
-    public void OnTriggerEnter(Collider other)
+    protected Animator _animator;
+    protected PlayerController _playerController;
+    
+    private void Awake()
     {
-        if (other.CompareTag("Enemy"))
-        {
-            Debug.Log("hit weapon");
-            ISubscriber subscriber = other.GetComponent<ISubscriber>();
-            if (subscriber != null)
-            {
-                subscriber.ReceiveMessage("Attacked:" + Damage);
-            }
-        }
+        _animator = GetComponentInParent<Animator>();
+        _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
 
     public void ReceiveMessage(string channel)
     {
         if (channel == "Burning")
         {
-            Debug.Log(Damage);
             if (!isBurning)
             {
                 TakeFireDamage();
             }
-            
+
         }
     }
 
@@ -72,4 +63,28 @@ public class Sword : Tool, ISubscriber, Burnable
         // reset sprite
         item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[0].sprite);
     }
+
+    #region - Colliders -
+    public void BeginCollision()
+    {
+        GetComponent<CapsuleCollider>().enabled = true;
+    }
+
+    public void EndCollision()
+    {
+        GetComponent<CapsuleCollider>().enabled = false;
+    }
+    #endregion
+
+    #region - Trail -
+    public void BeginTrail()
+    {
+        GetComponentInChildren<TrailRenderer>().enabled = true;
+    }
+
+    public void EndTrail()
+    {
+        GetComponentInChildren<TrailRenderer>().enabled = false;
+    }
+    #endregion
 }

@@ -701,7 +701,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     #endregion
 
     #region - Equipment -
-
     private void HandleEquipedItemChange()
     {
         if (InputManager.instance.ScrollInput > 0)
@@ -752,6 +751,27 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 _currentTool = 1;
             }
         }
+    }
+
+    public void EquipTool(Equipment type, GameObject tool)
+    {
+        switch (type)
+        {
+            case Equipment.WEAPON:
+                Tools[0] = tool.GetComponent<Tool>();
+                break;
+            case Equipment.PICKAXE:
+                Tools[1] = tool.GetComponent<Tool>();
+                break;
+            case Equipment.AXE:
+                Tools[2] = tool.GetComponent<Tool>();
+                break;
+        }
+    }
+
+    public Tool[] GetTools()
+    {
+        return Tools;
     }
 
     #endregion
