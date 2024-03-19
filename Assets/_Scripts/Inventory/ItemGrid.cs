@@ -22,9 +22,7 @@ public class ItemGrid : MonoBehaviour
     /// </summary>
     private void Start(){
         rectTransform = GetComponent<RectTransform>();
-        Init(InventoryWidth,InventoryHeight);
-        
-       
+        Init(InventoryWidth, InventoryHeight);
     }
     /// <summary>
     /// Initializes the inventory grid, sets the size of the grid and creates the inventory grid.
@@ -92,24 +90,19 @@ public class ItemGrid : MonoBehaviour
         RectTransform rectTransform = item.GetComponent<RectTransform>();
         rectTransform.SetParent(this.rectTransform);
 
-
         for (int itemx = 0; itemx < item.WIDTH; itemx++)
         {
             for (int itemy = 0; itemy < item.HEIGHT; itemy++)
             {
-
                 invItemSlots[x + itemx, y + itemy] = item;
-
             }
         }
-
 
         invItemSlots[x, y] = item;
         item.OnGridPositionX = x;
         item.OnGridPositionY = y;
         Vector2 position = CalculateItemPosition(item, x, y);
         rectTransform.localPosition = position;
-        Debug.Log("Item placed at " + x + " " + y);
     }
 
     /// <summary>
@@ -124,8 +117,8 @@ public class ItemGrid : MonoBehaviour
     public Vector2 CalculateItemPosition(Inventory_Item item, int x, int y)
     {
         Vector2 position = new Vector2();
-        position.x = x * tileSizeWidth;
-        position.y = -(y * tileSizeHeight);
+        position.x = x * tileSizeWidth + tileSizeWidth * item.WIDTH / 2;
+        position.y = -(y * tileSizeHeight + tileSizeHeight * item.HEIGHT / 2);
         return position;
     }
 
@@ -148,14 +141,17 @@ public class ItemGrid : MonoBehaviour
             {
                 if (invItemSlots[x + itemx, y + itemy] != null)
                 {
-                    if( overLappingItem == null){
+                    if( overLappingItem == null)
+                    {
                         overLappingItem = invItemSlots[x + itemx, y + itemy];
                     }
-                    else{
-                        if (overLappingItem != invItemSlots[x + itemx, y + itemy]){return false;}
-
-                        overLappingItem = invItemSlots[x + itemx, y + itemy];
-                        return false;}
+                    else
+                    {
+                        if (overLappingItem != invItemSlots[x + itemx, y + itemy]) 
+                        { 
+                            return false; 
+                        }
+                    }
                 }
             }
         }
@@ -172,20 +168,20 @@ public class ItemGrid : MonoBehaviour
     /// <param name="height"></param>
     /// <returns>true if there is a free space, false if there is not</returns>
     private bool CheckFreeSpace(int x, int y, int width, int height)
+    {
+        if (BoundryCheck(x, y, width, height) == false) { return false; }
+        for (int itemx = 0; itemx < width; itemx++)
         {
-            if (BoundryCheck(x, y, width, height) == false) { return false; }
-            for (int itemx = 0; itemx < width; itemx++)
+            for (int itemy = 0; itemy < height; itemy++)
             {
-                for (int itemy = 0; itemy < height; itemy++)
+                if (invItemSlots[x + itemx, y + itemy] != null)
                 {
-                    if (invItemSlots[x + itemx, y + itemy] != null)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
-            return true;
         }
+        return true;
+    }
 
     
     
@@ -281,13 +277,29 @@ public class ItemGrid : MonoBehaviour
         {
             for (int x = 0; x < InventoryWidth - width+ 1; x++)
             {
-                if(CheckFreeSpace(x, y, width, height)== true){
+                if(CheckFreeSpace(x, y, width, height) == true){
                     return new Vector2Int(x, y);
                 }
-
             }
         }
         return null;
+    }
+
+    public bool CheckForFreeSpace(ItemData itemtoInsert)
+    {
+        int height = itemtoInsert.height;
+        int width = itemtoInsert.width;
+        for (int y = 0; y < InventoryHeight - height + 1; y++)
+        {
+            for (int x = 0; x < InventoryWidth - width + 1; x++)
+            {
+                if (CheckFreeSpace(x, y, width, height) == true)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /// <summary>
@@ -313,5 +325,23 @@ public class ItemGrid : MonoBehaviour
     {
         CleanUpTiles(item);
     }
+
+
+    /// <summary>
+    /// Drops all the items in the inventory grid, used when the player dies.
+    /// </summary>
+    public void DeathDrop()
+    {
+        foreach (Inventory_Item item in invItemSlots)
+        {
+            if (item != null)
+            {
+                CleanUpTiles(item);
+                // invItemSlots.SetValue(null, item.OnGridPositionX, item.OnGridPositionY);
+                Destroy(item.gameObject);
+            }
+        }
+    }
+
     
 }

@@ -44,67 +44,8 @@ public class COW : MonoBehaviour
     NavMeshAgent navMeshAgent;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;//The probabilities of each item must add up to 1
-    private void OnDestroy()
-    {
-        float randomValue = Random.value;
-        if (randomValue < commonItemProbability)
-        {
-            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability)
-        {
-            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
-        {
-            Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
-        }
-    }
-    public void Die()
-    {
-        Destroy(gameObject);
-    }
-    public int lookAccurate = 10;
-    float subAngle;
-    List<GameObject> target = new List<GameObject>();
-    public void TakeDamage(float damage)
-    {
-        hp -= damage;
-        if (hp <= 0)
-            Die();
-    }
-    public void LookAround()
-    {
-        target.Clear();
 
-        RaycastHit hit;
-        for (int i = 0; i < lookAccurate; i++)
-        {
-            if (Physics.Raycast(transform.position, Quaternion.Euler(0, -1 * subAngle * (i + 1), 0) * transform.forward, out hit, attackRange + 0.1f) && !target.Contains(hit.collider.gameObject))
-            {
 
-                target.Add(hit.collider.gameObject);
-            }
-            if (Physics.Raycast(transform.position, Quaternion.Euler(0, subAngle * (i + 1), 0) * transform.forward, out hit, attackRange + 0.1f) && !target.Contains(hit.collider.gameObject))
-            {
-
-                target.Add(hit.collider.gameObject);
-            }
-        }
-        for (int j = 0; j < target.Count; j++)
-        {
-            if (target[j].tag == "Player" || target[j].tag == "Enemy")
-            {
-                StartCoroutine(Wave(target[j]));
-
-            }
-
-        }
-    }
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -179,7 +120,8 @@ public class COW : MonoBehaviour
                 {
                     Debug.Log($"Player taken damage from minotaur{attack}");
 
-                    player.gameObject.GetComponent<PlayerHealth>().CurrentHealth -= attack;
+                    player.gameObject.GetComponent<PlayerController>().ReceiveMessage("DamageOnPlayer:" + attack.ToString());
+                    player.gameObject.GetComponent<PlayerHealth>().TakeDamage(attack);
                     lastAttackTime = Time.time;
                 }
                 if (Time.time - lastSkillTime > skillSpeed)
@@ -211,7 +153,8 @@ public class COW : MonoBehaviour
 
                         target[i].gameObject.GetComponent<PlayerController>().SetState(PlayerController.State.KNOCKBACK);
                         target[i].gameObject.GetComponent<PlayerController>().strokeBackTargetPosition = target[i].transform.position + new Vector3((Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized * strokeBackDistance).x, 0, (Quaternion.Euler(0, 30f, 0) * (target[i].transform.position - transform.position).normalized * strokeBackDistance).z);
-                        target[i].gameObject.GetComponent<PlayerHealth>().CurrentHealth -= attack;
+                        target[i].gameObject.GetComponent<PlayerController>().ReceiveMessage("DamageOnPlayer:" + attack.ToString());
+                        target[i].gameObject.GetComponent<PlayerHealth>().TakeDamage(attack);
 
                         playerIsDamageByCharge = true;
                     }
@@ -232,6 +175,69 @@ public class COW : MonoBehaviour
         }
     }
 
+
+    private void OnDestroy()
+    {
+        float randomValue = Random.value;
+        if (randomValue < commonItemProbability)
+        {
+            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemsProbability)
+        {
+            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
+        {
+            Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
+        }
+    }
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
+    public int lookAccurate = 10;
+    float subAngle;
+    List<GameObject> target = new List<GameObject>();
+    public void TakeDamage(float damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+            Die();
+    }
+    public void LookAround()
+    {
+        target.Clear();
+
+        RaycastHit hit;
+        for (int i = 0; i < lookAccurate; i++)
+        {
+            if (Physics.Raycast(transform.position, Quaternion.Euler(0, -1 * subAngle * (i + 1), 0) * transform.forward, out hit, attackRange + 0.1f) && !target.Contains(hit.collider.gameObject))
+            {
+
+                target.Add(hit.collider.gameObject);
+            }
+            if (Physics.Raycast(transform.position, Quaternion.Euler(0, subAngle * (i + 1), 0) * transform.forward, out hit, attackRange + 0.1f) && !target.Contains(hit.collider.gameObject))
+            {
+
+                target.Add(hit.collider.gameObject);
+            }
+        }
+        for (int j = 0; j < target.Count; j++)
+        {
+            if (target[j].tag == "Player" || target[j].tag == "Enemy")
+            {
+                StartCoroutine(Wave(target[j]));
+
+            }
+
+        }
+    }
+
     public IEnumerator Wave(GameObject player)
     {
 
@@ -249,7 +255,8 @@ public class COW : MonoBehaviour
         else if (player.tag == "Player")
         {
             player.GetComponent<PlayerController>().MoveSpeed *= 0.7f;
-            player.GetComponent<PlayerHealth>().CurrentHealth -= WaveAttack;
+            player.gameObject.GetComponent<PlayerController>().ReceiveMessage("DamageOnPlayer:" + WaveAttack.ToString());
+            player.gameObject.GetComponent<PlayerHealth>().TakeDamage(WaveAttack);
             yield return new WaitForSeconds(3);//The projectile will be removed after 3 seconds, so the skillspeed must be greater than 3 seconds, otherwise it will keep firing.
             player.GetComponent<PlayerController>().MoveSpeed *= 10f / 7;
         }

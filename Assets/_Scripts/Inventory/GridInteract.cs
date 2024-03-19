@@ -5,10 +5,10 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(ItemGrid))]
 public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
-
 {
     InventoryController invController;
     ItemGrid itemGrid;
+
     /// <summary>
     /// finds type InventoryController, and also gets the item grid attached.
     /// </summary>

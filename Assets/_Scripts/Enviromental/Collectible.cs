@@ -19,16 +19,15 @@ public class Collectible : MonoBehaviour
     // contains all possible item drops with probability
     public List<DropItemAndProbability> DropItemAndProbability_List;
 
-    public void TakeDamage(float damage)
+    virtual public void TakeDamage(float damage)
     {
         hp -= damage;
-        if(hp <= 0)
-            Destroy(gameObject);
+        if (hp <= 0) { Destroy(gameObject); }
     }
 
-    public void instantiateLoot()
+    public void InstantiateLoot()
     {
-        Instantiate(sureToDrop, transform.position, Quaternion.identity);
+        Instantiate(sureToDrop, new Vector3(transform.position.x, InventoryController.instance.LookUpItem(sureToDrop.name).envModel.transform.position.y, transform.position.z), Quaternion.identity);
     }
 
     private void OnDestroy()
@@ -37,8 +36,7 @@ public class Collectible : MonoBehaviour
         // rolls for each possible drop
         foreach (var item in DropItemAndProbability_List)
         {
-            if (Random.value < item.probability)
-                Instantiate(item.item, transform.position, Quaternion.identity);
+            if (Random.value < item.probability) { Instantiate(item.item, transform.position, Quaternion.identity); }
         }
     }
 }

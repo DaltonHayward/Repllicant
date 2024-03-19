@@ -55,6 +55,10 @@ public class Enemy : MonoBehaviour, ISubscriber
                 Hurt();
             }
         }
+        else if (channel.StartsWith("SpeedChange"))
+        {
+            navMeshAgent.speed *= float.Parse(parts[1].Trim());
+        }
     }
 
     // effects for when enemy is hurt

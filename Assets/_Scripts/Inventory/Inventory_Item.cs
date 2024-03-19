@@ -5,14 +5,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory_Item : MonoBehaviour
+public class Inventory_Item : MonoBehaviour, ISubscriber
 {
-
-    public int width;
-    public int height;
     public Sprite itemIcon;
     public ItemData itemData;
-    public GameObject thisItemFab;
+    public string itemName;
+
+    public int OnGridPositionX;
+    public int OnGridPositionY;
+    private bool rotated = false;
+
+
     public int HEIGHT {
         get {
             if (rotated)
@@ -38,24 +41,17 @@ public class Inventory_Item : MonoBehaviour
                 return itemData.width;
             }
         }
-    } 
-    public int OnGridPositionX;
-    public int OnGridPositionY;
-    public bool rotated = false;
+    }
 
-
-
-    /// <summary>
-    /// Called when the script instance is being loaded.
-    /// </summary>
-    void Awake(){
-        thisItemFab = this.gameObject;
-        if (itemData == null)
-        {
-            ItemData itemData = ScriptableObject.CreateInstance<ItemData>();
-            itemData.construct(width, height, itemIcon, thisItemFab);
+    public void ReceiveMessage(string channel)
+    {
+        if (channel == "Burning"){
+            Debug.Log("Item is burning");   
+            Destroy(this.gameObject);
+            InventoryController.instance.RemoveItem(this);
         }
     }
+
 
     /// <summary>
     /// Rotates the inventory item.
@@ -74,11 +70,14 @@ public class Inventory_Item : MonoBehaviour
     internal void Set(ItemData itemData)
     {
         this.itemData = itemData;
-        GetComponent<Image>().sprite  = itemData.itemIcon;
+        itemName = itemData.Name;
+        itemIcon = itemData.itemIcon;
+        GetComponent<Image>().sprite = itemIcon;
         Vector2 size = new Vector2();
         size.x = itemData.width * ItemGrid.tileSizeWidth;
         size.y = itemData.height * ItemGrid.tileSizeHeight;
         GetComponent<RectTransform>().sizeDelta = size;
+        GetComponent<Image>().SetNativeSize();
     }
 
    

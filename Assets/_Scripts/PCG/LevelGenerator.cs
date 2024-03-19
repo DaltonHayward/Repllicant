@@ -12,41 +12,34 @@ public class LevelGenerator : MonoBehaviour
     // structures to place
     [SerializeField] private List<Structure> structures;
     // where structures are placed in scene
-    [SerializeField] private Tilemap walls;
     [SerializeField] private Tilemap ground;
+    [SerializeField] private Tilemap accents;
+    [SerializeField] private Tilemap walls;
     [SerializeField] private Transform props;
+    [SerializeField] private Transform enemies;
     // base tileset
     [SerializeField] private BaseLevelTiles baseLevelTiles;
     // level dimensions
-    [SerializeField] int width = 80;
-    [SerializeField] int height = 50;
+    [SerializeField] public int width = 80;
+    [SerializeField] public int height = 50;
 
-    // ai
-    [SerializeField] private GameObject nav_Mesh;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        GenerateLevel();
-        StartCoroutine(DelayBake());
-    }
-
-    // Delay navmesh rebuild till after level gen
-    private IEnumerator DelayBake()
-    {
-        yield return new WaitForSeconds(0.5f);
-        nav_Mesh.GetComponent<NavMeshSurface>().BuildNavMesh();
-    }
+    // Enemy Spawning
+    [SerializeField] bool enemiesSpawnable = false;
+    [SerializeField] private List<GameObject> enemyPrefabs;
+    [SerializeField] int enemyMin = 0;
+    [SerializeField] int enemyMax = 0;
 
 
     // Generate a complete level with structures
-    private void GenerateLevel()
+    public void GenerateLevel()
     {
+        Rect level = new Rect(transform.position.x, transform.position.z, width, height);
         (List<Rect>, List<Rect>) partitionedLevel = PartitionLevel();
         List<Rect> partitionedAreas = partitionedLevel.Item1;
         List<Rect> borders = partitionedLevel.Item2;
-        CreateBaseGroundTiles();
+        // spawns the structure (with props) and enemies
         SpawnStructures(partitionedAreas);
+        SpawnEnemiesInArea(level);
     }
 
 
@@ -113,7 +106,8 @@ public class LevelGenerator : MonoBehaviour
     }
 
 
-    // Fills the ground in and around the level with random ground tiles
+    // NOT USED rn
+    // Fills the ground with random ground tiles from the base ground tile scriptable object
     private void CreateBaseGroundTiles()
     {
         for (int x = 0; x < width; x++)
@@ -155,51 +149,86 @@ public class LevelGenerator : MonoBehaviour
 
         if (structure != null)
         {
-            Tilemap structWallsTilemap = structure.transform.Find("Walls").GetComponent<Tilemap>();
             Tilemap structGroundTilemap = structure.transform.Find("Ground").GetComponent<Tilemap>();
+            Tilemap structAccentsTilemap = structure.transform.Find("Ground/Accents").GetComponent<Tilemap>();
+            Tilemap structWallsTilemap = structure.transform.Find("Walls").GetComponent<Tilemap>();
 
-            if (structWallsTilemap != null && structGroundTilemap != null)
+            if (structGroundTilemap != null && structWallsTilemap != null && structAccentsTilemap != null)
             {
+                // Calculate the size of the area to check
+                int checkAreaWidth = structureToGen.width * 3;
+                int checkAreaHeight = structureToGen.height * 3;
+
+                // Calculate the offset to center the structure in the check area
+                int xOffset = (checkAreaWidth - structureToGen.width) / 2;
+                int yOffset = (checkAreaHeight - structureToGen.height) / 2;
+
                 // Copy the ground and wall tiles from the structure to corresponding tilemaps of the level generator
-                for (int i = 0; i < structureToGen.width; i++)
+                for (int i = 0; i < checkAreaWidth; i++)
                 {
-                    for (int j = 0; j < structureToGen.height; j++)
+                    for (int j = 0; j < checkAreaHeight; j++)
                     {
-                        TileBase wallTile = structWallsTilemap.GetTile(new Vector3Int(i, j, 0));
-                        TileBase groundTile = structGroundTilemap.GetTile(new Vector3Int(i, j, 0));
+                        // Calculate the position of the tile in the check area relative to the structure's position
+                        Vector3Int structureTilePos = new Vector3Int(i - xOffset, j - yOffset, 0);
 
-                        if (wallTile != null)
-                        {
-                            Vector3Int wallTilePosition = new Vector3Int(
-                                (int)(partitionedArea.x + i + widthOffset),
-                                (int)(partitionedArea.y + j + heightOffset),
-                                0
-                            );
-                            walls.SetTile(wallTilePosition, wallTile);
-                        }
+                        // Get the ground and wall tiles from the structure's tilemaps
+                        TileBase groundTile = structGroundTilemap.GetTile(structureTilePos);
+                        TileBase accentsTile = structAccentsTilemap.GetTile(structureTilePos);
+                        TileBase wallTile = structWallsTilemap.GetTile(structureTilePos);
 
+                        // Calculate the position of the Ground tile in the level generator's tilemap
+                        Vector3Int groundTilePosition = new Vector3Int(
+                            Mathf.RoundToInt(structurePosition.x + structureTilePos.x),
+                            Mathf.RoundToInt(structurePosition.y + structureTilePos.y),
+                            0
+                        );
+
+                        // Place the ground tile if it exists
                         if (groundTile != null)
                         {
-                            Vector3Int groundTilePosition = new Vector3Int(
-                                (int)(partitionedArea.x + i + widthOffset + transform.position.x),
-                                (int)(partitionedArea.y + -j + heightOffset + transform.position.z),
-                                0
-                            );
                             ground.SetTile(groundTilePosition, groundTile);
+                        }
+
+                        // Calculate the position of the Accents tile in the level generator's tilemap
+                        Vector3Int accentsTilePosition = new Vector3Int(
+                            Mathf.RoundToInt(structurePosition.x + structureTilePos.x),
+                            Mathf.RoundToInt(structurePosition.y + structureTilePos.y),
+                            0
+                        );
+
+                        // Place the accents tile if it exists
+                        if (accentsTile != null)
+                        {
+                            accents.SetTile(accentsTilePosition, accentsTile);
+                        }
+
+                        // Calculate the position of the wall tile in the level generator's tilemap
+                        Vector3Int wallTilePosition = new Vector3Int(
+                            Mathf.RoundToInt(structurePosition.x + structureTilePos.x),
+                            Mathf.RoundToInt(structurePosition.y + structureTilePos.y),
+                            0
+                        );
+
+                        // Place the wall tile if it exists
+                        if (wallTile != null)
+                        {
+                            walls.SetTile(wallTilePosition, wallTile);
                         }
                     }
                 }
             }
+            else { Debug.Log("structGroundTilemap != null && structWallsTilemap != null && structAccentsTilemap != null check failed");}
+        
 
-            // Re-parent the props from the structure to the level generator
-            Transform structProps = structure.transform.Find("Props");
+        // Re-parent the props from the structure to the level generator
+        Transform structProps = structure.transform.Find("Props");
             if (structProps != null)
             {
                 foreach (Transform childProp in structProps)
                 {
                     // Choose offsets to randomize the placement of the prop in the area
-                    int xOffset = Random.Range(0, (int)(structureToGen.width-1));
-                    int zOffset = Random.Range(-(int)(structureToGen.height-1), 0); 
+                    int xOffset = Random.Range(0, (int)(structureToGen.width - 1));
+                    int zOffset = Random.Range(-(int)(structureToGen.height - 1), 0);
 
                     // set the world position of the prop
                     Vector3 propWorldPosition = new Vector3(
@@ -207,11 +236,15 @@ public class LevelGenerator : MonoBehaviour
                         0,
                         childProp.position.y + zOffset
                     );
+                    // check for overlaps
+                    if (IsPositionValid(propWorldPosition)) {
                     childProp.position = propWorldPosition;
 
                     // randomize the rotation of the prop
                     childProp.rotation = Quaternion.Euler(childProp.localEulerAngles.x, Random.Range(0, 360), childProp.localEulerAngles.z);
                     childProp.SetParent(props);
+                    childProp.gameObject.layer = props.gameObject.layer;
+                    }
                 }
             }
             Destroy(structure);
@@ -266,20 +299,64 @@ public class LevelGenerator : MonoBehaviour
     }
 
 
-    // Clear all existing tiles, props, and enemies from the level
-    private void ClearLevel()
+    private void SpawnEnemiesInArea(Rect area)
     {
-        walls.ClearAllTiles();
-        ground.ClearAllTiles();
-        List<Transform> propsInScene = new List<Transform>();
-        foreach (Transform prop in props)
+        // prevent error
+        if (enemyPrefabs == null) { return; }
+        // randomize the number of enemies that can spawn, based on given min and max values
+        int maxEnemies = Random.Range(enemyMin, enemyMax + 1);
+        int numEnemies = Mathf.Clamp(maxEnemies, enemyMin, enemyMax);
+
+        // check the placement area before placing the enemy
+        for (int i = 0; i < numEnemies; i++)
         {
-            propsInScene.Add(prop);
-        }
-        foreach (Transform prop in propsInScene)
-        {
-            Destroy(prop.gameObject);
+            Vector3 enemyPosition = GetRandomPositionInArea(area);
+            // Check if the enemy position is valid (not within props)
+            if (IsPositionValid(enemyPosition))
+            {
+                // Instantiate enemy
+                GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+                GameObject enemy = Instantiate(enemyPrefab, enemyPosition, Quaternion.identity);
+                enemy.transform.SetParent(enemies);
+                enemy.layer = enemies.gameObject.layer;
+            }
         }
     }
 
+
+    // Get a random position within a given area
+    private Vector3 GetRandomPositionInArea(Rect area)
+    {
+        float x = Random.Range(area.xMin, area.xMax);
+        float y = Random.Range(area.yMin, area.yMax);
+        return new Vector3(x, 0, y);
+    }
+
+
+    // Check if a position is valid for placing
+    private bool IsPositionValid(Vector3 position)
+    {
+        int propsLayer = LayerMask.NameToLayer("Props");
+        int mobsLayer = LayerMask.NameToLayer("Mobs");
+        int groundLayer = LayerMask.NameToLayer("Ground");
+
+
+        // check for colliders around position
+        Collider[] colliders = Physics.OverlapSphere(position, 3f);
+
+        foreach (Collider collider in colliders)
+        {
+            // Check for invalid pos
+            if ((collider.gameObject.layer == propsLayer) | ((collider.gameObject.layer == mobsLayer)))
+            {
+                return false;
+            }
+            // Ignore ground
+            if (collider.gameObject.layer == groundLayer)
+            {
+                continue;
+            }
+        }
+        return true;
+    }
 }

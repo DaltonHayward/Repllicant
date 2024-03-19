@@ -4,7 +4,7 @@ using System.Collections.Generic;
 //using UnityEditor.Build.Content;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class ItemPickup : MonoBehaviour
 {
     private Boolean isPickedUp = false;
     void Start()
@@ -18,12 +18,11 @@ public class Item : MonoBehaviour
         {
             this.gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
             if (Input.GetKey("l"))
-
             {
                 if (!isPickedUp){
                     isPickedUp = true;
-                    InventoryController.instance.InsertNewItem(this.gameObject.GetComponent<Inventory_Item>(),InventoryController.playerInventory);
-                    
+                    //ItemData item = InventoryController.instance.LookUpItem(this.gameObject.GetComponent<EnvItem>().Name);
+                    //InventoryController.instance.InsertNewItem(item, InventoryController.playerInventory);
                     Destroy(this.gameObject);
                 }
 

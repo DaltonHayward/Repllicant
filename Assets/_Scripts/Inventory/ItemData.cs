@@ -9,24 +9,19 @@ public class ItemData : ScriptableObject
     public int width;
     public int height;
     public Sprite itemIcon;
-    public GameObject thisItemFab;
+    public GameObject envModel;
+    public string Name; 
+    public string Effect;
+    public Inventory_Item script;
 
-    void Start()
-    {
-        
-    }
+    public int range; 
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void construct(int width, int height, Sprite itemIcon, GameObject prefab)
+    public void construct(int width, int height, Sprite itemIcon, GameObject prefab, string Effect)
     {
         this.width = width;
         this.height = height;
         this.itemIcon = itemIcon;
-        this.thisItemFab = prefab;
+        this.envModel = prefab;
+        this.Effect = Effect;
     }
 }
