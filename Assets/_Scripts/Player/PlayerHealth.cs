@@ -38,6 +38,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
     {
         currentHealth += amount; // Restore HP
         currentHealth = Mathf.Min(currentHealth, maxHealth); // Make sure that the current hp wont above MAX HP
+        slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
         Debug.Log("Player healed, health is now " + currentHealth); // Print current HP
     }
 

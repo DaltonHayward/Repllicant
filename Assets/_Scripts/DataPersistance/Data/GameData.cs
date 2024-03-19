@@ -15,6 +15,8 @@ public class GameData
     public bool techNPC;
     public bool avNPC;
     public bool scientistNPC;
+    // Bosses
+    public bool sirenDefeated;
 
     // the values defined in this constructor will be the default values when no data to load
     public GameData()
@@ -28,5 +30,6 @@ public class GameData
         this.techNPC = false;
         this.avNPC = false;
         this.scientistNPC = false;
+        this.sirenDefeated = false;
     }
 }
