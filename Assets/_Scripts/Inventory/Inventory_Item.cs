@@ -53,8 +53,7 @@ public class Inventory_Item : MonoBehaviour
                 return itemData.width;
             }
         }
-    } 
-
+    }
 
     /// <summary>
     /// Rotates the inventory item.
@@ -80,38 +79,6 @@ public class Inventory_Item : MonoBehaviour
         size.x = itemData.width * ItemGrid.tileSizeWidth;
         size.y = itemData.height * ItemGrid.tileSizeHeight;
         GetComponent<RectTransform>().sizeDelta = size;
-        // set size of outline
-        GetComponentsInChildren<RectTransform>()[1].sizeDelta = size; 
-        // add effect script
-        gameObject.AddComponent(Type.GetType(itemData.Name));
-
-        // set up equip sprites depending on item type
-        if (itemData.isEquipable)
-        {
-            switch (itemData.toolType)
-            {
-                case PlayerController.Equipment.WEAPON:
-                    overlayImage.sprite = WeaponOverlay;
-                    outlineImage.sprite = WeaponOutline;
-                    break;
-
-                case PlayerController.Equipment.PICKAXE:
-                    overlayImage.sprite = PickaxeOverlay;
-                    outlineImage.sprite = PickaxeOutline;
-                    break;
-
-                case PlayerController.Equipment.AXE:
-                    overlayImage.sprite = AxeOverlay;
-                    outlineImage.sprite = AxeOutline;
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        Unequip();
-
         //GetComponent<Image>().SetNativeSize();
     }
 
