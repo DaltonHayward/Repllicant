@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEditor.Search;
 using UnityEngine;
-using static InventoryController;
+
 
 public class CraftingManager : MonoBehaviour
 {
@@ -15,29 +15,24 @@ public class CraftingManager : MonoBehaviour
     [SerializeField] Transform recipeParent;
 
     public List<ItemTypeAndCount> items = new List<ItemTypeAndCount>();
-    private InventoryController _InventoryController;
-
-
 
     private ItemGrid itemsInInventory;
 
+    private static CraftingManager instance;
+
     private void Awake()
     {
-        if (Instance == null)
+        if (instance != null)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Debug.LogWarning("Found more than one Crafting Manager in the scene");
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
     }
 
 
     public void GetAllItems()
     {
-        itemsInInventory = playerInventory;
+        itemsInInventory = InventoryController.playerInventory;
         items.Clear();
 
 
@@ -57,10 +52,10 @@ public class CraftingManager : MonoBehaviour
                     itemWasAdded = true;
 
                 }
-                else
+                /*else
                 {
                     items.Add(new ItemTypeAndCount(itemType, 1));
-                }
+                }*/
 
                 i++;
             }
@@ -75,23 +70,22 @@ public class CraftingManager : MonoBehaviour
 
     public void ItemCheck()
     {
-        if (InputManager.instance.DodgeInput)
+
+        GetAllItems();
+        int i = 0;
+
+        foreach (ItemTypeAndCount ItemAndCount in items)
         {
-            GetAllItems();
-            int i = 0;
 
-            foreach (ItemTypeAndCount ItemAndCount in items)
-            {
+            Debug.Log("ItemCheck");
+            Debug.Log(items[i].item.itemName);
 
-                Debug.Log("ItemCheck");
-                Debug.Log(items[i].item.itemName);
-
-                Debug.Log(items[i].count);
+            Debug.Log(items[i].count);
 
 
-                i++;
-            }
+            i++;
         }
+
 
     }
 
