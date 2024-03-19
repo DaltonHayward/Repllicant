@@ -1,13 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.UI;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory_Item : MonoBehaviour, ISubscriber
+public class Inventory_Item : MonoBehaviour
 {
     public Sprite itemIcon;
+
+    public Sprite WeaponOverlay;
+    public Sprite PickaxeOverlay;
+    public Sprite AxeOverlay;
+    public Image overlayImage;
+
+    public Sprite WeaponOutline;
+    public Sprite PickaxeOutline;
+    public Sprite AxeOutline;
+    public Image outlineImage;
+    
     public ItemData itemData;
     public string itemName;
 
@@ -15,6 +26,7 @@ public class Inventory_Item : MonoBehaviour, ISubscriber
     public int OnGridPositionY;
     private bool rotated = false;
 
+    public bool isEquipped;
 
     public int HEIGHT {
         get {
@@ -43,16 +55,6 @@ public class Inventory_Item : MonoBehaviour, ISubscriber
         }
     }
 
-    public void ReceiveMessage(string channel)
-    {
-        if (channel == "Burning"){
-            Debug.Log("Item is burning");   
-            Destroy(this.gameObject);
-            InventoryController.instance.RemoveItem(this);
-        }
-    }
-
-
     /// <summary>
     /// Rotates the inventory item.
     /// <summary>
@@ -60,7 +62,7 @@ public class Inventory_Item : MonoBehaviour, ISubscriber
     {
         rotated = !rotated;
         RectTransform rt = GetComponent<RectTransform>();
-        rt.rotation= Quaternion.Euler(0,0,rotated?90:0);
+        rt.rotation= Quaternion.Euler(0, 0, rotated ? 90 : 0);
     }
 
     /// <summary>
@@ -71,14 +73,33 @@ public class Inventory_Item : MonoBehaviour, ISubscriber
     {
         this.itemData = itemData;
         itemName = itemData.Name;
-        itemIcon = itemData.itemIcon;
+        itemIcon = itemData.sprites[0].sprite;
         GetComponent<Image>().sprite = itemIcon;
         Vector2 size = new Vector2();
         size.x = itemData.width * ItemGrid.tileSizeWidth;
         size.y = itemData.height * ItemGrid.tileSizeHeight;
         GetComponent<RectTransform>().sizeDelta = size;
-        GetComponent<Image>().SetNativeSize();
+        //GetComponent<Image>().SetNativeSize();
     }
 
-   
+    public void UpdateSprite(Sprite sprite)
+    {
+        GetComponent<Image>().sprite = sprite;
+    }
+
+    public void Equip()
+    {
+        isEquipped = true;
+        overlayImage.enabled = true;
+        outlineImage.enabled = true;
+    }
+
+    public void Unequip()
+    {
+        isEquipped = false;  
+        overlayImage.enabled = false;
+        outlineImage.enabled = false;
+    }
+
+
 }

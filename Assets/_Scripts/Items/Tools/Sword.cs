@@ -1,9 +1,12 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : Tool
+public class Sword : Tool, ISubscriber, Burnable
 {
+    public static float Damage = 20;
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))

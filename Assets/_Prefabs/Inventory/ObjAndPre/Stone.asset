@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528ac497870ac72489a123fa43e91b41, type: 3}
   m_Name: Stone
   m_EditorClassIdentifier: 
+  Name: Stone
   width: 2
   height: 2
-  itemIcon: {fileID: 2055802583, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
+  sprites:
+  - spriteName: Base
+    sprite: {fileID: 2055802583, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
   envModel: {fileID: 8760400047210153315, guid: fd2383f5619f7e443ae977adb8d36a6f, type: 3}
-  Name: Stone
-  Effect: None
+  effects: []
   range: 0
+  isEquipable: 0
+  toolType: 0
+  isEquipped: 0
