@@ -6,26 +6,27 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem.XR;
 [RequireComponent(typeof(NavMeshAgent))]
 
-public class Siren : MonoBehaviour
+public class Siren : MonoBehaviour, ISubscriber
 {
     [SerializeField]
-    public float hp, attack, chaseRange, speed;
-    [SerializeField]
-    public float attractionForce = 20f;
+    public float hp, attack, chaseRange, speed, attractionForce;
 
     NavMeshAgent navMeshAgent;
 
-    [SerializeField] private float _songRange = 30f;
+    [SerializeField] private float _songRange;
 
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
+    private Color baseColor;
 
     public GameObject player;
+    private Event e;
 
     private IEnumerator damageCoroutine;
 
     void Awake()
     {
+        transform.rotation = Quaternion.identity;
         player = GameObject.FindGameObjectWithTag("Player");
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
@@ -34,6 +35,8 @@ public class Siren : MonoBehaviour
 
         SirenSong ss = GetComponent<SirenSong>();
         ss.SetParameters(0.5f, _songRange, "Singing");
+
+        baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
     }
 
     // Update is called once per frame
@@ -52,16 +55,19 @@ public class Siren : MonoBehaviour
 
     public void Movement()
     {
-       
-        // only check for new position every 5 seconds
         // calc distance to player
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
         if (distanceToPlayer < chaseRange && distanceToPlayer > 2f)
         {
+            speed = 0.5f;
             transform.LookAt(player.transform.position);
             navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
-        }   
+        }
+        else 
+        {
+            speed = 0f;
+        }
     }
 
     private void OnDestroy()
@@ -109,11 +115,15 @@ public class Siren : MonoBehaviour
                         // Damages player more as they get closer to the siren
                         player.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(player.transform.position, transform.position));
                         yield return new WaitForSeconds(5);
-                        Debug.Log(player.GetComponent<PlayerHealth>().CurrentHealth);
                     }
                 }
             }
         }
+    }
+
+    void OnGUI()
+    {
+        e = Event.current;
     }
 
     private void Attract()
@@ -132,17 +142,29 @@ public class Siren : MonoBehaviour
 
                 // when the angle is at -90 or +90, then it is in view (180º FOV)
                 CharacterController cc = player.GetComponent<CharacterController>();
-                if (angleToSiren >= -90 && angleToSiren <= 90)
-                {
-                    Debug.Log("looking at siren");
-                    cc.Move(direction.normalized * (attractionForce * Time.deltaTime));
-                }
-                else
-                {
-                    Debug.Log("looking away from siren");
-                    cc.Move(direction.normalized * (attractionForce + player.GetComponent<PlayerController>().Speed * Time.deltaTime));
-                }
 
+                // get the distance between the player and the siren
+                float dist = Vector3.Distance(player.transform.position, transform.position);
+
+                if (angleToSiren >= -90 && angleToSiren <= 90 && dist < _songRange && dist > 3)
+                {
+                    attractionForce = _songRange / dist;
+                    cc.Move(direction.normalized * (attractionForce * 0.8f) * Time.deltaTime);
+                }
+                else if (angleToSiren <= -90 || angleToSiren >= 90 && dist < _songRange && dist > 3)
+                {
+                    // sometimes Input.anyKey || e.isKey works, sometimes only e.isKey does
+                    if (Input.anyKey || e.isKey)
+                    {
+                        // Weaken effect if player is trying to move away so player can escape if they want
+                        cc.Move(direction.normalized * (-dist / _songRange) * Time.deltaTime);
+                    }
+                    else
+                    {
+                        // resume attract as normal otherwise
+                        cc.Move(direction.normalized * (attractionForce * 0.2f) * Time.deltaTime);
+                    }
+                }
             }
         }
     }
@@ -161,7 +183,21 @@ public class Siren : MonoBehaviour
             if (float.TryParse(parts[1].Trim(), out damage))
             {
                 TakeDamage(damage);
+                ChangeColor(Color.red);
+                StartCoroutine(ResetColor());
             }
         }
+    }
+
+    IEnumerator ResetColor()
+    {
+        yield return new WaitForSeconds(0.1f);
+        ChangeColor(baseColor);
+    }
+
+    private void ChangeColor(Color color)
+    {
+        // siren body flashes red when hit
+        gameObject.transform.GetChild(7).GetComponent<Renderer>().material.SetColor("_BaseColor", color);
     }
 }

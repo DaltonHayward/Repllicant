@@ -8,12 +8,8 @@ public class SirenSong : MonoBehaviour
     private float broadcastRange;
     private string channel;
 
-    private IEnumerator emissionCoroutine;
 
-    private void Awake()
-    {
-        //emissionCoroutine = CoEmit();
-    }
+    private IEnumerator emissionCoroutine;
 
     public void SetParameters(float freq, float range, string ch)
     {
