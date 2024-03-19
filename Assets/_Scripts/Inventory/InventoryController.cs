@@ -137,6 +137,7 @@ public class InventoryController : MonoBehaviour
     /// <param name="itemtoInsert">The item to insert.</param>
     public void InsertItem(Inventory_Item itemtoInsert)
     {
+        
         Vector2Int? storePos = selectedItemGrid.FindSpace(itemtoInsert);
         if (storePos != null)
         {
@@ -273,7 +274,7 @@ public class InventoryController : MonoBehaviour
     /// <param name="staticselectedItemGrid">The selected item grid.</param>
     public void InsertNewItem(ItemData itemToInsert, ItemGrid staticselectedItemGrid)
     {
-
+        
         Inventory_Item newItem = Instantiate(ItemPrefab).GetComponent<Inventory_Item>();
 
         selectedItem = newItem;

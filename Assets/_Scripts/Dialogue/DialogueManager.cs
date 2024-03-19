@@ -73,7 +73,7 @@ public class DialogueManager : MonoBehaviour
         // handle continuing to next line in the dialogue when submit is pressed
         if (canContinueToNextLine 
             && currentStory.currentChoices.Count == 0 
-            && InputManager.instance.DodgeInput)
+            && InputManager.instance.InteractInput)
         {
             ContinueStory();
         }
