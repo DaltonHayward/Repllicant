@@ -45,25 +45,17 @@ public class CraftingManager : MonoBehaviour
 
             foreach (ItemTypeAndCount ItemAndCount in items)
             {
-                if (ItemAndCount.item == itemType)
+                if (ItemAndCount.name == itemType.itemData.Name)
                 {
-                    //items[i].items.Add(itemType);
                     items[i].count++;
                     itemWasAdded = true;
-
                 }
-                /*else
-                {
-                    items.Add(new ItemTypeAndCount(itemType, 1));
-                }*/
-
                 i++;
             }
             if (!itemWasAdded)
             {
-                items.Add(new ItemTypeAndCount(itemType, 1));
+                items.Add(new ItemTypeAndCount(itemType.itemData.Name, itemType.itemData, 1));
             }
-
         }
 
     }
@@ -77,8 +69,7 @@ public class CraftingManager : MonoBehaviour
         foreach (ItemTypeAndCount ItemAndCount in items)
         {
 
-            Debug.Log("ItemCheck");
-            Debug.Log(items[i].item.itemName);
+            Debug.Log(items[i].name);
 
             Debug.Log(items[i].count);
 
@@ -89,6 +80,10 @@ public class CraftingManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        ItemCheck();
+    }
 
 
 }

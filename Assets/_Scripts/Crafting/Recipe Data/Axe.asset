@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd48fa4bf677d4641886f75c5b9b1125, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  recipeName: Axe
+  input:
+  - name: Wood
+    item: {fileID: 11400000, guid: b08ff7f910673ef45b7f36f580163188, type: 2}
+    count: 2
+  - name: Stone
+    item: {fileID: 11400000, guid: 5e9c0c7858ed8544282c98ffee9c04d9, type: 2}
+    count: 1
+  output:
+  - name: Axe
+    item: {fileID: 11400000, guid: 5bd55dd28d416324da1acef9469523ab, type: 2}
+    count: 1

@@ -93,7 +93,7 @@ public class InventoryController : MonoBehaviour
             itemDataDictionary.Add(entry.Name, entry.itemData);
         }
 
-        StartCoroutine(ApplyEffectsLoop());
+        //StartCoroutine(ApplyEffectsLoop());
     }
 
     /// <summary>

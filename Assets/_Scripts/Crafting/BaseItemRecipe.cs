@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item Recipe", menuName = "Scriptable Objects/Item Recipe")]
+[CreateAssetMenu(menuName = "Recipes/Item_Recipe", fileName = "Item_Recipe")]
 public class BaseItemRecipe : ScriptableObject
 {
     public string recipeName;
@@ -15,13 +15,15 @@ public class BaseItemRecipe : ScriptableObject
 public class ItemTypeAndCount
 {
     
-    public Inventory_Item item;
+    //public Inventory_Item item;
+    public string name;
+    public ItemData item;
     public int count;
 
-    public ItemTypeAndCount(Inventory_Item i, int c)
+    public ItemTypeAndCount(string n, ItemData i, int c)
     {
+        name = n;
         item = i;
-        //items.Add(i);
         count = c;
     }
 }
