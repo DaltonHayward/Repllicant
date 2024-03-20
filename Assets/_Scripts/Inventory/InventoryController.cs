@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
 
-public class InventoryController : MonoBehaviour
+public class InventoryController : MonoBehaviour,IDataPersistance
 {
     public static InventoryController instance;
 
@@ -515,5 +515,26 @@ public class InventoryController : MonoBehaviour
 
         HideContextMenu();
     }
+    public void LoadData(GameData gameData)
+    {
+        List<(string,int,int)> newlist= new List<(string,int,int)>();
+        newlist= gameData.InvItems;
+        Debug.Log("Loading Inventory, count is: " + newlist.Count);
+        foreach ((string, int, int) item in newlist)
+        {
+            ItemData itemData = itemDataDictionary[item.Item1];
+            playerInventory.LoadnewItem(itemData, item.Item2, item.Item3);
+        }
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+        Debug.Log("Saving Inventory");
+        gameData.InvItems = playerInventory.getAllItems();    
+    }
     #endregion
+
+  
+
+
 }

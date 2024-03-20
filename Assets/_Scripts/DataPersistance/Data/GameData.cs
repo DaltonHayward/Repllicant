@@ -17,6 +17,8 @@ public class GameData
     public bool scientistNPC;
     // Bosses
     public bool sirenDefeated;
+    public List<(string,int,int)> InvItems;
+    public List<(string,int,int)> StashItems;
 
     // the values defined in this constructor will be the default values when no data to load
     public GameData()
@@ -31,5 +33,7 @@ public class GameData
         this.avNPC = false;
         this.scientistNPC = false;
         this.sirenDefeated = false;
+        this.InvItems = new List<(string, int, int)>();
+        this.StashItems = new List<(string, int, int)>();
     }
 }
