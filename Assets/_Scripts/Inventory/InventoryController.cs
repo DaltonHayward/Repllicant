@@ -31,6 +31,8 @@ public class InventoryController : MonoBehaviour,IDataPersistance
         }
     }
 
+    public ItemGrid StashGrid;
+
     public GameObject Player;
     Inventory_Item selectedItem;
 
@@ -370,6 +372,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
     /// </summary>
     private void BroadcastEffects()
     {
+
         for (int child = 1; child < playerInventory.transform.childCount; child++)
         {
 
@@ -545,31 +548,80 @@ public class InventoryController : MonoBehaviour,IDataPersistance
             ItemData itemData = itemDataDictionary[gameData.InvItems_Names[i]];
             Debug.Log("Loading in Inventory: " + itemData.Name + " at " + gameData.InvItems_xCord[i] + " " + gameData.InvItems_yCord[i]);
 
-            playerInventory.LoadnewItem(itemData, gameData.InvItems_xCord[i], gameData.InvItems_yCord[i]);
+            playerInventory.LoadnewItem(itemData, gameData.InvItems_xCord[i], gameData.InvItems_yCord[i], gameData.InvItems_Rotated[i]);
            
         }
         gameData.InvItems_Names.Clear();
         gameData.InvItems_xCord.Clear();
         gameData.InvItems_yCord.Clear();
+        gameData.InvItems_Rotated.Clear();
+
+        if (StashGrid){
+            for (int i = 0; i < gameData.StashItems_Names.Count; i++)
+            {
+                ItemData itemData = itemDataDictionary[gameData.StashItems_Names[i]];
+                Debug.Log("Loading in Stash: " + itemData.Name + " at " + gameData.StashItems_xCord[i] + " " + gameData.StashItems_yCord[i]);
+
+                StashGrid.LoadnewItem(itemData, gameData.StashItems_xCord[i], gameData.StashItems_yCord[i],gameData.StashItems_Rotated[i]);
+            
+            }
+            gameData.StashItems_Names.Clear();
+            gameData.StashItems_xCord.Clear();
+            gameData.StashItems_yCord.Clear();
+            gameData.StashItems_Rotated.Clear();
+        }
     
     }
 
     public void SaveData(ref GameData gameData)
     {
 
-        List<(string, int, int)> invItems = playerInventory.getAllItems();
+        List<(string, int, int,bool)> invItems = playerInventory.getAllItems();
         List<string> Names= new List<string>();
         List<int> xCord= new List<int>();
         List<int> yCord= new List<int>();
-        foreach ((string, int, int) item in invItems)
+        List<bool> rotated= new List<bool>();   
+        foreach ((string, int, int, bool) item in invItems)
         {
             Names.Add(item.Item1);
             xCord.Add(item.Item2);
             yCord.Add(item.Item3);
+            rotated.Add(item.Item4);
+
         } 
         gameData.InvItems_Names = Names;
         gameData.InvItems_xCord = xCord;
         gameData.InvItems_yCord = yCord;
+        gameData.InvItems_Rotated = rotated;
+
+        if (StashGrid){
+            List<(string, int, int,bool)> stashItems = StashGrid.getAllItems();
+            List<string> stashNames= new List<string>();
+            List<int> stashxCord= new List<int>();
+            List<int> stashyCord= new List<int>();
+            List<bool> stashRotated= new List<bool>();
+            foreach ((string, int, int, bool) item in stashItems)
+            {
+                stashNames.Add(item.Item1);
+                stashxCord.Add(item.Item2);
+                stashyCord.Add(item.Item3);
+                stashRotated.Add(item.Item4);
+            } 
+            gameData.StashItems_Names = stashNames;
+            gameData.StashItems_xCord = stashxCord;
+            gameData.StashItems_yCord = stashyCord;
+            gameData.StashItems_Rotated = stashRotated;
+
+        }
+
+        // gameData.InvItems_Names = new List<string>();
+        // gameData.InvItems_xCord = new List<int>();
+        // gameData.InvItems_yCord = new List<int>();
+        // gameData.InvItems_Rotated = new List<bool>();
+        // gameData.StashItems_Names = new List<string>();
+        // gameData.StashItems_xCord = new List<int>();
+        // gameData.StashItems_yCord = new List<int>();
+        // gameData.StashItems_Rotated = new List<bool>();
 
     }
   

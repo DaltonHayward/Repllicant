@@ -42,19 +42,20 @@ public class DropdownController : MonoBehaviour
 
         RemoveChildren();
 
-        
+        if(InventoryController.instance.SelectedItemGrid.isInventory){
 
-        if (_clickedOnItem != null && _clickedOnItem.itemData.isEquipable && !_clickedOnItem.isEquipped)
-        {
-            GameObject equipButton = Instantiate(buttonPrefab, dropdown.transform);
-            equipButton.GetComponent<Button>().onClick.AddListener(() => InventoryController.instance.EquipTool(_clickedOnItem));
-            equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "Equip";
-        }
-        else if (_clickedOnItem != null && _clickedOnItem.itemData.isEquipable && _clickedOnItem.isEquipped)
-        {
-            GameObject unequipButton = Instantiate(buttonPrefab, dropdown.transform);
-            unequipButton.GetComponent<Button>().onClick.AddListener(() => InventoryController.instance.UnequipTool(_clickedOnItem));
-            unequipButton.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip";
+            if (_clickedOnItem != null && _clickedOnItem.itemData.isEquipable && !_clickedOnItem.isEquipped)
+            {
+                GameObject equipButton = Instantiate(buttonPrefab, dropdown.transform);
+                equipButton.GetComponent<Button>().onClick.AddListener(() => InventoryController.instance.EquipTool(_clickedOnItem));
+                equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "Equip";
+            }
+            else if (_clickedOnItem != null && _clickedOnItem.itemData.isEquipable && _clickedOnItem.isEquipped)
+            {
+                GameObject unequipButton = Instantiate(buttonPrefab, dropdown.transform);
+                unequipButton.GetComponent<Button>().onClick.AddListener(() => InventoryController.instance.UnequipTool(_clickedOnItem));
+                unequipButton.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip";
+            }
         }
 
         GameObject discardButton = Instantiate(buttonPrefab, dropdown.transform);

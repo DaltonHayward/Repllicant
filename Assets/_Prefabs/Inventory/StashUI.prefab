@@ -47,7 +47,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2134486452273223529}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -140,7 +140,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 500, y: 500}
+  m_AnchoredPosition: {x: 554, y: 500}
   m_SizeDelta: {x: 320, y: 320}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &220411193998176358
@@ -193,9 +193,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06e9eb967c7c44255ab9de7d87578864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventoryWidth: 10
+  InventoryWidth: 20
   InventoryHeight: 20
   itemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
+  isInventory: 0
 --- !u!114 &4629538081603694257
 MonoBehaviour:
   m_ObjectHideFlags: 0
