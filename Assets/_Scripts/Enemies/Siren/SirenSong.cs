@@ -35,10 +35,6 @@ public class SirenSong : MonoBehaviour
                         sub.ReceiveMessage(channel);
                         if (c.gameObject.GetComponent<Charmable>() != null)
                             c.gameObject.GetComponent<Charmable>().Siren = transform;
-/*                        if (c.gameObject.GetComponent<PlayerHealth>() != null)
-                        { 
-                            if 
-                        }*/
                     }
                 }
             }

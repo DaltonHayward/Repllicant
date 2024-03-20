@@ -103,25 +103,23 @@ public class Siren : MonoBehaviour, ISubscriber
 
     private IEnumerator GiveDamageCoroutine()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
         while (true)//Vector3.Distance(player.transform.position, transform.position) <= _songRange)
         {
+            Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
             foreach (Collider c in targets)
             {
-                if (c.CompareTag("Player"))
+                ISubscriber[] subs = c.GetComponents<ISubscriber>();
+                if (subs != null)
                 {
-                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                    if (subscriber != null)
+                    foreach (ISubscriber sub in subs)
                     {
-                        // Damages player more as they get closer to the siren
-                        yield return new WaitForSeconds(2f);
-                        Debug.Log("Player Health: " + player.GetComponent<PlayerHealth>().currentHealth);
-                        player.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(player.transform.position, transform.position));
+                        if (c.gameObject.GetComponent<PlayerHealth>() != null)
+                            c.gameObject.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(c.gameObject.transform.position, transform.position));
                     }
                 }
             }
-            /*yield return new WaitForSeconds(2f);
-            Debug.Log(Vector3.Distance(player.transform.position, transform.position));*/
+            yield return new WaitForSeconds(2f);
+            Debug.Log("Player Health: " + player.GetComponent<PlayerHealth>().currentHealth);
         }
     }
 
