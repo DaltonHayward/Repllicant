@@ -11,8 +11,6 @@ public class EquippedTool : MonoBehaviour
     [SerializeField]
     private ParticleSystem fireSystem;
     private InvTool invTool;
-    private bool isBurning;
-    private IEnumerator BurnTimerCoroutine;
 
     protected Animator _animator;
     protected PlayerController _playerController;
@@ -21,53 +19,35 @@ public class EquippedTool : MonoBehaviour
     {
         _animator = GetComponentInParent<Animator>();
         _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        BurnTimerCoroutine = BurnTimer();
         Damage = BaseDamage;
     }
 
     public void Update()
     {
-        if (invTool.isBurning && !isBurning)
+        if (invTool.isBurning)
         {
-            StartCoroutine(BurnTimerCoroutine);
+            // set dmg
+            Damage = BurningDamage;
+            if (!fireSystem.isPlaying)
+            {
+                fireSystem.Play();
+            }
         }
 
-        if (!invTool.isBurning && isBurning)
+        else if (!invTool.isBurning)
         {
-            StopCoroutine(BurnTimerCoroutine);
-            isBurning = false;
-            fireSystem.Stop();
             // reset dmg
             Damage = BaseDamage;
+            if (fireSystem.isPlaying)
+            {
+                fireSystem.Stop();
+            }
         }
-    }
-
-    IEnumerator BurnTimer()
-    {
-        isBurning = true;
-        fireSystem.Play();
-        // Add dmg
-        Damage = BurningDamage;
-
-        yield return new WaitForSeconds(invTool.burnTime);
-
-        isBurning = false;
-        fireSystem.Stop();
-        // reset dmg
-        Damage = BaseDamage;
     }
 
     public void SetInvTool(InvTool tool)
     {
         invTool = tool;
-    }
-
-    public void OnEnable()
-    {
-        if (isBurning)
-        {
-            fireSystem.Play();
-        }
     }
 
     #region - Colliders -
