@@ -25,7 +25,7 @@ public class InvTool : MonoBehaviour, ISubscriber, Burnable
 
         //Debug.Log(igniteChance);
 
-        if (igniteChance < 0.01)
+        if (igniteChance < 0.05)
         {
             Ignite();
         }

@@ -179,6 +179,14 @@ PrefabInstance:
       propertyPath: _inventory
       value: 
       objectReference: {fileID: 988269512}
+    - target: {fileID: 5395350667693765750, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+      propertyPath: slider
+      value: 
+      objectReference: {fileID: 412812960}
+    - target: {fileID: 5395350667693765750, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+      propertyPath: currentHealth
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -816,6 +824,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339463042}
   m_CullTransparentMesh: 1
+--- !u!1 &412812960 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2709381650613901549, guid: 0e703a8a08bb51f49aa91046e14cd8eb, type: 3}
+  m_PrefabInstance: {fileID: 4976266362052820538}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &426268536
 GameObject:
   m_ObjectHideFlags: 0
