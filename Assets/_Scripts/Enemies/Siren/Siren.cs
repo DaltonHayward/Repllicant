@@ -62,12 +62,11 @@ public class Siren : MonoBehaviour, ISubscriber
         if (distanceToPlayer < chaseRange && distanceToPlayer > 2f)
         {
             speed = 0.5f;
-            //transform.LookAt(player.transform.position);
             navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
         }
         else 
         {
-            speed = 0f;
+            speed = 0.1f;
         }
     }
 
@@ -103,7 +102,7 @@ public class Siren : MonoBehaviour, ISubscriber
 
     private IEnumerator GiveDamageCoroutine()
     {
-        while (true)//Vector3.Distance(player.transform.position, transform.position) <= _songRange)
+        while (true)
         {
             Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
             foreach (Collider c in targets)
@@ -153,7 +152,7 @@ public class Siren : MonoBehaviour, ISubscriber
                     attractionForce = _songRange / dist;
                     cc.Move(direction.normalized * (attractionForce * 0.8f) * Time.deltaTime);
                 }
-                else if (angleToSiren <= -90 || angleToSiren >= 90 && dist < _songRange && dist > 3)
+                else if (angleToSiren <= -90 || angleToSiren >= 90 && dist < _songRange && dist > 3 || dist <= 2)
                 {
                     // sometimes Input.anyKey || e.isKey works, sometimes only e.isKey does
                     if (Input.anyKey || e.isKey)
