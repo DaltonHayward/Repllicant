@@ -66,6 +66,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
     Inventory_Item equippedAxe;
 
 
+
     /// <summary>
     /// Called when the script instance is being loaded. Responsible for doing singleton logic.
     /// sets inventory highlight and player inventory.
@@ -92,7 +93,9 @@ public class InventoryController : MonoBehaviour,IDataPersistance
         {
             itemDataDictionary.Add(entry.Name, entry.itemData);
         }
-
+       
+        // LoadData(DataPersistanceManager.instance.gameData);
+        
         StartCoroutine(ApplyEffectsLoop());
     }
 
@@ -356,6 +359,12 @@ public class InventoryController : MonoBehaviour,IDataPersistance
         Destroy(item.gameObject);
     }
 
+
+
+    public void HandleLoad(){
+        Debug.Log("Loading Inventory");
+    }
+
     /// <summary>
     /// Loops through the inventory and applies each items effects to other items in its range
     /// </summary>
@@ -409,6 +418,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
                 }
             } 
         }
+        
     }
 
     IEnumerator ApplyEffectsLoop()
@@ -515,25 +525,45 @@ public class InventoryController : MonoBehaviour,IDataPersistance
 
         HideContextMenu();
     }
-    public void LoadData(GameData gameData)
+
+  
+   
+    #endregion
+    public void LoadData( GameData gameData)
     {
-        List<(string,int,int)> newlist= new List<(string,int,int)>();
-        newlist= gameData.InvItems;
-        Debug.Log("Loading Inventory, count is: " + newlist.Count);
-        foreach ((string, int, int) item in newlist)
+
+        for (int i = 0; i < gameData.InvItems_Names.Count; i++)
         {
-            ItemData itemData = itemDataDictionary[item.Item1];
-            playerInventory.LoadnewItem(itemData, item.Item2, item.Item3);
+            ItemData itemData = itemDataDictionary[gameData.InvItems_Names[i]];
+            Debug.Log("Loading in Inventory: " + itemData.Name + " at " + gameData.InvItems_xCord[i] + " " + gameData.InvItems_yCord[i]);
+
+            playerInventory.LoadnewItem(itemData, gameData.InvItems_xCord[i], gameData.InvItems_yCord[i]);
+           
         }
+        gameData.InvItems_Names.Clear();
+        gameData.InvItems_xCord.Clear();
+        gameData.InvItems_yCord.Clear();
+    
     }
 
     public void SaveData(ref GameData gameData)
     {
-        Debug.Log("Saving Inventory");
-        gameData.InvItems = playerInventory.getAllItems();    
-    }
-    #endregion
 
+        List<(string, int, int)> invItems = playerInventory.getAllItems();
+        List<string> Names= new List<string>();
+        List<int> xCord= new List<int>();
+        List<int> yCord= new List<int>();
+        foreach ((string, int, int) item in invItems)
+        {
+            Names.Add(item.Item1);
+            xCord.Add(item.Item2);
+            yCord.Add(item.Item3);
+        } 
+        gameData.InvItems_Names = Names;
+        gameData.InvItems_xCord = xCord;
+        gameData.InvItems_yCord = yCord;
+
+    }
   
 
 

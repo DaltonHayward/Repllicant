@@ -26,6 +26,11 @@ public class ItemGrid : MonoBehaviour
     /// <summary>
     /// Grabs the component of the current item, and initializes the inventory grid.
     /// </summary>
+    /// 
+    void Awake(){
+        GetComponentInParent<Canvas>().enabled = true;
+        GetComponentInParent<Canvas>().enabled = false;
+    }
     private void Start() {
         rectTransform = GetComponent<RectTransform>();
         Init(InventoryWidth, InventoryHeight);
@@ -395,7 +400,8 @@ public class ItemGrid : MonoBehaviour
         GameObject newItem = Instantiate(itemPrefab, this.transform);
         Inventory_Item item = newItem.GetComponent<Inventory_Item>();
         item.Set(loadedItem);
-        storeItem(item, x, y, ref item);
+        UnityEngine.Debug.Log("ItemInfo"+item.itemName+" "+x+" "+y);
+        putItemInInventory(item, x, y);
 
     }
     

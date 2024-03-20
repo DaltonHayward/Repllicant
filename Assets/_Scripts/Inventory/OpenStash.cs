@@ -20,21 +20,21 @@ public class OpenStash : MonoBehaviour
     {
         if (other.transform.tag == "Player")
         {
-            // if (InputManager.instance.InteractInput){
-            //     PlayerController player = other.GetComponent<PlayerController>();
-            //     if (player._playerState == PlayerController.State.MOVING || player._playerState == PlayerController.State.STANDING )
-            //     {
-            //     stashUI.enabled=!isStashOpen;
-            //     PlayerUI.enabled=!isStashOpen;
-            //     isStashOpen = !isStashOpen;
-            //     if(isStashOpen){
-            //         player.SetState(PlayerController.State.INTERACTING);
-            //     }
-            //     else{
-            //         player.SetState(PlayerController.State.STANDING);
-            //     }
-            //     }
-            // }
+            if (InputManager.instance.InteractInput){
+                PlayerController player = other.GetComponent<PlayerController>();
+                if (player._playerState == PlayerController.State.MOVING || player._playerState == PlayerController.State.STANDING || player._playerState == PlayerController.State.INTERACTING)
+                {
+                stashUI.enabled=!isStashOpen;
+                PlayerUI.enabled=!isStashOpen;
+                isStashOpen = !isStashOpen;
+                if(isStashOpen){
+                    player.SetState(PlayerController.State.INTERACTING);
+                }
+                else{
+                    player.SetState(PlayerController.State.STANDING);
+                }
+                }
+            }
         }
     }
 }
