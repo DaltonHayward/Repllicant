@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
 
-public class InventoryController : MonoBehaviour
+public class InventoryController : MonoBehaviour,IDataPersistance
 {
     public static InventoryController instance;
 
@@ -66,6 +66,7 @@ public class InventoryController : MonoBehaviour
     Inventory_Item equippedAxe;
 
 
+
     /// <summary>
     /// Called when the script instance is being loaded. Responsible for doing singleton logic.
     /// sets inventory highlight and player inventory.
@@ -92,7 +93,9 @@ public class InventoryController : MonoBehaviour
         {
             itemDataDictionary.Add(entry.Name, entry.itemData);
         }
-
+       
+        // LoadData(DataPersistanceManager.instance.gameData);
+        
         StartCoroutine(ApplyEffectsLoop());
     }
 
@@ -351,9 +354,15 @@ public class InventoryController : MonoBehaviour
     public void DropHeldItem(Inventory_Item item)
     {
         Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
-        Instantiate(instance.LookUpItem(item.itemData.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
-        if (item.isEquipped) { item.Unequip(); } 
+        Instantiate(instance.LookUpItem(item.itemData.Name).worldModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
+        if (item.isEquipped) { UnequipTool(item); } 
         Destroy(item.gameObject);
+    }
+
+
+
+    public void HandleLoad(){
+        Debug.Log("Loading Inventory");
     }
 
     /// <summary>
@@ -369,7 +378,7 @@ public class InventoryController : MonoBehaviour
             if (broadcastingItem.itemData.effects.Length == 0) { continue; }
 
             List<Vector2Int> gridPositions = playerInventory.CalculateGridPositions(broadcastingItem);
-            List<Inventory_Item> receivingItems = new List<Inventory_Item>();
+            List<Inventory_Item> receivingItems = new();
 
             int radius = broadcastingItem.itemData.range;
             int xCoord = broadcastingItem.OnGridPositionX;
@@ -409,6 +418,7 @@ public class InventoryController : MonoBehaviour
                 }
             } 
         }
+        
     }
 
     IEnumerator ApplyEffectsLoop()
@@ -450,11 +460,11 @@ public class InventoryController : MonoBehaviour
     {
         Inventory_Item item = DropdownController.instance.GetClickedOnItem();
         Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
-        Instantiate(instance.LookUpItem(item.itemData.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
+        Instantiate(instance.LookUpItem(item.itemData.Name).worldModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
         // clean up 
         SetClickedItem(null);
         HideContextMenu();
-        if (item.isEquipped) { item.Unequip(); }
+        if (item.isEquipped) { UnequipTool(item); }
         playerInventory.RemoveItem(item);
         Destroy(item.gameObject);
     }
@@ -467,26 +477,33 @@ public class InventoryController : MonoBehaviour
                 //remove outline from currently equipped item
                 if (equippedWeapon != null)
                     equippedWeapon.Unequip();
+                
                 equippedWeapon = item;
                 equippedWeapon.Equip();
+                playerController.ActivateWeaponSlot();
                 break;
 
             case PlayerController.Equipment.PICKAXE:
                 if (equippedPickaxe != null)
                     equippedPickaxe.Unequip();
+
                 equippedPickaxe = item;
                 equippedPickaxe.Equip();
+                playerController.ActivatePickaxeSlot();
                 break;
 
             case PlayerController.Equipment.AXE: 
                 if (equippedAxe != null)
                     equippedAxe.Unequip();
+
                 equippedAxe = item;
                 equippedAxe.Equip();
+                playerController.ActivateAxeSlot();
                 break;
         }
+
         HideContextMenu();
-        playerController.EquipTool(item.itemData.toolType, item.itemData.envModel);
+        playerController.EquipTool(item.itemData.toolType, item);
     }
 
     public void UnequipTool(Inventory_Item item)
@@ -514,6 +531,48 @@ public class InventoryController : MonoBehaviour
         }
 
         HideContextMenu();
+        playerController.UnequipTool(item.itemData.toolType);
     }
+
+  
+   
     #endregion
+    public void LoadData( GameData gameData)
+    {
+
+        for (int i = 0; i < gameData.InvItems_Names.Count; i++)
+        {
+            ItemData itemData = itemDataDictionary[gameData.InvItems_Names[i]];
+            Debug.Log("Loading in Inventory: " + itemData.Name + " at " + gameData.InvItems_xCord[i] + " " + gameData.InvItems_yCord[i]);
+
+            playerInventory.LoadnewItem(itemData, gameData.InvItems_xCord[i], gameData.InvItems_yCord[i]);
+           
+        }
+        gameData.InvItems_Names.Clear();
+        gameData.InvItems_xCord.Clear();
+        gameData.InvItems_yCord.Clear();
+    
+    }
+
+    public void SaveData(ref GameData gameData)
+    {
+
+        List<(string, int, int)> invItems = playerInventory.getAllItems();
+        List<string> Names= new List<string>();
+        List<int> xCord= new List<int>();
+        List<int> yCord= new List<int>();
+        foreach ((string, int, int) item in invItems)
+        {
+            Names.Add(item.Item1);
+            xCord.Add(item.Item2);
+            yCord.Add(item.Item3);
+        } 
+        gameData.InvItems_Names = Names;
+        gameData.InvItems_xCord = xCord;
+        gameData.InvItems_yCord = yCord;
+
+    }
+  
+
+
 }
