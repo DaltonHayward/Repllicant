@@ -34,7 +34,7 @@ public class Siren : MonoBehaviour, ISubscriber
         StartCoroutine(damageCoroutine);
 
         SirenSong ss = GetComponent<SirenSong>();
-        ss.SetParameters(0.5f, _songRange, "Singing");
+        ss.SetParameters(2f, _songRange, "Singing");
 
         baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
     }
@@ -58,10 +58,11 @@ public class Siren : MonoBehaviour, ISubscriber
         // calc distance to player
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
+        transform.LookAt(player.transform.position);
         if (distanceToPlayer < chaseRange && distanceToPlayer > 2f)
         {
             speed = 0.5f;
-            transform.LookAt(player.transform.position);
+            //transform.LookAt(player.transform.position);
             navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
         }
         else 
@@ -72,7 +73,7 @@ public class Siren : MonoBehaviour, ISubscriber
 
     private void OnDestroy()
     {
-        float randomValue = Random.value;
+        /*float randomValue = Random.value;
         if (randomValue < commonItemProbability)
         {
             if (commonItems != null)
@@ -89,10 +90,10 @@ public class Siren : MonoBehaviour, ISubscriber
                 Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
         }
         else
-        {
-            if (legendaryItems != null)
-                Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
-        }
+        {*/
+        if (legendaryItems != null)
+            Instantiate(legendaryItems[0], transform.position, Quaternion.identity);
+        //}
     }
 
     public void Die()
@@ -103,21 +104,24 @@ public class Siren : MonoBehaviour, ISubscriber
     private IEnumerator GiveDamageCoroutine()
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
-        while (Vector3.Distance(player.transform.position, transform.position) <= _songRange)
+        while (true)//Vector3.Distance(player.transform.position, transform.position) <= _songRange)
         {
             foreach (Collider c in targets)
             {
                 if (c.CompareTag("Player"))
                 {
                     ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                    if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) <= _songRange)
+                    if (subscriber != null)
                     {
                         // Damages player more as they get closer to the siren
+                        yield return new WaitForSeconds(2f);
+                        Debug.Log("Player Health: " + player.GetComponent<PlayerHealth>().currentHealth);
                         player.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(player.transform.position, transform.position));
-                        yield return new WaitForSeconds(5);
                     }
                 }
             }
+            /*yield return new WaitForSeconds(2f);
+            Debug.Log(Vector3.Distance(player.transform.position, transform.position));*/
         }
     }
 
