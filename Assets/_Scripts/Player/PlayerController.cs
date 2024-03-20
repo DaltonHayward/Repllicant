@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -84,6 +85,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private int _currentTool;
     private EquippedTool[] _tools;
     public Transform ToolHolder;
+    private bool _canScroll = true;
+    [SerializeField]
+    private float _scrollDelay;
     public IEnumerator Reset;
 
     [Header("Inventory")]
@@ -715,8 +719,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
     #region - Equipment -
     private void HandleEquipedItemChange()
     {
-        if (InputManager.instance.ScrollInput < 0)
+        if (InputManager.instance.ScrollInput < 0 && _canScroll)
         {
+            StartCoroutine(ScrollDelay());
             switch (_currentEquipment)
             {
                 case Equipment.WEAPON:
@@ -735,8 +740,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
                     break;
             }
         }
-        if (InputManager.instance.ScrollInput > 0)
+        if (InputManager.instance.ScrollInput > 0 && _canScroll)
         {
+            StartCoroutine(ScrollDelay());
             switch (_currentEquipment)
             {
                 case Equipment.WEAPON:
@@ -755,6 +761,13 @@ public class PlayerController : MonoBehaviour, ISubscriber
                     break; 
             }
         }
+    }
+
+    IEnumerator ScrollDelay()
+    {
+        _canScroll = false;
+        yield return new WaitForSeconds(_scrollDelay);
+        _canScroll = true;
     }
 
     public void ActivateWeaponSlot()

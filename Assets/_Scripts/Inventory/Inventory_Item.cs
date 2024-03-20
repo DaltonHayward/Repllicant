@@ -95,14 +95,16 @@ public class Inventory_Item : MonoBehaviour
         String itemScript;
         if (itemData.isEquipable)
         {
-            itemScript = "Inv" + itemData.Name;
+            itemScript = "InvTool";
+            gameObject.AddComponent(Type.GetType(itemScript));
         }
-        else
+
+        // not sure if this is needed, may be useful if we want items in the inventory to give off effects into the world
+        /*else
         {
             itemScript = itemData.Name;
         }
-        
-        gameObject.AddComponent(Type.GetType(itemScript));
+        gameObject.AddComponent(Type.GetType(itemScript));*/
 
         // set up equip sprites depending on item type
         if (itemData.isEquipable)

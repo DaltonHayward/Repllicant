@@ -62,6 +62,14 @@ public class EquippedTool : MonoBehaviour
         invTool = tool;
     }
 
+    public void OnEnable()
+    {
+        if (isBurning)
+        {
+            fireSystem.Play();
+        }
+    }
+
     #region - Colliders -
     public void BeginCollision()
     {

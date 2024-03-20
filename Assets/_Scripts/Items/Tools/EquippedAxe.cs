@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pickaxe : Tool
+public class EquippedAxe : EquippedTool
 {
     public void OnTriggerEnter(Collider other)
     {
@@ -12,14 +12,15 @@ public class Pickaxe : Tool
         {
             if (c.GetType() == typeof(Wood))
             {
-                c.TakeDamage(Damage/2);
+                c.TakeDamage(Damage);
             }
 
             if (c.GetType() == typeof(Stone))
             {
-                c.TakeDamage(Damage);
+                c.TakeDamage(Damage / 10);
             }
         }
+
 
         _animator.CrossFade("Blend Tree", 0.07f, 0);
         _playerController.StopCoroutine(_playerController.Reset);

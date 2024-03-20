@@ -48,7 +48,6 @@ public class InventoryController : MonoBehaviour
 
     public GameObject staticPlayerInventory;
     public static ItemGrid playerInventory;
-    public GameObject instancedModels;
 
     // look up table
     [SerializeField] public List<ItemDataEntry> itemDataEntries;
