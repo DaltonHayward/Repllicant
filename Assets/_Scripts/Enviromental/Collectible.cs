@@ -27,7 +27,7 @@ public class Collectible : MonoBehaviour
 
     public void InstantiateLoot()
     {
-        Instantiate(sureToDrop, new Vector3(transform.position.x, InventoryController.instance.LookUpItem(sureToDrop.name).envModel.transform.position.y, transform.position.z), Quaternion.identity);
+        Instantiate(sureToDrop, new Vector3(transform.position.x, InventoryController.instance.LookUpItem(sureToDrop.name).worldModel.transform.position.y, transform.position.z), Quaternion.identity);
     }
 
     private void OnDestroy()
