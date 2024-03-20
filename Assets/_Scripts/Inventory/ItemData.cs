@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "New Item", menuName = "Items/New Item")]
 public class ItemData : ScriptableObject
 {
     [System.Serializable]
@@ -13,16 +13,17 @@ public class ItemData : ScriptableObject
     }
 
     // Start is called before the first frame update
-    [Header("Inventory")]
+    [Header("Item Fields")]
     public string Name;
     public int width;
     public int height;
-    public List<ItemSprites> sprites;
-    public GameObject envModel;
-    [Header("Effects")]
-    public string[] effects;
-    public int range;
-    [Header("Tools")]
     public bool isEquipable;
+    public GameObject worldModel;
+    public List<ItemSprites> sprites;
+    [Header("Inventory Effect Fields")]
+    public int range;
+    public string[] effects;
+    [Header("Tool Fields")]
+    public GameObject equippedModel;
     public PlayerController.Equipment toolType;
 }

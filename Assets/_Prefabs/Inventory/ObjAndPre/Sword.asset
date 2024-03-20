@@ -9,19 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 528ac497870ac72489a123fa43e91b41, type: 3}
+  m_Script: {fileID: 11500000, guid: 3003bb4c0bdec374e96047d3bf5feed5, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
   Name: Sword
   width: 1
-  height: 2
+  height: 3
+  isEquipable: 1
+  worldModel: {fileID: 6551310768165042004, guid: cf643c4cbe9020d429e82da13a7f47a4, type: 3}
   sprites:
   - spriteName: Base
-    sprite: {fileID: -846662441, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
+    sprite: {fileID: 21300000, guid: 0ec29467ec9faf549a51c9a2957b08f0, type: 3}
   - spriteName: Burning
-    sprite: {fileID: -2071988492, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
-  envModel: {fileID: 7393819587006878227, guid: cab415624d7794ae99ac69307779ea0b, type: 3}
-  effects: []
+    sprite: {fileID: 21300000, guid: 96ed093b397c4884cb6556a09e262d8b, type: 3}
   range: 0
-  isEquipable: 1
+  effects: []
+  equippedModel: {fileID: 6551310768165042004, guid: add05c8206a7ed34f955f1ab96b44fbd, type: 3}
   toolType: 0
