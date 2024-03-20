@@ -24,19 +24,39 @@ public class Siren : MonoBehaviour, ISubscriber
 
     private IEnumerator damageCoroutine;
 
+    [Header("Animator")]
+    // animation IDs
+    private Animator _animator;
+    private int _animIDSpeed;
+    private int _animIDMotionSpeed;
+    private int _animIDAttackSpeed;
+
+    // State
+    public enum State { MOVING, HOVERING, ATTACKING, PETRIFIED, KNOCKBACK};
+    [SerializeField]
+    private State _sirenState;
+
     void Awake()
     {
         transform.rotation = Quaternion.identity;
         player = GameObject.FindGameObjectWithTag("Player");
+
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
+
         damageCoroutine = GiveDamageCoroutine();
         StartCoroutine(damageCoroutine);
 
+        _sirenState = State.HOVERING;
         SirenSong ss = GetComponent<SirenSong>();
         ss.SetParameters(2f, _songRange, "Singing");
 
         baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
+
+        // Set up animator
+        _animator = GetComponent<Animator>();
+        AssignAnimationIDs();
+        _animator.SetFloat(_animIDAttackSpeed, AttackSpeed);
     }
 
     // Update is called once per frame
@@ -117,7 +137,7 @@ public class Siren : MonoBehaviour, ISubscriber
                     }
                 }
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(4f);
             Debug.Log("Player Health: " + player.GetComponent<PlayerHealth>().currentHealth);
         }
     }
