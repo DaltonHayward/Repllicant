@@ -8,7 +8,7 @@ public class DataPersistanceManager : MonoBehaviour
     [Header("File Storage Config")]
     [SerializeField] private string fileName;
 
-    private GameData gameData;
+    public GameData gameData;
     private List<IDataPersistance> dataPersistanceObjects;
     private FileDataHandler dataHandler;
 
@@ -39,20 +39,27 @@ public class DataPersistanceManager : MonoBehaviour
 
     public void LoadGame()
     {
+
+
         // load any saved data from a file using the data handler
         this.gameData = dataHandler.Load();
-
+        
         // if no data can be loaded, initialize a new game
         if (this.gameData == null)
         {
             Debug.Log("No data was found. Initializing to default values.");
             NewGame();
         }
+
+        InventoryController.instance.LoadData(gameData);
         // push the loaded data to all other scripts that need it
         foreach (IDataPersistance obj in dataPersistanceObjects)
         {
             obj.LoadData(gameData);
+
         }
+        
+
     }
 
     public void SaveGame()
@@ -64,6 +71,10 @@ public class DataPersistanceManager : MonoBehaviour
         }
 
         // save the data to a file using the data handler
+        foreach(string name in gameData.InvItems_Names)
+        {
+            Debug.Log("Inv Items on Save: "+name);
+        }
         dataHandler.Save(gameData);
     }
 

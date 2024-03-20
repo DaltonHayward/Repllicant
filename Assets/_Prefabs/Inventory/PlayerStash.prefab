@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 2364138207152227496}
   - component: {fileID: 7744185838864178558}
   - component: {fileID: 2905523431612671500}
+  - component: {fileID: 5230048978405777197}
   m_Layer: 0
   m_Name: PlayerStash
   m_TagString: Untagged
@@ -319,6 +320,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.1224016, y: 1.110248, z: 1.1079637}
   m_Center: {x: -0.3653603, y: 0.55512494, z: 0.565441}
+--- !u!114 &5230048978405777197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833587885929530471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1f677fa19274f5483833538a82472d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stashUI: {fileID: 0}
+  PlayerUI: {fileID: 0}
 --- !u!1 &7223580364191829289
 GameObject:
   m_ObjectHideFlags: 0

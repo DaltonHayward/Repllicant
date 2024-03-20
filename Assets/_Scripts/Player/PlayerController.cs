@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     // State
     public enum State { MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, KNOCKBACK, CHARMED };
     [SerializeField]
-    private State _playerState;
+    public State _playerState;
 
     public Canvas _effectCanvas;
 
