@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3003bb4c0bdec374e96047d3bf5feed5, type: 3}
+  m_Name: Torch
+  m_EditorClassIdentifier: 
+  Name: Torch
+  width: 1
+  height: 3
+  isEquipable: 0
+  worldModel: {fileID: 8664498978427664153, guid: e50cda3dc4fe54d4fa96850352faf642, type: 3}
+  sprites:
+  - spriteName: Base
+    sprite: {fileID: 21300000, guid: afb492f797f0bb4428a051cf6abaa282, type: 3}
+  range: 1
+  effects:
+  - Burning
+  equippedModel: {fileID: 0}
+  toolType: 0

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3003bb4c0bdec374e96047d3bf5feed5, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  Name: Axe
+  width: 2
+  height: 3
+  isEquipable: 1
+  worldModel: {fileID: 699386282119447561, guid: eb5ff714f1a94944096dc60ea1d9e53d, type: 3}
+  sprites:
+  - spriteName: Base
+    sprite: {fileID: 21300000, guid: ee482edb6e53b974e9330fc49cb0d0c3, type: 3}
+  - spriteName: Burning
+    sprite: {fileID: 21300000, guid: 37889d67c5e69c145a50aafc3c01a188, type: 3}
+  range: 0
+  effects: []
+  equippedModel: {fileID: 699386282119447561, guid: 5600fb6ab7186b346af872d99bab71f4, type: 3}
+  toolType: 2
