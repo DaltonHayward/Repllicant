@@ -247,6 +247,26 @@ public class LevelGenerator : MonoBehaviour
                     }
                 }
             }
+
+            // PARTIALLY FUNCTIONING FOR PONDS 
+            Transform structFixedProps = structure.transform.Find("FixedProps");
+            if (structFixedProps != null)
+            {
+                foreach (Transform childProp in structFixedProps)
+                {
+                    // Apply manual offsets to allign with center of object
+                    Vector3 worldPosition = new Vector3(childProp.position.x - 1.0f, 0, childProp.position.y + 3.0f);
+                    
+                    if(IsPositionValid(worldPosition))
+                    { 
+                        childProp.position = worldPosition;
+                        childProp.SetParent(props);
+                        childProp.gameObject.layer = props.gameObject.layer;
+                    }
+
+                }
+            }
+
             Destroy(structure);
         }
         return GetRemainingAreas(partitionedArea, structureToGen, widthOffset, heightOffset);
@@ -339,7 +359,7 @@ public class LevelGenerator : MonoBehaviour
         int propsLayer = LayerMask.NameToLayer("Props");
         int mobsLayer = LayerMask.NameToLayer("Mobs");
         int groundLayer = LayerMask.NameToLayer("Ground");
-
+        
 
         // check for colliders around position
         Collider[] colliders = Physics.OverlapSphere(position, 3f);
