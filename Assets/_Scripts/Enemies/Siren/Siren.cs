@@ -9,7 +9,7 @@ using UnityEngine.InputSystem.XR;
 public class Siren : MonoBehaviour, ISubscriber
 {
     [SerializeField]
-    public float hp, attack, chaseRange, speed, attractionForce;
+    public float hp, chaseRange, speed, attractionForce;
 
     NavMeshAgent navMeshAgent;
 
@@ -17,6 +17,7 @@ public class Siren : MonoBehaviour, ISubscriber
 
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
+    public float damageRate;
     private Color baseColor;
 
     public GameObject player;
@@ -29,7 +30,6 @@ public class Siren : MonoBehaviour, ISubscriber
     private Animator _animator;
     private int _animIDSpeed;
     private int _animIDMotionSpeed;
-    private int _animIDAttackSpeed;
 
     // State
     public enum State { MOVING, HOVERING, ATTACKING, PETRIFIED, KNOCKBACK};
@@ -49,14 +49,20 @@ public class Siren : MonoBehaviour, ISubscriber
 
         _sirenState = State.HOVERING;
         SirenSong ss = GetComponent<SirenSong>();
-        ss.SetParameters(2f, _songRange, "Singing");
+        ss.SetParameters(damageRate, _songRange, "Singing");
 
         baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
 
         // Set up animator
         _animator = GetComponent<Animator>();
         AssignAnimationIDs();
-        _animator.SetFloat(_animIDAttackSpeed, AttackSpeed);
+        //_animator.SetFloat(_animIDAttackSpeed, AttackSpeed);
+    }
+
+    private void AssignAnimationIDs()
+    {
+        _animIDSpeed = Animator.StringToHash("Speed");
+        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
     }
 
     // Update is called once per frame
@@ -82,12 +88,13 @@ public class Siren : MonoBehaviour, ISubscriber
         if (distanceToPlayer < chaseRange && distanceToPlayer > 2f)
         {
             speed = 0.5f;
-            navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
+            navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized * (chaseRange - 1));
         }
-        else 
+        else
         {
             speed = 0.1f;
         }
+        Debug.Log("Siren Speed: " + speed);
     }
 
     private void OnDestroy()
@@ -138,7 +145,7 @@ public class Siren : MonoBehaviour, ISubscriber
                 }
             }
             yield return new WaitForSeconds(4f);
-            Debug.Log("Player Health: " + player.GetComponent<PlayerHealth>().currentHealth);
+            //Movement();
         }
     }
 
