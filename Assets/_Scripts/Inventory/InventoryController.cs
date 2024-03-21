@@ -614,17 +614,17 @@ public class InventoryController : MonoBehaviour,IDataPersistance
 
         }
 
-        // gameData.InvItems_Names = new List<string>();
-        // gameData.InvItems_xCord = new List<int>();
-        // gameData.InvItems_yCord = new List<int>();
-        // gameData.InvItems_Rotated = new List<bool>();
-        // gameData.StashItems_Names = new List<string>();
-        // gameData.StashItems_xCord = new List<int>();
-        // gameData.StashItems_yCord = new List<int>();
-        // gameData.StashItems_Rotated = new List<bool>();
+       /* gameData.InvItems_Names = new List<string>();
+        gameData.InvItems_xCord = new List<int>();
+        gameData.InvItems_yCord = new List<int>();
+        gameData.InvItems_Rotated = new List<bool>();
+        gameData.StashItems_Names = new List<string>();
+        gameData.StashItems_xCord = new List<int>();
+        gameData.StashItems_yCord = new List<int>();
+        gameData.StashItems_Rotated = new List<bool>();*/
 
     }
-  
+
 
 
 }
