@@ -9100,6 +9100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81f5823fc298463bb82bf4e770a0641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StashGrid: {fileID: 0}
   Player: {fileID: 1514273360}
   items:
   - {fileID: 11400000, guid: 5e9c0c7858ed8544282c98ffee9c04d9, type: 2}
@@ -12118,6 +12119,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fileName: testData2.game
+  gameData:
+    testInt: 0
+    testBool: 0
+    currentHealth: 500
+    maxHealth: 500
+    daltonNPC: 0
+    techNPC: 0
+    avNPC: 0
+    scientistNPC: 0
+    sirenDefeated: 0
+    InvItems_Names: []
+    InvItems_xCord: 
+    InvItems_yCord: 
+    InvItems_Rotated: 
+    StashItems_Names: []
+    StashItems_xCord: 
+    StashItems_yCord: 
+    StashItems_Rotated: 
 --- !u!1 &1809849807
 GameObject:
   m_ObjectHideFlags: 0
@@ -13949,6 +13968,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3239257060384914184, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6213899023082996420, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7232743858075456561, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.79758
+      objectReference: {fileID: 0}
     - target: {fileID: 7232743858075456561, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 140.39
@@ -13992,6 +14023,10 @@ PrefabInstance:
     - target: {fileID: 8004038497722273419, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
       propertyPath: m_Name
       value: Harpy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004038497722273419, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14888,16 +14923,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5060062603251870360, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.0263524
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060062603251870360, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.0664057
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060062603251870360, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0088
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060062603251870360, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 145.17435
+      value: 147.5
       objectReference: {fileID: 0}
     - target: {fileID: 5060062603251870360, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.060038
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 5060062603251870360, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -68.434494
+      value: -68.435
       objectReference: {fileID: 0}
     - target: {fileID: 5060062603251870360, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14933,7 +14980,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5580844548074024994, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6463774292215752661, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
+      propertyPath: chargeRange
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6463774292215752661, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
+      propertyPath: chargeInternal
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

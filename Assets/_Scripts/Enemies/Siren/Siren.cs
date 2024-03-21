@@ -37,6 +37,7 @@ public class Siren : MonoBehaviour, ISubscriber
         ss.SetParameters(0.5f, _songRange, "Singing");
 
         baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
+
     }
 
     // Update is called once per frame
