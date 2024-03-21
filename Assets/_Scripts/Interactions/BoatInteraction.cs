@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class BoatInteraction : MonoBehaviour
 {
     [SerializeField] public Interactor interactor;
-    [SerializeField] public DataPersistanceManager dataPersistanceManager;
     public int scene = 2;
 
     public void BoatUsed()
@@ -17,7 +16,7 @@ public class BoatInteraction : MonoBehaviour
 
     private void SceneChange(int scene) 
     {
-        dataPersistanceManager.SaveGame();
+        DataPersistanceManager.instance.SaveGame();
         Debug.Log("Switching scene to: scene " + scene);
         SceneManager.LoadScene(scene);
     }

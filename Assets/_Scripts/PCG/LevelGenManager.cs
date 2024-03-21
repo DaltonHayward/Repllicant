@@ -20,9 +20,12 @@ public class LevelGenManager : MonoBehaviour
     void Start()
     {
         ui.SetActive(true);
-        Generate();
-        GenerateEnemies();
-        StartCoroutine(DelayBake());
+        if (levelGenerators != null) { Generate(); }
+        if (enemyGenerators != null)
+        { 
+            GenerateEnemies(); 
+            StartCoroutine(DelayBake()); 
+        }
     }
 
     // Activate all level generators
