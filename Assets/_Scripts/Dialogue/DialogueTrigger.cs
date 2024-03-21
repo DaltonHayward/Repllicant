@@ -30,7 +30,7 @@ public class DialogueTrigger : MonoBehaviour
             if (InputManager.instance.InteractInput)
             {
                 _playerController.SetState(PlayerController.State.DIALOG);
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, inventoryInteraction);
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
             }
         }
         else

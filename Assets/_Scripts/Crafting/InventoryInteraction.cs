@@ -13,7 +13,7 @@ public class InventoryInteraction : MonoBehaviour
 {
     private ItemGrid itemsInInventory;
 
-    CraftingManager _CraftingManager;
+    
 
 
     public List<ItemTypeAndCount> items = new ();
@@ -139,7 +139,8 @@ public class InventoryInteraction : MonoBehaviour
     // function for opening crafting menu
     public void OpenCrafting()
     {
-        _CraftingManager.EnterCraftingMode();
+        CraftingManager.instance.EnterCraftingMode();
+        Debug.Log("Called OpenCrafting!~");
 
     }
 }

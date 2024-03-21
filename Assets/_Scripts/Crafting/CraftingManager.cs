@@ -45,7 +45,7 @@ public class CraftingManager : MonoBehaviour
         }
         
         craftingCanvas.SetActive(false);
-        inventoryInteraction = CraftingManager.instance.GetComponent<InventoryInteraction>();
+        inventoryInteraction = GetComponent<InventoryInteraction>();
     }
 
     private void Update() 
