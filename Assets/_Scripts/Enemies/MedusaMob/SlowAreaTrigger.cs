@@ -7,14 +7,14 @@ public class SlowAreaTrigger : MonoBehaviour
     {
         if (other.TryGetComponent(out ISubscriber subscriber))
         {
-            subscriber.ReceiveMessage("SpeedChange:0.93");
+            subscriber.ReceiveMessage("SpeedChange:0.70");
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent(out ISubscriber subscriber))
         {
-            subscriber.ReceiveMessage("SpeedChange:" + (1 / 0.93).ToString());
+            subscriber.ReceiveMessage("SpeedChange:" + (1 / 0.70).ToString());
         }
     }
 }

@@ -802,6 +802,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (channel.Split(':')[0].Equals("SpeedChange"))
         {
             MoveSpeed *= float.Parse(channel.Split(':')[1]);
+            SprintSpeed *= float.Parse(channel.Split(':')[1]);
         }
 
     }
