@@ -9,24 +9,29 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
     public float maxHealth = 100f; // Player Max health
     public float currentHealth; // Player current health
 
-    public bool invincible = false;
+    public bool isDead;
 
-    private float _invinsibleDuration;
+    private float _invincibleDuration;
     public GameObject slider;
     public GameObject deathScreen;
 
     void Start()
     {
         StartCoroutine(RefreshHPBar(2));
-        if (_invinsibleDuration > 0)
+        isDead = false;
+    }
+
+    public void Update()
+    {
+        if (_invincibleDuration > 0)
         {
-            _invinsibleDuration -= Time.deltaTime;
+            _invincibleDuration -= Time.deltaTime;
         }
     }
 
     public void TakeDamage(float damage)
     {
-        if (!invincible) 
+        if (_invincibleDuration <= 0 && !isDead) 
         {
             currentHealth -= damage; // Reduce HP when take damage
             Debug.Log("Player health is now " + currentHealth); // Print current HP
@@ -53,29 +58,34 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         // 这里可以添加重启游戏或者显示游戏结束界面的逻辑
         //You can add game over scene logic here
         InventoryController.instance.PlayerDeath();
+        isDead = true;
         deathScreen.SetActive(true);
         deathScreen.GetComponent<CanvasGroup>().interactable = true;
-        invincible = true;
         Heal(maxHealth);
     }
 
-    public void Invinsible(float delay, float invinsibleLength)
+    public void Invincible(float delay, float invincibleLength)
     {
         if (delay > 0)
         {
-            StartCoroutine(StartInvinsible(delay, invinsibleLength));
+            StartCoroutine(StartInvincible(delay, invincibleLength));
         }
         else
         {
-            _invinsibleDuration = invinsibleLength;
+            _invincibleDuration = invincibleLength;
         }
     }
 
-    IEnumerator StartInvinsible(float dly, float invsLength)
+    public bool isInvincible()
+    {
+        return _invincibleDuration > 0;
+    }
+
+    IEnumerator StartInvincible(float dly, float invsLength)
     {
         yield return new WaitForSeconds(dly);
-        Debug.Log("Invinsible");
-        _invinsibleDuration = invsLength;
+        Debug.Log("Invincible");
+        _invincibleDuration = invsLength;
     }
 
     IEnumerator RefreshHPBar(float seconds)
