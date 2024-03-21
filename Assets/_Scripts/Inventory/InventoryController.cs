@@ -96,7 +96,6 @@ public class InventoryController : MonoBehaviour,IDataPersistance
             itemDataDictionary.Add(entry.Name, entry.itemData);
         }
        
-        // LoadData(DataPersistanceManager.instance.gameData);
         
         StartCoroutine(ApplyEffectsLoop());
     }
@@ -542,7 +541,6 @@ public class InventoryController : MonoBehaviour,IDataPersistance
     #endregion
     public void LoadData( GameData gameData)
     {
-
         for (int i = 0; i < gameData.InvItems_Names.Count; i++)
         {
             ItemData itemData = itemDataDictionary[gameData.InvItems_Names[i]];
@@ -614,14 +612,14 @@ public class InventoryController : MonoBehaviour,IDataPersistance
 
         }
 
-       /* gameData.InvItems_Names = new List<string>();
-        gameData.InvItems_xCord = new List<int>();
-        gameData.InvItems_yCord = new List<int>();
-        gameData.InvItems_Rotated = new List<bool>();
-        gameData.StashItems_Names = new List<string>();
-        gameData.StashItems_xCord = new List<int>();
-        gameData.StashItems_yCord = new List<int>();
-        gameData.StashItems_Rotated = new List<bool>();*/
+        // gameData.InvItems_Names = new List<string>();
+        // gameData.InvItems_xCord = new List<int>();
+        // gameData.InvItems_yCord = new List<int>();
+        // gameData.InvItems_Rotated = new List<bool>();
+        // gameData.StashItems_Names = new List<string>();
+        // gameData.StashItems_xCord = new List<int>();
+        // gameData.StashItems_yCord = new List<int>();
+        // gameData.StashItems_Rotated = new List<bool>();
 
     }
 

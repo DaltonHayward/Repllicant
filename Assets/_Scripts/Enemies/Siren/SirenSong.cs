@@ -38,7 +38,6 @@ public class SirenSong : MonoBehaviour
                     }
                 }
             }
-
             yield return new WaitForSeconds(emitFrequency);
         }
     }
