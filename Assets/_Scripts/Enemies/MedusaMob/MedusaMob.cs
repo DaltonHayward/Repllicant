@@ -101,6 +101,7 @@ public class MedusaMob : Enemy
 
                     break;
                 }
+                animator.Play("Idle");
                 break;
             case BoarState.chase:
                 if (Vector3.Distance(player.position, transform.position) <= attackRange)
@@ -121,6 +122,7 @@ public class MedusaMob : Enemy
                 Vector3 targetPos = player.position - (player.position - transform.position).normalized * (attackRange - 1);
                 targetPos.y = transform.position.y;
                 navMeshAgent.SetDestination(targetPos);
+                animator.Play("Chase");
 
                 break;
             case BoarState.attack:
@@ -148,6 +150,8 @@ public class MedusaMob : Enemy
 
                     lastSkillTime = Time.time;
                 }
+                animator.Play("Attack");
+
                 break;
             case BoarState.charge:
 
