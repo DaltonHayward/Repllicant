@@ -15,7 +15,6 @@ public class ProgressManager : MonoBehaviour, IDataPersistance
     public bool scientist = false;
     public bool sirenDefeated = false;
     
-
     // enables 
     public void ProgressCheck()
     {
@@ -31,6 +30,7 @@ public class ProgressManager : MonoBehaviour, IDataPersistance
         aviator = gameData.avNPC;
         scientist = gameData.scientistNPC;
         sirenDefeated = gameData.sirenDefeated;
+       
         ProgressCheck();
     }
 
@@ -40,5 +40,6 @@ public class ProgressManager : MonoBehaviour, IDataPersistance
         gameData.avNPC = aviator;
         gameData.scientistNPC = scientist;
         gameData.sirenDefeated = sirenDefeated;
+        
     }
 }

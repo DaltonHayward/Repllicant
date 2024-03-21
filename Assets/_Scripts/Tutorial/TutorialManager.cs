@@ -6,6 +6,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
 {
     // the camps
     [SerializeField] GameObject daltonCamp;
+    [SerializeField] GameObject tutorialDalton;
     [SerializeField] GameObject techCamp;
     [SerializeField] GameObject aviatorCamp;
     [SerializeField] GameObject scientistCamp;
@@ -19,7 +20,13 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
     // enables each camp
     public void NPCCheck()
     {
-        if (daltonNPC) { daltonCamp.SetActive(true); }
+        if (daltonNPC) { daltonCamp.SetActive(true);}
+        // put player in front of tutorial dalton
+        else 
+        { 
+            GameObject.FindWithTag("Player").transform.position = new Vector3(171.479996f, 0, -103.010002f); 
+            tutorialDalton.SetActive(true);
+        }
         if (daltonNPC) { tutorialObjects.SetActive(false); }
         if (techNPC) { techCamp.SetActive(true); }
         if (avNPC) {  aviatorCamp.SetActive(true); }

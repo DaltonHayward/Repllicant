@@ -39,6 +39,7 @@ public class RangedEnemy : Enemy
             case RangedEnemyState.idle:
                 lastCopyTime = -skillCD - 10;
                 navMeshAgent.isStopped = true;
+                animator.Play("Idle");
                 break;
             case RangedEnemyState.attack:
                 navMeshAgent.isStopped = true;
@@ -48,6 +49,8 @@ public class RangedEnemy : Enemy
                     Instantiate(bullet, transform.position, Quaternion.identity).GetComponent<Bullet>().player = player;
                     lastAttackTime = Time.time;
                 }
+                animator.Play("Attack");
+
                 break;
             case RangedEnemyState.chase:
                 navMeshAgent.isStopped = false;
@@ -63,6 +66,8 @@ public class RangedEnemy : Enemy
                     }
                     lastCopyTime = Time.time;
                 }
+                animator.Play("Chase");
+
                 break;
         }
     }

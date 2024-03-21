@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     // State
     public enum State { MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, KNOCKBACK, CHARMED };
     [SerializeField]
-    private State _playerState;
+    public State _playerState;
 
     public Canvas _effectCanvas;
 
@@ -913,6 +913,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (channel.Split(':')[0].Equals("SpeedChange"))
         {
             MoveSpeed *= float.Parse(channel.Split(':')[1]);
+            SprintSpeed *= float.Parse(channel.Split(':')[1]);
         }
 
     }
