@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17890392, g: 0.22401308, b: 0.305871, a: 1}
+  m_IndirectSpecularColor: {r: 0.17890388, g: 0.224013, b: 0.30587116, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -192,6 +192,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+--- !u!114 &50774688 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6378525936267336765, guid: 285595376e1cc49168df0352b6cdce49, type: 3}
+  m_PrefabInstance: {fileID: 1747584464}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e9eb967c7c44255ab9de7d87578864, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &62319753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -627,6 +638,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eee1676c1b7cb0c4680d5664d4636324, type: 3}
+--- !u!1 &119179071 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5078754905527251149, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
+  m_PrefabInstance: {fileID: 1078108990}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &274125615
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,22 +1274,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629120365}
   m_CullTransparentMesh: 1
---- !u!1 &714664504 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5078754905527251149, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
-  m_PrefabInstance: {fileID: 1078108990}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &782813069 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6378525936267336765, guid: 285595376e1cc49168df0352b6cdce49, type: 3}
-  m_PrefabInstance: {fileID: 1747584464}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06e9eb967c7c44255ab9de7d87578864, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &842457490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1551,6 +1551,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1549405492462902697, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1859686633834292737, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -1590,6 +1594,10 @@ PrefabInstance:
     - target: {fileID: 4801379275016198123, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5078754905527251149, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
+      propertyPath: m_Name
+      value: InventoryGrid
       objectReference: {fileID: 0}
     - target: {fileID: 5078754905527251149, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
       propertyPath: m_Layer
@@ -2742,7 +2750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81f5823fc298463bb82bf4e770a0641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StashGrid: {fileID: 782813069}
+  StashGrid: {fileID: 50774688}
   Player: {fileID: 0}
   items:
   - {fileID: 11400000, guid: ca2687dc6feef476ea736374d8ca0ba2, type: 2}
@@ -2752,18 +2760,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2fdd6c3225f07064eb9d0123f6547714, type: 2}
   ItemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 988269515}
-  staticPlayerInventory: {fileID: 714664504}
+  staticPlayerInventory: {fileID: 119179071}
   itemDataEntries:
   - Name: Stone
     itemData: {fileID: 11400000, guid: 9eae59cf6cda7ea408c2af037d694aa5, type: 2}
-  - Name: Sword
-    itemData: {fileID: 11400000, guid: ca2687dc6feef476ea736374d8ca0ba2, type: 2}
-  - Name: Torch
-    itemData: {fileID: 11400000, guid: 4b8470ef1c6b744958daff1b7124e389, type: 2}
   - Name: Wood
     itemData: {fileID: 11400000, guid: ef9d005d3a2a30947b1af5cd5453ee09, type: 2}
-  - Name: Axe
-    itemData: {fileID: 11400000, guid: 372047b134410c54b9f4bdefd0c05555, type: 2}
   _timeBetweenEffectApplication: 1
   DropdownHovered: 0
 --- !u!114 &1426796806
@@ -3412,6 +3414,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StashUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2134486452273223529, guid: 285595376e1cc49168df0352b6cdce49, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2656424221544252955, guid: 285595376e1cc49168df0352b6cdce49, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3853,6 +3859,10 @@ PrefabInstance:
       propertyPath: enemyPrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 758053738808146258, guid: 57433c07a797fd34fb180da013c39791, type: 3}
+    - target: {fileID: 3890887040909134518, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4367347577940395889, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyMax
       value: 3
@@ -4043,6 +4053,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7789842913098694146, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017122199474474345, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8831683295309799582, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}

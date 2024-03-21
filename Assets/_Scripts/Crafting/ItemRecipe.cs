@@ -26,6 +26,7 @@ public class ItemRecipe : MonoBehaviour
     {
         UpdateRecipeUI(itemRecipe);
     }
+
     public void UpdateRecipeUI(BaseItemRecipe newItemRecipe)
     {
         itemRecipe = newItemRecipe;
@@ -39,7 +40,7 @@ public class ItemRecipe : MonoBehaviour
         for (int i = 0; i < itemRecipe.input.Length; i++)
         {
             GameObject newIngredient = Instantiate(ingredientPrefab, transform);
-            //newIngredient.transform.GetChild(0).GetComponent<Image>().sprite = itemRecipe.input[i]..sprites[0].sprite;
+            //newIngredient.transform.GetChild(0).GetComponent<Image>().sprite = itemRecipe.input[i].item.sprites[0].sprite;
             GameObject newIngredientName = Instantiate(ingredientNamePrefab, transform);
             newIngredientName.transform.GetComponent<TextMeshProUGUI>().text = itemRecipe.input[i].name;
             Instantiate(ingredientSpacingPrefab,transform);
