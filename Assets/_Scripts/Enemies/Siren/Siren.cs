@@ -145,7 +145,6 @@ public class Siren : MonoBehaviour, ISubscriber
                 }
             }
             yield return new WaitForSeconds(4f);
-            //Movement();
         }
     }
 
