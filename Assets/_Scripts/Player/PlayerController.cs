@@ -464,7 +464,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (Vector3.Distance(transform.position, strokeBackTargetPosition) < 0.2f)
         {
             _playerState = State.STANDING;
-            GetComponent<Charmable>().ResetCharm();
         }
     }
 
@@ -914,6 +913,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (channel.Split(':')[0].Equals("SpeedChange"))
         {
             MoveSpeed *= float.Parse(channel.Split(':')[1]);
+            SprintSpeed *= float.Parse(channel.Split(':')[1]);
         }
 
     }

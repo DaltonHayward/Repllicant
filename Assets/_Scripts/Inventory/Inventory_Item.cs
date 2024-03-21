@@ -25,7 +25,7 @@ public class Inventory_Item : MonoBehaviour
 
     public int OnGridPositionX;
     public int OnGridPositionY;
-    private bool rotated = false;
+    public bool rotated = false;
 
     public bool isEquipped;
 

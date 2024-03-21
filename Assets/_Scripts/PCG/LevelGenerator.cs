@@ -237,7 +237,7 @@ public class LevelGenerator : MonoBehaviour
                         childProp.position.y + zOffset
                     );
                     // check for overlaps
-                    if (IsPositionValid(propWorldPosition)) {
+                    if (IsPositionValid(propWorldPosition, 3f)) {
                     childProp.position = propWorldPosition;
 
                     // randomize the rotation of the prop
@@ -257,7 +257,7 @@ public class LevelGenerator : MonoBehaviour
                     // Apply manual offsets to allign with center of object
                     Vector3 worldPosition = new Vector3(childProp.position.x - 1.0f, 0, childProp.position.y + 3.0f);
                     
-                    if(IsPositionValid(worldPosition))
+                    if(IsPositionValid(worldPosition, 5f))
                     { 
                         childProp.position = worldPosition;
                         childProp.SetParent(props);
@@ -332,7 +332,7 @@ public class LevelGenerator : MonoBehaviour
         {
             Vector3 enemyPosition = GetRandomPositionInArea(area);
             // Check if the enemy position is valid (not within props)
-            if (IsPositionValid(enemyPosition))
+            if (IsPositionValid(enemyPosition, 3f))
             {
                 // Instantiate enemy
                 GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
@@ -354,7 +354,7 @@ public class LevelGenerator : MonoBehaviour
 
 
     // Check if a position is valid for placing
-    private bool IsPositionValid(Vector3 position)
+    private bool IsPositionValid(Vector3 position, float overlapRadius)
     {
         int propsLayer = LayerMask.NameToLayer("Props");
         int mobsLayer = LayerMask.NameToLayer("Mobs");
@@ -362,12 +362,12 @@ public class LevelGenerator : MonoBehaviour
         
 
         // check for colliders around position
-        Collider[] colliders = Physics.OverlapSphere(position, 3f);
+        Collider[] colliders = Physics.OverlapSphere(position, overlapRadius);
 
         foreach (Collider collider in colliders)
         {
             // Check for invalid pos
-            if ((collider.gameObject.layer == propsLayer) | ((collider.gameObject.layer == mobsLayer)))
+            if ((collider.gameObject.layer == propsLayer) || ((collider.gameObject.layer == mobsLayer)))
             {
                 return false;
             }

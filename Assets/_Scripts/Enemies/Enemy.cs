@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour, ISubscriber
     public float hp, attack, chaseRange, attackRange, speed, attackSpeed, lastAttackTime, lastSkillTime;
     public Transform player;
     public NavMeshAgent navMeshAgent;
+    protected Animator animator;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
 
@@ -17,6 +18,7 @@ public class Enemy : MonoBehaviour, ISubscriber
         player = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame

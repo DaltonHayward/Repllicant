@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,6 +21,7 @@ public class ItemGrid : MonoBehaviour
     [SerializeField] GameObject itemPrefab;
 
     private List<Inventory_Item> singleInstances = new List<Inventory_Item>();
+    public bool isInventory;
 
     /// <summary>
     /// Grabs the component of the current item, and initializes the inventory grid.
@@ -100,11 +100,13 @@ public class ItemGrid : MonoBehaviour
     {
         RectTransform rectTransform = item.GetComponent<RectTransform>();
         rectTransform.SetParent(this.rectTransform);
+        UnityEngine.Debug.Log("Storing Item: " + item + item.WIDTH + item.HEIGHT + "X: " + x + "Y: " + y);
 
         for (int itemx = 0; itemx < item.WIDTH; itemx++)
         {
             for (int itemy = 0; itemy < item.HEIGHT; itemy++)
             {
+                //  UnityEngine.Debug.Log("ItemTest"+ invItemSlots + "X: " + x + "Y: " + y + "ItemX: " + itemx + "ItemY: " + itemy);   
                 invItemSlots[x + itemx, y + itemy] = item;
             }
         }
@@ -383,26 +385,32 @@ public class ItemGrid : MonoBehaviour
         }
     }
 
-    public List<(string,int,int)> getAllItems(){
-        List<(string,int,int)> items = new List<(string, int, int)>();
+    public List<(string,int,int,bool)> getAllItems(){
+        List<(string,int,int,bool)> items = new List<(string, int, int,bool)>();
         foreach (Inventory_Item item in singleInstances)
         {
             if (item != null)
             {
-                items.Add((item.itemName, item.OnGridPositionX, item.OnGridPositionY));
+                items.Add((item.itemName, item.OnGridPositionX, item.OnGridPositionY,item.rotated));
             }
         }
         
         return items;
     }
 
-    public void LoadnewItem(ItemData loadedItem, int x, int y){
+    public void LoadnewItem(ItemData loadedItem, int x, int y,bool rotated){
         GameObject newItem = Instantiate(itemPrefab, this.transform);
         Inventory_Item item = newItem.GetComponent<Inventory_Item>();
+        if (rotated)
+        {
+            item.Rotate();
+        }
         item.Set(loadedItem);
-        UnityEngine.Debug.Log("ItemInfo"+item.itemName+" "+x+" "+y);
+        UnityEngine.Debug.Log(item);
         putItemInInventory(item, x, y);
 
     }
-    
-}
+
+
+    }
+

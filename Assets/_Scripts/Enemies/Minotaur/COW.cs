@@ -44,7 +44,7 @@ public class COW : MonoBehaviour
     NavMeshAgent navMeshAgent;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;//The probabilities of each item must add up to 1
-
+    private RoleAnimation animator;
 
     void Start()
     {
@@ -52,6 +52,7 @@ public class COW : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
         subAngle = 45f / lookAccurate;
+        animator = GetComponent<RoleAnimation>();
     }
 
 
@@ -78,41 +79,43 @@ public class COW : MonoBehaviour
         switch (state)
         {
             case CowState.idle:
-
+                animator.PlayMove(0f);
                 playerIsDamageByCharge = false;
                 if (Vector3.Distance(player.position, transform.position) < chaseRange)
                 {
                     state = CowState.chase;
-
+                    animator.PlayMove(1);
                     break;
                 }
                 break;
             case CowState.chase:
+
                 if (Vector3.Distance(player.position, transform.position) <= attackRange)
                 {
                     state = CowState.attack;
                     navMeshAgent.enabled = false;
-
+                    animator.PlaySkill3();
                     break;
                 }
                 if (Vector3.Distance(player.position, transform.position) > chaseRange)
                 {
                     state = CowState.idle;
                     navMeshAgent.enabled = false;
-
                     break;
                 }
+
                 navMeshAgent.enabled = true;
                 Vector3 targetPos = player.position - (player.position - transform.position).normalized * (attackRange - 1);
                 targetPos.y = transform.position.y;
                 navMeshAgent.SetDestination(targetPos);
-
+                animator.PlayMove(1f);
                 break;
             case CowState.attack:
                 if (Vector3.Distance(player.position, transform.position) > attackRange)
                 {
                     state = CowState.chase;
-
+                    animator.PlayMove(1);
+                    animator.PlaySkill1();
                     break;
                 }
                 transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
@@ -129,7 +132,7 @@ public class COW : MonoBehaviour
 
                     //Shock wave
                     LookAround();
-
+                    animator.PlaySkill2();
 
                     lastSkillTime = Time.time;
                 }
@@ -139,7 +142,8 @@ public class COW : MonoBehaviour
                 if (Vector3.Distance(new Vector3(chargeTargetPosition.x, 0, chargeTargetPosition.z), new Vector3(transform.position.x, 0, transform.position.z)) < 0.2f)
                 {
                     state = CowState.idle;
-
+                    animator.PlayMove(1);
+                    //animator.PlayMove(0);
                     return;
                 }
                 Collider[] target;
@@ -206,6 +210,7 @@ public class COW : MonoBehaviour
     public void TakeDamage(float damage)
     {
         hp -= damage;
+        animator.PlayTakeDamage();
         if (hp <= 0)
             Die();
     }

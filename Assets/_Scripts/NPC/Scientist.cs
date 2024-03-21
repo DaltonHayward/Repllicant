@@ -22,9 +22,14 @@ public class Scientist : MonoBehaviour
 
     public void SendToBase()
     {
+        if (progressManager != null) { progressManager.scientist = true; }
+        HealPlayer();
+    }
+
+    public void HealPlayer()
+    {
         if (!interacted)
         {
-            progressManager.scientist = true;
             player.GetComponent<PlayerHealth>().Heal(player.GetComponent<PlayerHealth>().maxHealth);
         }
     }
