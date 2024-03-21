@@ -13,12 +13,10 @@ public class InventoryInteraction : MonoBehaviour
 {
     private ItemGrid itemsInInventory;
 
-    ItemGrid _ItemGrid;
-
-    CraftingManager _CraftingManager;
+    
 
 
-    public List<ItemTypeAndCount> items;
+    public List<ItemTypeAndCount> items = new ();
 
 
     // cycle thru player inventory and create list of items and amounts
@@ -98,7 +96,7 @@ public class InventoryInteraction : MonoBehaviour
         ItemTypeAndCount[] items = itemsToRemove;
         foreach (ItemTypeAndCount item in items)
         {
-            foreach (Inventory_Item i in _ItemGrid.invItemSlots)
+            foreach (Inventory_Item i in itemsInInventory.invItemSlots)
             {
                 if (i.itemData.Name == item.name && item.count > 0)
                 {
@@ -141,7 +139,8 @@ public class InventoryInteraction : MonoBehaviour
     // function for opening crafting menu
     public void OpenCrafting()
     {
-        _CraftingManager.EnterCraftingMode();
+        CraftingManager.instance.EnterCraftingMode();
+        Debug.Log("Called OpenCrafting!~");
 
     }
 }

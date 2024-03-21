@@ -8,20 +8,10 @@ using System.Runtime.CompilerServices;
 public class InkExternalFunctions
 {
     //private InventoryInteraction inventoryInteraction;
-    public void Bind(Story story, InventoryInteraction inventoryInteraction)
+    public void Bind(Story story)
     {
-        story.BindExternalFunction("craftingMenu", () =>
-        {
-            //inventoryInteraction = _InventoryInteraction;
-            if (inventoryInteraction != null)
-            {
-                inventoryInteraction.OpenCrafting();
-            }
-            else
-            {
-                Debug.LogWarning("Tried to open crafting menu, but InventoryInteraction was " + "not initialized when entering dialogue mode.");
-            }
-        });
+        story.BindExternalFunction("craftingMenu", () => CraftingManager.instance.inventoryInteraction.OpenCrafting());
+        //BindExternalFunction(string funcName, Func<object> func, bool lookaheadSafe=false)
     }
 
 

@@ -1,3 +1,4 @@
+using ReplicantPackage;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -108,7 +109,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private int _animIDAttackSpeed;
 
     // State
-    public enum State { MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, KNOCKBACK, CHARMED };
+    public enum State { MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, KNOCKBACK, CHARMED, DIALOG, CRAFTING, PAUSED };
     [SerializeField]
     public State _playerState;
 
@@ -183,6 +184,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 RotateCamera();
                 ToggleInventory();
                 HandleEquipedItemChange();
+                HandleMenuPress();
                 break;
 
             case State.MOVING:
@@ -193,6 +195,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 RotateCamera();
                 ToggleInventory();
                 HandleEquipedItemChange();
+                HandleMenuPress();
                 break;
 
             case State.SWINGING:
@@ -204,10 +207,13 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
             case State.INTERACTING:
                 HandleInteract();
+                HandleMenuPress();
+                ToggleInventory();
                 break;
 
             case State.INVENTORY:
                 ToggleInventory();
+                HandleMenuPress();
                 break;
 
             case State.PETRIFIED:
@@ -219,6 +225,20 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
             case State.CHARMED:
                 break;
+
+            case State.DIALOG:
+                HandleMenuPress();
+                break;
+
+            case State.CRAFTING:
+                HandleMenuPress();
+                break;
+
+            case State.PAUSED:
+                HandleMenuPress();
+                break;
+
+            
 
         }
         ExitAttack();
@@ -473,31 +493,14 @@ public class PlayerController : MonoBehaviour, ISubscriber
     {
         if (InputManager.instance.InteractInput)
         {
-            Collider[] targets = Physics.OverlapSphere(transform.position, _interactRange);
-
-            foreach (Collider c in targets)
+            if (!_isCrafting)
             {
-                if (c.CompareTag("Interactable"))
-                {
-                    // check for subscriber interface on collided object
-                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                    // send approriate signal if they are a subscriber
-                    if (subscriber != null && !_isCrafting)
-                    {
-                        subscriber.ReceiveMessage("OpenMenu");
-                        _isCrafting = true;
-                        _playerState = State.INTERACTING;
-                        break;
-                    }
-                    else if (subscriber != null && _isCrafting)
-                    {
-                        subscriber.ReceiveMessage("CloseMenu");
-                        _isCrafting = false;
-                        _playerState = State.MOVING;
-                        break;
-                    }
-                }
+                _isCrafting = true;
             }
+            else
+            {
+                _isCrafting = false;
+            }        
         }
     }
 
@@ -692,7 +695,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 _inventory.enabled = true;
                 _playerState = State.INVENTORY;
                 StartCoroutine(SlowDown());
-
             }
         }
     }
@@ -888,6 +890,63 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     #endregion
 
+    #region - MenuInput -
+
+    public void HandleMenuPress()
+    {
+        if (InputManager.instance.MenuOpenCloseInput)
+        {
+            bool isCurrentlyPaused = GameManager.instance.isPaused;
+            switch (_playerState)
+            {
+                case State.MOVING:
+                case State.STANDING:
+                    if (!isCurrentlyPaused)
+                    {
+                        MenuManager.instance.OpenMainMenu();
+                        GameManager.instance.Pause();
+                        _playerState = State.PAUSED;
+                    }
+                    break;
+
+                case State.PAUSED:
+                    GameManager.instance.UnPause();
+                    MenuManager.instance.CloseAllMenus();
+                    _playerState = State.STANDING;
+                    break;
+
+                case State.INTERACTING:
+                    
+                    break;
+
+                case State.INVENTORY:
+                    _inInventory = false;
+                    _inventory.enabled = false;
+
+                    if (DropdownController.instance.isActiveAndEnabled)
+                    {
+                        InventoryController.instance.HideContextMenu();
+                    }
+
+                    _playerState = State.STANDING;
+                    break;
+
+                case State.DIALOG:
+                    StartCoroutine(DialogueManager.instance.ExitDialogueMode());
+                    _playerState = State.STANDING;
+                    break;
+
+                case State.CRAFTING:
+                    CraftingManager.instance.ExitCraftingMode();
+                    _playerState = State.STANDING;
+                    break;
+            }
+            
+        }
+    }
+
+    #endregion
+
     #region - ISubscriber -
     public void ReceiveMessage(string channel)
     {
@@ -903,6 +962,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (channel.Equals("Petrified"))
         {
             Debug.Log("petrified");
+            _playerState = State.PETRIFIED;
             PetrifyCooldownCoroutine = PetrifyCooldown(2f);
             //GetComponent<Charmable>().ResetCharm();
             StartCoroutine(PetrifyCooldownCoroutine);
@@ -922,7 +982,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     IEnumerator PetrifyCooldown(float seconds)
     {
         meshRenderer.materials[0].SetColor("_BaseColor", Color.grey);
-        _playerState = State.PETRIFIED;
         _animator.enabled = false;
         yield return new WaitForSeconds(seconds);
         _playerState = State.STANDING;
