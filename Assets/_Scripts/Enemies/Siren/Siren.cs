@@ -24,6 +24,7 @@ public class Siren : MonoBehaviour, ISubscriber
     private Event e;
 
     private IEnumerator damageCoroutine;
+    private float damageRate;
     private Animator animator;
 
     void Awake()
@@ -31,6 +32,7 @@ public class Siren : MonoBehaviour, ISubscriber
         transform.rotation = Quaternion.identity;
         player = GameObject.FindGameObjectWithTag("Player");
         timeManager = GameObject.FindGameObjectWithTag("TimeManager");
+        damageRate = 4f;
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
@@ -38,7 +40,7 @@ public class Siren : MonoBehaviour, ISubscriber
         StartCoroutine(damageCoroutine);
 
         SirenSong ss = GetComponent<SirenSong>();
-        ss.SetParameters(0.5f, _songRange, "Singing");
+        ss.SetParameters(damageRate, _songRange, "Singing");
 
         baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
 
@@ -82,7 +84,7 @@ public class Siren : MonoBehaviour, ISubscriber
     {
         if (legendaryItems != null)
             Instantiate(legendaryItems[0], transform.position, Quaternion.identity);
-        float randomValue = Random.value;
+        /*float randomValue = Random.value;
         if (randomValue < commonItemProbability)
         {
             if (commonItems != null)
@@ -102,7 +104,7 @@ public class Siren : MonoBehaviour, ISubscriber
         {
             if (legendaryItems != null)
                 Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
-        }
+        }*/
     }
 
     public void Die()
