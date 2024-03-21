@@ -17,13 +17,12 @@ public class ItemTypeAndCount
     
     //public Inventory_Item item;
     public string name;
-    public ItemData item;
+    
     public int count;
 
-    public ItemTypeAndCount(string n, ItemData i, int c)
+    public ItemTypeAndCount(string n, int c)
     {
         name = n;
-        item = i;
         count = c;
     }
 }

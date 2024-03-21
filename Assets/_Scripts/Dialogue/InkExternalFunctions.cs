@@ -7,12 +7,12 @@ using System.Runtime.CompilerServices;
 
 public class InkExternalFunctions
 {
-    private InventoryInteraction inventoryInteraction;
+    //private InventoryInteraction inventoryInteraction;
     public void Bind(Story story, InventoryInteraction inventoryInteraction)
     {
         story.BindExternalFunction("craftingMenu", () =>
         {
-            inventoryInteraction = new InventoryInteraction();
+            //inventoryInteraction = _InventoryInteraction;
             if (inventoryInteraction != null)
             {
                 inventoryInteraction.OpenCrafting();

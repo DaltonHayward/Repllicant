@@ -18,7 +18,8 @@ public class InventoryInteraction : MonoBehaviour
     CraftingManager _CraftingManager;
 
 
-    public List<ItemTypeAndCount> items = new List<ItemTypeAndCount>();
+    public List<ItemTypeAndCount> items;
+
 
     // cycle thru player inventory and create list of items and amounts
     public List<ItemTypeAndCount> GetAllItems()
@@ -45,7 +46,7 @@ public class InventoryInteraction : MonoBehaviour
             }
             if (!itemWasAdded)
             {
-                items.Add(new ItemTypeAndCount(itemType.itemData.Name, itemType.itemData, 1));
+                items.Add(new ItemTypeAndCount(itemType.itemData.Name, 1));
             }
         }
 
@@ -141,6 +142,6 @@ public class InventoryInteraction : MonoBehaviour
     public void OpenCrafting()
     {
         _CraftingManager.EnterCraftingMode();
-        
+
     }
 }
