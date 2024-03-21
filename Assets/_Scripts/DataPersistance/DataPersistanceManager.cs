@@ -29,7 +29,7 @@ public class DataPersistanceManager : MonoBehaviour
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
         // fetch all dataPersistanceObjects, then load the game with the data
         this.dataPersistanceObjects = FindAllDataPersistanceObjects();
-        LoadGame();
+        Invoke("LoadGame",1f);
     }
 
     public void NewGame()
@@ -51,7 +51,10 @@ public class DataPersistanceManager : MonoBehaviour
             NewGame();
         }
 
-        InventoryController.instance.LoadData(gameData);
+        // InventoryController.instance.LoadData(gameData);
+        // // Invoke("InventoryController.instance.LoadData(gameData)",1f);
+
+        
         // push the loaded data to all other scripts that need it
         foreach (IDataPersistance obj in dataPersistanceObjects)
         {
