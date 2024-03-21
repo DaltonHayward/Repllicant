@@ -38,7 +38,7 @@ public class DialogueManager : MonoBehaviour
 
     //private DialogueVariables dialogueVariables;
 
-    private InventoryInteraction inventoryInteraction;
+    
     private void Awake()
     {
         if (instance != null)
@@ -85,15 +85,15 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON, InventoryInteraction inventoryInteraction)
+    public void EnterDialogueMode(TextAsset inkJSON)
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
-        //_playerController.SetState(PlayerController.State.INTERACTING);
+      
 
-        inkExternalFunctions.Bind(currentStory, inventoryInteraction);
-        //currentStory.BindExternalFunction("craftingMenu", Func<inventoryInteraction>.OpenCrafting, false);
+        inkExternalFunctions.Bind(currentStory);
+       
 
         ContinueStory();
     }
@@ -107,7 +107,7 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        //_playerController.SetState(PlayerController.State.STANDING);
+       
 
     }
 

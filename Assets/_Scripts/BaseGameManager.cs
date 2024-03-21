@@ -36,36 +36,19 @@ namespace ReplicantPackage
 		public UnityEvent OnGameStarting;
 		public UnityEvent OnGameStarted;
 
-		public UnityEvent OnLevelStarting;
-		public UnityEvent OnLevelStarted;
-		public UnityEvent OnLevelEnding;
-		public UnityEvent OnLevelEnded;
-
 		public UnityEvent OnGameEnding;
 		public UnityEvent OnGameEnded;
 		public UnityEvent OnGamePause;
 		public UnityEvent OnGameUnPause;
-
-		public UnityEvent OnShowLevelResults;
-		public UnityEvent OnShowGameResults;
-
-		public UnityEvent OnRestartLevel;
 		public UnityEvent OnRestartGame;
 
 		public virtual void Loaded() { OnLoaded.Invoke(); }
 		public virtual void GameStarting() { OnGameStarting.Invoke(); }
 		public virtual void GameStarted() { OnGameStarted.Invoke(); }
-		public virtual void LevelStarting() { OnLevelStarting.Invoke(); }
-		public virtual void LevelStarted() { OnLevelStarted.Invoke(); }
-		public virtual void LevelEnding() { OnLevelEnding.Invoke(); }
-		public virtual void LevelEnded() { OnLevelEnded.Invoke(); }
 		public virtual void GameEnding() { OnGameEnding.Invoke(); }
 		public virtual void GameEnded() { OnGameEnded.Invoke(); }
 		public virtual void GamePause() { OnGamePause.Invoke(); }
 		public virtual void GameUnPause() { OnGameUnPause.Invoke(); }
-		public virtual void ShowLevelResults() { OnShowLevelResults.Invoke(); }
-		public virtual void ShowGameResults() { OnShowGameResults.Invoke(); }
-		public virtual void RestartLevel() { OnRestartLevel.Invoke(); }
 		public virtual void RestartGame() { OnRestartGame.Invoke(); }
 
 		public virtual void UpdateTargetState()
@@ -94,24 +77,9 @@ namespace ReplicantPackage
 					GameStarted();
 					break;
 
-				case Game.State.levelStarting:
-					LevelStarting();
-					break;
-
-				case Game.State.levelStarted:
-					LevelStarted();
-					break;
-
 				case Game.State.gamePlaying:
 					break;
 
-				case Game.State.levelEnding:
-					LevelEnding();
-					break;
-
-				case Game.State.levelEnded:
-					LevelEnded();
-					break;
 
 				case Game.State.gameEnding:
 					GameEnding();
@@ -129,17 +97,6 @@ namespace ReplicantPackage
 					GameUnPause();
 					break;
 
-				case Game.State.showingLevelResults:
-					ShowLevelResults();
-					break;
-
-				case Game.State.showingGameResults:
-					ShowGameResults();
-					break;
-
-				case Game.State.restartingLevel:
-					RestartLevel();
-					break;
 
 				case Game.State.restartingGame:
 					RestartGame();
@@ -169,20 +126,9 @@ namespace ReplicantPackage
 				case Game.State.gameStarted:
 					break;
 
-				case Game.State.levelStarting:
-					break;
-
-				case Game.State.levelStarted:
-					break;
-
 				case Game.State.gamePlaying:
 					break;
 
-				case Game.State.levelEnding:
-					break;
-
-				case Game.State.levelEnded:
-					break;
 
 				case Game.State.gameEnding:
 					break;
@@ -194,15 +140,6 @@ namespace ReplicantPackage
 					break;
 
 				case Game.State.gameUnPausing:
-					break;
-
-				case Game.State.showingLevelResults:
-					break;
-
-				case Game.State.showingGameResults:
-					break;
-
-				case Game.State.restartingLevel:
 					break;
 
 				case Game.State.restartingGame:
