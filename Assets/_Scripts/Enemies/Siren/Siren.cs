@@ -168,7 +168,7 @@ public class Siren : MonoBehaviour, ISubscriber
 
                 if (angleToSiren >= -90 && angleToSiren <= 90 && dist < _songRange && dist > 3)
                 {
-                    if (timeManager.GetComponent<TimeManager>().CurrentTime >= 21f || timeManager.GetComponent<TimeManager>().CurrentTime <= 6f)
+                    if (timeManager.GetComponent<TimeManager>().CurrentTime >= 19f || timeManager.GetComponent<TimeManager>().CurrentTime <= 7f)
                     {
                         attractionForce = (_songRange / dist) * 1.5f;
                     }
