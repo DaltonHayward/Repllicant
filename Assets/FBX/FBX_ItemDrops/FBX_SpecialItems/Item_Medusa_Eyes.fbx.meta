@@ -3,7 +3,22 @@ guid: 843d7a5f215ad164a8ffb3bfdd63924a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: medusa_eye_optic_nerve
+    second: {fileID: 2100000, guid: cd621eaa95a8c2345908ad793faf9851, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: medusa_eye_retina
+    second: {fileID: 2100000, guid: ba710da89b2765a4fb3cb5d9fcaf9f69, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: medusa_eyes
+    second: {fileID: 2100000, guid: 35f54ad04d5331c4f9a796e14ecf6328, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
