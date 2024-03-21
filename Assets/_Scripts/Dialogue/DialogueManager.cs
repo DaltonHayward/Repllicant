@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
 
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
-    private static DialogueManager instance;
+    public static DialogueManager instance;
 
     private Coroutine displayLineCoroutine;
 
@@ -39,13 +39,20 @@ public class DialogueManager : MonoBehaviour
     //private DialogueVariables dialogueVariables;
 
     private InventoryInteraction inventoryInteraction;
+
+    private String _currentLine;
+
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
         {
             Debug.LogWarning("Found more than one Dialogue Manager in the scene");
+            Destroy(this);
         }
-        instance = this;
 
         inkExternalFunctions = new InkExternalFunctions();
     }
@@ -83,6 +90,19 @@ public class DialogueManager : MonoBehaviour
         {
             ContinueStory();
         }
+
+        // if the space bar is pressed, finish displaying the line right away
+        if (InputManager.instance.DodgeInput && dialogueIsPlaying)
+        {
+            StopCoroutine(displayLineCoroutine);
+            dialogueText.maxVisibleCharacters = _currentLine.Length;
+
+            continueText.SetActive(true);
+            DisplayChoices();
+
+            canContinueToNextLine = true;
+        }
+
     }
 
     public void EnterDialogueMode(TextAsset inkJSON, InventoryInteraction inventoryInteraction)
@@ -98,17 +118,17 @@ public class DialogueManager : MonoBehaviour
         ContinueStory();
     }
 
-    private IEnumerator ExitDialogueMode()
+    public IEnumerator ExitDialogueMode()
     {
         yield return new WaitForSeconds(0.2f);
+
+        StopCoroutine(displayLineCoroutine);
 
         inkExternalFunctions.Unbind(currentStory);
 
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        //_playerController.SetState(PlayerController.State.STANDING);
-
     }
 
     private void ContinueStory()
@@ -130,6 +150,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator DisplayLine(string line)
     {
+        _currentLine = line;
         // empty the dialogue text
         dialogueText.text = line;
         dialogueText.maxVisibleCharacters = 0;
@@ -145,13 +166,6 @@ public class DialogueManager : MonoBehaviour
         // display each letter one at a time
         foreach (char letter in line.ToCharArray())
         {
-            // if the space bar is pressed, finish displaying the line right away
-            if (InputManager.instance.DodgeInput)
-            {
-                dialogueText.maxVisibleCharacters = line.Length;
-                break;
-            }
-
             // check for rich text tag, if found, add it without waiting
             if (letter == '<' || isAddingRichTextTag)
             {

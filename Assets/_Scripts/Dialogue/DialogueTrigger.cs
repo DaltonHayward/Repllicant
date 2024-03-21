@@ -15,10 +15,13 @@ public class DialogueTrigger : MonoBehaviour
 
     private bool playerInRange;
 
+    private PlayerController _playerController;
+
     private void Awake()
     {
         playerInRange = false;
         visualCue.SetActive(false);
+        _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
     private void Update()
     {
@@ -27,6 +30,7 @@ public class DialogueTrigger : MonoBehaviour
             visualCue.SetActive(true);
             if (InputManager.instance.InteractInput)
             {
+                _playerController.SetState(PlayerController.State.DIALOG);
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON, inventoryInteraction);
             }
         }
