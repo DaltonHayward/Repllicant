@@ -27,6 +27,10 @@ public class Siren : MonoBehaviour, ISubscriber
     private float damageRate;
     private Animator animator;
 
+    // set up progress
+    [SerializeField] public bool isBoss = false;
+    public SirenBossKill killProg;
+
     void Awake()
     {
         transform.rotation = Quaternion.identity;
@@ -45,6 +49,7 @@ public class Siren : MonoBehaviour, ISubscriber
         baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
 
         animator = GetComponent<Animator>();
+        killProg = GetComponent<SirenBossKill>();
     }
 
     // Update is called once per frame
@@ -58,7 +63,7 @@ public class Siren : MonoBehaviour, ISubscriber
     {
         hp -= damage;
         if (hp < -0)
-            Die();
+        { Die(); }
     }
 
     public void Movement()
@@ -80,36 +85,39 @@ public class Siren : MonoBehaviour, ISubscriber
         }
     }
 
-    private void OnDestroy()
+    // rolls for loot to instantiate
+    private void RollLoot()
     {
-        if (legendaryItems != null)
-            Instantiate(legendaryItems[0], transform.position, Quaternion.identity);
-        /*float randomValue = Random.value;
+        float randomValue = Random.value;
         if (randomValue < commonItemProbability)
         {
             if (commonItems != null)
-                Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
+            { Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity); }
+            else if (randomValue < commonItemProbability + uncommonItemsProbability)
+            {
+                if (uncommonItems != null)
+                { Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity); }
+
+            }
+            else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
+            {
+                if (rareItems != null)
+                { Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity); }
+
+            }
+            else
+            {
+                if (legendaryItems != null)
+                { Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity); }
+            }
         }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability)
-        {
-            if (uncommonItems != null)
-                Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
-        {
-            if (rareItems != null)
-                Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
-        }
-        else
-        {
-            if (legendaryItems != null)
-                Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
-        }*/
     }
 
     public void Die()
     {
+        if (isBoss) { killProg.SirenDeath(); }
         Destroy(gameObject);
+        RollLoot();
     }
 
     private IEnumerator GiveDamageCoroutine()
