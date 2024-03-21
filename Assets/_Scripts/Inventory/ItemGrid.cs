@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Linq;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 public class ItemGrid : MonoBehaviour
 {
     public const float tileSizeWidth = 32;
@@ -18,9 +20,17 @@ public class ItemGrid : MonoBehaviour
     [SerializeField] public int InventoryHeight;
     [SerializeField] GameObject itemPrefab;
 
+    private List<Inventory_Item> singleInstances = new List<Inventory_Item>();
+    public bool isInventory;
+
     /// <summary>
     /// Grabs the component of the current item, and initializes the inventory grid.
     /// </summary>
+    /// 
+    void Awake(){
+        GetComponentInParent<Canvas>().enabled = true;
+        GetComponentInParent<Canvas>().enabled = false;
+    }
     private void Start() {
         rectTransform = GetComponent<RectTransform>();
         Init(InventoryWidth, InventoryHeight);
@@ -98,13 +108,13 @@ public class ItemGrid : MonoBehaviour
                 invItemSlots[x + itemx, y + itemy] = item;
             }
         }
-
         invItemSlots[x, y] = item;
         item.OnGridPositionX = x;
         item.OnGridPositionY = y;
         Vector2 position = CalculateItemPosition(item, x, y);
+        singleInstances.Add(item);
         rectTransform.localPosition = position;
-        //Debug.Log("Item placed at " + x + " " + y);
+        UnityEngine.Debug.Log(singleInstances);
     }
 
     /// <summary>
@@ -219,6 +229,8 @@ public class ItemGrid : MonoBehaviour
         CleanUpTiles(item);
 
         invItemSlots[x, y] = null;
+        singleInstances.Remove(item);
+        UnityEngine.Debug.Log(singleInstances.Count);
         return item;
     }
 
@@ -350,6 +362,8 @@ public class ItemGrid : MonoBehaviour
     public void RemoveItem(Inventory_Item item)
     {
         CleanUpTiles(item);
+        singleInstances.Remove(item);
+        
     }
 
 
@@ -368,4 +382,32 @@ public class ItemGrid : MonoBehaviour
             }
         }
     }
-}
+
+    public List<(string,int,int,bool)> getAllItems(){
+        List<(string,int,int,bool)> items = new List<(string, int, int,bool)>();
+        foreach (Inventory_Item item in singleInstances)
+        {
+            if (item != null)
+            {
+                items.Add((item.itemName, item.OnGridPositionX, item.OnGridPositionY,item.rotated));
+            }
+        }
+        
+        return items;
+    }
+
+    public void LoadnewItem(ItemData loadedItem, int x, int y,bool rotated){
+        GameObject newItem = Instantiate(itemPrefab, this.transform);
+        Inventory_Item item = newItem.GetComponent<Inventory_Item>();
+        if (rotated)
+        {
+            item.Rotate();
+        }
+        item.Set(loadedItem);
+        putItemInInventory(item, x, y);
+
+    }
+
+
+    }
+

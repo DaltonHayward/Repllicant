@@ -1490,7 +1490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6046282755259407049, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
       propertyPath: InventoryHeight
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8762714436167307075, guid: cefa32b9a0d32471e9c82096f16700ac, type: 3}
       propertyPath: m_Pivot.x
@@ -2554,21 +2554,15 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: ca2687dc6feef476ea736374d8ca0ba2, type: 2}
   - {fileID: 11400000, guid: 4b8470ef1c6b744958daff1b7124e389, type: 2}
-  - {fileID: 11400000, guid: 5bd55dd28d416324da1acef9469523ab, type: 2}
   ItemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 988269515}
   staticPlayerInventory: {fileID: 714664504}
+  instancedModels: {fileID: 0}
   itemDataEntries:
-  - Name: Stone
-    itemData: {fileID: 11400000, guid: 5e9c0c7858ed8544282c98ffee9c04d9, type: 2}
   - Name: Sword
     itemData: {fileID: 11400000, guid: ca2687dc6feef476ea736374d8ca0ba2, type: 2}
   - Name: Torch
     itemData: {fileID: 11400000, guid: 4b8470ef1c6b744958daff1b7124e389, type: 2}
-  - Name: Wood
-    itemData: {fileID: 11400000, guid: b08ff7f910673ef45b7f36f580163188, type: 2}
-  - Name: Axe
-    itemData: {fileID: 11400000, guid: 5bd55dd28d416324da1acef9469523ab, type: 2}
   _timeBetweenEffectApplication: 1
   DropdownHovered: 0
 --- !u!114 &1426796806

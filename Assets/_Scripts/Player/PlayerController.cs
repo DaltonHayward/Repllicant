@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -81,8 +83,11 @@ public class PlayerController : MonoBehaviour, ISubscriber
     public enum Equipment { WEAPON, PICKAXE, AXE };
     private Equipment _currentEquipment;
     private int _currentTool;
-    public Tool[] Tools;
-    public GameObject ToolHolder;
+    private EquippedTool[] _tools;
+    public Transform ToolHolder;
+    private bool _canScroll = true;
+    [SerializeField]
+    private float _scrollDelay;
     public IEnumerator Reset;
 
     [Header("Inventory")]
@@ -105,7 +110,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     // State
     public enum State { MOVING, STANDING, DODGING, INTERACTING, SWINGING, INVENTORY, PETRIFIED, KNOCKBACK, CHARMED };
     [SerializeField]
-    private State _playerState;
+    public State _playerState;
 
     public Canvas _effectCanvas;
 
@@ -123,11 +128,12 @@ public class PlayerController : MonoBehaviour, ISubscriber
         _playerState = State.STANDING;
         _currentEquipment = Equipment.WEAPON;
 
-        // set current tool as weapon
+        // set current Tool as weapon and initalize tools array
         _currentTool = 0;
+        _tools = new EquippedTool[3];
 
         // set base color
-        meshRenderer = gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+        meshRenderer = transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
         _originalMaterialColor = meshRenderer.materials[0].GetColor("_BaseColor");
 
         // Inital dodge setup
@@ -148,6 +154,14 @@ public class PlayerController : MonoBehaviour, ISubscriber
         _controller = GetComponent<CharacterController>();
 
         _effectCanvas.enabled = false;
+    }
+
+    public void Start()
+    {
+        // initalize tools
+        _tools[0] = ToolHolder.GetChild(0).GetComponentInChildren<EquippedTool>();
+        _tools[1] = ToolHolder.GetChild(1).GetComponentInChildren<EquippedTool>();
+        _tools[2] = ToolHolder.GetChild(2).GetComponentInChildren<EquippedTool>();
     }
 
     private void AssignAnimationIDs()
@@ -339,6 +353,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
     #region - Combat/Equipment -
     private void HandleClick()
     {
+        if (_tools[_currentTool] == null) { return; }
+
         if (_currentEquipment == Equipment.WEAPON)
         {
             if (Time.time - _lastComboEnd > _timeBetweenCombos && _comboCounter < Combo.Count && (InputManager.instance.AttackInput || _bufferNextAttack))
@@ -425,21 +441,21 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     public void BeginCollison()
     {
-        Tools[_currentTool].BeginCollision();
+        _tools[_currentTool].BeginCollision();
     }
 
     public void EndCollision()
     {
-        Tools[_currentTool].EndCollision();
+        _tools[_currentTool].EndCollision();
     }
 
     public void BeginTrail()
     {
-        Tools[_currentTool].BeginTrail();
+        _tools[_currentTool].BeginTrail();
     }
     public void EndTrail()
     {
-        Tools[_currentTool].EndTrail();
+        _tools[_currentTool].EndTrail();
     }
 
     private void Knockback()
@@ -448,7 +464,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (Vector3.Distance(transform.position, strokeBackTargetPosition) < 0.2f)
         {
             _playerState = State.STANDING;
-            GetComponent<Charmable>().ResetCharm();
         }
     }
 
@@ -703,75 +718,171 @@ public class PlayerController : MonoBehaviour, ISubscriber
     #region - Equipment -
     private void HandleEquipedItemChange()
     {
-        if (InputManager.instance.ScrollInput > 0)
+        if (InputManager.instance.ScrollInput < 0 && _canScroll)
         {
-            if (_currentEquipment == Equipment.WEAPON)
+            StartCoroutine(ScrollDelay());
+            switch (_currentEquipment)
             {
-                _currentEquipment = Equipment.PICKAXE;
-                ToolHolder.transform.GetChild(0).gameObject.SetActive(false);
-                ToolHolder.transform.GetChild(1).gameObject.SetActive(true);
-                _currentTool = 1;
-            }
-            else if (_currentEquipment == Equipment.PICKAXE)
-            {
-                _currentEquipment = Equipment.AXE;
-                ToolHolder.transform.GetChild(1).gameObject.SetActive(false);
-                ToolHolder.transform.GetChild(2).gameObject.SetActive(true);
-                _currentTool = 2;
-            }
-            else if (_currentEquipment == Equipment.AXE)
-            {
-                _currentEquipment = Equipment.WEAPON;
-                ToolHolder.transform.GetChild(2).gameObject.SetActive(false);
-                ToolHolder.transform.GetChild(0).gameObject.SetActive(true);
-                _currentTool = 0;
+                case Equipment.WEAPON:
+                    _currentEquipment = Equipment.PICKAXE;
+                    ActivatePickaxeSlot();
+                    break;
+
+                case Equipment.PICKAXE:
+                    _currentEquipment = Equipment.AXE;
+                    ActivateAxeSlot();
+                    break;
+
+                case Equipment.AXE:
+                    _currentEquipment = Equipment.WEAPON;
+                    ActivateWeaponSlot();
+                    break;
             }
         }
-        if (InputManager.instance.ScrollInput < 0)
+        if (InputManager.instance.ScrollInput > 0 && _canScroll)
         {
-            if (_currentEquipment == Equipment.WEAPON)
+            StartCoroutine(ScrollDelay());
+            switch (_currentEquipment)
             {
-                _currentEquipment = Equipment.AXE;
-                ToolHolder.transform.GetChild(0).gameObject.SetActive(false);
-                ToolHolder.transform.GetChild(2).gameObject.SetActive(true);
-                _currentTool = 2;
-            }
-            else if (_currentEquipment == Equipment.PICKAXE)
-            {
-                _currentEquipment = Equipment.WEAPON;
-                ToolHolder.transform.GetChild(1).gameObject.SetActive(false);
-                ToolHolder.transform.GetChild(0).gameObject.SetActive(true);
-                _currentTool = 0;
-            }
-            else if (_currentEquipment == Equipment.AXE)
-            {
-                _currentEquipment = Equipment.PICKAXE;
-                ToolHolder.transform.GetChild(2).gameObject.SetActive(false);
-                ToolHolder.transform.GetChild(1).gameObject.SetActive(true);
-                _currentTool = 1;
+                case Equipment.WEAPON:
+                    _currentEquipment = Equipment.AXE;
+                    ActivateAxeSlot();
+                    break;
+
+                case Equipment.PICKAXE:
+                    _currentEquipment = Equipment.WEAPON;
+                    ActivateWeaponSlot();
+                    break;
+
+                case Equipment.AXE:
+                    _currentEquipment = Equipment.PICKAXE;
+                    ActivatePickaxeSlot();
+                    break; 
             }
         }
     }
 
-    public void EquipTool(Equipment type, GameObject tool)
+    IEnumerator ScrollDelay()
+    {
+        _canScroll = false;
+        yield return new WaitForSeconds(_scrollDelay);
+        _canScroll = true;
+    }
+
+    public void ActivateWeaponSlot()
+    {
+        ToolHolder.GetChild(0).gameObject.SetActive(true);
+        ToolHolder.GetChild(1).gameObject.SetActive(false);
+        ToolHolder.GetChild(2).gameObject.SetActive(false);
+        _currentTool = 0;
+    }
+
+    public void ActivatePickaxeSlot()
+    {
+        ToolHolder.GetChild(0).gameObject.SetActive(false);
+        ToolHolder.GetChild(1).gameObject.SetActive(true);
+        ToolHolder.GetChild(2).gameObject.SetActive(false);
+        _currentTool = 1;
+    }
+
+    public void ActivateAxeSlot()
+    {
+        ToolHolder.GetChild(0).gameObject.SetActive(false);
+        ToolHolder.GetChild(1).gameObject.SetActive(false);
+        ToolHolder.GetChild(2).gameObject.SetActive(true);
+        _currentTool = 2;
+    }
+
+    public void EquipTool(Equipment type, Inventory_Item tool)
+    {
+        GameObject newTool;
+        switch (type)
+        {
+            case Equipment.WEAPON:
+                Transform weaponHolder = ToolHolder.GetChild(0);
+                if (weaponHolder.childCount != 0)
+                {
+                    Destroy(weaponHolder.GetChild(0).gameObject);
+                }   
+
+                newTool = Instantiate(tool.itemData.equippedModel, weaponHolder);
+                newTool.GetComponent<EquippedTool>().SetInvTool(tool.GetComponent<InvTool>());
+                _tools[0] = newTool.GetComponent<EquippedTool>();
+
+                break;
+
+            case Equipment.PICKAXE:
+                Transform pickaxeHolder = ToolHolder.GetChild(1);
+                if (pickaxeHolder.childCount != 0)
+                {
+                    Destroy(pickaxeHolder.GetChild(0).gameObject);
+                }
+
+                newTool = Instantiate(tool.itemData.equippedModel, pickaxeHolder);
+                newTool.GetComponent<EquippedTool>().SetInvTool(tool.GetComponent<InvTool>());
+                _tools[1] = newTool.GetComponent<EquippedTool>();
+
+                break;
+
+            case Equipment.AXE:
+                Transform axeHolder = ToolHolder.GetChild(2);
+                if (axeHolder.childCount != 0)
+                {
+                    Destroy(axeHolder.GetChild(0).gameObject);
+                }
+
+                newTool = Instantiate(tool.itemData.equippedModel, axeHolder);
+                newTool.GetComponent<EquippedTool>().SetInvTool(tool.GetComponent<InvTool>());
+                _tools[2] = newTool.GetComponent<EquippedTool>();
+                break;
+        }
+    }
+
+    public void UnequipTool(Equipment type)
     {
         switch (type)
         {
             case Equipment.WEAPON:
-                Tools[0] = tool.GetComponent<Tool>();
+                Transform weaponHolder = ToolHolder.GetChild(0);
+                if (weaponHolder.childCount == 0)
+                {
+                    return;
+                }
+
+                Destroy(weaponHolder.GetChild(0).gameObject);
+                _tools[0] = null;
+
                 break;
+
             case Equipment.PICKAXE:
-                Tools[1] = tool.GetComponent<Tool>();
+                Transform pickaxeHolder = ToolHolder.GetChild(1);
+                if (pickaxeHolder.childCount == 0)
+                {
+                    return;
+                }
+
+                Destroy(pickaxeHolder.GetChild(0).gameObject);
+                _tools[1] = null;
+
                 break;
+
             case Equipment.AXE:
-                Tools[2] = tool.GetComponent<Tool>();
+                Transform axeHolder = ToolHolder.GetChild(2);
+                if (axeHolder.childCount == 0)
+                {
+                    return;
+                }
+
+                Destroy(axeHolder.GetChild(0).gameObject);
+                _tools[2] = null;
+
                 break;
         }
     }
 
-    public Tool[] GetTools()
+    public EquippedTool[] GetTools()
     {
-        return Tools;
+        return _tools;
     }
 
     #endregion
