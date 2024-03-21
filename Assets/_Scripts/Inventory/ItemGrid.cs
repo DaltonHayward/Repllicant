@@ -379,6 +379,7 @@ public class ItemGrid : MonoBehaviour
             if (item != null)
             {
                 CleanUpTiles(item);
+                singleInstances.Remove(item);
                 // invItemSlots.SetValue(null, item.OnGridPositionX, item.OnGridPositionY);
                 Destroy(item.gameObject);
             }
