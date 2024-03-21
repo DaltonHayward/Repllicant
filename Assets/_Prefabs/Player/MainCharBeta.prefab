@@ -199,7 +199,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 2af0410df22867646902900534f51b26, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 151.2
+      value: 158.371
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2af0410df22867646902900534f51b26, type: 3}
       propertyPath: m_LocalPosition.y
@@ -207,7 +207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2af0410df22867646902900534f51b26, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -93.29
+      value: -88
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2af0410df22867646902900534f51b26, type: 3}
       propertyPath: m_LocalRotation.w
@@ -336,32 +336,32 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   InputDirection: {x: 0, y: 0, z: 0}
   SpeedChangeRate: 10
-  _rotationSpeed: 1.45
+  _rotationSpeed: 2.98
   _dodgeCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: -0.07693814
-      outSlope: -0.07693814
+      time: 0.010258083
+      value: 0.7985363
+      inSlope: -0.00053145067
+      outSlope: -0.00053145067
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.17333274
+      outWeight: 0.574712
     - serializedVersion: 3
-      time: 0.31625366
-      value: 0.0005607605
-      inSlope: -1.918057
-      outSlope: -1.918057
+      time: 1.3706067
+      value: 1.0004698
+      inSlope: 0.0033446683
+      outSlope: 0.0033446683
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.02666666
+      inWeight: 1
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _delayBeforeInvinsible: 0.2
+  _delayBeforeInvinsible: 0.1
   _invinsibleDuration: 1
   Combo:
   - {fileID: 11400000, guid: 3fcd2bd62dece204ba89674177454d69, type: 2}
@@ -390,8 +390,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1000
-  currentHealth: 0
+  currentHealth: 1000
+  isDead: 0
   slider: {fileID: 0}
+  deathScreen: {fileID: 0}
 --- !u!114 &2015218755923770508
 MonoBehaviour:
   m_ObjectHideFlags: 0

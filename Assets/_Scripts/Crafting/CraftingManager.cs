@@ -2,99 +2,107 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
-using UnityEditor.Search;
+
 using UnityEngine;
-using static InventoryController;
+
+using UnityEngine.UI;
+
+
 
 public class CraftingManager : MonoBehaviour
 {
-    public static CraftingManager Instance { get; private set; }
 
+
+    [HideInInspector] public bool isCraftingOpened;
+
+    [Header("Crafting UI")]
+    [SerializeField] private GameObject craftingCanvas;
+    [SerializeField] UnityEngine.UI.Button craftingButton;
+
+    [Header("Recipes")]
     [SerializeField] BaseItemRecipe[] recipes;
     [SerializeField] GameObject recipePrefab;
     [SerializeField] Transform recipeParent;
+    
+    private InventoryInteraction inventoryInteraction;
 
     public List<ItemTypeAndCount> items = new List<ItemTypeAndCount>();
-    private InventoryController _InventoryController;
 
+    public static CraftingManager instance;
 
-
-    private ItemGrid itemsInInventory;
 
     private void Awake()
     {
-        if (Instance == null)
+        if (instance != null)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            Debug.LogWarning("Found more than one Crafting Manager in the scene");
+        }
+        instance = this;
+        craftingCanvas.SetActive(false);
+        inventoryInteraction = new InventoryInteraction();
+    }
+
+    private void Update() 
+    {
+    
+    }
+    public static CraftingManager GetInstance()
+    {
+        return instance;
+    }
+
+    private void OnEnable() 
+    {
+        UpdateCraftingUI();
+        craftingButton.enabled = false;
+        
+    }
+
+    public void EnterCraftingMode()
+    {
+        craftingCanvas.SetActive(true);
+        isCraftingOpened = true;
+    }
+
+    public void ExitCraftingMode()
+    {
+        //yield return new WaitForSeconds(0.2f);
+        craftingCanvas.SetActive(false);
+        isCraftingOpened = false;
+    }
+
+    
+
+    
+    private void UpdateCraftingUI()
+    {
+        foreach (Transform child in recipeParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        for (int i = 0; i < recipes.Length; i++)
+        {
+            GameObject newRecipe = Instantiate(recipePrefab, recipeParent);
+        }
+    }
+
+    public void OpenAndCloseCrafting()
+    {
+        if (isCraftingOpened)
+        {
+            isCraftingOpened = false;
         }
         else
         {
-            Destroy(gameObject);
+            isCraftingOpened = true;
         }
     }
 
 
-    public void GetAllItems()
-    {
-        itemsInInventory = playerInventory;
-        items.Clear();
+  
 
-
-        for (int child = 0; child < itemsInInventory.transform.childCount; child++)
-        {
-            Inventory_Item itemType = itemsInInventory.transform.GetChild(child).GetComponent<Inventory_Item>();
-
-            int i = 0;
-            bool itemWasAdded = false;
-
-            foreach (ItemTypeAndCount ItemAndCount in items)
-            {
-                if (ItemAndCount.item == itemType)
-                {
-                    //items[i].items.Add(itemType);
-                    items[i].count++;
-                    itemWasAdded = true;
-
-                }
-                else
-                {
-                    items.Add(new ItemTypeAndCount(itemType, 1));
-                }
-
-                i++;
-            }
-            if (!itemWasAdded)
-            {
-                items.Add(new ItemTypeAndCount(itemType, 1));
-            }
-
-        }
-
-    }
-
-    public void ItemCheck()
-    {
-        if (InputManager.instance.DodgeInput)
-        {
-            GetAllItems();
-            int i = 0;
-
-            foreach (ItemTypeAndCount ItemAndCount in items)
-            {
-
-                Debug.Log("ItemCheck");
-                Debug.Log(items[i].item.itemName);
-
-                Debug.Log(items[i].count);
-
-
-                i++;
-            }
-        }
-
-    }
-
+    
 
 
 }

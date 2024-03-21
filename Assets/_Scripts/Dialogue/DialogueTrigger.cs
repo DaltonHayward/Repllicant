@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
+
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -9,23 +9,25 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private GameObject visualCue;
 
     [Header("Ink JSON")]
-    [SerializeField] private UnityEngine.TextAsset inkJSON;
+    [SerializeField] private TextAsset inkJSON;
+
+    private InventoryInteraction inventoryInteraction;
 
     private bool playerInRange;
 
-    private void Awake() 
+    private void Awake()
     {
         playerInRange = false;
         visualCue.SetActive(false);
     }
-    private void Update() 
+    private void Update()
     {
         if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
         {
             visualCue.SetActive(true);
-            if(InputManager.instance.InteractInput)
+            if (InputManager.instance.InteractInput)
             {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, inventoryInteraction);
             }
         }
         else
@@ -33,16 +35,16 @@ public class DialogueTrigger : MonoBehaviour
             visualCue.SetActive(false);
         }
     }
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             playerInRange = true;
         }
     }
-    private void OnTriggerExit(Collider other) 
+    private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             playerInRange = false;
         }
