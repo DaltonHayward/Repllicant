@@ -8,7 +8,7 @@ public class BaseItemRecipe : ScriptableObject
     public string recipeName;
 
     public ItemTypeAndCount[] input;
-    public ItemTypeAndCount[] output;
+    public ItemData output;
 }
 
 [System.Serializable]

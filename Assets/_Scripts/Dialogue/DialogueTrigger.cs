@@ -11,6 +11,9 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private UnityEngine.TextAsset inkJSON;
 
+    [Header("Crafting Manager")]
+    [SerializeField] private CraftingManager craftingManager;
+
     private bool playerInRange;
 
     private void Awake() 
@@ -25,7 +28,7 @@ public class DialogueTrigger : MonoBehaviour
             visualCue.SetActive(true);
             if(InputManager.instance.InteractInput)
             {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, craftingManager);
             }
         }
         else
