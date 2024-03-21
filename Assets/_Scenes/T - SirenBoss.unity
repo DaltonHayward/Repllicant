@@ -3361,6 +3361,10 @@ PrefabInstance:
       value: Bird_WithAnimations
       objectReference: {fileID: 0}
     - target: {fileID: 7277670552455599702, guid: ac296f78cc675464a8abf80afcca448d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7277670552455599702, guid: ac296f78cc675464a8abf80afcca448d, type: 3}
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
@@ -3810,6 +3814,10 @@ PrefabInstance:
     - target: {fileID: 769206792841266335, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
       propertyPath: m_Name
       value: MainCharBeta (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 769206792841266335, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5051895226653657304, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
       propertyPath: _inventory
@@ -7367,6 +7375,10 @@ PrefabInstance:
       value: Harpy_WithAnimations
       objectReference: {fileID: 0}
     - target: {fileID: 8004038497722273419, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004038497722273419, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
@@ -8366,6 +8378,14 @@ PrefabInstance:
     - target: {fileID: 1008906681683865238, guid: 48aa99f49632e114b9c9f0c0b6ba1ead, type: 3}
       propertyPath: m_Name
       value: Siren_Beta
+      objectReference: {fileID: 0}
+    - target: {fileID: 2952618090573486407, guid: 48aa99f49632e114b9c9f0c0b6ba1ead, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 3371012250585660291, guid: 48aa99f49632e114b9c9f0c0b6ba1ead, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3530986028975139186, guid: 48aa99f49632e114b9c9f0c0b6ba1ead, type: 3}
       propertyPath: m_LocalPosition.y
