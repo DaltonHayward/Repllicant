@@ -6535,7 +6535,7 @@ GameObject:
   - component: {fileID: 939599817}
   m_Layer: 0
   m_Name: TimeManager
-  m_TagString: Untagged
+  m_TagString: TimeManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6568,10 +6568,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DayLength: 24
-  _StartingTime: 9
+  _StartingTime: 20
   _TimeFactor: 60
   Bridges: []
-  CurrentTime: 9
+  CurrentTime: 20
 --- !u!1001 &942397809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8395,6 +8395,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3668635702323725137, guid: 48aa99f49632e114b9c9f0c0b6ba1ead, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3668635702323725137, guid: 48aa99f49632e114b9c9f0c0b6ba1ead, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b1410d63a35037b4185473422c87058b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

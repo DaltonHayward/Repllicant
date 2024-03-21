@@ -21,25 +21,16 @@ public class Siren : MonoBehaviour, ISubscriber
     private Color baseColor;
 
     public GameObject player;
+    public GameObject timeManager;
     private Event e;
 
     private IEnumerator damageCoroutine;
-
-    [Header("Animator")]
-    // animation IDs
-    private Animator _animator;
-    private int _animIDSpeed;
-    private int _animIDMotionSpeed;
-
-    // State
-    public enum State { MOVING, HOVERING, ATTACKING, PETRIFIED, KNOCKBACK};
-    [SerializeField]
-    private State _sirenState;
 
     void Awake()
     {
         transform.rotation = Quaternion.identity;
         player = GameObject.FindGameObjectWithTag("Player");
+        timeManager = GameObject.FindGameObjectWithTag("TimeManager");
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
@@ -47,23 +38,12 @@ public class Siren : MonoBehaviour, ISubscriber
         damageCoroutine = GiveDamageCoroutine();
         StartCoroutine(damageCoroutine);
 
-        _sirenState = State.HOVERING;
         SirenSong ss = GetComponent<SirenSong>();
         ss.SetParameters(damageRate, _songRange, "Singing");
 
         baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
-
-        // Set up animator
-        _animator = GetComponent<Animator>();
-        AssignAnimationIDs();
-        //_animator.SetFloat(_animIDAttackSpeed, AttackSpeed);
     }
 
-    private void AssignAnimationIDs()
-    {
-        _animIDSpeed = Animator.StringToHash("Speed");
-        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-    }
 
     // Update is called once per frame
     void Update()
@@ -94,32 +74,12 @@ public class Siren : MonoBehaviour, ISubscriber
         {
             speed = 0.1f;
         }
-        Debug.Log("Siren Speed: " + speed);
     }
 
     private void OnDestroy()
     {
-        /*float randomValue = Random.value;
-        if (randomValue < commonItemProbability)
-        {
-            if (commonItems != null)
-                Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability)
-        {
-            if (uncommonItems != null)
-                Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
-        {
-            if (rareItems != null)
-                Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
-        }
-        else
-        {*/
         if (legendaryItems != null)
             Instantiate(legendaryItems[0], transform.position, Quaternion.identity);
-        //}
     }
 
     public void Die()
@@ -140,11 +100,19 @@ public class Siren : MonoBehaviour, ISubscriber
                     foreach (ISubscriber sub in subs)
                     {
                         if (c.gameObject.GetComponent<PlayerHealth>() != null)
-                            c.gameObject.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(c.gameObject.transform.position, transform.position));
+                            if (timeManager.GetComponent<TimeManager>().CurrentTime >= 21f || timeManager.GetComponent<TimeManager>().CurrentTime <= 6f)
+                            {
+                                c.gameObject.GetComponent<PlayerHealth>().TakeDamage(1.5f * _songRange / Vector3.Distance(c.gameObject.transform.position, transform.position));
+                                damageRate = 2f;
+                            }
+                            else
+                            {
+                                c.gameObject.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(c.gameObject.transform.position, transform.position));
+                            }
                     }
                 }
             }
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(damageRate);
         }
     }
 
@@ -175,7 +143,14 @@ public class Siren : MonoBehaviour, ISubscriber
 
                 if (angleToSiren >= -90 && angleToSiren <= 90 && dist < _songRange && dist > 3)
                 {
-                    attractionForce = _songRange / dist;
+                    if (timeManager.GetComponent<TimeManager>().CurrentTime >= 21f || timeManager.GetComponent<TimeManager>().CurrentTime <= 6f)
+                    {
+                        attractionForce = (_songRange / dist) * 1.5f;
+                    }
+                    else
+                    {
+                        attractionForce = _songRange / dist;
+                    }
                     cc.Move(direction.normalized * (attractionForce * 0.8f) * Time.deltaTime);
                 }
                 else if (angleToSiren <= -90 || angleToSiren >= 90 && dist < _songRange && dist > 3 || dist <= 2)
