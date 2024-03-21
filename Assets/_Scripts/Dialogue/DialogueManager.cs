@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Ink.Runtime;
@@ -16,14 +17,12 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
-
     [SerializeField] private GameObject continueText;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
-
 
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
@@ -33,8 +32,13 @@ public class DialogueManager : MonoBehaviour
 
     private bool canContinueToNextLine = false;
 
-    private PlayerController _playerController;
+    //private PlayerController _playerController;
 
+    private InkExternalFunctions inkExternalFunctions;
+
+    //private DialogueVariables dialogueVariables;
+
+    private InventoryInteraction inventoryInteraction;
     private void Awake()
     {
         if (instance != null)
@@ -42,6 +46,8 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("Found more than one Dialogue Manager in the scene");
         }
         instance = this;
+
+        inkExternalFunctions = new InkExternalFunctions();
     }
 
     public static DialogueManager GetInstance()
@@ -71,21 +77,24 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         // handle continuing to next line in the dialogue when submit is pressed
-        if (canContinueToNextLine 
-            && currentStory.currentChoices.Count == 0 
+        if (canContinueToNextLine
+            && currentStory.currentChoices.Count == 0
             && InputManager.instance.InteractInput)
         {
             ContinueStory();
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(TextAsset inkJSON, InventoryInteraction inventoryInteraction)
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         //_playerController.SetState(PlayerController.State.INTERACTING);
-        
+
+        inkExternalFunctions.Bind(currentStory, inventoryInteraction);
+        //currentStory.BindExternalFunction("craftingMenu", Func<inventoryInteraction>.OpenCrafting, false);
+
         ContinueStory();
     }
 
@@ -93,11 +102,13 @@ public class DialogueManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
 
+        inkExternalFunctions.Unbind(currentStory);
+
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
         //_playerController.SetState(PlayerController.State.STANDING);
-        
+
     }
 
     private void ContinueStory()
@@ -140,13 +151,13 @@ public class DialogueManager : MonoBehaviour
                 dialogueText.maxVisibleCharacters = line.Length;
                 break;
             }
-            
+
             // check for rich text tag, if found, add it without waiting
             if (letter == '<' || isAddingRichTextTag)
             {
                 isAddingRichTextTag = true;
-                
-                if(letter == '>') 
+
+                if (letter == '>')
                 {
                     isAddingRichTextTag = false;
                 }
