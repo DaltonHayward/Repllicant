@@ -1,5 +1,4 @@
 EXTERNAL craftingMenu()
-
 -> main
 
 === main ===
@@ -8,8 +7,8 @@ This is a test of my crafting function.
 Do you want to craft?
 + [Yes]
     Let's craft!
-    ~craftingMenu()
-    ->DONE
+    ~ craftingMenu()
+    -> END
 + [No]
     Well... I'll be here if you change your mind!
 -> END

@@ -14,6 +14,8 @@ public class InventoryInteraction : MonoBehaviour
 
     ItemGrid _ItemGrid;
 
+    CraftingManager _CraftingManager;
+
 
     public List<ItemTypeAndCount> items = new List<ItemTypeAndCount>();
 
@@ -118,7 +120,7 @@ public class InventoryInteraction : MonoBehaviour
         else
         {
             Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
-            Instantiate(InventoryController.instance.LookUpItem(itemToAdd.Name).envModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
+            Instantiate(InventoryController.instance.LookUpItem(itemToAdd.Name).worldModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
         }
 
     }
@@ -131,5 +133,13 @@ public class InventoryInteraction : MonoBehaviour
 
         // add inventory items
         AddInventoryItems(itemRecipe.output);
+    }
+
+
+    // function for opening crafting menu
+    public void OpenCrafting()
+    {
+        _CraftingManager.EnterCraftingMode();
+        
     }
 }

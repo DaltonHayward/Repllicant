@@ -2,33 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
+using System.Runtime.CompilerServices;
+
 
 public class InkExternalFunctions
 {
-    private CraftingManager _CraftingManager;
-    private DialogueManager _DialogueManager;
-    public void Bind(Story story, CraftingManager craftingManager)
+    private InventoryInteraction inventoryInteraction;
+    public void Bind(Story story, InventoryInteraction inventoryInteraction)
     {
-        story.BindExternalFunction("craftingMenu", () => _CraftingManager.EnterCraftingMode());
+        story.BindExternalFunction("craftingMenu", () =>
+        {
+            if (inventoryInteraction != null)
+            {
+                inventoryInteraction.OpenCrafting();
+            }
+            else
+            {
+                Debug.LogWarning("Tried to open crafting menu, but InventoryInteraction was " + "not initialized when entering dialogue mode.");
+            }
+        });
     }
 
-    public void Unbind(Story story) 
+
+    public void Unbind(Story story)
     {
         story.UnbindExternalFunction("craftingMenu");
     }
 
-    public void craftingMenu()
-    {
-        if (_CraftingManager != null) 
-        {
-            _CraftingManager.EnterCraftingMode();
-            _DialogueManager.ExitDialogueMode();
-        }
-        else 
-        {
-            Debug.LogWarning("Tried to open crafting menu, but CraftingManager was "
-                + "not initialized when entering dialogue mode.");
-        }
-    }
     
+
 }

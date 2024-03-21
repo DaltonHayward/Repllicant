@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Ink.Runtime;
@@ -16,14 +17,12 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
-
     [SerializeField] private GameObject continueText;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
-
 
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
@@ -33,13 +32,13 @@ public class DialogueManager : MonoBehaviour
 
     private bool canContinueToNextLine = false;
 
-    private PlayerController _playerController;
+    //private PlayerController _playerController;
 
     private InkExternalFunctions inkExternalFunctions;
 
-    private DialogueVariables dialogueVariables;
+    //private DialogueVariables dialogueVariables;
 
-
+    private InventoryInteraction inventoryInteraction;
     private void Awake()
     {
         if (instance != null)
@@ -47,6 +46,8 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("Found more than one Dialogue Manager in the scene");
         }
         instance = this;
+
+        inkExternalFunctions = new InkExternalFunctions();
     }
 
     public static DialogueManager GetInstance()
@@ -84,19 +85,20 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON, CraftingManager craftingManager)
+    public void EnterDialogueMode(TextAsset inkJSON)
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
         //_playerController.SetState(PlayerController.State.INTERACTING);
 
-        inkExternalFunctions.Bind(currentStory, craftingManager);
+        inkExternalFunctions.Bind(currentStory, inventoryInteraction);
+        //currentStory.BindExternalFunction("craftingMenu", Func<inventoryInteraction>.OpenCrafting, false);
 
         ContinueStory();
     }
 
-    public IEnumerator ExitDialogueMode()
+    private IEnumerator ExitDialogueMode()
     {
         yield return new WaitForSeconds(0.2f);
 
