@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     private AnimationCurve _dodgeCurve;
     private bool _canDodge = true;
     private float _dodgeDuration;
-    private float _dodgeCooldown = 1;
+    private float _dodgeCooldown = 1f;
     [SerializeField]
     [Range(0f, 1f)]
     private float _delayBeforeInvinsible = 0.2f;
@@ -200,7 +200,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 break;
 
             case State.DODGING:
-                HandleMovement();
                 break;
 
             case State.INTERACTING:
@@ -228,11 +227,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
     public void SetState(State state)
     {
         _playerState = state;
-    }
-
-    public Equipment GetCurrentEquipment()
-    {
-        return _currentEquipment;
     }
 
     #region - Movement -
@@ -283,7 +277,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
         // if there is a move input rotate player when the player is moving
         if (InputManager.instance.MoveInput != Vector2.zero)
         {
-            _playerState = State.MOVING;
+            if (_playerState != State.DODGING)
+                _playerState = State.MOVING;
             _targetRotation = Mathf.Atan2(InputDirection.x, InputDirection.z) * Mathf.Rad2Deg + _playerCamera.transform.eulerAngles.y;
             float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
 
@@ -292,7 +287,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
         }
         else
         {
-            _playerState = State.STANDING;
+            if (_playerState != State.DODGING)
+                _playerState = State.STANDING;
         }
 
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
@@ -460,11 +456,14 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     private void Knockback()
     {
-        transform.position = Vector3.MoveTowards(transform.position, strokeBackTargetPosition, 30 * Time.deltaTime);
-        if (Vector3.Distance(transform.position, strokeBackTargetPosition) < 0.2f)
+        if (!GetComponent<PlayerHealth>().isInvincible())
         {
-            _playerState = State.STANDING;
-        }
+            transform.position = Vector3.MoveTowards(transform.position, strokeBackTargetPosition, 30 * Time.deltaTime);
+            if (Vector3.Distance(transform.position, strokeBackTargetPosition) < 0.2f)
+            {
+                _playerState = State.STANDING;
+            }
+        }  
     }
 
     #endregion
@@ -511,7 +510,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (InputManager.instance.DodgeInput && InputDirection != Vector3.zero && _canDodge)
         {
             StartCoroutine(Dodge());
-            GetComponent<PlayerHealth>().Invinsible(_delayBeforeInvinsible, _invinsibleDuration);
+            GetComponent<PlayerHealth>().Invincible(_delayBeforeInvinsible, _invinsibleDuration);
             StartCoroutine(DodgeCooldown());
         }
     }
@@ -527,11 +526,13 @@ public class PlayerController : MonoBehaviour, ISubscriber
         while (timer < _dodgeDuration)
         {
             float speed = _dodgeCurve.Evaluate(timer);
-            _controller.Move((dir * speed) * Time.deltaTime);
+            _controller.Move((dir * speed* MoveSpeed) * Time.deltaTime);
             timer += Time.deltaTime;
+            Debug.Log(timer);
             yield return null;
         }
 
+        Debug.Log("HerE");
         _playerState = State.STANDING;
     }
 
