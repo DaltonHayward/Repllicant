@@ -185,6 +185,17 @@ public class MedusaMob : Enemy
                 break;
         }
     }
+    public void Die1()
+    {
+        Destroy(gameObject);
+    }
+    
+    public void TakeDamage1(float damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+            Die();
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, chaseRange);
