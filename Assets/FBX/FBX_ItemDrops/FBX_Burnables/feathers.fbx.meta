@@ -3,7 +3,22 @@ guid: d8228c9b20e36e94a842956c9710539c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: feather_accent
+    second: {fileID: 2100000, guid: d1f043bee701899419a546c29757a381, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: feather_calamus
+    second: {fileID: 2100000, guid: f143004c9d7718a4daa4f797cde7eb72, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: feather_main
+    second: {fileID: 2100000, guid: 3e6c9fc823ec546499ac8b24982d91c3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -100,11 +100,13 @@ public class ItemGrid : MonoBehaviour
     {
         RectTransform rectTransform = item.GetComponent<RectTransform>();
         rectTransform.SetParent(this.rectTransform);
+        UnityEngine.Debug.Log("Storing Item: " + item + item.WIDTH + item.HEIGHT + "X: " + x + "Y: " + y);
 
         for (int itemx = 0; itemx < item.WIDTH; itemx++)
         {
             for (int itemy = 0; itemy < item.HEIGHT; itemy++)
             {
+                //  UnityEngine.Debug.Log("ItemTest"+ invItemSlots + "X: " + x + "Y: " + y + "ItemX: " + itemx + "ItemY: " + itemy);   
                 invItemSlots[x + itemx, y + itemy] = item;
             }
         }
@@ -377,6 +379,7 @@ public class ItemGrid : MonoBehaviour
             if (item != null)
             {
                 CleanUpTiles(item);
+                singleInstances.Remove(item);
                 // invItemSlots.SetValue(null, item.OnGridPositionX, item.OnGridPositionY);
                 Destroy(item.gameObject);
             }
@@ -404,6 +407,7 @@ public class ItemGrid : MonoBehaviour
             item.Rotate();
         }
         item.Set(loadedItem);
+        UnityEngine.Debug.Log(item);
         putItemInInventory(item, x, y);
 
     }

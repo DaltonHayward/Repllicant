@@ -95,7 +95,8 @@ public class InventoryController : MonoBehaviour,IDataPersistance
         {
             itemDataDictionary.Add(entry.Name, entry.itemData);
         }
-
+       
+        
         StartCoroutine(ApplyEffectsLoop());
     }
 
@@ -540,7 +541,6 @@ public class InventoryController : MonoBehaviour,IDataPersistance
     #endregion
     public void LoadData( GameData gameData)
     {
-
         for (int i = 0; i < gameData.InvItems_Names.Count; i++)
         {
             ItemData itemData = itemDataDictionary[gameData.InvItems_Names[i]];
@@ -622,7 +622,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
         // gameData.StashItems_Rotated = new List<bool>();
 
     }
-  
+
 
 
 }

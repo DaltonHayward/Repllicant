@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -98,9 +97,9 @@ public class Boar : Enemy
                 if (Vector3.Distance(player.position, transform.position) < chaseRange)
                 {
                     state = BoarState.chase;
-
                     break;
                 }
+                animator.Play("Idle");
                 break;
             case BoarState.chase:
                 if (Vector3.Distance(player.position, transform.position) <= attackRange)
@@ -121,6 +120,7 @@ public class Boar : Enemy
                 Vector3 targetPos = player.position - (player.position - transform.position).normalized * (attackRange - 1);
                 targetPos.y = transform.position.y;
                 navMeshAgent.SetDestination(targetPos);
+                animator.Play("Chase");
 
                 break;
             case BoarState.attack:
@@ -148,6 +148,8 @@ public class Boar : Enemy
 
                     lastSkillTime = Time.time;
                 }
+                animator.Play("Attack");
+
                 break;
             case BoarState.charge:
 
@@ -174,6 +176,8 @@ public class Boar : Enemy
                         playerIsDamageByCharge = true;
                     }
                 }
+                animator.Play("Charge");
+
                 break;
             case BoarState.stone:
                 break;

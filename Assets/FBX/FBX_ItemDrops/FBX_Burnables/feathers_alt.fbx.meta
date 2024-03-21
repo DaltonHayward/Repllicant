@@ -3,7 +3,22 @@ guid: cafb9a247115eb44dba8c83a4d5cbb35
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: harpy_body_accent1
+    second: {fileID: 2100000, guid: 55d12183a2248f5438eee1b7cac47c0f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: harpy_body_accent2
+    second: {fileID: 2100000, guid: f9938a11c43dbe841a361d5b7ca5b7d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: harpy_body_main
+    second: {fileID: 2100000, guid: 3a2535251f1dbca41912a53b125fd0df, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

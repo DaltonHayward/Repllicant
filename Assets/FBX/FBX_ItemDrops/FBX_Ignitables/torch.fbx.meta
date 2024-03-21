@@ -3,7 +3,22 @@ guid: c254e03b04990654c9e4723d364940e0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: torch_handle
+    second: {fileID: 2100000, guid: 8ac52b7c1adf94643b6ef3bd2d15f7bf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: torch_head_main
+    second: {fileID: 2100000, guid: a1152cf21c1ea7842bf82d33a0691226, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: torch_head_wrapping
+    second: {fileID: 2100000, guid: 13c45bd02eaaa664a91e995bf94bfc99, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

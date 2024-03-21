@@ -9,7 +9,7 @@ using UnityEngine.InputSystem.XR;
 public class Siren : MonoBehaviour, ISubscriber
 {
     [SerializeField]
-    public float hp, attack, chaseRange, speed, attractionForce;
+    public float hp, chaseRange, speed, attractionForce;
 
     NavMeshAgent navMeshAgent;
 
@@ -17,6 +17,7 @@ public class Siren : MonoBehaviour, ISubscriber
 
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
+    public float damageRate;
     private Color baseColor;
 
     public GameObject player;
@@ -24,19 +25,44 @@ public class Siren : MonoBehaviour, ISubscriber
 
     private IEnumerator damageCoroutine;
 
+    [Header("Animator")]
+    // animation IDs
+    private Animator _animator;
+    private int _animIDSpeed;
+    private int _animIDMotionSpeed;
+
+    // State
+    public enum State { MOVING, HOVERING, ATTACKING, PETRIFIED, KNOCKBACK};
+    [SerializeField]
+    private State _sirenState;
+
     void Awake()
     {
         transform.rotation = Quaternion.identity;
         player = GameObject.FindGameObjectWithTag("Player");
+
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
+
         damageCoroutine = GiveDamageCoroutine();
         StartCoroutine(damageCoroutine);
 
+        _sirenState = State.HOVERING;
         SirenSong ss = GetComponent<SirenSong>();
-        ss.SetParameters(0.5f, _songRange, "Singing");
+        ss.SetParameters(damageRate, _songRange, "Singing");
 
         baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
+
+        // Set up animator
+        _animator = GetComponent<Animator>();
+        AssignAnimationIDs();
+        //_animator.SetFloat(_animIDAttackSpeed, AttackSpeed);
+    }
+
+    private void AssignAnimationIDs()
+    {
+        _animIDSpeed = Animator.StringToHash("Speed");
+        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
     }
 
     // Update is called once per frame
@@ -58,21 +84,22 @@ public class Siren : MonoBehaviour, ISubscriber
         // calc distance to player
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
+        transform.LookAt(player.transform.position);
         if (distanceToPlayer < chaseRange && distanceToPlayer > 2f)
         {
             speed = 0.5f;
-            transform.LookAt(player.transform.position);
-            navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
+            navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized * (chaseRange - 1));
         }
-        else 
+        else
         {
-            speed = 0f;
+            speed = 0.1f;
         }
+        Debug.Log("Siren Speed: " + speed);
     }
 
     private void OnDestroy()
     {
-        float randomValue = Random.value;
+        /*float randomValue = Random.value;
         if (randomValue < commonItemProbability)
         {
             if (commonItems != null)
@@ -89,10 +116,10 @@ public class Siren : MonoBehaviour, ISubscriber
                 Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
         }
         else
-        {
-            if (legendaryItems != null)
-                Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
-        }
+        {*/
+        if (legendaryItems != null)
+            Instantiate(legendaryItems[0], transform.position, Quaternion.identity);
+        //}
     }
 
     public void Die()
@@ -102,22 +129,22 @@ public class Siren : MonoBehaviour, ISubscriber
 
     private IEnumerator GiveDamageCoroutine()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
-        while (Vector3.Distance(player.transform.position, transform.position) <= _songRange)
+        while (true)
         {
+            Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
             foreach (Collider c in targets)
             {
-                if (c.CompareTag("Player"))
+                ISubscriber[] subs = c.GetComponents<ISubscriber>();
+                if (subs != null)
                 {
-                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                    if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) <= _songRange)
+                    foreach (ISubscriber sub in subs)
                     {
-                        // Damages player more as they get closer to the siren
-                        player.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(player.transform.position, transform.position));
-                        yield return new WaitForSeconds(5);
+                        if (c.gameObject.GetComponent<PlayerHealth>() != null)
+                            c.gameObject.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(c.gameObject.transform.position, transform.position));
                     }
                 }
             }
+            yield return new WaitForSeconds(4f);
         }
     }
 
@@ -151,7 +178,7 @@ public class Siren : MonoBehaviour, ISubscriber
                     attractionForce = _songRange / dist;
                     cc.Move(direction.normalized * (attractionForce * 0.8f) * Time.deltaTime);
                 }
-                else if (angleToSiren <= -90 || angleToSiren >= 90 && dist < _songRange && dist > 3)
+                else if (angleToSiren <= -90 || angleToSiren >= 90 && dist < _songRange && dist > 3 || dist <= 2)
                 {
                     // sometimes Input.anyKey || e.isKey works, sometimes only e.isKey does
                     if (Input.anyKey || e.isKey)
