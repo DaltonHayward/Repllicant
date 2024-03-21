@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ingredient_Name
       objectReference: {fileID: 0}
+    - target: {fileID: 4814900013148487345, guid: 8a76fe4e67d9e574d9a6fab7aafb0e65, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9042794003658707263, guid: 8a76fe4e67d9e574d9a6fab7aafb0e65, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -310,6 +314,10 @@ PrefabInstance:
     - target: {fileID: 4657486237941718505, guid: 1c9df99a01399a0458ed3a7cf196f731, type: 3}
       propertyPath: m_Name
       value: Ingredient_Need
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657486237941718505, guid: 1c9df99a01399a0458ed3a7cf196f731, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8879606997993991073, guid: 1c9df99a01399a0458ed3a7cf196f731, type: 3}
       propertyPath: m_Pivot.x
@@ -545,7 +553,7 @@ GameObject:
   m_Component:
   - component: {fileID: 87376161}
   - component: {fileID: 87376162}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Content_Vertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -989,7 +997,7 @@ GameObject:
   - component: {fileID: 141775459}
   - component: {fileID: 141775461}
   - component: {fileID: 141775460}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Recipe_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1915,7 +1923,7 @@ GameObject:
   m_Component:
   - component: {fileID: 275246034}
   - component: {fileID: 275246035}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2336,7 +2344,6 @@ GameObject:
   m_Component:
   - component: {fileID: 426268537}
   - component: {fileID: 426268538}
-  - component: {fileID: 426268539}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -2379,19 +2386,6 @@ MonoBehaviour:
   - {fileID: 1665285856}
   - {fileID: 1252417333}
   - {fileID: 806522595}
---- !u!114 &426268539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 426268536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ef95a5c0c0c4449b198eca8e2c6c2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: []
 --- !u!1 &465399112
 GameObject:
   m_ObjectHideFlags: 0
@@ -5616,7 +5610,7 @@ GameObject:
   - component: {fileID: 872272455}
   - component: {fileID: 872272457}
   - component: {fileID: 872272456}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Crafting_Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7277,7 +7271,7 @@ GameObject:
   - component: {fileID: 1044171049}
   - component: {fileID: 1044171051}
   - component: {fileID: 1044171050}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Menu_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8217,6 +8211,7 @@ Transform:
   - {fileID: 426268537}
   - {fileID: 617496091}
   - {fileID: 1488051524}
+  - {fileID: 1647598385}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1204880502
@@ -8230,7 +8225,7 @@ GameObject:
   - component: {fileID: 1204880503}
   - component: {fileID: 1204880505}
   - component: {fileID: 1204880504}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Crafting_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8984,7 +8979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2334839957140025327, guid: a223885692662be43b7875a2d5b63287, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3107764231794122601, guid: a223885692662be43b7875a2d5b63287, type: 3}
       propertyPath: m_IsActive
@@ -9974,6 +9969,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ingredient_Spacing
       objectReference: {fileID: 0}
+    - target: {fileID: 6913247099221986388, guid: 2d33c1c3898ad2f49a2c378977b8e992, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10781,7 +10780,7 @@ GameObject:
   - component: {fileID: 1426796804}
   - component: {fileID: 1426796806}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: InventoryManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11175,9 +11174,7 @@ MonoBehaviour:
   craftingButton: {fileID: 488005229}
   recipes: []
   recipePrefab: {fileID: 1092512827731717413, guid: 452eed37c612bde46adf43e879b8247a, type: 3}
-  recipeParent: {fileID: 1204880503}
   inventoryInteraction: {fileID: 0}
-  items: []
 --- !u!1001 &1490238424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11269,6 +11266,14 @@ PrefabInstance:
     - target: {fileID: 4584661547070221755, guid: 237b8a049f7775e4686a72e9acbade32, type: 3}
       propertyPath: m_Name
       value: Ingredient
+      objectReference: {fileID: 0}
+    - target: {fileID: 4584661547070221755, guid: 237b8a049f7775e4686a72e9acbade32, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6520390578184148206, guid: 237b8a049f7775e4686a72e9acbade32, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12567,9 +12572,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5855632766181887189, guid: e4a5d27eb39d2a341a1ff20b694310bb, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8200918592997277446, guid: e4a5d27eb39d2a341a1ff20b694310bb, type: 3}
       propertyPath: m_Name
       value: Ingredient_Have
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200918592997277446, guid: e4a5d27eb39d2a341a1ff20b694310bb, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13104,6 +13117,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638835293}
   m_CullTransparentMesh: 1
+--- !u!1 &1647598384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1647598385}
+  - component: {fileID: 1647598386}
+  m_Layer: 0
+  m_Name: 'GameManager '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1647598385
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647598384}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1200043391}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1647598386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1647598384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7256d3afa1bc8714cb772b7cce718a0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPaused: 0
 --- !u!1 &1648846186
 GameObject:
   m_ObjectHideFlags: 0
@@ -13512,7 +13570,7 @@ GameObject:
   - component: {fileID: 1661880558}
   - component: {fileID: 1661880560}
   - component: {fileID: 1661880559}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Inventory_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14076,7 +14134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1712022990}
   - component: {fileID: 1712022991}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Content_Horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14632,9 +14690,7 @@ GameObject:
   - component: {fileID: 1895925809}
   - component: {fileID: 1895925808}
   - component: {fileID: 1895925807}
-  - component: {fileID: 1895925810}
-  - component: {fileID: 1895925811}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Crafting_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14708,7 +14764,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895925805}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -14724,56 +14780,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1895925810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895925805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c5ed788ef456d74e88febb80c4c37f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isCraftingOpened: 0
-  craftingCanvas: {fileID: 1895925805}
-  craftingButton: {fileID: 488005229}
-  recipes:
-  - {fileID: 11400000, guid: 561ee8eec494ae4448e1e9b0825b89e7, type: 2}
-  recipePrefab: {fileID: 1092512827731717413, guid: 452eed37c612bde46adf43e879b8247a, type: 3}
-  recipeParent: {fileID: 87376161}
-  inventoryInteraction: {fileID: 0}
-  items: []
---- !u!114 &1895925811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895925805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 16
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1895925810}
-          m_TargetAssemblyTypeName: CraftingManager, Assembly-CSharp
-          m_MethodName: ExitCraftingMode
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &1904014562
 GameObject:
   m_ObjectHideFlags: 0
@@ -14785,7 +14791,7 @@ GameObject:
   - component: {fileID: 1904014563}
   - component: {fileID: 1904014565}
   - component: {fileID: 1904014564}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Inventory_Header (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15784,7 +15790,7 @@ GameObject:
   - component: {fileID: 2070884606}
   - component: {fileID: 2070884608}
   - component: {fileID: 2070884607}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Materials_Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17044,7 +17050,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5442404537062935213}
   - component: {fileID: 3031301309765245644}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Recipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
