@@ -12,6 +12,7 @@ public class InkExternalFunctions
     {
         story.BindExternalFunction("craftingMenu", () =>
         {
+            inventoryInteraction = new InventoryInteraction();
             if (inventoryInteraction != null)
             {
                 inventoryInteraction.OpenCrafting();

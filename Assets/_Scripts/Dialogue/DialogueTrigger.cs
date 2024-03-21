@@ -11,6 +11,8 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
+    private InventoryInteraction inventoryInteraction;
+
     private bool playerInRange;
 
     private void Awake()
@@ -25,7 +27,7 @@ public class DialogueTrigger : MonoBehaviour
             visualCue.SetActive(true);
             if (InputManager.instance.InteractInput)
             {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, inventoryInteraction);
             }
         }
         else

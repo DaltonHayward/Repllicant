@@ -85,7 +85,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(TextAsset inkJSON, InventoryInteraction inventoryInteraction)
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;

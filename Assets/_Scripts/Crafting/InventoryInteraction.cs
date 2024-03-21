@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -101,7 +102,7 @@ public class InventoryInteraction : MonoBehaviour
                 if (i.itemData.Name == item.name && item.count > 0)
                 {
                     InventoryController.playerInventory.RemoveItem(i);
-                    Destroy(i);
+                    Object.Destroy(i);
                     item.count--;
                 }
             }
@@ -120,7 +121,7 @@ public class InventoryInteraction : MonoBehaviour
         else
         {
             Vector3 playerPos = GameObject.FindWithTag("Player").transform.position;
-            Instantiate(InventoryController.instance.LookUpItem(itemToAdd.Name).worldModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
+            Object.Instantiate(InventoryController.instance.LookUpItem(itemToAdd.Name).worldModel, new Vector3(playerPos.x + Random.Range(-1f, 1f), 0.8f, playerPos.z + Random.Range(-1f, 1f)), Quaternion.identity);
         }
 
     }

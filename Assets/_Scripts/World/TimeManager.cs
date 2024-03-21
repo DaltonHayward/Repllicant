@@ -64,4 +64,6 @@ public class TimeManager : MonoBehaviour
             bridge.OnTick(CurrentTime);
         }
     }
+
+    
 }

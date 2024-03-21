@@ -24,7 +24,7 @@ public class CraftingManager : MonoBehaviour
     [SerializeField] GameObject recipePrefab;
     [SerializeField] Transform recipeParent;
     
-    
+    private InventoryInteraction inventoryInteraction;
 
     public List<ItemTypeAndCount> items = new List<ItemTypeAndCount>();
 
@@ -38,8 +38,14 @@ public class CraftingManager : MonoBehaviour
             Debug.LogWarning("Found more than one Crafting Manager in the scene");
         }
         instance = this;
+        craftingCanvas.SetActive(false);
+        inventoryInteraction = new InventoryInteraction();
     }
 
+    private void Update() 
+    {
+    
+    }
     public static CraftingManager GetInstance()
     {
         return instance;
