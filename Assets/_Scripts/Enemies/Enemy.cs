@@ -75,23 +75,25 @@ public class Enemy : MonoBehaviour, ISubscriber
         float randomValue = Random.value;
         if (randomValue < commonItemProbability)
         {
-            if (commonItems != null)
-            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability)
-        {
-            if (uncommonItems != null)
-                Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
-        {
-            if (rareItems != null)
-                Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
-        }
-        else
-        {
-            if (legendaryItems != null)
-                Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
+            if (commonItems != null) 
+                { Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity); }
+            else if (randomValue < commonItemProbability + uncommonItemsProbability)
+            {
+                if (uncommonItems != null) 
+                { Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity); }
+
+            }
+            else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
+            {
+                if (rareItems != null) 
+                { Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity); }
+
+            }
+            else
+            {
+                if (legendaryItems != null) 
+                { Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity); }
+            }
         }
     }
 
@@ -107,6 +109,8 @@ public class Enemy : MonoBehaviour, ISubscriber
     {
         hp -= damage;
         if (hp <= 0)
+        {
             Die();
+        }
     }
 }
