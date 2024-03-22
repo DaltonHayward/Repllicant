@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 
@@ -9,12 +10,14 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private GameObject visualCue;
 
     [Header("Ink JSON")]
-    [SerializeField] private TextAsset inkJSON;
+    [SerializeField] public TextAsset inkJSON;
+
 
 
     private bool playerInRange;
 
     private PlayerController _playerController;
+
 
     private void Awake()
     {

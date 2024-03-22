@@ -36,7 +36,7 @@ public class DialogueManager : MonoBehaviour
 
     private InkExternalFunctions inkExternalFunctions;
 
-    //private DialogueVariables dialogueVariables;
+    private DialogueVariables dialogueVariables;
 
     private InventoryInteraction inventoryInteraction;
 
@@ -98,7 +98,7 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
       
-
+        //dialogueVariables.StartListening(currentStory);
         inkExternalFunctions.Bind(currentStory);
        
 
@@ -111,7 +111,8 @@ public class DialogueManager : MonoBehaviour
 
         StopCoroutine(displayLineCoroutine);
 
-        //inkExternalFunctions.Unbind(currentStory);
+        //dialogueVariables.StopListening(currentStory);
+        inkExternalFunctions.Unbind(currentStory);
 
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
@@ -237,5 +238,23 @@ public class DialogueManager : MonoBehaviour
         }
 
 
+    }
+
+    public Ink.Runtime.Object GetVariableState(string variableName) 
+    {
+        Ink.Runtime.Object variableValue = null;
+        dialogueVariables.variables.TryGetValue(variableName, out variableValue);
+        if (variableValue == null) 
+        {
+            Debug.LogWarning("Ink Variable was found to be null: " + variableName);
+        }
+        return variableValue;
+    }
+
+    // This method will get called anytime the application exits.
+    // Depending on your game, you may want to save variable state in other places.
+    public void OnApplicationQuit() 
+    {
+        dialogueVariables.SaveVariables();
     }
 }
