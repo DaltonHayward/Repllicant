@@ -7,6 +7,14 @@ public class Bullet : MonoBehaviour
     public Transform player;
     public float speed=1;
     public float attackDamage;
+    public float lifeTime = 15f;
+
+    public void Awake()
+    {
+        player = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        transform.LookAt(new Vector3(player.position.x, 1, player.position.z));
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -18,7 +26,14 @@ public class Bullet : MonoBehaviour
     }
     void Update()
     {
-        transform.LookAt(player);
-        transform.position = Vector3.MoveTowards(transform.position, player.position, speed);
+        if (lifeTime > 0)
+        {
+            transform.position += transform.forward * Time.deltaTime * speed;
+            lifeTime -= Time.deltaTime;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

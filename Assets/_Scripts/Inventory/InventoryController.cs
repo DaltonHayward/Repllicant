@@ -301,17 +301,19 @@ public class InventoryController : MonoBehaviour,IDataPersistance
     /// </summary>
     private void CreateRandomItem()
     {
+        if (items.Count > 0)
+        {
+            Inventory_Item newItem = Instantiate(ItemPrefab).GetComponent<Inventory_Item>();
 
-        Inventory_Item newItem = Instantiate(ItemPrefab).GetComponent<Inventory_Item>();
+            selectedItem = newItem;
 
-        selectedItem = newItem;
+            selectedItemTransform = newItem.GetComponent<RectTransform>();
+            selectedItemTransform.SetParent(canvasTransform);
+            selectedItemTransform.SetAsLastSibling();
 
-        selectedItemTransform = newItem.GetComponent<RectTransform>();
-        selectedItemTransform.SetParent(canvasTransform);
-        selectedItemTransform.SetAsLastSibling();
-
-        int selectedUID = Random.Range(0, items.Count);
-        newItem.Set(items[selectedUID]);
+            int selectedUID = Random.Range(0, items.Count);
+            newItem.Set(items[selectedUID]);
+        }
     }
 
 
