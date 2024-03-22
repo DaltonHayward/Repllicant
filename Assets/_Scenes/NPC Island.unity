@@ -613,15 +613,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 73481538429189391, guid: cf643c4cbe9020d429e82da13a7f47a4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.9754181
+      value: -2.316
       objectReference: {fileID: 0}
     - target: {fileID: 73481538429189391, guid: cf643c4cbe9020d429e82da13a7f47a4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.427986
+      value: 8.938
       objectReference: {fileID: 0}
     - target: {fileID: 73481538429189391, guid: cf643c4cbe9020d429e82da13a7f47a4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.587181
+      value: -12.859
       objectReference: {fileID: 0}
     - target: {fileID: 73481538429189391, guid: cf643c4cbe9020d429e82da13a7f47a4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -836,6 +836,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 588492368}
     m_Modifications:
+    - target: {fileID: 2325453498998391100, guid: 361502f79c55ed84b9d91a0c2eb6451e, type: 3}
+      propertyPath: inkJSON
+      value: 
+      objectReference: {fileID: 4900000, guid: 0d546e623ca80034eb2c30e0c79891aa, type: 3}
     - target: {fileID: 4865865482969410846, guid: 361502f79c55ed84b9d91a0c2eb6451e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.2
@@ -1065,7 +1069,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: O
+  m_text: Tab
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3798,7 +3802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4319289866275059925, guid: eb5ff714f1a94944096dc60ea1d9e53d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.864763
+      value: 9.233
       objectReference: {fileID: 0}
     - target: {fileID: 4319289866275059925, guid: eb5ff714f1a94944096dc60ea1d9e53d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5038,7 +5042,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: I
+  m_text: E
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5572,7 +5576,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Y
+  m_text: Q
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6279,7 +6283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: L
+  m_text: Shift
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6784,10 +6788,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 588492369}
     m_Modifications:
+    - target: {fileID: 507122009720521258, guid: 763840f17194f124bbaa1394dbbdef56, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1379041365482575652, guid: 763840f17194f124bbaa1394dbbdef56, type: 3}
       propertyPath: m_Name
       value: Aviator
       objectReference: {fileID: 0}
+    - target: {fileID: 1467097202482860610, guid: 763840f17194f124bbaa1394dbbdef56, type: 3}
+      propertyPath: inkJSON
+      value: 
+      objectReference: {fileID: 4900000, guid: 16cd724b3bdf7fd4e98173ab6fe25aaf, type: 3}
     - target: {fileID: 7712467548378027502, guid: 763840f17194f124bbaa1394dbbdef56, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.05
@@ -8078,7 +8090,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: U/H/J/K
+  m_text: W/A/S/D
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8480,7 +8492,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: G
+  m_text: F
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9630,7 +9642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 73481538429189391, guid: b15047b1e155eda4d89e70f14a033753, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.427987
+      value: 9.086
       objectReference: {fileID: 0}
     - target: {fileID: 73481538429189391, guid: b15047b1e155eda4d89e70f14a033753, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11267,6 +11279,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Technologist
       objectReference: {fileID: 0}
+    - target: {fileID: 4983215813699235414, guid: 1341e393156ef2e4e9f69694cafa3e0e, type: 3}
+      propertyPath: inkJSON
+      value: 
+      objectReference: {fileID: 4900000, guid: a14c010b4aa60bb4a8e6c44e3b1e6852, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
