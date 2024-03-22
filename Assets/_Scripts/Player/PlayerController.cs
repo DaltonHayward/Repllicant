@@ -793,6 +793,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 newTool = Instantiate(tool.itemData.equippedModel, weaponHolder);
                 newTool.GetComponent<EquippedTool>().SetInvTool(tool.GetComponent<InvTool>());
                 _tools[0] = newTool.GetComponent<EquippedTool>();
+                _currentEquipment = Equipment.WEAPON;
 
                 break;
 
@@ -806,6 +807,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 newTool = Instantiate(tool.itemData.equippedModel, pickaxeHolder);
                 newTool.GetComponent<EquippedTool>().SetInvTool(tool.GetComponent<InvTool>());
                 _tools[1] = newTool.GetComponent<EquippedTool>();
+                _currentEquipment = Equipment.PICKAXE;
 
                 break;
 
@@ -819,6 +821,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 newTool = Instantiate(tool.itemData.equippedModel, axeHolder);
                 newTool.GetComponent<EquippedTool>().SetInvTool(tool.GetComponent<InvTool>());
                 _tools[2] = newTool.GetComponent<EquippedTool>();
+                _currentEquipment= Equipment.AXE;
+
                 break;
         }
     }
