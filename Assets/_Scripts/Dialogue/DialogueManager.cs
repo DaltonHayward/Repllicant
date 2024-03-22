@@ -117,6 +117,11 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+
+        if (GameObject.FindWithTag("Player").GetComponent<PlayerController>()._playerState == PlayerController.State.DIALOG)
+        {
+            GameObject.FindWithTag("Player").GetComponent<PlayerController>().SetState(PlayerController.State.STANDING);
+        }
     }
 
     private void ContinueStory()

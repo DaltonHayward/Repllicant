@@ -24,7 +24,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         // put player in front of tutorial dalton
         else 
         { 
-            GameObject.FindWithTag("Player").transform.position = new Vector3(171.479996f, 0, -103.010002f); 
+            //GameObject.FindWithTag("Player").transform.position = new Vector3(186.630005f, 0, -103.230003f); 
             tutorialDalton.SetActive(true);
         }
         if (daltonNPC) { tutorialObjects.SetActive(false); }

@@ -1021,11 +1021,11 @@ MonoBehaviour:
   _UICanvasGroups:
   - {fileID: 1993096289}
   - {fileID: 1759549318}
-  - {fileID: 0}
+  - {fileID: 524524615}
   - {fileID: 1055510575}
   fadeDuration: 0.25
   waitBetweenFadeTime: 0.1
-  _FadeCanvasGroup: {fileID: 0}
+  _FadeCanvasGroup: {fileID: 524524615}
 --- !u!114 &1179445495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1038,7 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611da6e2960b36f44a9c92c988674548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profileObject: {fileID: 0}
+  profileObject: {fileID: 11400000, guid: 82dc5680f696ed741a51a17c599747d8, type: 2}
   profileSaveName: Replicant_ProfileData
 --- !u!4 &1179445496
 Transform:
@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasManager: {fileID: 1179445494}
-  gameSceneName: T - Parker
+  gameSceneName: NPC Island
   _profileManager: {fileID: 1179445495}
 --- !u!1 &1189929639
 GameObject:
@@ -2211,9 +2211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6f05c84d7d76941a4e67961358d54a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvasManager: {fileID: 0}
+  _canvasManager: {fileID: 1179445494}
   gameSceneName: 
-  _profileManager: {fileID: 0}
+  _profileManager: {fileID: 1179445495}
 --- !u!114 &1993096286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2301,7 +2301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611da6e2960b36f44a9c92c988674548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profileObject: {fileID: 0}
+  profileObject: {fileID: 11400000, guid: 82dc5680f696ed741a51a17c599747d8, type: 2}
   profileSaveName: Replicant_ProfileData
 --- !u!1 &2009080782
 GameObject:

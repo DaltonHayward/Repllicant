@@ -33,6 +33,7 @@ public class DialogueTrigger : MonoBehaviour
             if (InputManager.instance.InteractInput)
             {
                 _playerController.SetState(PlayerController.State.DIALOG);
+                StartCoroutine(_playerController.SlowDown());
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
             }
         }
