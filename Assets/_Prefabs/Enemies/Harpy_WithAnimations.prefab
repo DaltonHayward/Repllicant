@@ -875,13 +875,16 @@ MonoBehaviour:
   lastSkillTime: 0
   player: {fileID: 0}
   navMeshAgent: {fileID: 0}
-  commonItems: []
-  uncommonItems: []
-  rareItems: []
+  commonItems:
+  - {fileID: 8760400047210153315, guid: eba719d5ad4c96545854a8ce38a9de71, type: 3}
+  uncommonItems:
+  - {fileID: 8760400047210153315, guid: d71c1f45bd726a04c82e9156c05e87cf, type: 3}
+  rareItems:
+  - {fileID: 8760400047210153315, guid: 62eb1f1652f95bf4c8ccd5eea60e5a67, type: 3}
   legendaryItems: []
-  commonItemProbability: 0
-  uncommonItemsProbability: 0
-  rareItemsProbability: 0
+  commonItemProbability: 70
+  uncommonItemsProbability: 25
+  rareItemsProbability: 5
   legendaryItemsProbability: 0
   strokeBackDistance: 0
   WaveAttack: 0
