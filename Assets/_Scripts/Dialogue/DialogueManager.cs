@@ -260,6 +260,6 @@ public class DialogueManager : MonoBehaviour
     // Depending on your game, you may want to save variable state in other places.
     public void OnApplicationQuit() 
     {
-        dialogueVariables.SaveVariables();
+        //dialogueVariables.SaveVariables();
     }
 }
