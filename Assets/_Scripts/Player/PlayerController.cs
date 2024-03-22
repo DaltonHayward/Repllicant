@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
-using static UnityEditor.FilePathAttribute;
+//using static UnityEditor.FilePathAttribute;
 using FMOD.Studio;
 
 public class PlayerController : MonoBehaviour, ISubscriber
