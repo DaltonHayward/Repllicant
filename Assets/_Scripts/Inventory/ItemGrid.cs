@@ -22,7 +22,6 @@ public class ItemGrid : MonoBehaviour
 
     private List<Inventory_Item> singleInstances = new List<Inventory_Item>();
     public bool isInventory;
-
     /// <summary>
     /// Grabs the component of the current item, and initializes the inventory grid.
     /// </summary>
@@ -386,28 +385,34 @@ public class ItemGrid : MonoBehaviour
         }
     }
 
-    public List<(string,int,int,bool)> getAllItems(){
-        List<(string,int,int,bool)> items = new List<(string, int, int,bool)>();
+    public List<(string,int,int,bool,bool)> getAllItems(){
+        List<(string,int,int,bool,bool)> items = new List<(string, int, int,bool,bool)>();
         foreach (Inventory_Item item in singleInstances)
         {
             if (item != null)
             {
-                items.Add((item.itemName, item.OnGridPositionX, item.OnGridPositionY,item.rotated));
+                items.Add((item.itemName, item.OnGridPositionX, item.OnGridPositionY,item.rotated,item.isEquipped));
             }
         }
         
         return items;
     }
 
-    public void LoadnewItem(ItemData loadedItem, int x, int y,bool rotated){
+    public void LoadnewItem(ItemData loadedItem, int x, int y,bool rotated,bool equipped){
         GameObject newItem = Instantiate(itemPrefab, this.transform);
         Inventory_Item item = newItem.GetComponent<Inventory_Item>();
         if (rotated)
         {
             item.Rotate();
         }
+
         item.Set(loadedItem);
         UnityEngine.Debug.Log(item);
+        if( equipped){
+            item.isEquipped = true;
+            InventoryController.instance.EquipTool(item);
+        }
+        item.isEquipped = equipped;
         putItemInInventory(item, x, y);
 
     }

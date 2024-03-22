@@ -21,6 +21,7 @@ public class GameData
     public List<int> InvItems_xCord;
     public List<int> InvItems_yCord;
     public List<bool> InvItems_Rotated;
+    public List<bool> InvItems_Equipped;
     public List<string> StashItems_Names;
     public List<int> StashItems_xCord;
     public List<int> StashItems_yCord;
@@ -40,10 +41,13 @@ public class GameData
         this.avNPC = false;
         this.scientistNPC = false;
         this.sirenDefeated = false;
+        
         this.InvItems_Names = new List<string>();
         this.InvItems_xCord = new List<int>();
         this.InvItems_yCord = new List<int>();
         this.InvItems_Rotated = new List<bool>();
+        this.InvItems_Equipped = new List<bool>();
+
         this.StashItems_Names = new List<string>();
         this.StashItems_xCord = new List<int>();
         this.StashItems_yCord = new List<int>();

@@ -546,23 +546,24 @@ public class InventoryController : MonoBehaviour,IDataPersistance
         for (int i = 0; i < gameData.InvItems_Names.Count; i++)
         {
             ItemData itemData = itemDataDictionary[gameData.InvItems_Names[i]];
-            Debug.Log("Loading in Inventory: " + itemData.Name + " at " + gameData.InvItems_xCord[i] + " " + gameData.InvItems_yCord[i]);
+            Debug.Log("Loading in Inventory: " + itemData.Name + " at " + gameData.InvItems_xCord[i] + " " + gameData.InvItems_yCord[i]+ " " + gameData.InvItems_Rotated[i] + " " + gameData.InvItems_Equipped[i]);
 
-            playerInventory.LoadnewItem(itemData, gameData.InvItems_xCord[i], gameData.InvItems_yCord[i], gameData.InvItems_Rotated[i]);
+            playerInventory.LoadnewItem(itemData, gameData.InvItems_xCord[i], gameData.InvItems_yCord[i], gameData.InvItems_Rotated[i],gameData.InvItems_Equipped[i]);
            
         }
-        gameData.InvItems_Names.Clear();
-        gameData.InvItems_xCord.Clear();
-        gameData.InvItems_yCord.Clear();
-        gameData.InvItems_Rotated.Clear();
+        // gameData.InvItems_Names.Clear();
+        // gameData.InvItems_xCord.Clear();
+        // gameData.InvItems_yCord.Clear();
+        // gameData.InvItems_Rotated.Clear();
+        // gameData.InvItems_Equipped.Clear();
 
         if (StashGrid){
             for (int i = 0; i < gameData.StashItems_Names.Count; i++)
             {
                 ItemData itemData = itemDataDictionary[gameData.StashItems_Names[i]];
-                Debug.Log("Loading in Stash: " + itemData.Name + " at " + gameData.StashItems_xCord[i] + " " + gameData.StashItems_yCord[i]);
+                // Debug.Log("Loading in Stash: " + itemData.Name + " at " + gameData.StashItems_xCord[i] + " " + gameData.StashItems_yCord[i]);
 
-                StashGrid.LoadnewItem(itemData, gameData.StashItems_xCord[i], gameData.StashItems_yCord[i],gameData.StashItems_Rotated[i]);
+                StashGrid.LoadnewItem(itemData, gameData.StashItems_xCord[i], gameData.StashItems_yCord[i],gameData.StashItems_Rotated[i],false);
             
             }
             gameData.StashItems_Names.Clear();
@@ -576,31 +577,34 @@ public class InventoryController : MonoBehaviour,IDataPersistance
     public void SaveData(ref GameData gameData)
     {
 
-        List<(string, int, int,bool)> invItems = playerInventory.getAllItems();
+        List<(string, int, int,bool,bool)> invItems = playerInventory.getAllItems();
         List<string> Names= new List<string>();
         List<int> xCord= new List<int>();
         List<int> yCord= new List<int>();
-        List<bool> rotated= new List<bool>();   
-        foreach ((string, int, int, bool) item in invItems)
+        List<bool> rotated= new List<bool>();
+        List<bool> equipped= new List<bool>();   
+        foreach ((string, int, int, bool,bool) item in invItems)
         {
             Names.Add(item.Item1);
             xCord.Add(item.Item2);
             yCord.Add(item.Item3);
             rotated.Add(item.Item4);
+            equipped.Add(item.Item5);
 
         } 
         gameData.InvItems_Names = Names;
         gameData.InvItems_xCord = xCord;
         gameData.InvItems_yCord = yCord;
         gameData.InvItems_Rotated = rotated;
+        gameData.InvItems_Equipped = equipped;
 
         if (StashGrid){
-            List<(string, int, int,bool)> stashItems = StashGrid.getAllItems();
+            List<(string, int, int,bool,bool)> stashItems = StashGrid.getAllItems();
             List<string> stashNames= new List<string>();
             List<int> stashxCord= new List<int>();
             List<int> stashyCord= new List<int>();
             List<bool> stashRotated= new List<bool>();
-            foreach ((string, int, int, bool) item in stashItems)
+            foreach ((string, int, int, bool,bool) item in stashItems)
             {
                 stashNames.Add(item.Item1);
                 stashxCord.Add(item.Item2);
@@ -618,6 +622,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
         // gameData.InvItems_xCord = new List<int>();
         // gameData.InvItems_yCord = new List<int>();
         // gameData.InvItems_Rotated = new List<bool>();
+        // gameData.InvItems_Equipped = new List<bool>();
         // gameData.StashItems_Names = new List<string>();
         // gameData.StashItems_xCord = new List<int>();
         // gameData.StashItems_yCord = new List<int>();
