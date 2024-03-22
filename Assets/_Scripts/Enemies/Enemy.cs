@@ -73,35 +73,29 @@ public class Enemy : MonoBehaviour, ISubscriber
     private void RollLoot()
     {
         float randomValue = Random.value;
-        if (randomValue < commonItemProbability)
+        if (randomValue < commonItemProbability && commonItems.Count > 0)
         {
-            if (commonItems != null) 
-                { Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity); }
-            else if (randomValue < commonItemProbability + uncommonItemsProbability)
-            {
-                if (uncommonItems != null) 
-                { Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity); }
-
-            }
-            else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
-            {
-                if (rareItems != null) 
-                { Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity); }
-
-            }
-            else
-            {
-                if (legendaryItems != null) 
-                { Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity); }
-            }
+            Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemsProbability && uncommonItems.Count > 0)
+        {
+            Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability && rareItems.Count > 0)
+        {
+            Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
+        }
+        else if (legendaryItems.Count > 0)
+        {
+            Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
         }
     }
 
     // on death
     public virtual void Die()
     {
-        Destroy(gameObject);
         RollLoot();
+        Destroy(gameObject);
     }
 
     // handles damage taken

@@ -177,21 +177,11 @@ public class PlayerController : MonoBehaviour, ISubscriber
         switch (_playerState)
         {
             case State.STANDING:
-                HandleMovement();
-                HandleInteract();
-                HandleDodge();
-                HandleClick();
-                RotateCamera();
-                ToggleInventory();
-                HandleEquipedItemChange();
-                HandleMenuPress();
-                break;
-
             case State.MOVING:
                 HandleMovement();
                 HandleInteract();
-                HandleClick();
                 HandleDodge();
+                HandleClick();
                 RotateCamera();
                 ToggleInventory();
                 HandleEquipedItemChange();
@@ -227,18 +217,10 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 break;
 
             case State.DIALOG:
-                HandleMenuPress();
-                break;
-
             case State.CRAFTING:
-                HandleMenuPress();
-                break;
-
             case State.PAUSED:
                 HandleMenuPress();
                 break;
-
-            
 
         }
         ExitAttack();
@@ -699,7 +681,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         }
     }
 
-    IEnumerator SlowDown()
+    public IEnumerator SlowDown()
     {
         float elapsedTime = 0f;
         float ratio = elapsedTime / 0.2f;
@@ -707,8 +689,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
         while (_animator.GetFloat(_animIDSpeed) > 0.01f)
         {
             _animator.SetFloat(_animIDSpeed, Mathf.Lerp(_animator.GetFloat(_animIDSpeed), 0, ratio));
-            elapsedTime += Time.deltaTime;
-            ratio = elapsedTime / _dodgeDuration;
+            elapsedTime += Time.unscaledDeltaTime;
+            ratio = elapsedTime / 0.2f;
 
             yield return null;
         }
@@ -932,8 +914,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
                     break;
 
                 case State.DIALOG:
+                    // sets player state to standing in coroutine
                     StartCoroutine(DialogueManager.instance.ExitDialogueMode());
-                    _playerState = State.STANDING;
                     break;
 
                 case State.CRAFTING:
