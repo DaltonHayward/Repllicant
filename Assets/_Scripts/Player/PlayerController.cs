@@ -6,7 +6,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
-using static UnityEditor.FilePathAttribute;
+//using static UnityEditor.FilePathAttribute;
+using FMOD.Studio;
 
 public class PlayerController : MonoBehaviour, ISubscriber
 
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     // Coupled EffectableObject script here so that effects can be applied to the player
     protected EffectableObject Effectable;
 
+    private EventInstance FootstepsGrass;
     private Transform _playerCamera;
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
@@ -159,6 +161,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     public void Start()
     {
+        FootstepsGrass = AudioManager.instance.CreateInstance(FMODEvents.instance.footStepsGrass);
         // initalize tools
         _tools[0] = ToolHolder.GetChild(0).GetComponentInChildren<EquippedTool>();
         _tools[1] = ToolHolder.GetChild(1).GetComponentInChildren<EquippedTool>();
@@ -793,6 +796,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 newTool = Instantiate(tool.itemData.equippedModel, weaponHolder);
                 newTool.GetComponent<EquippedTool>().SetInvTool(tool.GetComponent<InvTool>());
                 _tools[0] = newTool.GetComponent<EquippedTool>();
+                _currentEquipment = Equipment.WEAPON;
 
                 break;
 
@@ -806,6 +810,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 newTool = Instantiate(tool.itemData.equippedModel, pickaxeHolder);
                 newTool.GetComponent<EquippedTool>().SetInvTool(tool.GetComponent<InvTool>());
                 _tools[1] = newTool.GetComponent<EquippedTool>();
+                _currentEquipment = Equipment.PICKAXE;
 
                 break;
 
@@ -819,6 +824,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
                 newTool = Instantiate(tool.itemData.equippedModel, axeHolder);
                 newTool.GetComponent<EquippedTool>().SetInvTool(tool.GetComponent<InvTool>());
                 _tools[2] = newTool.GetComponent<EquippedTool>();
+                _currentEquipment= Equipment.AXE;
+
                 break;
         }
     }
@@ -971,4 +978,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
         meshRenderer.materials[0].SetColor("_BaseColor", _originalMaterialColor);
     }
     #endregion
+
+    private void UpdateSound()
+    {
+
+    }
 }

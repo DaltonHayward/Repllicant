@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public bool isPaused;
+    public bool isPaused = false;
 
 
     // Start is called before the first frame update

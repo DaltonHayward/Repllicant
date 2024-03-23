@@ -5123,7 +5123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &475560206
 Transform:
   m_ObjectHideFlags: 0
@@ -6896,29 +6896,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StashGrid: {fileID: 0}
   Player: {fileID: 0}
-  items:
-  - {fileID: 11400000, guid: ca2687dc6feef476ea736374d8ca0ba2, type: 2}
-  - {fileID: 11400000, guid: 4b8470ef1c6b744958daff1b7124e389, type: 2}
-  - {fileID: 11400000, guid: ef9d005d3a2a30947b1af5cd5453ee09, type: 2}
-  - {fileID: 11400000, guid: 372047b134410c54b9f4bdefd0c05555, type: 2}
-  - {fileID: 11400000, guid: 2fdd6c3225f07064eb9d0123f6547714, type: 2}
-  - {fileID: 11400000, guid: 9eae59cf6cda7ea408c2af037d694aa5, type: 2}
+  items: []
   ItemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 1536120486}
   staticPlayerInventory: {fileID: 1536120487}
   itemDataEntries:
-  - Name: Stone
-    itemData: {fileID: 11400000, guid: 9eae59cf6cda7ea408c2af037d694aa5, type: 2}
   - Name: Sword
     itemData: {fileID: 11400000, guid: ca2687dc6feef476ea736374d8ca0ba2, type: 2}
+  - Name: Pickaxe
+    itemData: {fileID: 11400000, guid: 2fdd6c3225f07064eb9d0123f6547714, type: 2}
+  - Name: Axe
+    itemData: {fileID: 11400000, guid: 372047b134410c54b9f4bdefd0c05555, type: 2}
   - Name: Torch
     itemData: {fileID: 11400000, guid: 4b8470ef1c6b744958daff1b7124e389, type: 2}
   - Name: Wood
     itemData: {fileID: 11400000, guid: ef9d005d3a2a30947b1af5cd5453ee09, type: 2}
-  - Name: Axe
-    itemData: {fileID: 11400000, guid: 372047b134410c54b9f4bdefd0c05555, type: 2}
-  - Name: Pickaxe
-    itemData: {fileID: 11400000, guid: 2fdd6c3225f07064eb9d0123f6547714, type: 2}
+  - Name: Stone
+    itemData: {fileID: 11400000, guid: 9eae59cf6cda7ea408c2af037d694aa5, type: 2}
+  - Name: Potion
+    itemData: {fileID: 11400000, guid: a632ac994e252b3499b79e880a6e307f, type: 2}
+  - Name: SyntheticPlumCore
+    itemData: {fileID: 11400000, guid: 83d8fbb2eb67ce44c9956167984a4187, type: 2}
+  - Name: AethericCircuitFragment
+    itemData: {fileID: 11400000, guid: 4649f600f93f7454d8a53dd99fc4573d, type: 2}
+  - Name: IonizedEtherCrystal
+    itemData: {fileID: 11400000, guid: ae854280c5f25234189dc3de95bfc5bf, type: 2}
+  - Name: String
+    itemData: {fileID: 11400000, guid: eaa186ce844af774dafa739519d5c894, type: 2}
+  - Name: MedusaEyes
+    itemData: {fileID: 11400000, guid: 50db7b456151ba642a401b874b3fa4ef, type: 2}
+  - Name: Feathers
+    itemData: {fileID: 11400000, guid: 543c3beef1c3bc947adccd0cca9d8d56, type: 2}
+  - Name: MinotaurHorn
+    itemData: {fileID: 11400000, guid: 7fec939e83c7ed24fa11fbab3e629312, type: 2}
+  - Name: SirenHair
+    itemData: {fileID: 11400000, guid: 9828d20ef92b28f45abdd028a1f862dd, type: 2}
   _timeBetweenEffectApplication: 3
   DropdownHovered: 0
 --- !u!114 &698185910
@@ -8950,7 +8962,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7232743858075456561, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -28.6
+      value: -20.2
       objectReference: {fileID: 0}
     - target: {fileID: 7232743858075456561, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9738,6 +9750,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 475560206}
     m_Modifications:
+    - target: {fileID: 882238559463603865, guid: 0bc054563f1d0d54eb2cf04fcb235303, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 882238559463603865, guid: 0bc054563f1d0d54eb2cf04fcb235303, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1048424142703815308, guid: 0bc054563f1d0d54eb2cf04fcb235303, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -9821,6 +9841,10 @@ PrefabInstance:
     - target: {fileID: 2778890252518865678, guid: 0bc054563f1d0d54eb2cf04fcb235303, type: 3}
       propertyPath: m_Name
       value: Dropdown Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318674845104690058, guid: 0bc054563f1d0d54eb2cf04fcb235303, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10142,15 +10166,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2656424221544252955, guid: 285595376e1cc49168df0352b6cdce49, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2656424221544252955, guid: 285595376e1cc49168df0352b6cdce49, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2656424221544252955, guid: 285595376e1cc49168df0352b6cdce49, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2656424221544252955, guid: 285595376e1cc49168df0352b6cdce49, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -10208,7 +10232,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7232743858075456561, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18
+      value: 9.9
       objectReference: {fileID: 0}
     - target: {fileID: 7232743858075456561, guid: da42bec0b438dc84faefddf295b452a2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10332,6 +10356,10 @@ PrefabInstance:
       propertyPath: InitialModule.startSize.scalar
       value: 70
       objectReference: {fileID: 0}
+    - target: {fileID: 2952618090573486407, guid: 48aa99f49632e114b9c9f0c0b6ba1ead, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.50980395
+      objectReference: {fileID: 0}
     - target: {fileID: 3371012250585660291, guid: 48aa99f49632e114b9c9f0c0b6ba1ead, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.4
@@ -10393,7 +10421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3d759cfe50085947ab7a3a1f835e615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 0
+  scene: 2
 --- !u!1001 &1208538209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12891,7 +12919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac71fd1417621742978ff043f1fda66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: testData0000.game
+  fileName: testbuild.game
   gameData:
     testInt: 0
     testBool: 0
@@ -13848,7 +13876,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1857420591
 Transform:
   m_ObjectHideFlags: 0

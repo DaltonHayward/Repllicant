@@ -1,4 +1,4 @@
-EXTERNAL craftingMenu()
+EXTERNAL ItemCountCheck()
 -> main
 
 === main ===
@@ -7,7 +7,7 @@ This is a test of my crafting function.
 Do you want to craft?
 + [Yes]
     Let's craft!
-    ~ craftingMenu()
+    ~ ItemCountCheck()
     Here's an extra comment!
     -> END
 + [No]

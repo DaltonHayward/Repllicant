@@ -31,25 +31,30 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
         {
             Debug.LogError("Found more than one Audio Manager in the scene.");
+            Destroy(this);
         }
-        instance = this;
 
         eventInstances = new List<EventInstance>();
         eventEmitters = new List<StudioEventEmitter>();
-
+        
         masterBus = RuntimeManager.GetBus("bus:/");
         musicBus = RuntimeManager.GetBus("bus:/Music");
         ambienceBus = RuntimeManager.GetBus("bus:/Ambience");
         sfxBus = RuntimeManager.GetBus("bus:/SFX");
+        
     }
 
     private void Start()
     {
         //InitializeAmbience(FMODEvents.instance.ambience);
-        InitializeMusic(FMODEvents.instance.music);
+        InitializeMusic(FMODEvents.instance.betaMusic);
     }
 
     private void Update()

@@ -154,15 +154,19 @@ MonoBehaviour:
   speed: 0.5
   attractionForce: 0
   _songRange: 20
-  commonItems: []
+  commonItems:
+  - {fileID: 919132149155446097, guid: 9e0930949890d3048ae8c35d03eb815d, type: 3}
   uncommonItems: []
   rareItems: []
   legendaryItems: []
-  commonItemProbability: 0
+  commonItemProbability: 100
   uncommonItemsProbability: 0
   rareItemsProbability: 0
   legendaryItemsProbability: 0
   player: {fileID: 0}
+  timeManager: {fileID: 0}
+  isBoss: 0
+  killProg: {fileID: 0}
 --- !u!54 &7619463547273630945
 Rigidbody:
   m_ObjectHideFlags: 0
