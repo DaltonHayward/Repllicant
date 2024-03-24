@@ -2918,6 +2918,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 842f79b1f8593984b9085295f26a8268, type: 3}
+--- !u!4 &684503865 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2391198309773345407, guid: 886ef34fed8245443bac786e7e630d01, type: 3}
+  m_PrefabInstance: {fileID: 948479172}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &686837074
 GameObject:
   m_ObjectHideFlags: 0
@@ -4669,11 +4674,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 886ef34fed8245443bac786e7e630d01, type: 3}
---- !u!4 &948479173 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 775202342866762387, guid: 886ef34fed8245443bac786e7e630d01, type: 3}
-  m_PrefabInstance: {fileID: 948479172}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &951097216
 GameObject:
   m_ObjectHideFlags: 0
@@ -6394,7 +6394,7 @@ Transform:
   - {fileID: 96951399}
   - {fileID: 1798725008}
   - {fileID: 1054622183}
-  - {fileID: 948479173}
+  - {fileID: 684503865}
   - {fileID: 1426796803}
   - {fileID: 426268537}
   - {fileID: 1894053950}
@@ -10557,6 +10557,7 @@ MonoBehaviour:
     InvItems_xCord: 
     InvItems_yCord: 
     InvItems_Rotated: 
+    InvItems_Equipped: 
     StashItems_Names: []
     StashItems_xCord: 
     StashItems_yCord: 
@@ -13449,10 +13450,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6760304967453545177}
   - component: {fileID: 6760304967453545182}
-  - component: {fileID: 6760304967453545183}
   - component: {fileID: 6633476301351071425}
   - component: {fileID: 443654544965878249}
   - component: {fileID: 6760304967453545184}
+  - component: {fileID: 6760304967453545185}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -13511,14 +13512,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &6760304967453545183
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6760304967453545180}
-  m_Enabled: 1
 --- !u!114 &6760304967453545184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13533,6 +13526,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Mode: 0
   PixelSize: 0.032
+--- !u!114 &6760304967453545185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6760304967453545180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1001 &6965208569997303269
 PrefabInstance:
   m_ObjectHideFlags: 0
