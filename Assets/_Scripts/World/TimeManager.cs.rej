@@ -1,0 +1,10 @@
+diff a/Assets/_Scripts/World/TimeManager.cs b/Assets/_Scripts/World/TimeManager.cs	(rejected hunks)
+@@ -3,7 +3,7 @@
+ using System.Collections.Generic;
+ using UnityEngine;
+ 
+-public class TimeManager : MonoBehaviour
++public class TimeManager : MonoBehaviour, IDataPersistance
+ {
+     // serialized fields for easier editing via inspector
+     [Tooltip("Length of a day in hours")]

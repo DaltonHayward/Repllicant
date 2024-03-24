@@ -26,7 +26,6 @@ public class GameData
     public List<int> StashItems_xCord;
     public List<int> StashItems_yCord;
     public List<bool> StashItems_Rotated;
-    public float time; 
 
 
     // the values defined in this constructor will be the default values when no data to load
