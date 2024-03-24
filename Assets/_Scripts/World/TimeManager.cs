@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeManager : MonoBehaviour, IDataPersistance
+public class TimeManager : MonoBehaviour //IDataPersistance
 {
     // serialized fields for easier editing via inspector
     [Tooltip("Length of a day in hours")]
@@ -64,7 +64,7 @@ public class TimeManager : MonoBehaviour, IDataPersistance
             bridge.OnTick(CurrentTime);
         }
     }
-
+/*
     public void LoadData(GameData gameData)
     {
         CurrentTime = gameData.time;
@@ -74,4 +74,5 @@ public class TimeManager : MonoBehaviour, IDataPersistance
     {
         gameData.time = CurrentTime;
     }
+    */
 }
