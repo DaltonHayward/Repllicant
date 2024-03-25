@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
-
+using Unity.VisualScripting;
 using UnityEngine;
-
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+
+
 
 
 
@@ -17,12 +20,17 @@ public class CraftingManager : MonoBehaviour
 
     [Header("Crafting UI")]
     [SerializeField] public GameObject craftingCanvas;
-    [SerializeField] UnityEngine.UI.Button craftingButton;
+    [SerializeField] public UnityEngine.UI.Button craftingButton;
 
     [Header("Recipes")]
     [SerializeField] BaseItemRecipe[] recipes;
-    [SerializeField] GameObject recipePrefab;
-    //[SerializeField] Transform recipeParent;
+    [SerializeField] GameObject craftableItem;
+    [SerializeField] Transform contentParent;
+
+    [SerializeField] public Transform recipeParent;
+
+    [SerializeField] public GameObject recipePanel;
+
 
     public InventoryInteraction inventoryInteraction;
 
@@ -42,7 +50,13 @@ public class CraftingManager : MonoBehaviour
             Destroy(this);
         }
         craftingCanvas.SetActive(false);
+        recipePanel.SetActive(false);
         inventoryInteraction = GetComponent<InventoryInteraction>();
+    }
+
+    private void OnEnable()
+    {
+        UpdateCraftingUI();
     }
 
 
@@ -55,27 +69,31 @@ public class CraftingManager : MonoBehaviour
 
     public void ExitCraftingMode()
     {
-        //craftingCanvas.SetActive(false);
+        craftingCanvas.SetActive(false);
         isCraftingOpened = false;
     }
 
 
 
 
-    /* private void UpdateCraftingUI()
-     {
-         foreach (Transform child in recipeParent)
-         {
-             Destroy(child.gameObject);
-         }
+    private void UpdateCraftingUI()
+    {
+        foreach (Transform child in contentParent)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        for (int i = 0; i < recipes.Length; i++)
+        {
+            GameObject newCraftable = Instantiate(craftableItem, contentParent);
+            newCraftable.name = recipes[i].name;
+            newCraftable.GetComponent<ItemRecipe>().itemRecipe = recipes[i];
+            newCraftable.GetComponent<UnityEngine.UI.Image>().sprite = recipes[i].output.sprites[0].sprite;
+            newCraftable.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
+        }
+    }
 
-         for (int i = 0; i < recipes.Length; i++)
-         {
-             GameObject newRecipe = Instantiate(recipePrefab, recipeParent);
-         }
-     }*/
 
-    
 
 
 

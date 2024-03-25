@@ -33,4 +33,9 @@ public class BaseEffect : ScriptableObject
     {
         return originalMovementSpeed;
     }
+
+    public virtual float Effect_PlayerHealth(float originalCurrentHealth)
+    {
+        return originalCurrentHealth;
+    }
 }

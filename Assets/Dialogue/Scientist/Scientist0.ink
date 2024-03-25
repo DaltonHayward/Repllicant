@@ -1,4 +1,4 @@
-﻿-> main
+-> main
 
 ===main===
 Oh, you're here! And awake! I narrowly escaped a monster back there.

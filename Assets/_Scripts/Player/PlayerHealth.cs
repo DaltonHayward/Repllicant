@@ -15,18 +15,27 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
     public GameObject slider;
     public GameObject deathScreen;
 
+    // Coupled EffectableObject script here so that effects can be applied to the player health
+    protected EffectableObject Effectable;
+
     void Start()
     {
         StartCoroutine(RefreshHPBar(2));
         isDead = false;
     }
 
+    private void Awake() 
+    {
+        // retrieve effects
+        Effectable = GetComponent<EffectableObject>();
+    }
     public void Update()
     {
         if (_invincibleDuration > 0)
         {
             _invincibleDuration -= Time.deltaTime;
         }
+        currentHealth = Effectable.Effect_PlayerHealth(currentHealth);
     }
 
     public void TakeDamage(float damage)

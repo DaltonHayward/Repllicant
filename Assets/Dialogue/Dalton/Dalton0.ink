@@ -1,4 +1,4 @@
-﻿-> main
+-> main
 
 ===main===
 Howdy partner, what can I do for you?

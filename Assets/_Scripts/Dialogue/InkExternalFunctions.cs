@@ -7,17 +7,22 @@ using System.Runtime.CompilerServices;
 
 public class InkExternalFunctions
 {
-    //private InventoryInteraction inventoryInteraction;
     public void Bind(Story story)
     {
-        story.BindExternalFunction("craftingMenu", () => CraftingManager.instance.inventoryInteraction.OpenCrafting());
+        story.BindExternalFunction("OpenCrafting", () => OpenCrafting());
         //BindExternalFunction(string funcName, Func<object> func, bool lookaheadSafe=false)
+        // story.BindExternalFunction("OpenCrafting", () => CraftingManager.instance.inventoryInteraction.OpenCrafting());
     }
 
 
     public void Unbind(Story story)
     {
-        story.UnbindExternalFunction("craftingMenu");
+        story.UnbindExternalFunction("OpenCrafting");
+    }
+
+    public void OpenCrafting()
+    {
+        CraftingManager.instance.inventoryInteraction.OpenCrafting();
     }
 
     

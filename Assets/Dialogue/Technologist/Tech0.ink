@@ -1,4 +1,4 @@
-﻿->main
+->main
 
 ===main===
 It looks like you hit your head pretty bad, you look like you don't even remember me.

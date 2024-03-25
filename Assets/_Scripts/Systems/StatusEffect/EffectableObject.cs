@@ -55,4 +55,20 @@ public class EffectableObject : MonoBehaviour
         }
         return workingMovementSpeed;
     }
+
+    public float Effect_PlayerHealth(float originalCurrentHealth)
+    {
+        float workingCurrentHealth = originalCurrentHealth;
+        // apply any active effects
+        for (int index = 0; index < ActiveEffects.Count; ++index)
+        {
+            if (!ActiveEffects[index].IsActive)
+            {
+                continue;
+            }
+            workingCurrentHealth = ActiveEffects[index].Effect_PlayerHealth(workingCurrentHealth);
+        }
+
+        return workingCurrentHealth;
+    }
 }
