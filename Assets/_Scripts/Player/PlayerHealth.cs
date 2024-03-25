@@ -20,7 +20,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
 
     void Start()
     {
-        StartCoroutine(RefreshHPBar(2));
+        StartCoroutine(RefreshHPBar(0.5f));
         isDead = false;
     }
 
