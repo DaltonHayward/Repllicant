@@ -1,4 +1,5 @@
 ﻿using ReplicantPackage;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +36,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         {
             _invincibleDuration -= Time.deltaTime;
         }
-        currentHealth = Effectable.Effect_PlayerHealth(currentHealth);
+        currentHealth = Mathf.RoundToInt(Effectable.Effect_PlayerHealth(currentHealth));
     }
 
     public void TakeDamage(float damage)

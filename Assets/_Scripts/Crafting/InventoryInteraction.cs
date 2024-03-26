@@ -96,6 +96,7 @@ public class InventoryInteraction : MonoBehaviour
             int removalCount = item.count;
             foreach (Inventory_Item invItem in itemsInInventory.invItemSlots)
             {
+                Debug.Log(invItem.itemData.Name);
                 if (invItem.itemData.Name == item.name && removalCount > 0)
                 {
                     InventoryController.playerInventory.RemoveItem(invItem);
