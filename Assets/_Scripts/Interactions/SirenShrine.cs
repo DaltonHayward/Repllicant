@@ -15,6 +15,8 @@ public class SirenShrine : MonoBehaviour
 
     private void SceneChange(int scene)
     {
+        UIManager.instance.loadingScreen.gameObject.SetActive(true);
+        UIManager.instance.loadingScreen.alpha = 1f;
         DataPersistanceManager.instance.SaveGame();
         Debug.Log("Switching scene to: scene " + scene);
         SceneManager.LoadScene(scene);

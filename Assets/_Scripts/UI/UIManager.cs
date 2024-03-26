@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        loadingScreen.gameObject.SetActive(true);
         if (loadingAccent == null) { Debug.Log("no loadingScreen reference set up"); }
         else { StartCoroutine(FadeOutCanvas(loadingScreen, fadeOutDuration)); }
     }
@@ -44,6 +45,7 @@ public class UIManager : MonoBehaviour
         else { StartCoroutine(FadeInImage(loadingAccent.GetComponent<Image>(), accentFadeTime)); }
         yield return new WaitForSeconds(loadingTime); // Wait for a second
         yield return StartCoroutine(FadeCanvasGroup(canvasGroup, 1f, 0f, fadeDuration)); // Fade out
+        loadingScreen.gameObject.SetActive(false);
     }
 
     IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float start, float end, float duration)
