@@ -90,7 +90,7 @@ public class CraftingManager : MonoBehaviour
 
 
 
-    private void UpdateCraftingUI()
+    public void UpdateCraftingUI()
     {
         foreach (Transform child in contentParent)
         {
@@ -100,10 +100,10 @@ public class CraftingManager : MonoBehaviour
         for (int i = 0; i < recipes.Length; i++)
         {
             GameObject newCraftable = Instantiate(craftableItem, contentParent);
-            newCraftable.name = recipes[i].name;
-            newCraftable.GetComponent<ItemRecipe>().itemRecipe = recipes[i];
-            newCraftable.GetComponent<UnityEngine.UI.Image>().sprite = recipes[i].output.sprites[0].sprite;
-            newCraftable.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
+            //newCraftable.name = recipes[i].name;
+            newCraftable.transform.GetChild(0).GetComponent<ItemRecipe>().itemRecipe = recipes[i];
+            newCraftable.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = recipes[i].output.sprites[0].sprite;
+            //newCraftable.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
         }
     }
 

@@ -171,6 +171,9 @@ public class InventoryController : MonoBehaviour,IDataPersistance
             }
             //BroadcastEffects();
         }
+        if (Input.GetKeyDown(KeyCode.P)){
+            PlayerDeath();
+        }
 
 
     }
