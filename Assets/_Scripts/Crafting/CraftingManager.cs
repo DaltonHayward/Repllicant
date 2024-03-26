@@ -27,12 +27,16 @@ public class CraftingManager : MonoBehaviour
     [SerializeField] GameObject craftableItem;
     [SerializeField] Transform contentParent;
 
+    
+
     [SerializeField] public Transform recipeParent;
 
     [SerializeField] public GameObject recipePanel;
 
 
     public InventoryInteraction inventoryInteraction;
+
+    public BaseItemRecipe selectedRecipe;
 
     private List<ItemTypeAndCount> items = new List<ItemTypeAndCount>();
 
@@ -56,13 +60,14 @@ public class CraftingManager : MonoBehaviour
 
     private void OnEnable()
     {
+        //items = inventoryInteraction.GetAllItems();
         UpdateCraftingUI();
     }
 
 
     public void EnterCraftingMode()
     {
-        Debug.Log("EnterCraftingMode!");
+        
         craftingCanvas.SetActive(true);
         isCraftingOpened = true;
     }
@@ -70,7 +75,16 @@ public class CraftingManager : MonoBehaviour
     public void ExitCraftingMode()
     {
         craftingCanvas.SetActive(false);
+        recipePanel.SetActive(false);
         isCraftingOpened = false;
+    }
+
+    public void CraftSelectedItem()
+    {
+        
+        inventoryInteraction.CraftItem(selectedRecipe);
+        recipePanel.SetActive(false);
+        UpdateCraftingUI();
     }
 
 

@@ -13,9 +13,6 @@ public class InventoryInteraction : MonoBehaviour
 {
     private ItemGrid itemsInInventory;
 
-    
-
-
     public List<ItemTypeAndCount> items = new ();
 
 
@@ -96,13 +93,15 @@ public class InventoryInteraction : MonoBehaviour
         ItemTypeAndCount[] items = itemsToRemove;
         foreach (ItemTypeAndCount item in items)
         {
-            foreach (Inventory_Item i in itemsInInventory.invItemSlots)
+            int removalCount = item.count;
+            foreach (Inventory_Item invItem in itemsInInventory.invItemSlots)
             {
-                if (i.itemData.Name == item.name && item.count > 0)
+                if (invItem.itemData.Name == item.name && removalCount > 0)
                 {
-                    InventoryController.playerInventory.RemoveItem(i);
-                    Object.Destroy(i);
-                    item.count--;
+                    InventoryController.playerInventory.RemoveItem(invItem);
+                    Object.Destroy(invItem);
+                    removalCount--;
+                    Debug.Log("Removed" + invItem.itemData.Name);
                 }
             }
         }
@@ -116,6 +115,7 @@ public class InventoryInteraction : MonoBehaviour
         if (InventoryController.playerInventory.CheckForFreeSpace(itemToAdd))
         {
             InventoryController.instance.InsertNewItem(itemToAdd, InventoryController.playerInventory);
+            Debug.Log("Added item to inventory: " + itemToAdd.name);
         }
         else
         {
@@ -140,7 +140,7 @@ public class InventoryInteraction : MonoBehaviour
     public void OpenCrafting()
     {
         CraftingManager.instance.EnterCraftingMode();
-        Debug.Log("Called OpenCrafting!~");
+        
 
     }
 }
