@@ -16,6 +16,8 @@ public class BoatInteraction : MonoBehaviour
 
     private void SceneChange(int scene) 
     {
+        UIManager.instance.loadingScreen.alpha = 1f;
+        UIManager.instance.FadeAccent();
         DataPersistanceManager.instance.SaveGame();
         Debug.Log("Switching scene to: scene " + scene);
         SceneManager.LoadScene(scene);
