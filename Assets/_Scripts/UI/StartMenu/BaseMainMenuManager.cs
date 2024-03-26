@@ -73,8 +73,7 @@ namespace ReplicantPackage
 
 		public virtual void StartGame() //hides main menu canvas, shows loading screen, and invokes LoadGameScene
 		{
-			_canvasManager.TimedSwitchCanvas(0, 2);
-			//_canvasManager.ShowCanvas(2, false);
+			_canvasManager.TimedSwitchCanvas(0,2);
 
 			LoadGameScene();
 		}
