@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 
@@ -9,16 +10,20 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private GameObject visualCue;
 
     [Header("Ink JSON")]
-    [SerializeField] private TextAsset inkJSON;
+    [SerializeField] public TextAsset inkJSON;
 
-    private InventoryInteraction inventoryInteraction;
+
 
     private bool playerInRange;
+
+    private PlayerController _playerController;
+
 
     private void Awake()
     {
         playerInRange = false;
         visualCue.SetActive(false);
+        _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
     private void Update()
     {
@@ -27,7 +32,9 @@ public class DialogueTrigger : MonoBehaviour
             visualCue.SetActive(true);
             if (InputManager.instance.InteractInput)
             {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, inventoryInteraction);
+                _playerController.SetState(PlayerController.State.DIALOG);
+                StartCoroutine(_playerController.SlowDown());
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
             }
         }
         else

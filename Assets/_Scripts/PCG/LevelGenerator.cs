@@ -367,7 +367,7 @@ public class LevelGenerator : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             // Check for invalid pos
-            if ((collider.gameObject.layer == propsLayer) || ((collider.gameObject.layer == mobsLayer)))
+            if ((collider.gameObject.layer == propsLayer) | ((collider.gameObject.layer == mobsLayer)))
             {
                 return false;
             }

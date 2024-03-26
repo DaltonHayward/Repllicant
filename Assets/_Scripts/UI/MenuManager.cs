@@ -8,11 +8,11 @@ namespace ReplicantPackage
 {
     public class MenuManager : MonoBehaviour
     {
+        public static MenuManager instance;
+
         [SerializeField] private GameObject _mainMenuCanvasGO;
         [SerializeField] private GameObject _settingsMenuCanvasGO;
         [SerializeField] private GameObject _controlsMenuCanvasGO;
-
-        private bool isPaused;
 
         [Header("First Selected Options")]
         [SerializeField] private GameObject _mainMenuFirst;
@@ -21,44 +21,22 @@ namespace ReplicantPackage
 
         private void Awake()
         {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(instance);
+            }
+
             _mainMenuCanvasGO.SetActive(false);
             _settingsMenuCanvasGO.SetActive(false);
             _controlsMenuCanvasGO.SetActive(true);
             _controlsMenuCanvasGO.SetActive(false);
         }
 
-        private void Update()
-        {
-            if (InputManager.instance.MenuOpenCloseInput)
-            {
-                if (!isPaused)
-                {
-                    Pause();
-                }
-                else
-                {
-                    UnPause();
-                }
-            }
-        }
-
-        public void Pause()
-        {
-            isPaused = true;
-            Time.timeScale = 0f;
-
-            OpenMainMenu();
-        }
-
-        public void UnPause()
-        {
-            isPaused = false;
-            Time.timeScale = 1f;
-
-            CloseAllMenus();
-        }
-
-        private void OpenMainMenu()
+        public void OpenMainMenu()
         {
             _mainMenuCanvasGO.SetActive(true);
             _settingsMenuCanvasGO.SetActive(false);
@@ -85,7 +63,7 @@ namespace ReplicantPackage
             EventSystem.current.SetSelectedGameObject(_controlsMenuFirst);
         }
 
-        private void CloseAllMenus()
+        public void CloseAllMenus()
         {
             _mainMenuCanvasGO.SetActive(false);
             _settingsMenuCanvasGO.SetActive(false);
@@ -99,11 +77,6 @@ namespace ReplicantPackage
         public void OnSettingsPress()
         {
             OpenSettingsMenu();
-        }
-
-        public void OnResumePress()
-        {
-            UnPause();
         }
 
         #endregion

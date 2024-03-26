@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
 
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
-    private static DialogueManager instance;
+    public static DialogueManager instance;
 
     private Coroutine displayLineCoroutine;
 
@@ -36,16 +36,23 @@ public class DialogueManager : MonoBehaviour
 
     private InkExternalFunctions inkExternalFunctions;
 
-    //private DialogueVariables dialogueVariables;
+    private DialogueVariables dialogueVariables;
 
     private InventoryInteraction inventoryInteraction;
+
+    private String _currentLine;
+
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
         {
             Debug.LogWarning("Found more than one Dialogue Manager in the scene");
+            Destroy(this);
         }
-        instance = this;
 
         inkExternalFunctions = new InkExternalFunctions();
     }
@@ -85,30 +92,36 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON, InventoryInteraction inventoryInteraction)
+    public void EnterDialogueMode(TextAsset inkJSON)
     {
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
-        //_playerController.SetState(PlayerController.State.INTERACTING);
-
-        inkExternalFunctions.Bind(currentStory, inventoryInteraction);
-        //currentStory.BindExternalFunction("craftingMenu", Func<inventoryInteraction>.OpenCrafting, false);
+      
+        //dialogueVariables.StartListening(currentStory);
+        inkExternalFunctions.Bind(currentStory);
+       
 
         ContinueStory();
     }
 
-    private IEnumerator ExitDialogueMode()
+    public IEnumerator ExitDialogueMode()
     {
         yield return new WaitForSeconds(0.2f);
 
+        StopCoroutine(displayLineCoroutine);
+
+        //dialogueVariables.StopListening(currentStory);
         inkExternalFunctions.Unbind(currentStory);
 
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        //_playerController.SetState(PlayerController.State.STANDING);
 
+        if (GameObject.FindWithTag("Player").GetComponent<PlayerController>()._playerState == PlayerController.State.DIALOG)
+        {
+            GameObject.FindWithTag("Player").GetComponent<PlayerController>().SetState(PlayerController.State.STANDING);
+        }
     }
 
     private void ContinueStory()
@@ -130,6 +143,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator DisplayLine(string line)
     {
+        _currentLine = line;
         // empty the dialogue text
         dialogueText.text = line;
         dialogueText.maxVisibleCharacters = 0;
@@ -145,12 +159,12 @@ public class DialogueManager : MonoBehaviour
         // display each letter one at a time
         foreach (char letter in line.ToCharArray())
         {
-            // if the space bar is pressed, finish displaying the line right away
-            if (InputManager.instance.DodgeInput)
-            {
-                dialogueText.maxVisibleCharacters = line.Length;
-                break;
-            }
+            // if the submit button is pressed, finish up displaying the line right away
+            //if (InputManager.instance.InteractInput) 
+            //{
+             //   dialogueText.maxVisibleCharacters = line.Length;
+              //  break;
+           // }
 
             // check for rich text tag, if found, add it without waiting
             if (letter == '<' || isAddingRichTextTag)
@@ -229,5 +243,23 @@ public class DialogueManager : MonoBehaviour
         }
 
 
+    }
+
+    public Ink.Runtime.Object GetVariableState(string variableName) 
+    {
+        Ink.Runtime.Object variableValue = null;
+        dialogueVariables.variables.TryGetValue(variableName, out variableValue);
+        if (variableValue == null) 
+        {
+            Debug.LogWarning("Ink Variable was found to be null: " + variableName);
+        }
+        return variableValue;
+    }
+
+    // This method will get called anytime the application exits.
+    // Depending on your game, you may want to save variable state in other places.
+    public void OnApplicationQuit() 
+    {
+        //dialogueVariables.SaveVariables();
     }
 }

@@ -20,25 +20,36 @@ public class Siren : MonoBehaviour, ISubscriber
     private Color baseColor;
 
     public GameObject player;
+    public GameObject timeManager;
     private Event e;
 
     private IEnumerator damageCoroutine;
+    private float damageRate;
     private Animator animator;
+
+    // set up progress
+    [SerializeField] public bool isBoss = false;
+    public SirenBossKill killProg;
 
     void Awake()
     {
         transform.rotation = Quaternion.identity;
         player = GameObject.FindGameObjectWithTag("Player");
+        timeManager = GameObject.FindGameObjectWithTag("TimeManager");
+        damageRate = 4f;
+
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
         damageCoroutine = GiveDamageCoroutine();
         StartCoroutine(damageCoroutine);
 
         SirenSong ss = GetComponent<SirenSong>();
-        ss.SetParameters(0.5f, _songRange, "Singing");
+        ss.SetParameters(damageRate, _songRange, "Singing");
 
         baseColor = gameObject.transform.GetChild(7).GetComponent<Renderer>().material.GetColor("_BaseColor");
+
         animator = GetComponent<Animator>();
+        killProg = GetComponent<SirenBossKill>();
     }
 
     // Update is called once per frame
@@ -52,7 +63,7 @@ public class Siren : MonoBehaviour, ISubscriber
     {
         hp -= damage;
         if (hp < -0)
-            Die();
+        { Die(); }
     }
 
     public void Movement()
@@ -60,68 +71,81 @@ public class Siren : MonoBehaviour, ISubscriber
         // calc distance to player
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
+        transform.LookAt(player.transform.position);
         if (distanceToPlayer < chaseRange && distanceToPlayer > 2f)
         {
             speed = 0.5f;
-            transform.LookAt(player.transform.position);
-            navMeshAgent.SetDestination((player.transform.position - transform.position).normalized * distanceToPlayer);
+            navMeshAgent.SetDestination(player.transform.position - (player.transform.position - transform.position).normalized * (chaseRange - 1));
             animator.SetFloat("move", 1);
         }
         else 
         {
-            speed = 0f;
+            speed = 0.1f;
             //animator.SetFloat("move", 0);
         }
     }
 
-    private void OnDestroy()
+    // rolls for loot to instantiate
+    private void RollLoot()
     {
         float randomValue = Random.value;
         if (randomValue < commonItemProbability)
         {
             if (commonItems != null)
-                Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability)
-        {
-            if (uncommonItems != null)
-                Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
-        }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
-        {
-            if (rareItems != null)
-                Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
-        }
-        else
-        {
-            if (legendaryItems != null)
-                Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
+            { Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity); }
+            else if (randomValue < commonItemProbability + uncommonItemsProbability)
+            {
+                if (uncommonItems != null)
+                { Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity); }
+
+            }
+            else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
+            {
+                if (rareItems != null)
+                { Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity); }
+
+            }
+            else
+            {
+                if (legendaryItems != null)
+                { Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity); }
+            }
         }
     }
 
     public void Die()
     {
+        if (isBoss) { killProg.SirenDeath(); }
         Destroy(gameObject);
+        RollLoot();
     }
 
     private IEnumerator GiveDamageCoroutine()
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
-        while (Vector3.Distance(player.transform.position, transform.position) <= _songRange)
+        while (true)
         {
+            Collider[] targets = Physics.OverlapSphere(transform.position, _songRange);
             foreach (Collider c in targets)
             {
-                if (c.CompareTag("Player"))
+                ISubscriber[] subs = c.GetComponents<ISubscriber>();
+                if (subs != null)
                 {
-                    ISubscriber subscriber = c.GetComponent<ISubscriber>();
-                    if (subscriber != null && Vector3.Distance(player.transform.position, transform.position) <= _songRange)
+                    foreach (ISubscriber sub in subs)
                     {
-                        // Damages player more as they get closer to the siren
-                        player.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(player.transform.position, transform.position));
-                        yield return new WaitForSeconds(5);
+                        if (c.gameObject.GetComponent<PlayerHealth>() != null)
+                            if (timeManager.GetComponent<TimeManager>().CurrentTime >= 20f || timeManager.GetComponent<TimeManager>().CurrentTime <= 6f)
+                            {
+                                c.gameObject.GetComponent<PlayerHealth>().TakeDamage(1.5f *_songRange / Vector3.Distance(c.gameObject.transform.position, transform.position));
+                                damageRate = 2f;
+                            }
+                            else
+                            { 
+                                c.gameObject.GetComponent<PlayerHealth>().TakeDamage(_songRange / Vector3.Distance(c.gameObject.transform.position, transform.position)); 
+                            }
                     }
                 }
             }
+            yield return new WaitForSeconds(damageRate);
         }
     }
 
@@ -152,7 +176,14 @@ public class Siren : MonoBehaviour, ISubscriber
 
                 if (angleToSiren >= -90 && angleToSiren <= 90 && dist < _songRange && dist > 3)
                 {
-                    attractionForce = _songRange / dist;
+                    if (timeManager.GetComponent<TimeManager>().CurrentTime >= 19f || timeManager.GetComponent<TimeManager>().CurrentTime <= 7f)
+                    {
+                        attractionForce = (_songRange / dist) * 1.5f;
+                    }
+                    else
+                    {
+                        attractionForce = _songRange / dist;
+                    }
                     cc.Move(direction.normalized * (attractionForce * 0.8f) * Time.deltaTime);
                     animator.SetFloat("move", 1);
                     animator.SetBool("attack", true);
