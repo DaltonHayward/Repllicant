@@ -122,6 +122,9 @@ public class InventoryController : MonoBehaviour,IDataPersistance
             {
                 HideContextMenu();
             }
+              if (Input.GetKeyDown(KeyCode.P)){
+            PlayerDeath();
+        }
             return;
         }
 
@@ -171,6 +174,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
             }
             //BroadcastEffects();
         }
+      
 
 
     }

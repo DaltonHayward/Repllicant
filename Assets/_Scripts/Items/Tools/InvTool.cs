@@ -6,7 +6,7 @@ public class InvTool : MonoBehaviour, ISubscriber, Burnable
 {
     public bool isBurning = false;
     public float burnTime = 15f;
-
+    public bool isShocked = false;
     public void ReceiveMessage(string channel)
     {
         if (channel == "Burning")
