@@ -10,6 +10,7 @@ public class SirenShrine : MonoBehaviour
     public void SirenCheck()
     {
         // TODO: check player inv for harpy feathers
+        // call inventoryinteraction script's methods to achieve this
         SceneChange(scene);
     }
 
