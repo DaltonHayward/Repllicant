@@ -6,13 +6,13 @@ using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 
 public class ItemRecipe : MonoBehaviour
 {
     public BaseItemRecipe itemRecipe;
 
-    InventoryInteraction _InventoryInteraction;
 
     [SerializeField] GameObject ingredientPrefab;
     [SerializeField] GameObject ingredientNamePrefab;
@@ -20,34 +20,70 @@ public class ItemRecipe : MonoBehaviour
     [SerializeField] GameObject ingredientHavePrefab;
     [SerializeField] GameObject ingredientNeedPrefab;
     [SerializeField] GameObject recipePrefab;
-    [SerializeField] GameObject craftableSpritePrefab;
+    //[SerializeField] GameObject craftableSpritePrefab;
+
+    
+    
     
     public void OnPointerClick()
     {
-        UpdateRecipeUI(itemRecipe);
+        CraftingManager.instance.UpdateCraftingUI();
+        CraftingManager.instance.recipePanel.SetActive(true);
+        CraftingManager.instance.selectedRecipe = itemRecipe;
+        GetComponent<UnityEngine.UI.Image>().canvasRenderer.SetAlpha(100);
+        
+        if (CraftingManager.instance.inventoryInteraction.ItemCheck(itemRecipe.input))
+        {
+            CraftingManager.instance.craftingButton.interactable = true;
+        }
+        else
+        {
+            CraftingManager.instance.craftingButton.interactable = false;
+        }
+        UpdateRecipeUI(CraftingManager.instance.selectedRecipe);
     }
 
     public void UpdateRecipeUI(BaseItemRecipe newItemRecipe)
     {
         itemRecipe = newItemRecipe;
+
+        Transform recipeParent = CraftingManager.instance.recipeParent;
         
 
-        foreach (Transform child in transform)
+        foreach (Transform child in recipeParent)
         {
             Destroy(child.gameObject);
         }
 
         for (int i = 0; i < itemRecipe.input.Length; i++)
-        {
-            GameObject newIngredient = Instantiate(ingredientPrefab, transform);
-            //newIngredient.transform.GetChild(0).GetComponent<Image>().sprite = itemRecipe.input[i].item.sprites[0].sprite;
-            GameObject newIngredientName = Instantiate(ingredientNamePrefab, transform);
+        {   
+            // instantiate vertical layout group
+            GameObject newRecipe = Instantiate(recipePrefab, recipeParent);
+            // instantiate ingredient sprite
+            GameObject newIngredient = Instantiate(ingredientPrefab, recipeParent);
+            ItemData item = InventoryController.instance.itemDataDictionary[itemRecipe.input[i].name];
+            newIngredient.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = item.sprites[0].sprite;  
+            newIngredient.transform.SetParent(newRecipe.transform);
+            // instantiate ingredient name
+            GameObject newIngredientName = Instantiate(ingredientNamePrefab, recipeParent);
             newIngredientName.transform.GetComponent<TextMeshProUGUI>().text = itemRecipe.input[i].name;
-            Instantiate(ingredientSpacingPrefab,transform);
-            GameObject newIngredientHave = Instantiate(ingredientHavePrefab,transform);
-            newIngredientHave.transform.GetComponent<TextMeshProUGUI>().text = _InventoryInteraction.ItemCountCheck(itemRecipe.input[i].name).ToString(); // update this line of code upon adding craftable check
-            GameObject newIngredientNeed = Instantiate(ingredientNeedPrefab, transform);
+            newIngredientName.transform.SetParent(newRecipe.transform);
+            // instantiate spacing between name and have/needs
+            GameObject newSpacing =Instantiate(ingredientSpacingPrefab,transform);
+            newSpacing.transform.SetParent(newRecipe.transform);
+            // instantiate number of ingredients that we have
+            GameObject newIngredientHave = Instantiate(ingredientHavePrefab,recipeParent);
+            newIngredientHave.transform.GetComponent<TextMeshProUGUI>().text = CraftingManager.instance.inventoryInteraction.ItemCountCheck(itemRecipe.input[i].name).ToString(); 
+            // set number panel to red if we don't have enough items
+            /*if (CraftingManager.instance.inventoryInteraction.ItemCountCheck(itemRecipe.input[i].name) < itemRecipe.input[i].count)
+            {
+                newIngredientHave.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().color = new Color(251,0,0,50);
+            }*/
+            newIngredientHave.transform.SetParent(newRecipe.transform);
+            // instantiate number of ingredients that we need
+            GameObject newIngredientNeed = Instantiate(ingredientNeedPrefab, recipeParent);
             newIngredientNeed.transform.GetComponent<TextMeshProUGUI>().text = " / " + itemRecipe.input[i].count.ToString();
+            newIngredientNeed.transform.SetParent(newRecipe.transform);
         }
         
 

@@ -17,6 +17,7 @@ public class GameData
     public bool scientistNPC;
     // Bosses
     public bool sirenDefeated;
+    // Inventory
     public List<string> InvItems_Names;
     public List<int> InvItems_xCord;
     public List<int> InvItems_yCord;
@@ -26,7 +27,8 @@ public class GameData
     public List<int> StashItems_xCord;
     public List<int> StashItems_yCord;
     public List<bool> StashItems_Rotated;
-    public float time; 
+    // World info
+    public float time;
 
 
     // the values defined in this constructor will be the default values when no data to load
@@ -45,16 +47,18 @@ public class GameData
 
 
         
-        this.InvItems_Names = new List<string>();
-        this.InvItems_xCord = new List<int>();
-        this.InvItems_yCord = new List<int>();
-        this.InvItems_Rotated = new List<bool>();
-        this.InvItems_Equipped = new List<bool>();
+        this.InvItems_Names = new List<string> {"Sword", "Axe", "Pickaxe" };
+        this.InvItems_xCord = new List<int> {0, 1, 3 };
+        this.InvItems_yCord = new List<int> {0, 0, 0 };
+        this.InvItems_Rotated = new List<bool> {false, false, false };
+        this.InvItems_Equipped = new List<bool> {true, true, true };
 
         this.StashItems_Names = new List<string>();
         this.StashItems_xCord = new List<int>();
         this.StashItems_yCord = new List<int>();
         this.StashItems_Rotated = new List<bool>();
+
+        this.time = 0;
 
     }
 }

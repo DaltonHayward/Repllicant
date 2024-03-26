@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 //using static UnityEditor.FilePathAttribute;
-using FMOD.Studio;
+
 
 public class PlayerController : MonoBehaviour, ISubscriber
 
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
     // Coupled EffectableObject script here so that effects can be applied to the player
     protected EffectableObject Effectable;
 
-    private EventInstance FootstepsGrass;
+    
     private Transform _playerCamera;
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     public void Start()
     {
-        FootstepsGrass = AudioManager.instance.CreateInstance(FMODEvents.instance.footStepsGrass);
+        
         // initalize tools
         _tools[0] = ToolHolder.GetChild(0).GetComponentInChildren<EquippedTool>();
         _tools[1] = ToolHolder.GetChild(1).GetComponentInChildren<EquippedTool>();
@@ -979,8 +979,5 @@ public class PlayerController : MonoBehaviour, ISubscriber
     }
     #endregion
 
-    private void UpdateSound()
-    {
-
-    }
+    
 }

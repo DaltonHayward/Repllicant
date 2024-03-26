@@ -12,15 +12,19 @@ public class DataPersistanceManager : MonoBehaviour
     private List<IDataPersistance> dataPersistanceObjects;
     private FileDataHandler dataHandler;
 
-    public static DataPersistanceManager instance { get; private set; }
+    public static DataPersistanceManager instance;
 
     private void Awake()
     {
-        if (instance != null)
+        // singleton
+        if (instance == null)
         {
-            Debug.LogError("Found more than one Data Persistance Manager in the scene");
+            instance = this;
         }
-        instance = this;
+        else
+        {
+            Destroy(this);
+        }
     }
 
     private void Start()
