@@ -6,19 +6,35 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     // references
-    [SerializeField] CanvasGroup loadingScreen;
-    [SerializeField] GameObject loadingAccent;
+    [SerializeField] public CanvasGroup loadingScreen;
+    [SerializeField] public GameObject loadingAccent;
     // Time values
     [SerializeField] float loadingTime = 4f;
     [SerializeField] float accentFadeTime = 2f;
     [SerializeField] float fadeOutDuration = 2f;
 
+    public static UIManager instance { get; private set; }
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogError("Found more than one UIManager in the scene");
+        }
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        if (loadingScreen == null) { Debug.Log("no loadingScreen reference set up"); }
+        if (loadingAccent == null) { Debug.Log("no loadingScreen reference set up"); }
         else { StartCoroutine(FadeOutCanvas(loadingScreen, fadeOutDuration)); }
+    }
+
+    public void FadeAccent()
+    {
+        if (loadingAccent == null) { Debug.Log("no loadingScreen reference set up"); }
+        else { StartCoroutine(FadeInImage(loadingAccent.GetComponent<Image>(), accentFadeTime)); }
     }
 
     IEnumerator FadeOutCanvas(CanvasGroup canvasGroup, float fadeDuration)
