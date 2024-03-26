@@ -47,11 +47,11 @@ public class GameData
 
 
         
-        this.InvItems_Names = new List<string>();
-        this.InvItems_xCord = new List<int>();
-        this.InvItems_yCord = new List<int>();
-        this.InvItems_Rotated = new List<bool>();
-        this.InvItems_Equipped = new List<bool>();
+        this.InvItems_Names = new List<string> {"Sword", "Axe", "Pickaxe" };
+        this.InvItems_xCord = new List<int> {0, 1, 3 };
+        this.InvItems_yCord = new List<int> {0, 0, 0 };
+        this.InvItems_Rotated = new List<bool> {false, false, false };
+        this.InvItems_Equipped = new List<bool> {true, true, true };
 
         this.StashItems_Names = new List<string>();
         this.StashItems_xCord = new List<int>();
