@@ -7,17 +7,14 @@ public class SirenShrine : MonoBehaviour
 {
     [SerializeField] int scene = 3;
 
-    [SerializeField] GameObject gameManager;
+    [SerializeField] public GameObject gameManager;
 
     public void SirenCheck()
     {
         // TODO: check player inv for harpy feathers
-        for (int i = 0; i < gameManager.GetComponent<InventoryController>().items.length(); i++)
-        { 
-            
-        }
+        Debug.Log(gameManager.GetComponent<InventoryController>().LookUpItem("Crystallzed Etherforce"));
 
-        SceneChange(scene);
+        //SceneChange(scene);
     }
 
     private void SceneChange(int scene)
