@@ -40,7 +40,10 @@ public class ProgressManager : MonoBehaviour, IDataPersistance
             GameObject.FindWithTag("Player").transform.position = new Vector3(149.089996f, 0, 132.199997f); 
             if (boat2 != null) { boat2.SetActive(true); }
         }
-        gate.GetComponentInChildren<Interactor>().interactable = sirenDefeated;
+        if (gate != null)
+        {
+            gate.GetComponentInChildren<Interactor>().interactable = sirenDefeated;
+        }
     }
 
     public void LoadData(GameData gameData)
