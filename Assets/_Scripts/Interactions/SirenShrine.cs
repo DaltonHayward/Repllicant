@@ -11,10 +11,12 @@ public class SirenShrine : MonoBehaviour
 
     public void SirenCheck()
     {
-        // TODO: check player inv for harpy feathers
-        Debug.Log(gameManager.GetComponent<InventoryController>().LookUpItem("Crystallzed Etherforce"));
-
-        //SceneChange(scene);
+        // check player inventory for reagents
+        Dictionary<string, ItemData> inventory = gameManager.GetComponent<InventoryController>().itemDataDictionary;
+        if (inventory.ContainsKey("Crystallized Etherforce") && inventory.ContainsKey("Arcane Conductor Matrix"))
+        {
+            SceneChange(scene);
+        }
     }
 
     private void SceneChange(int scene)
