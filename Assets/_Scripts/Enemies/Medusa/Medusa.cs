@@ -51,19 +51,6 @@ public class Medusa : Enemy
         }
     }
 
-    // changes medusa color to indicate she got damaged
-    public override void Hurt()
-    {
-        GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", Color.red);
-        StartCoroutine(HurtTimeout(0.1f));
-    }
-
-    IEnumerator HurtTimeout(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", _originalMaterialColor);
-    }
-
     // medusa spawns a snake that moves forward
     void Attack()
     {

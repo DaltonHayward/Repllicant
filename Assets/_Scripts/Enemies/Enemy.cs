@@ -1,7 +1,9 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(DamageIndicator))]
 
 public class Enemy : MonoBehaviour, ISubscriber
 {
@@ -11,6 +13,10 @@ public class Enemy : MonoBehaviour, ISubscriber
     protected Animator animator;
     public List<GameObject> commonItems, uncommonItems, rareItems, legendaryItems;
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
+    bool rolledLoot= false;
+
+    // for red flash on damage taken
+    private DamageIndicator _damageIndicator;
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -19,6 +25,7 @@ public class Enemy : MonoBehaviour, ISubscriber
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
         animator = GetComponent<Animator>();
+        _damageIndicator = GetComponent<DamageIndicator>();
     }
 
     // Update is called once per frame
@@ -49,24 +56,43 @@ public class Enemy : MonoBehaviour, ISubscriber
         // handles attack message
         if (channel.StartsWith("Attacked"))
         {
+            Debug.Log("Enemy attacked");
             // apply damage from message
             float damage;
             if (float.TryParse(parts[1].Trim(), out damage))
             {
                 TakeDamage(damage);
-                Hurt();
+                _damageIndicator.Hurt();
             }
         }
         else if (channel.StartsWith("SpeedChange"))
         {
             navMeshAgent.speed *= float.Parse(parts[1].Trim());
         }
-    }
-
-    // effects for when enemy is hurt
-    public virtual void Hurt()
-    {
-        // this is specific to the enemy type
+        else if (channel.StartsWith("Shocked:")){
+            Debug.Log("Enemy is shocked");
+            float damage;
+            string[] test = channel.Split(':');
+            string[] values = parts[1].Split(',');
+            Debug.Log("message "+ test + " "+ values[0]+" "+ values[1]);
+            if (float.TryParse(parts[1].Trim(), out damage))
+            {
+                
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
+                foreach (Collider collider in colliders)
+                {
+                    if (collider.gameObject.GetComponent<ISubscriber>() != null && collider.gameObject.tag == "Enemy" && collider.gameObject != this.gameObject)
+                    {
+                        if(damage> 0){
+                        collider.gameObject.GetComponent<ISubscriber>().ReceiveMessage("Shocked:"+(damage-1));}
+                        break;
+                    }
+                }
+                TakeDamage(damage);
+                _damageIndicator.Hurt();
+                
+            }
+        }
     }
 
     // rolls for loot to instantiate
@@ -94,7 +120,12 @@ public class Enemy : MonoBehaviour, ISubscriber
     // on death
     public virtual void Die()
     {
+        if (rolledLoot)
+        {
+            return;
+        }
         RollLoot();
+        rolledLoot = true;
         Destroy(gameObject);
     }
 

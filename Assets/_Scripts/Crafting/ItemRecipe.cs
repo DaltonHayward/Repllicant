@@ -20,6 +20,8 @@ public class ItemRecipe : MonoBehaviour
     [SerializeField] GameObject ingredientHavePrefab;
     [SerializeField] GameObject ingredientNeedPrefab;
     [SerializeField] GameObject recipePrefab;
+
+    
     //[SerializeField] GameObject craftableSpritePrefab;
 
     
@@ -27,10 +29,10 @@ public class ItemRecipe : MonoBehaviour
     
     public void OnPointerClick()
     {
+        
         CraftingManager.instance.UpdateCraftingUI();
         CraftingManager.instance.recipePanel.SetActive(true);
         CraftingManager.instance.selectedRecipe = itemRecipe;
-        GetComponent<UnityEngine.UI.Image>().canvasRenderer.SetAlpha(100);
         
         if (CraftingManager.instance.inventoryInteraction.ItemCheck(itemRecipe.input))
         {
