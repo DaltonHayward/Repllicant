@@ -23,14 +23,9 @@ public class PlayerFootsteps : MonoBehaviour
     {
         if (footsteps.isValid())
         {
-            
-            //footsteps.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
-            //FMODUnity.RuntimeManager.AttachInstanceToGameObject(footsteps, transform);
             footsteps.start();
-            
-            //footsteps.release();
         }
-        //footsteps = FMODUnity.RuntimeManager.CreateInstance("event:/Footsteps");
+       
         
     }
 }
