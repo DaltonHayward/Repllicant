@@ -30,7 +30,7 @@ You can cycle your equipped items by using the -scroll wheel- on your mouse.
 Does that make sense?
 + [Ya I guess]
     Great! Now... could you do me a favour?
-    And clear those obstacles for me so I can set up my tent?
+    And clear those trees for me so I can set up my tent?
     -> tools
 + [Umm not really]
     -> tutorialRecap
@@ -51,5 +51,6 @@ Before you go, here are some things that should help.
 ~ npcAddItem("Axe")
 ~ npcAddItem("Pickaxe")
 Make sure to equip those!
+Oh and once you chop down those trees, you should probably craft yourself a torch!
 Good luck out there...
 -> END
