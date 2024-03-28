@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private GameObject continueText;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private TextMeshProUGUI displayNameText;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -28,11 +29,13 @@ public class DialogueManager : MonoBehaviour
     public bool dialogueIsPlaying { get; private set; }
     public static DialogueManager instance;
 
+    private const string SPEAKER_TAG = "speaker"; //set this value in an ink file by adding #speaker:"InsertNameHere"
+
     private Coroutine displayLineCoroutine;
 
     private bool canContinueToNextLine = false;
 
-    //private PlayerController _playerController;
+    
 
     private InkExternalFunctions inkExternalFunctions;
 
@@ -41,6 +44,10 @@ public class DialogueManager : MonoBehaviour
     private InventoryInteraction inventoryInteraction;
 
     private String _currentLine;
+
+    // add lists of jsons for each npc here
+        // instead of passing json file in from trigger - we will pass npc name
+        // create method to check variable and select according npc jsons i.e. DaltonDialogueJSON[i]
 
     private void Awake()
     {
@@ -100,6 +107,9 @@ public class DialogueManager : MonoBehaviour
       
         //dialogueVariables.StartListening(currentStory);
         inkExternalFunctions.Bind(currentStory);
+
+        // reset speaker text
+        displayNameText.text = "???";
        
 
         ContinueStory();
@@ -133,13 +143,57 @@ public class DialogueManager : MonoBehaviour
             {
                 StopCoroutine(displayLineCoroutine);
             }
-            displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
+            string nextLine = currentStory.Continue();
+
+            // handling if a function call is the last line of text
+            if (nextLine.Equals("") && !currentStory.canContinue)
+            {
+                StartCoroutine(ExitDialogueMode());
+            }
+            // otherwise, handle the normal case for continuing the story
+            else 
+            {
+                // handle tags
+                HandleTags(currentStory.currentTags);
+                displayLineCoroutine = StartCoroutine(DisplayLine(nextLine));
+            }
         }
         else
         {
             StartCoroutine(ExitDialogueMode());
         }
     }
+
+    private void HandleTags(List<string> currentTags)
+    {
+        // loop through each tag and handle it accordingly
+        foreach (string tag in currentTags) 
+        {
+            // parse the tag
+            string[] splitTag = tag.Split(':');
+            if (splitTag.Length != 2) 
+            {
+                Debug.LogError("Tag could not be appropriately parsed: " + tag);
+            }
+            string tagKey = splitTag[0].Trim();
+            string tagValue = splitTag[1].Trim();
+            
+            // handle the tag
+            switch (tagKey) 
+            {
+                case SPEAKER_TAG:
+                    displayNameText.text = tagValue;
+                    break;
+                //case AUDIO_TAG: 
+                    //SetCurrentAudioInfo(tagValue);
+                    //break;
+                default:
+                    Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
+                    break;
+            }
+        }
+    }
+
 
     private IEnumerator DisplayLine(string line)
     {
