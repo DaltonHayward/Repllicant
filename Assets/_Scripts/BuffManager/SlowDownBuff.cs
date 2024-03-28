@@ -20,6 +20,12 @@ public class SlowDownBuff:Buff
     public GameObject player;
 
     protected float IntervalTime;
+
+    public void Start()
+    {
+        player = GameObject.FindWithTag("Player").gameObject;
+    }
+
     public void Init(GameObject user,float slowDown=0.7f, float dis=10,float intervalTime=0.5f)
     {
         this.user = user;

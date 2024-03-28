@@ -29,6 +29,7 @@ public class GameData
     public List<bool> StashItems_Rotated;
     // World info
     public float time;
+    public bool firstSpawn;
 
 
     // the values defined in this constructor will be the default values when no data to load
