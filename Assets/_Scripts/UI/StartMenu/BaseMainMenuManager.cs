@@ -17,7 +17,9 @@ namespace ReplicantPackage
 		//public Slider _sfxSlider;
 		//public Slider _musicSlider;
 
-		public string gameSceneName; 
+		public string gameSceneName;
+
+		public CanvasGroup confirmPopup;
 
 		#endregion
 		void Start()
@@ -69,6 +71,23 @@ namespace ReplicantPackage
 		void ShowMainMenu() //switches the active canvas from the loading screen to the main menu
 		{
 			_canvasManager.TimedSwitchCanvas(2, 0);
+		}
+
+        public virtual void NewGameButton() // triggers confirmation popup
+        {
+			if (DataPersistanceManager.instance.IsNewGame()) { NewGame(); }
+			else { confirmPopup.gameObject.SetActive(true); }
+        }
+
+		public virtual void ClosePopup()
+		{
+            confirmPopup.gameObject.SetActive(false);
+        }
+
+        public virtual void NewGame() // clears save, then starts game
+		{
+			DataPersistanceManager.instance.NewGame();
+			StartGame();
 		}
 
 		public virtual void StartGame() //hides main menu canvas, shows loading screen, and invokes LoadGameScene
