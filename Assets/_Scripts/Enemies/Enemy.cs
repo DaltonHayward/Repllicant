@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(DamageIndicator))]
 
 public class Enemy : MonoBehaviour, ISubscriber
 {
@@ -14,6 +15,9 @@ public class Enemy : MonoBehaviour, ISubscriber
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;
     bool rolledLoot= false;
 
+    // for red flash on damage taken
+    private DamageIndicator _damageIndicator;
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -21,6 +25,7 @@ public class Enemy : MonoBehaviour, ISubscriber
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.speed = speed;
         animator = GetComponent<Animator>();
+        _damageIndicator = GetComponent<DamageIndicator>();
     }
 
     // Update is called once per frame
@@ -57,7 +62,7 @@ public class Enemy : MonoBehaviour, ISubscriber
             if (float.TryParse(parts[1].Trim(), out damage))
             {
                 TakeDamage(damage);
-                Hurt();
+                _damageIndicator.Hurt();
             }
         }
         else if (channel.StartsWith("SpeedChange"))
@@ -88,12 +93,6 @@ public class Enemy : MonoBehaviour, ISubscriber
                 
             }
         }
-    }
-
-    // effects for when enemy is hurt
-    public virtual void Hurt()
-    {
-        // this is specific to the enemy type
     }
 
     // rolls for loot to instantiate

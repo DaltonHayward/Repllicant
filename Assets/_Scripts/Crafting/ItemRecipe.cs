@@ -13,7 +13,6 @@ public class ItemRecipe : MonoBehaviour
 {
     public BaseItemRecipe itemRecipe;
 
-    InventoryInteraction _InventoryInteraction;
 
     [SerializeField] GameObject ingredientPrefab;
     [SerializeField] GameObject ingredientNamePrefab;
@@ -21,15 +20,18 @@ public class ItemRecipe : MonoBehaviour
     [SerializeField] GameObject ingredientHavePrefab;
     [SerializeField] GameObject ingredientNeedPrefab;
     [SerializeField] GameObject recipePrefab;
-    [SerializeField] GameObject craftableSpritePrefab;
+    //[SerializeField] GameObject craftableSpritePrefab;
 
     
-
     
     
     public void OnPointerClick()
     {
+        CraftingManager.instance.UpdateCraftingUI();
         CraftingManager.instance.recipePanel.SetActive(true);
+        CraftingManager.instance.selectedRecipe = itemRecipe;
+        GetComponent<UnityEngine.UI.Image>().canvasRenderer.SetAlpha(100);
+        
         if (CraftingManager.instance.inventoryInteraction.ItemCheck(itemRecipe.input))
         {
             CraftingManager.instance.craftingButton.interactable = true;
@@ -38,7 +40,7 @@ public class ItemRecipe : MonoBehaviour
         {
             CraftingManager.instance.craftingButton.interactable = false;
         }
-        UpdateRecipeUI(itemRecipe);
+        UpdateRecipeUI(CraftingManager.instance.selectedRecipe);
     }
 
     public void UpdateRecipeUI(BaseItemRecipe newItemRecipe)

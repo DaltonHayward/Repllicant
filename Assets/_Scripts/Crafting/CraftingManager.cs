@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -27,12 +25,16 @@ public class CraftingManager : MonoBehaviour
     [SerializeField] GameObject craftableItem;
     [SerializeField] Transform contentParent;
 
+    
+
     [SerializeField] public Transform recipeParent;
 
     [SerializeField] public GameObject recipePanel;
 
 
     public InventoryInteraction inventoryInteraction;
+
+    public BaseItemRecipe selectedRecipe;
 
     private List<ItemTypeAndCount> items = new List<ItemTypeAndCount>();
 
@@ -56,13 +58,14 @@ public class CraftingManager : MonoBehaviour
 
     private void OnEnable()
     {
+        //items = inventoryInteraction.GetAllItems();
         UpdateCraftingUI();
     }
 
 
     public void EnterCraftingMode()
     {
-        Debug.Log("EnterCraftingMode!");
+        
         craftingCanvas.SetActive(true);
         isCraftingOpened = true;
     }
@@ -70,13 +73,22 @@ public class CraftingManager : MonoBehaviour
     public void ExitCraftingMode()
     {
         craftingCanvas.SetActive(false);
+        recipePanel.SetActive(false);
         isCraftingOpened = false;
+    }
+
+    public void CraftSelectedItem()
+    {
+        
+        inventoryInteraction.CraftItem(selectedRecipe);
+        recipePanel.SetActive(false);
+        UpdateCraftingUI();
     }
 
 
 
 
-    private void UpdateCraftingUI()
+    public void UpdateCraftingUI()
     {
         foreach (Transform child in contentParent)
         {
@@ -86,10 +98,10 @@ public class CraftingManager : MonoBehaviour
         for (int i = 0; i < recipes.Length; i++)
         {
             GameObject newCraftable = Instantiate(craftableItem, contentParent);
-            newCraftable.name = recipes[i].name;
-            newCraftable.GetComponent<ItemRecipe>().itemRecipe = recipes[i];
-            newCraftable.GetComponent<UnityEngine.UI.Image>().sprite = recipes[i].output.sprites[0].sprite;
-            newCraftable.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
+            //newCraftable.name = recipes[i].name;
+            newCraftable.transform.GetChild(0).GetComponent<ItemRecipe>().itemRecipe = recipes[i];
+            newCraftable.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = recipes[i].output.sprites[0].sprite;
+            //newCraftable.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
         }
     }
 

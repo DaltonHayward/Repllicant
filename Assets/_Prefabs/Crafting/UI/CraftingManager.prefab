@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8523911933262242561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6712025325727012332}
+  - component: {fileID: 7035412418529476175}
+  - component: {fileID: 3764481294884331924}
+  m_Layer: 0
+  m_Name: CraftingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6712025325727012332
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8523911933262242561}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7035412418529476175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8523911933262242561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c5ed788ef456d74e88febb80c4c37f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCraftingOpened: 0
+  craftingCanvas: {fileID: 0}
+  craftingButton: {fileID: 0}
+  recipes:
+  - {fileID: 11400000, guid: 561ee8eec494ae4448e1e9b0825b89e7, type: 2}
+  - {fileID: 11400000, guid: a7b6e0cec15144741a9a30ccdc972bad, type: 2}
+  craftableItem: {fileID: 2777302505306379785, guid: 781bece8d22746945a63c499bed7bb55, type: 3}
+  contentParent: {fileID: 0}
+  recipeParent: {fileID: 0}
+  recipePanel: {fileID: 0}
+  inventoryInteraction: {fileID: 3764481294884331924}
+  selectedRecipe: {fileID: 0}
+--- !u!114 &3764481294884331924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8523911933262242561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ef95a5c0c0c4449b198eca8e2c6c2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []

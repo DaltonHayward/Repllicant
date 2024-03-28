@@ -180,28 +180,29 @@ public class COW : MonoBehaviour
     }
 
 
-    private void OnDestroy()
+    private void RollLoot()
     {
         float randomValue = Random.value;
-        if (randomValue < commonItemProbability)
+        if (randomValue < commonItemProbability && commonItems.Count > 0)
         {
             Instantiate(commonItems[Random.Range(0, commonItems.Count)], transform.position, Quaternion.identity);
         }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability)
+        else if (randomValue < commonItemProbability + uncommonItemsProbability && uncommonItems.Count > 0)
         {
             Instantiate(uncommonItems[Random.Range(0, uncommonItems.Count)], transform.position, Quaternion.identity);
         }
-        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability)
+        else if (randomValue < commonItemProbability + uncommonItemsProbability + rareItemsProbability && rareItems.Count > 0)
         {
             Instantiate(rareItems[Random.Range(0, rareItems.Count)], transform.position, Quaternion.identity);
         }
-        else
+        else if (legendaryItems.Count > 0)
         {
             Instantiate(legendaryItems[Random.Range(0, legendaryItems.Count)], transform.position, Quaternion.identity);
         }
     }
     public void Die()
     {
+        RollLoot();
         Destroy(gameObject);
     }
     public int lookAccurate = 10;
@@ -211,8 +212,7 @@ public class COW : MonoBehaviour
     {
         hp -= damage;
         animator.PlayTakeDamage();
-        if (hp <= 0)
-            Die();
+        if (hp <= 0) { Die(); }
     }
     public void LookAround()
     {
@@ -237,17 +237,12 @@ public class COW : MonoBehaviour
             if (target[j].tag == "Player" || target[j].tag == "Enemy")
             {
                 StartCoroutine(Wave(target[j]));
-
             }
-
         }
     }
 
     public IEnumerator Wave(GameObject player)
     {
-
-
-
         yield return new WaitForSeconds(1);//Delay before cast 1 sec
         Debug.Log($"The shock wave causes {WaveAttack} damage and slows down by 30%");
         if (player.tag == "Enemy")
@@ -265,9 +260,6 @@ public class COW : MonoBehaviour
             yield return new WaitForSeconds(3);//The projectile will be removed after 3 seconds, so the skillspeed must be greater than 3 seconds, otherwise it will keep firing.
             player.GetComponent<PlayerController>().MoveSpeed *= 10f / 7;
         }
-
-
-
     }
 
     private void OnDrawGizmos()

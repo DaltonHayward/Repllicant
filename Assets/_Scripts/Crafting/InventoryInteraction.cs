@@ -13,10 +13,7 @@ public class InventoryInteraction : MonoBehaviour
 {
     private ItemGrid itemsInInventory;
 
-    
-
-
-    public List<ItemTypeAndCount> items = new ();
+    public List<ItemTypeAndCount> items = new();
 
 
     // cycle thru player inventory and create list of items and amounts
@@ -30,21 +27,24 @@ public class InventoryInteraction : MonoBehaviour
         {
             Inventory_Item itemType = itemsInInventory.transform.GetChild(child).GetComponent<Inventory_Item>();
 
-            int i = 0;
-            bool itemWasAdded = false;
+            if (itemType != null)
+            {
+                int i = 0;
+                bool itemWasAdded = false;
 
-            foreach (ItemTypeAndCount ItemAndCount in items)
-            {
-                if (ItemAndCount.name == itemType.itemData.Name)
+                foreach (ItemTypeAndCount ItemAndCount in items)
                 {
-                    items[i].count++;
-                    itemWasAdded = true;
+                    if (ItemAndCount.name == itemType.itemData.Name)
+                    {
+                        items[i].count++;
+                        itemWasAdded = true;
+                    }
+                    i++;
                 }
-                i++;
-            }
-            if (!itemWasAdded)
-            {
-                items.Add(new ItemTypeAndCount(itemType.itemData.Name, 1));
+                if (!itemWasAdded)
+                {
+                    items.Add(new ItemTypeAndCount(itemType.itemData.Name, 1));
+                }
             }
         }
 
@@ -96,13 +96,19 @@ public class InventoryInteraction : MonoBehaviour
         ItemTypeAndCount[] items = itemsToRemove;
         foreach (ItemTypeAndCount item in items)
         {
-            foreach (Inventory_Item i in itemsInInventory.invItemSlots)
+            int removalCount = item.count;
+            foreach (Inventory_Item invItem in itemsInInventory.invItemSlots)
             {
-                if (i.itemData.Name == item.name && item.count > 0)
+                if (invItem != null)
                 {
-                    InventoryController.playerInventory.RemoveItem(i);
-                    Object.Destroy(i);
-                    item.count--;
+                    if (invItem.itemData.Name == item.name && removalCount > 0)
+                    {
+                        InventoryController.playerInventory.RemoveItem(invItem);
+                        Object.Destroy(invItem);
+                        //InventoryController.playerInventory.invItemSlots.SetValue(null, invItem.OnGridPositionX, invItem.OnGridPositionY);
+                        removalCount--;
+                        Debug.Log("Removed" + invItem.itemData.Name);
+                    }
                 }
             }
         }
@@ -116,6 +122,7 @@ public class InventoryInteraction : MonoBehaviour
         if (InventoryController.playerInventory.CheckForFreeSpace(itemToAdd))
         {
             InventoryController.instance.InsertNewItem(itemToAdd, InventoryController.playerInventory);
+            Debug.Log("Added item to inventory: " + itemToAdd.name);
         }
         else
         {
@@ -140,7 +147,7 @@ public class InventoryInteraction : MonoBehaviour
     public void OpenCrafting()
     {
         CraftingManager.instance.EnterCraftingMode();
-        Debug.Log("Called OpenCrafting!~");
+
 
     }
 }

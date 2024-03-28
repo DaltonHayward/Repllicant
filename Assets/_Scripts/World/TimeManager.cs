@@ -10,7 +10,7 @@ public class TimeManager : MonoBehaviour //IDataPersistance
     [SerializeField] float _DayLength = 24f;
 
     [Tooltip("Starting time in hours relative to midnight")]
-    [SerializeField] float _StartingTime = 6f;
+    [SerializeField] float _StartingTime = 9f;
 
     [Tooltip("Controls how fast time advances (eg. 60 = 1 irl second = 1 game minute)")]
 

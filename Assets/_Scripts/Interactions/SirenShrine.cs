@@ -10,11 +10,14 @@ public class SirenShrine : MonoBehaviour
     public void SirenCheck()
     {
         // TODO: check player inv for harpy feathers
+        // call inventoryinteraction script's methods to achieve this
         SceneChange(scene);
     }
 
     private void SceneChange(int scene)
     {
+        UIManager.instance.loadingScreen.gameObject.SetActive(true);
+        UIManager.instance.loadingScreen.alpha = 1f;
         DataPersistanceManager.instance.SaveGame();
         Debug.Log("Switching scene to: scene " + scene);
         SceneManager.LoadScene(scene);
