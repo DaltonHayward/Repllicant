@@ -1884,6 +1884,7 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1014219387}
   continueText: {fileID: 1014219386}
   dialogueText: {fileID: 1014219385}
+  displayNameText: {fileID: 0}
   choices:
   - {fileID: 1014219384}
   - {fileID: 1014219383}
@@ -6365,12 +6366,17 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7035412418529476175, guid: 9f2f0b9b5cc98784ab99ef110e3ed4cc, type: 3}
   m_PrefabInstance: {fileID: 1139581904}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1139581907}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c5ed788ef456d74e88febb80c4c37f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1139581907 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8523911933262242561, guid: 9f2f0b9b5cc98784ab99ef110e3ed4cc, type: 3}
+  m_PrefabInstance: {fileID: 1139581904}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1144400527 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3874781074327444040, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
@@ -12709,20 +12715,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4468811504589983490, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyPrefabs.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4468811504589983490, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 3081457287780391554, guid: f5af98e4885749b4ca28e9d2acab3c82, type: 3}
+      objectReference: {fileID: 5580844548074024994, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
     - target: {fileID: 4468811504589983490, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 8046436329547149706, guid: 89a1c2391c27da64e9b00a4a0c8916fb, type: 3}
+      objectReference: {fileID: 3081457287780391554, guid: f5af98e4885749b4ca28e9d2acab3c82, type: 3}
     - target: {fileID: 4468811504589983490, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 5580844548074024994, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
+      objectReference: {fileID: 3081457287780391554, guid: f5af98e4885749b4ca28e9d2acab3c82, type: 3}
     - target: {fileID: 4543770225511458357, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyMax
       value: 5
@@ -12757,20 +12763,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4785899773187355756, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyPrefabs.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4785899773187355756, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 3081457287780391554, guid: f5af98e4885749b4ca28e9d2acab3c82, type: 3}
+      objectReference: {fileID: 5580844548074024994, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
     - target: {fileID: 4785899773187355756, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 8046436329547149706, guid: 89a1c2391c27da64e9b00a4a0c8916fb, type: 3}
+      objectReference: {fileID: 3081457287780391554, guid: f5af98e4885749b4ca28e9d2acab3c82, type: 3}
     - target: {fileID: 4785899773187355756, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 5580844548074024994, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
+      objectReference: {fileID: 3081457287780391554, guid: f5af98e4885749b4ca28e9d2acab3c82, type: 3}
     - target: {fileID: 5592326305526408246, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyMax
       value: 6
@@ -12989,7 +12995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 3
-  gameManager: {fileID: 1426796802}
+  craftingManager: {fileID: 1139581907}
 --- !u!4 &3089176010519514347 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7966142024966220276, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
