@@ -13,7 +13,7 @@ public class SirenShrine : MonoBehaviour
     {
         // check player inventory for reagents
         Dictionary<string, ItemData> inventory = gameManager.GetComponent<InventoryController>().itemDataDictionary;
-        if (inventory.ContainsKey("Crystallized Etherforce") && inventory.ContainsKey("Arcane Conductor Matrix"))
+        if (inventory.ContainsKey("CrystallizedEtherforce") && inventory.ContainsKey("ArcaneConductorMatrix"))
         {
             SceneChange(scene);
         }
