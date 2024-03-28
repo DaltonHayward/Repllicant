@@ -6365,7 +6365,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7035412418529476175, guid: 9f2f0b9b5cc98784ab99ef110e3ed4cc, type: 3}
   m_PrefabInstance: {fileID: 1139581904}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1288508398}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c5ed788ef456d74e88febb80c4c37f3, type: 3}
@@ -7525,6 +7525,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 65195228}
   m_SourcePrefab: {fileID: 100100000, guid: a223885692662be43b7875a2d5b63287, type: 3}
+--- !u!1 &1288508398 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8523911933262242561, guid: 9f2f0b9b5cc98784ab99ef110e3ed4cc, type: 3}
+  m_PrefabInstance: {fileID: 1139581904}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1291068681 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7344814463175590085, guid: 842f79b1f8593984b9085295f26a8268, type: 3}
@@ -44621,7 +44626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scene: 3
-  gameManager: {fileID: 1426796802}
+  craftingManager: {fileID: 1288508398}
 --- !u!4 &3089176010519514347 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7966142024966220276, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}

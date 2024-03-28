@@ -7,13 +7,19 @@ public class SirenShrine : MonoBehaviour
 {
     [SerializeField] int scene = 3;
 
-    [SerializeField] public GameObject gameManager;
+    [SerializeField] public GameObject craftingManager;
 
     public void SirenCheck()
     {
         // check player inventory for reagents
-        Dictionary<string, ItemData> inventory = gameManager.GetComponent<InventoryController>().itemDataDictionary;
-        if (inventory.ContainsKey("CrystallizedEtherforce") && inventory.ContainsKey("ArcaneConductorMatrix"))
+        InventoryInteraction inventory = craftingManager.GetComponent<InventoryInteraction>();
+
+        var item1 = new ItemTypeAndCount("Arcane Conductor Matrix", 1);
+        var item2 = new ItemTypeAndCount("Crystallized Etherforce", 1);
+
+        ItemTypeAndCount[] items = {item1, item2};
+        Debug.Log(inventory.ItemCheck(items));
+        if (inventory.ItemCheck(items))
         {
             SceneChange(scene);
         }
