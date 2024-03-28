@@ -73,7 +73,7 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4916612213692268899}
+      addedObject: {fileID: 4599409972994164263}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
       insertIndex: -1
@@ -112,7 +112,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.7327471, y: 0.62299466, z: 2.0231886}
   m_Center: {x: 0.004943937, y: 0.016525239, z: 1.0115547}
@@ -163,7 +163,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!1001 &4962165692848218972
+--- !u!1001 &4553724893888537624
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -181,15 +181,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 64870818309513791, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.011
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 64870818309513791, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.044
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 64870818309513791, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.015
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 64870818309513791, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
       propertyPath: m_LocalRotation.w
@@ -219,6 +219,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1734197304830844950, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734197304830844950, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
+      propertyPath: m_LODs.Array.data[1].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734197304830844950, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
+      propertyPath: m_LODs.Array.data[2].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5565207644459920583, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -228,12 +240,42 @@ PrefabInstance:
       value: Simple_Tree_01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7983912288042882115, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
+    - {fileID: 3671387078121073655, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 543116996558746003, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9009263939183258805}
   m_SourcePrefab: {fileID: 100100000, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
---- !u!4 &4916612213692268899 stripped
+--- !u!1 &4088035556700198283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 543116996558746003, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
+  m_PrefabInstance: {fileID: 4553724893888537624}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9009263939183258805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4088035556700198283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c033f70b1b219fc4eafb5873bbb62fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  sureToDrop: {fileID: 5370432301953082585, guid: eac811f6c02eb024b9655abc5f605ef0, type: 3}
+  DropItemAndProbability_List: []
+  dropWhenStoned: {fileID: 8760400047210153315, guid: fd2383f5619f7e443ae977adb8d36a6f, type: 3}
+  dropItemStart: {fileID: 0}
+  isStoned: 0
+  stoneMaterial: {fileID: 2100000, guid: 9f7cb414d3ae21c448d4d37557e18733, type: 2}
+  woodMaterial: {fileID: 2100000, guid: 203f9731d33c0bf43b983fbc34da8e2d, type: 2}
+--- !u!4 &4599409972994164263 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 64870818309513791, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
-  m_PrefabInstance: {fileID: 4962165692848218972}
+  m_PrefabInstance: {fileID: 4553724893888537624}
   m_PrefabAsset: {fileID: 0}
