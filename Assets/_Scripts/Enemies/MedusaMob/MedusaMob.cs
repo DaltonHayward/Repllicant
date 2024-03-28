@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+// 
+
 public enum MedusaMobState
 {
     idle,
@@ -67,6 +70,7 @@ public class MedusaMob : Enemy
     {
         base.Start();
         subAngle = 45f / lookAccurate;
+        gameObject.AddComponent<SlowDownBuff>().Init(gameObject);
     }
 
 
@@ -135,7 +139,7 @@ public class MedusaMob : Enemy
                 transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
                 if (Time.time - lastAttackTime > attackSpeed)
                 {
-                    Debug.Log($"Player taken damage from minotaur{attack}");
+                    Debug.Log($"Player taken damage from Harpy{attack}");
 
                     player.gameObject.GetComponent<PlayerController>().ReceiveMessage("DamageOnPlayer:" + attack.ToString());
                     player.gameObject.GetComponent<PlayerHealth>().TakeDamage(attack);

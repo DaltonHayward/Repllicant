@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HurtBird : MonoBehaviour, ISubscriber
+public class HurtHarpy : MonoBehaviour, ISubscriber
 {
     private Color _originalMaterialColor;
     public void Awake()
     {
-        //_originalMaterialColor = GetComponentInChildren<SkinnedMeshRenderer>().materials[0].GetColor("_BaseColor");
+        _originalMaterialColor = GetComponentInChildren<SkinnedMeshRenderer>().materials[0].GetColor("_BaseColor");
     }
     public void ReceiveMessage(string channel)
     {
@@ -18,8 +18,8 @@ public class HurtBird : MonoBehaviour, ISubscriber
             float damage;
             if (float.TryParse(parts[1].Trim(), out damage))
             {
-                GetComponent<RangedEnemy>().TakeDamage(damage);
-                //GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", Color.red);
+                GetComponent<MedusaMob>().TakeDamage(damage);
+                GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", Color.red);
                 StartCoroutine(Timeout(0.1f));
             }
         }
@@ -28,7 +28,7 @@ public class HurtBird : MonoBehaviour, ISubscriber
     IEnumerator Timeout(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        //GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", _originalMaterialColor);
+        GetComponentInChildren<SkinnedMeshRenderer>().materials[0].SetColor("_BaseColor", _originalMaterialColor);
     }
 
 }
