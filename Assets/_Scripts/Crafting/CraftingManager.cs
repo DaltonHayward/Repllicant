@@ -23,6 +23,8 @@ public class CraftingManager : MonoBehaviour
     [Header("Recipes")]
     [SerializeField] BaseItemRecipe[] recipes;
     [SerializeField] GameObject craftableItem;
+
+    
     [SerializeField] Transform contentParent;
 
     

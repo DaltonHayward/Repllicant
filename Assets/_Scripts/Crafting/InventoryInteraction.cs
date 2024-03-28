@@ -150,4 +150,15 @@ public class InventoryInteraction : MonoBehaviour
 
 
     }
+
+    public void NPCAddItem(string itemToAdd)
+    {
+        //string itemString = "Sword"; 
+        ItemData item;
+        if (!InventoryController.instance.itemDataDictionary.TryGetValue(itemToAdd, out item))
+        {
+            return;
+        }
+        AddInventoryItems(item);
+    }
 }
