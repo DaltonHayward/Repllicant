@@ -16,12 +16,17 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
     public bool techNPC = false;
     public bool avNPC = false;
     public bool scientistNPC = false;
+    public bool firstSpawn = false;
 
     // enables each camp
     public void NPCCheck()
     {
+        if (!firstSpawn)
+        {
+            firstSpawn = true;
+            GameObject.FindWithTag("Player").gameObject.transform.position = new Vector3(173.259995f, 0f, -98.6600037f);
+        }
         if (daltonNPC) { daltonCamp.SetActive(true);}
-        // put player in front of tutorial dalton
         else 
         { 
             //GameObject.FindWithTag("Player").transform.position = new Vector3(186.630005f, 0, -103.230003f); 
