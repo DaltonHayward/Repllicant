@@ -378,7 +378,11 @@ public class ItemGrid : MonoBehaviour
         {
             if (item != null)
             {
-                CleanUpTiles(item);
+                if (item.isEquipped)
+                {
+                    InventoryController.instance.UnequipTool(item);
+                } 
+                CleanUpTiles(item);  
                 singleInstances.Remove(item);
                 invItemSlots.SetValue(null, item.OnGridPositionX, item.OnGridPositionY);
                 

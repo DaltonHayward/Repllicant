@@ -944,6 +944,7 @@ GameObject:
   - component: {fileID: 6591804027531316472}
   - component: {fileID: 6271366450050791284}
   - component: {fileID: 3041377989063288088}
+  - component: {fileID: 4644998387307914816}
   m_Layer: 0
   m_Name: Boar_WithAnimatrions
   m_TagString: Enemy
@@ -961,7 +962,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 145.17435, y: -0.060038, z: -68.434494}
-  m_LocalScale: {x: 1, y: 0.66325945, z: 1}
+  m_LocalScale: {x: 1, y: 1.386975, z: 1.4728}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1671839164429676347}
@@ -1113,6 +1114,18 @@ CapsuleCollider:
   m_Height: 4
   m_Direction: 1
   m_Center: {x: 0, y: 0.99, z: 0}
+--- !u!114 &4644998387307914816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5580844548074024994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5134944ed213a284b80d7ea9243479c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5667736574734349408
 GameObject:
   m_ObjectHideFlags: 0

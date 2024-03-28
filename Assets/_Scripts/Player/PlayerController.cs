@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
 {
     // Coupled EffectableObject script here so that effects can be applied to the player
     protected EffectableObject Effectable;
-
+    [SerializeField] private PlayerFootsteps playerFootsteps;
     
     private Transform _playerCamera;
     [Header("Player")]
@@ -979,5 +979,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
     }
     #endregion
 
-    
+    private void PlayFootstep()
+    {
+        playerFootsteps.PlayFootstep();
+        
+    }
 }

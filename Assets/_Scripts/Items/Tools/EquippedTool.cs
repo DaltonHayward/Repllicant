@@ -10,7 +10,7 @@ public class EquippedTool : MonoBehaviour
     public float Damage;
     [SerializeField]
     private ParticleSystem fireSystem;
-    private InvTool invTool;
+    public InvTool invTool;
 
     protected Animator _animator;
     protected PlayerController _playerController;
@@ -24,6 +24,7 @@ public class EquippedTool : MonoBehaviour
 
     public void Update()
     {
+        Damage=BaseDamage*500;
         if (invTool.isBurning)
         {
             // set dmg
@@ -43,6 +44,14 @@ public class EquippedTool : MonoBehaviour
                 fireSystem.Stop();
             }
         }
+        // if (invTool.isShocked)
+        // {
+        //     Damage = BaseDamage;
+        // }
+        // else if (!invTool.isShocked)
+        // {
+        //     Damage = BaseDamage;
+        // }
     }
 
     public void SetInvTool(InvTool tool)

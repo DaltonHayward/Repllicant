@@ -3498,6 +3498,7 @@ MonoBehaviour:
   dialoguePanel: {fileID: 0}
   continueText: {fileID: 0}
   dialogueText: {fileID: 0}
+  displayNameText: {fileID: 0}
   choices:
   - {fileID: 0}
   - {fileID: 0}
@@ -10433,6 +10434,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 475560206}
     m_Modifications:
     - target: {fileID: 997728091123537018, guid: 981b45e5bfc8db04cbc82c9beb86474d, type: 3}
+      propertyPath: baseIsland
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 997728091123537018, guid: 981b45e5bfc8db04cbc82c9beb86474d, type: 3}
       propertyPath: dataPersistanceManager
       value: 
       objectReference: {fileID: 0}
@@ -12991,7 +12996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac71fd1417621742978ff043f1fda66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: testbuild.game
+  fileName: testbuild2.game
   gameData:
     testInt: 0
     testBool: 0
@@ -13012,6 +13017,7 @@ MonoBehaviour:
     StashItems_yCord: 
     StashItems_Rotated: 
     time: 0
+    firstSpawn: 0
 --- !u!1001 &1741673297
 PrefabInstance:
   m_ObjectHideFlags: 0

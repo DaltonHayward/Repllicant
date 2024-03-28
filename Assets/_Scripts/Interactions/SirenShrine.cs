@@ -7,11 +7,22 @@ public class SirenShrine : MonoBehaviour
 {
     [SerializeField] int scene = 3;
 
+    [SerializeField] public GameObject craftingManager;
+
     public void SirenCheck()
     {
-        // TODO: check player inv for harpy feathers
-        // call inventoryinteraction script's methods to achieve this
-        SceneChange(scene);
+        // check player inventory for reagents
+        InventoryInteraction inventory = craftingManager.GetComponent<InventoryInteraction>();
+
+        var item1 = new ItemTypeAndCount("Arcane Conductor Matrix", 1);
+        var item2 = new ItemTypeAndCount("Crystallized Etherforce", 1);
+
+        ItemTypeAndCount[] items = {item1, item2};
+        Debug.Log(inventory.ItemCheck(items));
+        if (inventory.ItemCheck(items))
+        {
+            SceneChange(scene);
+        }
     }
 
     private void SceneChange(int scene)

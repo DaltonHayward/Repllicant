@@ -16,10 +16,17 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
     public bool techNPC = false;
     public bool avNPC = false;
     public bool scientistNPC = false;
+    public bool firstSpawn = false;
 
     // enables each camp
     public void NPCCheck()
     {
+        if (!firstSpawn) 
+        {
+            firstSpawn = true;
+            GameObject.FindWithTag("Player").gameObject.transform.position = new Vector3(171.800003f, 0, -103.419998f);
+            StartCoroutine(TeleportPlayer(1));
+        }
         if (daltonNPC) { daltonCamp.SetActive(true);}
         // put player in front of tutorial dalton
         else 
@@ -32,12 +39,14 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         if (avNPC) {  aviatorCamp.SetActive(true); }
         if (scientistNPC) {  scientistCamp.SetActive(true);}
     }
+
     public void LoadData(GameData gameData)
     {
         daltonNPC = gameData.daltonNPC;
         techNPC = gameData.techNPC;
         avNPC = gameData.avNPC;
         scientistNPC= gameData.scientistNPC;
+        firstSpawn = gameData.firstSpawn;
         NPCCheck();
     }
 
@@ -47,5 +56,12 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         gameData.techNPC = techNPC;
         gameData.avNPC = avNPC;
         gameData.scientistNPC = scientistNPC;
+        gameData.firstSpawn = firstSpawn;
+    }
+
+    IEnumerator TeleportPlayer(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        GameObject.FindWithTag("Player").gameObject.transform.position = new Vector3(171.800003f, 0, -103.419998f);
     }
 }
