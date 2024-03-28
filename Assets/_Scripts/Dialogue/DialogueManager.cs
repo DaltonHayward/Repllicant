@@ -119,7 +119,7 @@ public class DialogueManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
 
-        StopCoroutine(displayLineCoroutine);
+        //StopCoroutine(displayLineCoroutine);
 
         //dialogueVariables.StopListening(currentStory);
         inkExternalFunctions.Unbind(currentStory);
@@ -214,11 +214,11 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in line.ToCharArray())
         {
             // if the submit button is pressed, finish up displaying the line right away
-            //if (InputManager.instance.InteractInput) 
-            //{
-             //   dialogueText.maxVisibleCharacters = line.Length;
-              //  break;
-           // }
+            if (InputManager.instance.DodgeInput) 
+            {
+                dialogueText.maxVisibleCharacters = line.Length;
+                break;
+            }
 
             // check for rich text tag, if found, add it without waiting
             if (letter == '<' || isAddingRichTextTag)

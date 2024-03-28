@@ -11,7 +11,7 @@ public class InkExternalFunctions
     {
         story.BindExternalFunction("OpenCrafting", () => OpenCrafting());
 
-        story.BindExternalFunction("NPCAddItem", (string itemToAdd) => NPCAddItem(itemToAdd));
+        story.BindExternalFunction("npcAddItem", (string itemToAdd) => NPCAddItem(itemToAdd));
         
     }
 
@@ -20,7 +20,7 @@ public class InkExternalFunctions
     {
         story.UnbindExternalFunction("OpenCrafting");
 
-        story.UnbindExternalFunction("NPCAddItem");
+        story.UnbindExternalFunction("npcAddItem");
     }
 
     public void OpenCrafting()

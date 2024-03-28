@@ -10,15 +10,15 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private GameObject visualCue;
 
     [Header("Ink JSON")]
-    [SerializeField] public TextAsset inkJSON; // make this a list
+    [SerializeField] public TextAsset inkJSON; // move this to dialogue manager
 
 
-    [SerializeField] public string nameNPC;
+   // [SerializeField] public string nameNPC;
     private bool playerInRange;
 
     private PlayerController _playerController;
 
-    private DialogueVariables dialogueVariables;
+    //private DialogueVariables dialogueVariables;
 
 
     private void Awake()
@@ -36,7 +36,7 @@ public class DialogueTrigger : MonoBehaviour
             {
                 _playerController.SetState(PlayerController.State.DIALOG);
                 StartCoroutine(_playerController.SlowDown());
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON); // make this call a numbered item from list depending on variable
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON); 
             }
         }
         else
