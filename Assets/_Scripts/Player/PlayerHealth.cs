@@ -1,4 +1,5 @@
 ﻿using ReplicantPackage;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +36,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         {
             _invincibleDuration -= Time.deltaTime;
         }
-        currentHealth = Effectable.Effect_PlayerHealth(currentHealth);
+        currentHealth = Mathf.RoundToInt(Effectable.Effect_PlayerHealth(currentHealth));
     }
 
     public void TakeDamage(float damage)
@@ -69,8 +70,29 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         InventoryController.instance.PlayerDeath();
         isDead = true;
         deathScreen.SetActive(true);
+        deathScreen.GetComponent<CanvasGroup>().alpha = 0;
+        FadeIn(deathScreen.GetComponent<CanvasGroup>(), 0.5f);
         deathScreen.GetComponent<CanvasGroup>().interactable = true;
         Heal(maxHealth);
+    }
+
+    // Call this method to fade in the canvas group
+    public void FadeIn(CanvasGroup canvasGroup, float fadeDuration)
+    {
+        StartCoroutine(FadeCanvasGroup(canvasGroup, canvasGroup.alpha, 1f, fadeDuration));
+    }
+
+    // Coroutine to fade the canvas group
+    IEnumerator FadeCanvasGroup(CanvasGroup cg, float startAlpha, float endAlpha, float duration)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            cg.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
+            yield return null;
+        }
+        cg.alpha = endAlpha;
     }
 
     public void Invincible(float delay, float invincibleLength)

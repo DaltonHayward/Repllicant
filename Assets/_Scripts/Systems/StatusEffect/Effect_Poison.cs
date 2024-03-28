@@ -13,6 +13,7 @@ public class Effect_Poison : BaseEffect
     [SerializeField] float DamageModifier = 0.99f;
     public override float Effect_PlayerHealth(float originalCurrentHealth)
     {
+        Debug.Log("Poison Active");
         return originalCurrentHealth * DamageModifier;
     }
 }

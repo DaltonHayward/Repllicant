@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class DeathScreen : MonoBehaviour
 {
     public int baseIsland = 2;
-    public int mainMenu = 1;
+    public int mainMenu = 0;
 
     public void Respawn()
     {

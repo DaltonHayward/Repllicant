@@ -20,7 +20,7 @@ public class ItemGrid : MonoBehaviour
     [SerializeField] public int InventoryHeight;
     [SerializeField] GameObject itemPrefab;
 
-    private List<Inventory_Item> singleInstances = new List<Inventory_Item>();
+    public List<Inventory_Item> singleInstances = new List<Inventory_Item>();
     public bool isInventory;
     /// <summary>
     /// Grabs the component of the current item, and initializes the inventory grid.
@@ -364,6 +364,7 @@ public class ItemGrid : MonoBehaviour
     {
         CleanUpTiles(item);
         singleInstances.Remove(item);
+        Destroy(item.gameObject);
         
     }
 
@@ -377,10 +378,14 @@ public class ItemGrid : MonoBehaviour
         {
             if (item != null)
             {
-                CleanUpTiles(item);
+                if (item.isEquipped)
+                {
+                    InventoryController.instance.UnequipTool(item);
+                } 
+                CleanUpTiles(item);  
                 singleInstances.Remove(item);
-                // invItemSlots.SetValue(null, item.OnGridPositionX, item.OnGridPositionY);
-                Destroy(item.gameObject);
+                invItemSlots.SetValue(null, item.OnGridPositionX, item.OnGridPositionY);
+                
             }
         }
     }
