@@ -17,6 +17,10 @@ public class InvTool : MonoBehaviour, ISubscriber, Burnable
             }
 
         }
+        else if (channel == "Shock")
+        {
+            Shock();
+        }
     }
 
     public void TakeFireDamage()
@@ -31,10 +35,16 @@ public class InvTool : MonoBehaviour, ISubscriber, Burnable
         }
     }
 
+    public void Shock()
+    {
+        StartCoroutine(ShockTimer());
+    }
+
     public void Ignite()
     {
         StartCoroutine(BurnTimer());
     }
+
 
     IEnumerator BurnTimer()
     {
@@ -49,4 +59,20 @@ public class InvTool : MonoBehaviour, ISubscriber, Burnable
         item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[0].sprite);
         isBurning = false;
     }
+
+    IEnumerator ShockTimer()
+    {
+        isShocked = true;
+        Inventory_Item item = GetComponent<Inventory_Item>();
+        //Update sprite
+        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[1].sprite);
+
+        yield return new WaitForSeconds(burnTime);
+
+        // reset sprite
+        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[0].sprite);
+        isShocked = false;
+    }
+
+   
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Ink.Parsed;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -382,7 +383,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
         {
 
             Inventory_Item broadcastingItem = playerInventory.transform.GetChild(child).GetComponent<Inventory_Item>();
-
+            if (broadcastingItem == null) { continue; }
             if (broadcastingItem.itemData.effects.Length == 0) { continue; }
 
             List<Vector2Int> gridPositions = playerInventory.CalculateGridPositions(broadcastingItem);
