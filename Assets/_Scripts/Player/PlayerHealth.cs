@@ -49,7 +49,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
     {
         if (_invincibleDuration <= 0 && !isDead) 
         {
-            damageIndicator.Hurt();
+            //damageIndicator.Hurt();
             currentHealth -= damage; // Reduce HP when take damage
             Debug.Log("Player health is now " + currentHealth); // Print current HP
             slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
@@ -74,7 +74,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         Debug.Log("Player is dead!"); // Death logic
         // 这里可以添加重启游戏或者显示游戏结束界面的逻辑
         //You can add game over scene logic here
-        InventoryController.instance.PlayerDeath();
+        //InventoryController.instance.PlayerDeath();
         isDead = true;
         deathScreen.SetActive(true);
         deathScreen.GetComponent<CanvasGroup>().alpha = 0;

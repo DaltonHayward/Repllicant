@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.HighDefinition;
 
 public class WeatherManager : MonoBehaviour
 {

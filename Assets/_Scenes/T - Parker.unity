@@ -5142,22 +5142,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Clock_Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3537077144121920654, guid: 79f5a4befc4f7fb448341ff77dfc1389, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79f5a4befc4f7fb448341ff77dfc1389, type: 3}
---- !u!114 &964490683 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1900634662130124027, guid: 79f5a4befc4f7fb448341ff77dfc1389, type: 3}
-  m_PrefabInstance: {fileID: 964490682}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14da91fa777c8b5499a00b7a00eb6161, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &964490684 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 627406946462330303, guid: 79f5a4befc4f7fb448341ff77dfc1389, type: 3}
@@ -9843,6 +9836,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1407632838}
     m_Modifications:
     - target: {fileID: 997728091123537018, guid: 981b45e5bfc8db04cbc82c9beb86474d, type: 3}
+      propertyPath: baseIsland
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 997728091123537018, guid: 981b45e5bfc8db04cbc82c9beb86474d, type: 3}
       propertyPath: dataPersistanceManager
       value: 
       objectReference: {fileID: 0}
@@ -11359,17 +11356,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 1200043391}
     m_Modifications:
     - target: {fileID: 2370373785013833126, guid: a0baa5ea2f1c9e6438899c81f9266c5d, type: 3}
+      propertyPath: CurrentTime
+      value: 7.08412
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370373785013833126, guid: a0baa5ea2f1c9e6438899c81f9266c5d, type: 3}
+      propertyPath: _TimeFactor
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370373785013833126, guid: a0baa5ea2f1c9e6438899c81f9266c5d, type: 3}
       propertyPath: _StartingTime
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2370373785013833126, guid: a0baa5ea2f1c9e6438899c81f9266c5d, type: 3}
       propertyPath: Bridges.Array.data[0]
       value: 
-      objectReference: {fileID: 964490683}
+      objectReference: {fileID: 0}
     - target: {fileID: 2370373785013833126, guid: a0baa5ea2f1c9e6438899c81f9266c5d, type: 3}
       propertyPath: Bridges.Array.data[1]
       value: 
-      objectReference: {fileID: 1296708071}
+      objectReference: {fileID: 0}
     - target: {fileID: 4254462728567636775, guid: a0baa5ea2f1c9e6438899c81f9266c5d, type: 3}
       propertyPath: m_Name
       value: TimeManager
