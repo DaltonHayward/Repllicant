@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 5472084412965694766}
   - component: {fileID: 7389270157287792496}
   - component: {fileID: 1497461587550039563}
-  - component: {fileID: 2732819415485739858}
+  - component: {fileID: 7280913787425912043}
   m_Layer: 0
   m_Name: Palm_Tree_05_LOD0
   m_TagString: Untagged
@@ -165,7 +165,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.45
+  m_Radius: 0.69
   m_Height: 7.2165537
   m_Direction: 1
   m_Center: {x: 0.16, y: 3.5722752, z: -0.07}
@@ -188,11 +188,11 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.43
+  m_Radius: 0.79
   m_Height: 7.2165537
   m_Direction: 1
   m_Center: {x: -0.69, y: 3.5722752, z: -0.06}
---- !u!114 &2732819415485739858
+--- !u!114 &7280913787425912043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c033f70b1b219fc4eafb5873bbb62fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 150
+  hp: 100
   sureToDrop: {fileID: 5370432301953082585, guid: eac811f6c02eb024b9655abc5f605ef0, type: 3}
   DropItemAndProbability_List: []
   dropWhenStoned: {fileID: 8760400047210153315, guid: fd2383f5619f7e443ae977adb8d36a6f, type: 3}
