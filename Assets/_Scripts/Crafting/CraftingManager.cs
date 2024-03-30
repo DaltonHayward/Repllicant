@@ -22,6 +22,8 @@ public class CraftingManager : MonoBehaviour
 
     [SerializeField] public TextMeshProUGUI notificationText;
 
+    [SerializeField] public GameObject notificationPanel;
+
     [Header("Recipes")]
     [SerializeField] BaseItemRecipe[] recipes;
     [SerializeField] GameObject craftableItem;
