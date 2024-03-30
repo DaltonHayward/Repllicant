@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+
+
 public class ItemController : MonoBehaviour
 {
     private Boolean isPickedUp = false;
     public String Name;
 
     private ItemData itemData;
+
 
     private void Start()
     {
@@ -29,6 +32,7 @@ public class ItemController : MonoBehaviour
                 {
                     isPickedUp = true;
                     InventoryController.instance.InsertNewItem(itemData, InventoryController.playerInventory);
+                    CraftingManager.instance.inventoryInteraction.AddItemNotification(itemData.Name);
                     transform.GetChild(0).gameObject.SetActive(false);
                     Destroy(gameObject);
                 }
