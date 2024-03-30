@@ -109,6 +109,7 @@ public class InventoryInteraction : MonoBehaviour
                         //InventoryController.playerInventory.invItemSlots.SetValue(null, invItem.OnGridPositionX, invItem.OnGridPositionY);
                         removalCount--;
                         Debug.Log("Removed" + invItem.itemData.Name);
+                        RemoveItemNotification(invItem.itemData.Name);
                     }
                 }
             }
@@ -124,6 +125,7 @@ public class InventoryInteraction : MonoBehaviour
         {
             InventoryController.instance.InsertNewItem(itemToAdd, InventoryController.playerInventory);
             Debug.Log("Added item to inventory: " + itemToAdd.name);
+            AddItemNotification(itemToAdd.name);
         }
         else
         {
@@ -164,7 +166,7 @@ public class InventoryInteraction : MonoBehaviour
         AddInventoryItems(item);
 
 
-        AddItemNotification(itemToAdd);
+        
     }
 
     public void AddItemNotification(string itemToAdd)
@@ -177,6 +179,22 @@ public class InventoryInteraction : MonoBehaviour
         }*/
         GameObject notification = Instantiate(CraftingManager.instance.notificationText, parent);
         notification.transform.GetComponent<TextMeshProUGUI>().text = (itemToAdd + " added");
+        
+        StartCoroutine(ClearNotifications(notification));
+        
+    }
+
+    public void RemoveItemNotification(string itemToAdd)
+    {
+        Transform parent = CraftingManager.instance.notificationPanel;
+
+        /*foreach (Transform child in parent)
+        {
+            Destroy(child.gameObject);
+        }*/
+        GameObject notification = Instantiate(CraftingManager.instance.notificationText, parent);
+        notification.transform.GetComponent<TextMeshProUGUI>().text = (itemToAdd + " removed");
+        notification.transform.GetComponent<TextMeshProUGUI>().color = Color.red;
         
         StartCoroutine(ClearNotifications(notification));
         
