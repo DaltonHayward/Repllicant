@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -154,16 +155,42 @@ public class InventoryInteraction : MonoBehaviour
     public void NPCAddItem(string itemToAdd)
     {
         //string itemString = "Sword"; 
+
         ItemData item;
         if (!InventoryController.instance.itemDataDictionary.TryGetValue(itemToAdd, out item))
         {
             return;
         }
         AddInventoryItems(item);
+
+
+        AddItemNotification(itemToAdd);
     }
 
-    public void AddItemNotification()
+    public void AddItemNotification(string itemToAdd)
     {
-        //CraftingManager.instance.notificationText.SetActive(true);
+        Transform parent = CraftingManager.instance.notificationPanel;
+
+        /*foreach (Transform child in parent)
+        {
+            Destroy(child.gameObject);
+        }*/
+        GameObject notification = Instantiate(CraftingManager.instance.notificationText, parent);
+        notification.transform.GetComponent<TextMeshProUGUI>().text = (itemToAdd + " added");
+        
+        StartCoroutine(ClearNotifications(notification));
+        
     }
+
+
+    private IEnumerator ClearNotifications(GameObject notification)
+    {
+        yield return new WaitForSeconds(3f);
+
+        if (notification)
+        {
+            Destroy(notification);
+        }
+    }
+
 }
