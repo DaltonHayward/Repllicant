@@ -11,8 +11,8 @@ public class WeatherManager : MonoBehaviour
     [SerializeField, Range(0f, 1f)] float FogIntensity;
     //[SerializeField, Range(0f, 1f)] float HailIntensity;
 
-    [SerializeField] float MinFogAttenuationDistance = 10f;
-    [SerializeField] float MaxFogAttenuationDistance = 50f;
+    //[SerializeField] float MinFogAttenuationDistance = 10f;
+    //[SerializeField] float MaxFogAttenuationDistance = 50f;
     [SerializeField] VisualEffect RainVFX;
     //[SerializeField] VisualEffect SnowVFX;
     //[SerializeField] VisualEffect HailVFX;
