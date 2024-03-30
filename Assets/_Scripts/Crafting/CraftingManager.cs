@@ -20,6 +20,8 @@ public class CraftingManager : MonoBehaviour
     [SerializeField] public GameObject craftingCanvas;
     [SerializeField] public UnityEngine.UI.Button craftingButton;
 
+    [SerializeField] public TextMeshProUGUI notificationText;
+
     [Header("Recipes")]
     [SerializeField] BaseItemRecipe[] recipes;
     [SerializeField] GameObject craftableItem;

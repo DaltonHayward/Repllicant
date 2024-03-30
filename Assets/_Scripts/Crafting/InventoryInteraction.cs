@@ -161,4 +161,9 @@ public class InventoryInteraction : MonoBehaviour
         }
         AddInventoryItems(item);
     }
+
+    public void AddItemNotification()
+    {
+        //CraftingManager.instance.notificationText.SetActive(true);
+    }
 }
