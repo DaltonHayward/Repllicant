@@ -73,6 +73,7 @@ public class InventoryInteraction : MonoBehaviour
         return foundItems == itemsNeed.Length;
     }
 
+    // function for finding the count of an item in the player's inventory
     public int ItemCountCheck(string itemName)
     {
         List<ItemTypeAndCount> items = GetAllItems();
