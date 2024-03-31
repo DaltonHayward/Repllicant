@@ -52,27 +52,29 @@ public class TimeManager : MonoBehaviour //IDataPersistance
     // Update is called once per frame
     void Update()
     {
-        
+
         CurrentTime = (DayLength + CurrentTime + Time.deltaTime * _TimeFactor / 3600f) % DayLength;
         //_elapsedTime += (DeltaTime / DayLength);
         //var elapsedDays = _elapsedTime / _TimeFactor;
         //var elapsedTimeSpan = TimeSpan.FromDays(elapsedDays);
         // CurrentDate = _startDate.Add(elapsedTimeSpan);
-        
-       /* foreach (var bridge in Bridges)
+
+        foreach (var bridge in Bridges)
         {
             bridge.OnTick(CurrentTime);
-        }*/
-    }
-/*
-    public void LoadData(GameData gameData)
-    {
-        CurrentTime = gameData.time;
+        }
     }
 
-    public void SaveData(ref GameData gameData)
-    {
-        gameData.time = CurrentTime;
-    }
-    */
+    // saving/loading time between scenes
+    /*
+        public void LoadData(GameData gameData)
+        {
+            CurrentTime = gameData.time;
+        }
+
+        public void SaveData(ref GameData gameData)
+        {
+            gameData.time = CurrentTime;
+        }
+        */
 }

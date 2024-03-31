@@ -39,7 +39,7 @@ public class LevelGenerator : MonoBehaviour
         List<Rect> borders = partitionedLevel.Item2;
         // spawns the structure (with props) and enemies
         SpawnStructures(partitionedAreas);
-        SpawnEnemiesInArea(level); // this line is throwing a missing exception reference
+        //SpawnEnemiesInArea(level); // this line is throwing a missing exception reference
     }
 
 
