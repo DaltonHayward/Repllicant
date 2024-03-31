@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 19fa4063a714d034386abb7533e7fe76, type: 2}
     - target: {fileID: 919132149155446097, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
       propertyPath: m_Name
-      value: FallenDeadTree1 1
+      value: FallenDeadTree2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -116,6 +116,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2620387451102638757}
     m_Modifications:
+    - target: {fileID: 79917196034450755, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.018
+      objectReference: {fileID: 0}
+    - target: {fileID: 79917196034450755, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.005
+      objectReference: {fileID: 0}
     - target: {fileID: 88580964116536303, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
       propertyPath: m_Name
       value: Dead_Tree_13
@@ -172,21 +180,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1007638888586028720, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
+      propertyPath: m_Height
+      value: 2.146247
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007638888586028720, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
+      propertyPath: m_Radius
+      value: 0.79236573
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007638888586028720, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
+      propertyPath: m_Center.x
+      value: -0.00999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007638888586028720, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
+      propertyPath: m_Center.y
+      value: 0.99940205
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007638888586028720, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
+      propertyPath: m_Center.z
+      value: 0.01999998
+      objectReference: {fileID: 0}
     - target: {fileID: 1007638888586028727, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
       propertyPath: m_Height
-      value: 2.4363718
+      value: 2.652317
       objectReference: {fileID: 0}
     - target: {fileID: 1007638888586028727, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
       propertyPath: m_Radius
-      value: 0.53400403
+      value: 1.0751342
       objectReference: {fileID: 0}
     - target: {fileID: 1007638888586028727, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
       propertyPath: m_Center.x
-      value: -2.5468144
+      value: -3.0704288
       objectReference: {fileID: 0}
     - target: {fileID: 1007638888586028727, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
       propertyPath: m_Center.y
-      value: 0.4740041
+      value: 1.0151342
       objectReference: {fileID: 0}
     - target: {fileID: 1007638888586028727, guid: a481871fe86ab3e4b86697bd99d87cc8, type: 3}
       propertyPath: m_Center.z
