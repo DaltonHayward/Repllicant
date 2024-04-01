@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
 {
     // Coupled EffectableObject script here so that effects can be applied to the player
-    protected EffectableObject Effectable;
+    public EffectableObject Effectable; //should be protected but ¯\_(ツ)_/¯
     [SerializeField] private PlayerSounds playerSounds;
     
     private Transform _playerCamera;
@@ -84,8 +84,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     // Equipment
     public enum Equipment { WEAPON, PICKAXE, AXE };
-    private Equipment _currentEquipment;
-    private int _currentTool;
+    public Equipment _currentEquipment; // switched to public for testing (change back to private sometime)
+    private int _currentTool; 
     private EquippedTool[] _tools;
     public Transform ToolHolder;
     private bool _canScroll = true;
