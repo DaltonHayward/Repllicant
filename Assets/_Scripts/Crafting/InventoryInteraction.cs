@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -72,6 +73,7 @@ public class InventoryInteraction : MonoBehaviour
         return foundItems == itemsNeed.Length;
     }
 
+    // function for finding the count of an item in the player's inventory
     public int ItemCountCheck(string itemName)
     {
         List<ItemTypeAndCount> items = GetAllItems();
@@ -108,6 +110,7 @@ public class InventoryInteraction : MonoBehaviour
                         //InventoryController.playerInventory.invItemSlots.SetValue(null, invItem.OnGridPositionX, invItem.OnGridPositionY);
                         removalCount--;
                         Debug.Log("Removed" + invItem.itemData.Name);
+                        RemoveItemNotification(invItem.itemData.Name);
                     }
                 }
             }
@@ -123,6 +126,7 @@ public class InventoryInteraction : MonoBehaviour
         {
             InventoryController.instance.InsertNewItem(itemToAdd, InventoryController.playerInventory);
             Debug.Log("Added item to inventory: " + itemToAdd.name);
+            AddItemNotification(itemToAdd.name);
         }
         else
         {
@@ -154,11 +158,58 @@ public class InventoryInteraction : MonoBehaviour
     public void NPCAddItem(string itemToAdd)
     {
         //string itemString = "Sword"; 
+
         ItemData item;
         if (!InventoryController.instance.itemDataDictionary.TryGetValue(itemToAdd, out item))
         {
             return;
         }
         AddInventoryItems(item);
+
+
+        
     }
+
+    public void AddItemNotification(string itemToAdd)
+    {
+        Transform parent = CraftingManager.instance.notificationPanel;
+
+        /*foreach (Transform child in parent)
+        {
+            Destroy(child.gameObject);
+        }*/
+        GameObject notification = Instantiate(CraftingManager.instance.notificationText, parent);
+        notification.transform.GetComponent<TextMeshProUGUI>().text = (itemToAdd + " added");
+        
+        StartCoroutine(ClearNotifications(notification));
+        
+    }
+
+    public void RemoveItemNotification(string itemToAdd)
+    {
+        Transform parent = CraftingManager.instance.notificationPanel;
+
+        /*foreach (Transform child in parent)
+        {
+            Destroy(child.gameObject);
+        }*/
+        GameObject notification = Instantiate(CraftingManager.instance.notificationText, parent);
+        notification.transform.GetComponent<TextMeshProUGUI>().text = (itemToAdd + " removed");
+        notification.transform.GetComponent<TextMeshProUGUI>().color = Color.red;
+        
+        StartCoroutine(ClearNotifications(notification));
+        
+    }
+
+
+    private IEnumerator ClearNotifications(GameObject notification)
+    {
+        yield return new WaitForSeconds(3f);
+
+        if (notification)
+        {
+            Destroy(notification);
+        }
+    }
+
 }
