@@ -45,19 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aacf21488bb6968499c55bdf8a445917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  structures: []
-  ground: {fileID: 0}
-  accents: {fileID: 0}
+  structures:
+  - {fileID: 11400000, guid: c29c37e2830145a4592173d98f3e5540, type: 2}
+  - {fileID: 11400000, guid: 933498ef324185141bb7d53d2fbdce5b, type: 2}
+  - {fileID: 11400000, guid: 5a368c5c2ebc0b94d8122b18b514a772, type: 2}
+  - {fileID: 11400000, guid: 6107fa47cb0769843ac77f59d4d119cb, type: 2}
+  - {fileID: 11400000, guid: 8d27818196be2c04cb3eed6ddf8137e9, type: 2}
   walls: {fileID: 0}
+  ground: {fileID: 0}
   props: {fileID: 0}
-  enemies: {fileID: 0}
   baseLevelTiles: {fileID: 11400000, guid: 1fa2812f85981fc409a8a858b06de989, type: 2}
   width: 80
   height: 80
-  enemiesSpawnable: 0
-  enemyPrefabs: []
-  enemyMin: 0
-  enemyMax: 0
 --- !u!156049354 &1679489695546201047
 Grid:
   m_ObjectHideFlags: 0
