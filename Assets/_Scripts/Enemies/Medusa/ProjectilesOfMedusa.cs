@@ -27,7 +27,7 @@ public class ProjectilesOfMedusa : MonoBehaviour
         if (other.GetComponent<Wood>() != null)
         {
             Wood wood = other.GetComponent<Wood>();
-            wood.sureToDrop = wood.dropItemStart;
+            wood.sureToDrop = wood.baseItemDrop;
         }
         else if (other.CompareTag("Player"))
         {

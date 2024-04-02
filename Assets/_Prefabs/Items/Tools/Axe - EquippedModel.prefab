@@ -71,9 +71,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseDamage: 20
-  BurningDamage: 40
+  BurningDamage: 30
+  isBurning: 0
   Damage: 0
   fireSystem: {fileID: 3884850380465758781}
+  invTool: {fileID: 0}
 --- !u!1 &1985885499490862092
 GameObject:
   m_ObjectHideFlags: 0
