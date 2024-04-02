@@ -516,11 +516,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
             float speed = _dodgeCurve.Evaluate(timer);
             _controller.Move((dir * speed* MoveSpeed) * Time.deltaTime);
             timer += Time.deltaTime;
-            Debug.Log(timer);
             yield return null;
         }
 
-        Debug.Log("HerE");
         _playerState = State.STANDING;
     }
 
