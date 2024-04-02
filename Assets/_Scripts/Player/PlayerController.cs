@@ -498,6 +498,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (InputManager.instance.DodgeInput && InputDirection != Vector3.zero && _canDodge)
         {
             StartCoroutine(Dodge());
+            
             GetComponent<PlayerHealth>().Invincible(_delayBeforeInvinsible, _invinsibleDuration);
             StartCoroutine(DodgeCooldown());
         }
@@ -855,7 +856,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
                 Destroy(pickaxeHolder.GetChild(0).gameObject);
                 _tools[1] = null;
-
                 break;
 
             case Equipment.AXE:
