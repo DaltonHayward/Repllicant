@@ -24,14 +24,12 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         if (!firstSpawn) 
         {
             firstSpawn = true;
-            GameObject.FindWithTag("Player").gameObject.transform.position = new Vector3(171.800003f, 0, -103.419998f);
-            StartCoroutine(TeleportPlayer(2f));
+            StartCoroutine(TeleportPlayer(2.5f));
         }
         if (daltonNPC) { daltonCamp.SetActive(true);}
         // put player in front of tutorial dalton
         else 
         { 
-            //GameObject.FindWithTag("Player").transform.position = new Vector3(186.630005f, 0, -103.230003f); 
             tutorialDalton.SetActive(true);
         }
         if (daltonNPC) { tutorialObjects.SetActive(false); }
@@ -63,6 +61,8 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
     {
         yield return new WaitForSeconds(seconds);
         Debug.Log("First spawn, teleporting to starting position");
+        GameObject.FindWithTag("Player").gameObject.transform.position = new Vector3(171.800003f, 0, -103.419998f);
+        yield return new WaitForSeconds(1f);
         GameObject.FindWithTag("Player").gameObject.transform.position = new Vector3(171.800003f, 0, -103.419998f);
     }
 }
