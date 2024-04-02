@@ -5,21 +5,26 @@ using UnityEngine;
 public class Wood : Collectible, ISubscriber
 {
     public GameObject dropWhenStoned; // drops when tree is stoned
-    [HideInInspector]public GameObject dropItemStart; // drops when tree isn't stoned
+    [HideInInspector]public GameObject baseItemDrop; // drops when tree isn't stoned
 
     public bool isStoned = false;
+    private bool isBurning = false;
 
     public Material stoneMaterial;
     public Material woodMaterial;
 
+    [SerializeField]
+    public ParticleSystem fireSystem;
+    private IEnumerator burnCD;
+
     private void Start()
     {
-        dropItemStart = sureToDrop;
+        baseItemDrop = sureToDrop;
+        burnCD = BurnCooldown();
     }
 
     override public void TakeDamage(float damage)
     {
-
         hp -= damage;
         
         if (hp <= 0) {
@@ -39,8 +44,32 @@ public class Wood : Collectible, ISubscriber
     public void UnStoned() // changes tree back to normal
     {
         isStoned = false;
-        sureToDrop = dropItemStart;
+        sureToDrop = baseItemDrop;
         GetComponent<MeshRenderer>().material = woodMaterial;
+    }
+
+    private void Burn()
+    {
+        isBurning = true;
+
+        if (!fireSystem.isPlaying)
+        {
+            fireSystem.Play();
+        }
+
+        StartCoroutine(burnCD);
+    }
+
+    IEnumerator BurnCooldown()
+    {
+        float rand = Random.Range(3f, 10f);
+        yield return new WaitForSeconds(rand);
+        isBurning = false;
+
+        if (fireSystem.isPlaying)
+        {
+            fireSystem.Stop();
+        }
     }
 
     public void ReceiveMessage(string channel)
@@ -48,6 +77,24 @@ public class Wood : Collectible, ISubscriber
         if (channel.Equals("Petrified"))
         {
             Stoned();
+        }
+
+        if (channel.Equals("Burning"))
+        {
+            if (isBurning)
+            {
+                // reset burn cooldown
+                StopCoroutine(burnCD);
+                Burn();
+            }
+            else
+            {
+                float rand = Random.value;
+                if (rand < 0.6)
+                {
+                    Burn();
+                }
+            }
         }
     }
 }
