@@ -22,11 +22,6 @@ public class ItemRecipe : MonoBehaviour
     [SerializeField] GameObject recipePrefab;
 
     
-    //[SerializeField] GameObject craftableSpritePrefab;
-
-    
-    
-    
     public void OnPointerClick()
     {
         

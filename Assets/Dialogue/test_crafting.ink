@@ -8,6 +8,8 @@ Do you want a sword? You might need one!
 + [Yes]
     Let's craft!
     ~ npcAddItem("Sword")
+    ~ npcAddItem("Axe")
+    ~ npcAddItem("Pickaxe")
     -> END
 + [No]
     Well... I'll be here if you change your mind!

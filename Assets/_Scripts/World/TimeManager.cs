@@ -59,10 +59,10 @@ public class TimeManager : MonoBehaviour //IDataPersistance
         //var elapsedTimeSpan = TimeSpan.FromDays(elapsedDays);
         // CurrentDate = _startDate.Add(elapsedTimeSpan);
         
-        foreach (var bridge in Bridges)
+       /* foreach (var bridge in Bridges)
         {
             bridge.OnTick(CurrentTime);
-        }
+        }*/
     }
 /*
     public void LoadData(GameData gameData)

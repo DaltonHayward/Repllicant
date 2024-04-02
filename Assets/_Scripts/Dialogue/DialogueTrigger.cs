@@ -12,13 +12,9 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] public TextAsset inkJSON; // move this to dialogue manager
 
-
-   // [SerializeField] public string nameNPC;
     private bool playerInRange;
 
     private PlayerController _playerController;
-
-    //private DialogueVariables dialogueVariables;
 
 
     private void Awake()
