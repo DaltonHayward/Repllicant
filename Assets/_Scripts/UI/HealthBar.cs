@@ -11,16 +11,18 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] PlayerHealth playerHealth;
     public Slider healthSlider;
-
     public Slider easeSlider;
-    //public float maxHealth = 100f;
+    public float maxHealth;
     public float health;
 
     private float lerpSpeed = 0.05f;
 
     private void Start() 
     {
-        //health = playerHealth.currentHealth;
+        maxHealth = playerHealth.maxHealth;
+        health = playerHealth.currentHealth;
+        healthSlider.maxValue = maxHealth;
+        easeSlider.maxValue = maxHealth;
     }
 
     private void Update() 

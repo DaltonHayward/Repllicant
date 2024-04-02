@@ -84,9 +84,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     // Equipment
     public enum Equipment { WEAPON, PICKAXE, AXE };
-    public Equipment _currentEquipment; // switched to public for testing (change back to private sometime)
+    private Equipment _currentEquipment; 
     private int _currentTool; 
-    private EquippedTool[] _tools;
+    private EquippedTool[] _tools; 
     public Transform ToolHolder;
     private bool _canScroll = true;
     [SerializeField]
@@ -990,4 +990,16 @@ public class PlayerController : MonoBehaviour, ISubscriber
         playerSounds.PlayDodge();
         
     }
+
+    public string GetCurrentEquipment()
+    {
+        return _currentEquipment.ToString();
+    }
+
+    public int GetCurrentTool()
+    {
+        return _currentTool;
+    }
+
+    
 }

@@ -10,7 +10,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Effects/Poison", fileName = "Effect_Poison")]
 public class Effect_Poison : BaseEffect
 {
-    [SerializeField] float DamageModifier = 0.99f;
+    [SerializeField] float DamageModifier = 0.999f;
 
     public override float Effect_PlayerHealth(float originalCurrentHealth)
     {

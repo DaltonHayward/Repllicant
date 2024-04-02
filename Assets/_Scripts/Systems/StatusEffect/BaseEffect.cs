@@ -15,7 +15,7 @@ public class BaseEffect : ScriptableObject
 
     float DurationRemaining = 0f;
 
-    public string name;
+    public new string name;
 
 
     public void EnableEffect()

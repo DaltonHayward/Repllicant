@@ -20,7 +20,7 @@ public class EquippedGUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        equipped = playerController._currentEquipment.ToString();
+        equipped = playerController.GetCurrentEquipment();
         UpdateEquippedUI();
 
     }
@@ -28,7 +28,8 @@ public class EquippedGUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        string newEquipped = playerController._currentEquipment.ToString();
+        string newEquipped = playerController.GetCurrentEquipment();
+        
         if (newEquipped != equipped)
         {
             equipped = newEquipped;
@@ -42,9 +43,10 @@ public class EquippedGUI : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-
-
-        if (equipped != null)
+        //Debug.Log(playerController._tools[playerController._currentTool] != null);
+        int currentTool = playerController.GetCurrentTool();
+        EquippedTool[] tools = playerController.GetTools();
+        if (equipped != null && tools[currentTool] != null)
         {
             GameObject newEquipped = Instantiate(equippedSprite, equippedPanel);
             if (equipped == "WEAPON")

@@ -9,13 +9,19 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour, IDataPersistance
 {
-    public float maxHealth = 100f; // Player Max health
+    public float maxHealth = 500f; // Player Max health
     public float currentHealth; // Player current health
+
+    //public float healthRecoveryRate = 10f;
+    //public float healthRecoveryDelay = 5f;
+
+    protected float previousHealth = 0f;
+    //protected float HealthRecoveryDelayRemaining = 0f;
 
     public bool isDead;
 
     private float _invincibleDuration;
-    public GameObject slider;
+    //public GameObject slider;
     public GameObject deathScreen;
 
     // Coupled EffectableObject script here so that effects can be applied to the player health
@@ -29,6 +35,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         damageIndicator = GetComponent<DamageIndicator>();
         StartCoroutine(RefreshHPBar(0.5f));
         isDead = false;
+        previousHealth = currentHealth;
     }
 
     private void Awake() 
@@ -43,6 +50,11 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
             _invincibleDuration -= Time.deltaTime;
         }
         currentHealth = Mathf.RoundToInt(Effectable.Effect_PlayerHealth(currentHealth));
+
+        if  (previousHealth != currentHealth)
+        {
+            previousHealth = currentHealth;
+        }
     }
 
     public void TakeDamage(float damage)
@@ -52,7 +64,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
             //damageIndicator.Hurt();
             currentHealth -= damage; // Reduce HP when take damage
             Debug.Log("Player health is now " + currentHealth); // Print current HP
-            slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
+            //slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
 
             if (currentHealth <= 0)
             {
@@ -65,14 +77,14 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
     {
         currentHealth += amount; // Restore HP
         currentHealth = Mathf.Min(currentHealth, maxHealth); // Make sure that the current hp wont above MAX HP
-        slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
+        //slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
         Debug.Log("Player healed, health is now " + currentHealth); // Print current HP
     }
 
     void Die()
     {
         Debug.Log("Player is dead!"); // Death logic
-        // 这里可以添加重启游戏或者显示游戏结束界面的逻辑
+        // 这里可以添加重启游戏或者显示游戏结束界面的逻辑 - (Here you can add logic to restart the game or display the game end interface)
         //You can add game over scene logic here
         //InventoryController.instance.PlayerDeath();
         isDead = true;
@@ -129,14 +141,14 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
     IEnumerator RefreshHPBar(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
+        //slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
     }
 
     public void LoadData(GameData gameData)
     {
         this.currentHealth = gameData.currentHealth;
         this.maxHealth = gameData.maxHealth;
-        slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
+        //slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
     }
 
     public void SaveData(ref GameData gameData)
