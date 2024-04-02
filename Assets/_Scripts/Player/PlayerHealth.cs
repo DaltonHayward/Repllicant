@@ -3,12 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(DamageIndicator))]
 
 public class PlayerHealth : MonoBehaviour, IDataPersistance
 {
+    [SerializeField] protected UnityEvent<PlayerHealth> OnPlayerDied = new UnityEvent<PlayerHealth>();
     public float maxHealth = 500f; // Player Max health
     public float currentHealth; // Player current health
 
@@ -33,7 +35,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
     void Start()
     {
         damageIndicator = GetComponent<DamageIndicator>();
-        StartCoroutine(RefreshHPBar(0.5f));
+        //StartCoroutine(RefreshHPBar(0.5f));
         isDead = false;
         previousHealth = currentHealth;
     }
@@ -57,26 +59,26 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage) //could be nice to provide a type or source here for resilience to certain damage etc.
     {
         if (_invincibleDuration <= 0 && !isDead) 
         {
             //damageIndicator.Hurt();
-            currentHealth -= damage; // Reduce HP when take damage
-            Debug.Log("Player health is now " + currentHealth); // Print current HP
-            //slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
+            //currentHealth -= damage; // Reduce HP when take damage
+            currentHealth = Mathf.Max(currentHealth - damage, 0f);
+            
 
-            if (currentHealth <= 0)
+            if (currentHealth <= 0f && previousHealth > 0f)
             {
                 Die(); // Excute dealth logic when HP reach 0
             }
         }
     }
 
-    public void Heal(float amount)
+    public void Heal(float amount) // could add gameobject source here
     {
-        currentHealth += amount; // Restore HP
-        currentHealth = Mathf.Min(currentHealth, maxHealth); // Make sure that the current hp wont above MAX HP
+        //currentHealth += amount; // Restore HP
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth); // Make sure that the current hp wont above MAX HP
         //slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
         Debug.Log("Player healed, health is now " + currentHealth); // Print current HP
     }
@@ -90,11 +92,13 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         isDead = true;
         deathScreen.SetActive(true);
         deathScreen.GetComponent<CanvasGroup>().alpha = 0;
-        FadeIn(deathScreen.GetComponent<CanvasGroup>(), 0.5f);
+        //FadeIn(deathScreen.GetComponent<CanvasGroup>(), 0.5f);
+        deathScreen.GetComponent<CanvasFader>().Fade();
         deathScreen.GetComponent<CanvasGroup>().interactable = true;
         Heal(maxHealth);
+        OnPlayerDied.Invoke(this);
     }
-
+    /*
     // Call this method to fade in the canvas group
     public void FadeIn(CanvasGroup canvasGroup, float fadeDuration)
     {
@@ -112,7 +116,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
             yield return null;
         }
         cg.alpha = endAlpha;
-    }
+    }*/
 
     public void Invincible(float delay, float invincibleLength)
     {
@@ -138,11 +142,12 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         _invincibleDuration = invsLength;
     }
 
+    /*
     IEnumerator RefreshHPBar(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         //slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
-    }
+    }*/
 
     public void LoadData(GameData gameData)
     {
