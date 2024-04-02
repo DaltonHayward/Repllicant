@@ -57,19 +57,25 @@ namespace ToolTipUI
             popupObject.transform.position = newPos;
         }
 
-        public static void ShowToolTip(ItemData item) 
+        public static void ShowToolTip(ItemData item)
         {
             current.popupCanvasObject.SetActive(true);
             //current.GetComponent<CanvasFader>().Fade();
-            current.header.transform.GetComponent<TextMeshProUGUI>().text = item.name;
+            current.header.transform.GetComponent<TextMeshProUGUI>().text = current.AddSpaces(item.name);
             LayoutRebuilder.ForceRebuildLayoutImmediate(current.popupObject);
         }
 
         public static void HideToolTip()
         {
-            
+
             current.popupCanvasObject.SetActive(false);
             //current.GetComponent<CanvasFader>().Fade();
+        }
+
+        private string AddSpaces(string itemName)
+        {
+            string name = System.Text.RegularExpressions.Regex.Replace(itemName, "([a-z])([A-Z])", "$1 $2");
+            return name;
         }
 
     }

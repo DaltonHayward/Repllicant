@@ -13,6 +13,9 @@ public class PlayerSounds : MonoBehaviour
     [SerializeField] private FMODUnity.EventReference _dodge;
     private FMOD.Studio.EventInstance dodge;
 
+    [SerializeField] private FMODUnity.EventReference _attack01;
+    private FMOD.Studio.EventInstance attack01;
+
     private void Awake() 
     {
         if (! _footsteps.IsNull)
@@ -25,6 +28,12 @@ public class PlayerSounds : MonoBehaviour
         {
             
             dodge = FMODUnity.RuntimeManager.CreateInstance(_dodge);
+        }
+
+        if (! _attack01.IsNull)
+        {
+            
+            attack01 = FMODUnity.RuntimeManager.CreateInstance(_attack01);
         }
     }
 
@@ -53,6 +62,10 @@ public class PlayerSounds : MonoBehaviour
 
     public void PlayAttack01()
     {
+        if (attack01.isValid())
+        {
+            attack01.start();
+        }
 
     }
 
@@ -63,7 +76,7 @@ public class PlayerSounds : MonoBehaviour
 
     public void PlayToolSwing()
     {
-
+        
     }
 
     public void PlayHurt()
