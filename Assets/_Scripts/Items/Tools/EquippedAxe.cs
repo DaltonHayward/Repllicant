@@ -12,7 +12,24 @@ public class EquippedAxe : EquippedTool
         {
             if (c.GetType() == typeof(Wood))
             {
-                c.TakeDamage(Damage);
+                float dmg;
+                if (other.gameObject.GetComponent<Wood>().isStoned)
+                {
+                    dmg = Damage / 10;
+                }
+                else
+                {
+                    dmg = Damage;
+                }
+
+                c.TakeDamage(dmg);
+                
+                // send fire signal if burning
+                ISubscriber subscriber = other.GetComponent<ISubscriber>();
+                if (isBurning && subscriber != null)
+                {
+                    subscriber.ReceiveMessage("Burning");
+                }
             }
 
             if (c.GetType() == typeof(Stone))

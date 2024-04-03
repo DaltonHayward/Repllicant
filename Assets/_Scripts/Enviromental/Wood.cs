@@ -1,25 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class Wood : Collectible, ISubscriber
 {
     public GameObject dropWhenStoned; // drops when tree is stoned
+    public GameObject burningItemDrop;
     [HideInInspector]public GameObject dropItemStart; // drops when tree isn't stoned
 
     public bool isStoned = false;
+    private bool isBurning = false;
 
     public Material stoneMaterial;
     public Material woodMaterial;
 
+
+    // burn system
+    [SerializeField]
+    public ParticleSystem fireSystem;
+    [Range(0,1)]
+    public float burnChance = 0.7f;
+    private IEnumerator burnCD;
+    private IEnumerator burnTick;
+    public GameObject fireLight;
+
     private void Start()
     {
         dropItemStart = sureToDrop;
+        burnCD = BurnCooldown();
+        burnTick = BurnTick();
     }
 
     override public void TakeDamage(float damage)
     {
-
         hp -= damage;
         
         if (hp <= 0) {
@@ -31,6 +45,7 @@ public class Wood : Collectible, ISubscriber
     // change tree to stoned; changes drop and material
     public void Stoned()
     {
+        StopBurn();
         isStoned = true;
         sureToDrop = dropWhenStoned;
         GetComponent<MeshRenderer>().material = stoneMaterial;
@@ -43,11 +58,91 @@ public class Wood : Collectible, ISubscriber
         GetComponent<MeshRenderer>().material = woodMaterial;
     }
 
+    private void Burn()
+    {
+        if (isStoned) { return; }
+
+        isBurning = true;
+        sureToDrop = burningItemDrop;
+        fireLight.SetActive(true);
+
+        if (!fireSystem.isPlaying)
+        {
+            fireSystem.Play();
+        }
+
+        StartCoroutine(burnCD);
+        StopCoroutine(burnTick);
+        StartCoroutine(burnTick);
+
+    }
+
+    private void StopBurn()
+    {
+        // stop all fire related effects when set to stone
+        if (isBurning)
+        {
+            isBurning = false;
+            StopCoroutine(burnTick);
+            StartCoroutine(burnCD);
+            fireLight.SetActive(false);
+
+            if (fireSystem.isPlaying)
+            {
+                fireSystem.Stop();
+            }
+
+        }
+    }
+
+    IEnumerator BurnCooldown()
+    {
+        float rand = Random.Range(5f, 10f);
+        yield return new WaitForSeconds(rand);
+        isBurning = false;
+        sureToDrop = dropItemStart;
+        fireLight.SetActive(false);
+
+        if (fireSystem.isPlaying)
+        {
+            fireSystem.Stop();
+        }
+
+        StopCoroutine(burnTick);
+    }
+
+    IEnumerator BurnTick()
+    {
+        while (true)
+        {
+            TakeDamage(3f);
+            yield return new WaitForSeconds(1);
+        }
+    }
+
     public void ReceiveMessage(string channel)
     {
         if (channel.Equals("Petrified"))
         {
             Stoned();
+        }
+
+        if (channel.Equals("Burning"))
+        {
+            if (isBurning)
+            {
+                // reset burn cooldown
+                StopCoroutine(burnCD);
+                Burn();
+            }
+            else
+            {
+                float rand = Random.value;
+                if (rand < burnChance)
+                {
+                    Burn();
+                }
+            }
         }
     }
 }

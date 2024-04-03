@@ -25,7 +25,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         {
             firstSpawn = true;
             GameObject.FindWithTag("Player").gameObject.transform.position = new Vector3(171.800003f, 0, -103.419998f);
-            StartCoroutine(TeleportPlayer(1));
+            StartCoroutine(TeleportPlayer(2f));
         }
         if (daltonNPC) { daltonCamp.SetActive(true);}
         // put player in front of tutorial dalton
@@ -62,6 +62,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
     IEnumerator TeleportPlayer(float seconds)
     {
         yield return new WaitForSeconds(seconds);
+        Debug.Log("First spawn, teleporting to starting position");
         GameObject.FindWithTag("Player").gameObject.transform.position = new Vector3(171.800003f, 0, -103.419998f);
     }
 }
