@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EquippedAxe : EquippedTool
 {
+
     public void OnTriggerEnter(Collider other)
     {
         Collectible c = other.GetComponent<Collectible>();
@@ -51,7 +52,9 @@ public class EquippedAxe : EquippedTool
         }
 
 
+        
         _animator.CrossFade("Blend Tree", 0.07f, 0);
+        _playerController.EndCollision();
         _playerController.StopCoroutine(_playerController.Reset);
         _playerController.SetState(PlayerController.State.STANDING);
     }

@@ -1057,5 +1057,10 @@ public class PlayerController : MonoBehaviour, ISubscriber
         return _currentTool;
     }
 
+    public EquippedTool CurrentTool()
+    {
+        return _tools[_currentTool];
+    }
+
     
 }
