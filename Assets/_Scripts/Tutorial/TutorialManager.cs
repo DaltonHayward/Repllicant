@@ -18,6 +18,9 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
     public bool scientistNPC = false;
     public bool firstSpawn = false;
 
+    // tutorial messages
+    [SerializeField] GameObject tutorialMessages;
+
     // enables each camp
     public void NPCCheck()
     {
@@ -31,6 +34,12 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         else 
         { 
             tutorialDalton.SetActive(true);
+            if (tutorialMessages == null) 
+            {
+                Debug.Log("Reference to tutorial messages not set");
+                return;
+            }
+            tutorialMessages.SetActive(true);
         }
         if (daltonNPC) { tutorialObjects.SetActive(false); }
         if (techNPC) { techCamp.SetActive(true); }
@@ -45,7 +54,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         avNPC = gameData.avNPC;
         scientistNPC= gameData.scientistNPC;
         firstSpawn = gameData.firstSpawn;
-        NPCCheck();
+        StartCoroutine(NPCCheckCR(0.5f));
     }
 
     public void SaveData(ref GameData gameData)
@@ -57,10 +66,16 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         gameData.firstSpawn = firstSpawn;
     }
 
+    IEnumerator NPCCheckCR(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        NPCCheck();
+    }
+
     IEnumerator TeleportPlayer(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        Debug.Log("First spawn, teleporting to starting position");
+        Debug.Log("First spawn, teleporting player to starting position");
         GameObject.FindWithTag("Player").gameObject.transform.position = new Vector3(171.800003f, 0, -103.419998f);
         yield return new WaitForSeconds(1f);
         GameObject.FindWithTag("Player").gameObject.transform.position = new Vector3(171.800003f, 0, -103.419998f);

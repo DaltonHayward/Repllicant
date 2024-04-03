@@ -8,7 +8,7 @@ public class ContinueCheck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Timeout(1));
+        StartCoroutine(Timeout(2));
     }
 
     IEnumerator Timeout(float seconds)
