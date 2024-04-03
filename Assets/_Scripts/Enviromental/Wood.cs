@@ -127,7 +127,7 @@ public class Wood : Collectible, ISubscriber
         {
             Stoned();
         }
-        else if (channel.Contains("Shocked")){
+        if (channel.Contains("Shocked")){
             Debug.Log("Enemy is shocked");
             string[] sections = channel.Split(':');
             string[] values = sections[1].Split(',');

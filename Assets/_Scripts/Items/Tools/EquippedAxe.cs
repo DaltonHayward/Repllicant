@@ -13,11 +13,8 @@ public class EquippedAxe : EquippedTool
         {
             if (c.GetType() == typeof(Wood))
             {
-                if(invTool.isShocked){
-                c.GetComponent<Wood>().ReceiveMessage("Shocked:"+Damage+","+3);
-                }
-                else{
-                    float dmg;
+                
+                float dmg;
                 if (other.gameObject.GetComponent<Wood>().isStoned)
                 {
                     dmg = Damage / 10;
@@ -31,11 +28,15 @@ public class EquippedAxe : EquippedTool
                 
                 // send fire signal if burning
                 ISubscriber subscriber = other.GetComponent<ISubscriber>();
+                if(invTool.isShocked && subscriber != null){
+                c.GetComponent<Wood>().ReceiveMessage("Shocked:"+Damage+","+3);
+                }
                 if (isBurning && subscriber != null)
                 {
+                    
                     subscriber.ReceiveMessage("Burning");
                 }
-                }
+                
             }
 
             if (c.GetType() == typeof(Stone))
