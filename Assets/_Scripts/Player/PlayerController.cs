@@ -996,6 +996,11 @@ public class PlayerController : MonoBehaviour, ISubscriber
         playerSounds.PlayAttack01();
     }
 
+    private void PlayToolSwing()
+    {
+        playerSounds.PlayToolSwing();
+    }
+
     public string GetCurrentEquipment()
     {
         return _currentEquipment.ToString();
