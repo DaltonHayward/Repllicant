@@ -47,6 +47,14 @@ public class MedusaMob : Enemy
     public int lookAccurate = 10;
     float subAngle;
     List<GameObject> target = new List<GameObject>();
+
+    // [SerializeField] BaseEffect Effect; // add this to use slow effect
+    // could just add the collider on to this script (or have the trigger be added to the player damage trigger)
+    // set up a OnTriggerEnter for the collider and use this logic:
+    // var effectableObject = other.GetComponent<EffectableObject>();
+    // if (effectableObject != null)
+    // effectableObject.ApplyEffect(Effect);
+
     public void LookAround()
     {
         target.Clear();
@@ -189,7 +197,7 @@ public class MedusaMob : Enemy
                 break;
         }
     }
-    public void Die1()
+/*    public void Die1()
     {
         Destroy(gameObject);
     }
@@ -199,7 +207,7 @@ public class MedusaMob : Enemy
         hp -= damage;
         if (hp <= 0)
             Die();
-    }
+    }*/
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, chaseRange);

@@ -36,9 +36,12 @@ public class Wood : Collectible, ISubscriber
     override public void TakeDamage(float damage)
     {
         hp -= damage;
+        // add collision sound trigger here - check if 'stoned' lmao
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Player/Tool/WoodHit");
         
         if (hp <= 0) {
             Destroy(gameObject);
+            // add tree falling sound here
             InstantiateLoot();
         }
     }

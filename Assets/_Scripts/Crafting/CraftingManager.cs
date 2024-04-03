@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
 
 
 
@@ -61,6 +61,8 @@ public class CraftingManager : MonoBehaviour
         recipePanel.SetActive(false);
         inventoryInteraction = GetComponent<InventoryInteraction>();
     }
+
+
 
     private void OnEnable()
     {
