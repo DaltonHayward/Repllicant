@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EquippedAxe : EquippedTool
@@ -12,6 +13,7 @@ public class EquippedAxe : EquippedTool
         {
             if (c.GetType() == typeof(Wood))
             {
+                
                 float dmg;
                 if (other.gameObject.GetComponent<Wood>().isStoned)
                 {
@@ -26,15 +28,25 @@ public class EquippedAxe : EquippedTool
                 
                 // send fire signal if burning
                 ISubscriber subscriber = other.GetComponent<ISubscriber>();
+                if(invTool.isShocked && subscriber != null){
+                c.GetComponent<Wood>().ReceiveMessage("Shocked:"+Damage+","+3);
+                }
                 if (isBurning && subscriber != null)
                 {
+                    
                     subscriber.ReceiveMessage("Burning");
                 }
+                
             }
 
             if (c.GetType() == typeof(Stone))
             {
-                c.TakeDamage(Damage / 10);
+                if(invTool.isShocked){
+                c.GetComponent<Stone>().ReceiveMessage("Shocked:"+Damage / 10+","+3);
+                }
+                else{
+                    c.TakeDamage(Damage/10);
+                }
             }
         }
 

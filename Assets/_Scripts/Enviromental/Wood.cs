@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using System.Linq;
 using UnityEngine;
 
 public class Wood : Collectible, ISubscriber
@@ -125,6 +126,45 @@ public class Wood : Collectible, ISubscriber
         if (channel.Equals("Petrified"))
         {
             Stoned();
+        }
+        if (channel.Contains("Shocked")){
+            Debug.Log("Enemy is shocked");
+            string[] sections = channel.Split(':');
+            string[] values = sections[1].Split(',');
+
+            if (values.Length == 2)
+            {
+                float damage;
+                int jumps;
+
+                if (float.TryParse(values[0].Trim(), out damage) && int.TryParse(values[1].Trim(), out jumps))
+                {
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
+                    Collider[] CollectiblesColliders = colliders.Where(collider => collider.gameObject != this.gameObject && collider.gameObject.GetComponent<Collectible>() != null).ToArray();
+                    Debug.Log("Wood collectibles:"+CollectiblesColliders.Length);
+                    if (CollectiblesColliders.Length > 0)
+                    {
+                        Collider collider = CollectiblesColliders[Random.Range(0, CollectiblesColliders.Length)];
+                        if(jumps > 0)
+                        {
+                            GameObject lightning = Instantiate(InventoryController.instance.lightningEffect);
+                            
+                            lightning.transform.position = gameObject.transform.position;
+                            lightning.GetComponent<LightningBullet>().SetDirection(collider.bounds.center,damage-5,"Shocked:"+damage);
+                            damage = (float)(damage *.90);
+                            jumps--;
+                            
+                            collider.gameObject.GetComponent<ISubscriber>().ReceiveMessage("Shocked:" + damage + "," + jumps);
+                            TakeDamage(damage);
+                        }
+                        
+                    }
+                    else
+                    {
+                    TakeDamage(damage);
+                    }
+                }
+            }
         }
 
         if (channel.Equals("Burning"))

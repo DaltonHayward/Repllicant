@@ -1,4 +1,4 @@
-
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -69,32 +69,50 @@ public class Enemy : MonoBehaviour, ISubscriber
         {
             navMeshAgent.speed *= float.Parse(parts[1].Trim());
         }
-        else if (channel.StartsWith("Shocked:")){
+        else if (channel.StartsWith("Shocked:"))
+        {
             Debug.Log("Enemy is shocked");
-            float damage;
-            string[] test = channel.Split(':');
-            string[] values = parts[1].Split(',');
-            Debug.Log("message "+ test + " "+ values[0]+" "+ values[1]);
-            if (float.TryParse(parts[1].Trim(), out damage))
+            string[] sections = channel.Split(':');
+            string[] values = sections[1].Split(',');
+            Debug.Log(values.Length);
+            Debug.Log(values[0]);
+
+            if (values.Length == 2)
             {
-                
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
-                foreach (Collider collider in colliders)
+                float damage;
+                int jumps;
+
+                if (float.TryParse(values[0].Trim(), out damage) && int.TryParse(values[1].Trim(), out jumps))
                 {
-                    if (collider.gameObject.GetComponent<ISubscriber>() != null && collider.gameObject.tag == "Enemy" && collider.gameObject != this.gameObject)
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
+                    Collider[] enemyColliders = colliders.Where(collider => collider.gameObject.CompareTag("Enemy") && collider.gameObject!=this.gameObject).ToArray();
+                    if(enemyColliders.Length > 0)
                     {
-                        if(damage> 0){
-                        collider.gameObject.GetComponent<ISubscriber>().ReceiveMessage("Shocked:"+(damage-1));}
-                        break;
+                        Collider collider = enemyColliders[Random.Range(0, enemyColliders.Length)];
+                        if(jumps > 0)
+                        {
+                            GameObject lightning = Instantiate(InventoryController.instance.lightningEffect);
+                            
+                            lightning.transform.position = gameObject.transform.position;
+                            lightning.GetComponent<LightningBullet>().SetDirection(collider.bounds.center,damage-5,"Shocked:"+damage);
+                            damage = (float)(damage *.90);
+                            jumps--;
+                            
+                            collider.gameObject.GetComponent<ISubscriber>().ReceiveMessage("Shocked:" + damage + "," + jumps);
+                            TakeDamage(damage);
+                            _damageIndicator.Hurt();
+                        }
+                        
+                    }
+                    else
+                    {
+                    TakeDamage(damage);
+                    _damageIndicator.Hurt();
                     }
                 }
-                TakeDamage(damage);
-                _damageIndicator.Hurt();
-                
             }
         }
     }
-
     // rolls for loot to instantiate
     private void RollLoot()
     {

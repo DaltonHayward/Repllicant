@@ -25,7 +25,6 @@ public class EquippedTool : MonoBehaviour
 
     public void Update()
     {
-        Damage=BaseDamage*500;
         if (invTool.isBurning)
         {
             // set dmg
@@ -47,14 +46,14 @@ public class EquippedTool : MonoBehaviour
                 fireSystem.Stop();
             }
         }
-        // if (invTool.isShocked)
-        // {
-        //     Damage = BaseDamage;
-        // }
-        // else if (!invTool.isShocked)
-        // {
-        //     Damage = BaseDamage;
-        // }
+        if (invTool.isShocked)
+        {
+            Damage = BaseDamage;
+        }
+        else if (!invTool.isShocked)
+        {
+            Damage = BaseDamage;
+        }
     }
 
     public void SetInvTool(InvTool tool)

@@ -12,12 +12,22 @@ public class EquippedPickaxe : EquippedTool
         {
             if (c.GetType() == typeof(Wood))
             {
-                c.TakeDamage(Damage / 2);
+                if(invTool.isShocked){
+                c.GetComponent<Wood>().ReceiveMessage("Shocked:"+Damage/2+","+3);
+                }
+                else{
+                    c.TakeDamage(Damage/2);
+                }
             }
 
             if (c.GetType() == typeof(Stone))
             {
-                c.TakeDamage(Damage);
+                if(invTool.isShocked){
+                c.GetComponent<Stone>().ReceiveMessage("Shocked:"+Damage+","+3);
+                }
+                else{
+                    c.TakeDamage(Damage);
+                }
             }
         }
 
