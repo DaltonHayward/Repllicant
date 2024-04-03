@@ -19,11 +19,11 @@ public class EnemyHealthBar : MonoBehaviour
 
     float timeUntilHidden = 0f;
 
-    private void Awake() 
+    private void Awake()
     {
 
     }
-    private void Start() 
+    private void Start()
     {
         maxHealth = enemy.hp;
         health = maxHealth;
@@ -31,7 +31,7 @@ public class EnemyHealthBar : MonoBehaviour
         easeSlider.maxValue = maxHealth;
     }
 
-    private void Update() 
+    private void Update()
     {
         // billboard the health bar to always face camera
         transform.LookAt(transform.position + Camera.main.transform.forward);
@@ -58,25 +58,28 @@ public class EnemyHealthBar : MonoBehaviour
 
         // calculate time until the bar is hidden from player
         timeUntilHidden -= Time.deltaTime;
-
-        if (timeUntilHidden <= 0)
+        if (healthSlider != null)
         {
-            timeUntilHidden = 0;
-            healthSlider.gameObject.SetActive(false);
-            easeSlider.gameObject.SetActive(false);
-        }
-        else
-        {
-            if (!healthSlider.gameObject.activeInHierarchy)
+            if (timeUntilHidden <= 0)
             {
-                healthSlider.gameObject.SetActive(true);
-                easeSlider.gameObject.SetActive(true);
+                timeUntilHidden = 0;
+                healthSlider.gameObject.SetActive(false);
+                easeSlider.gameObject.SetActive(false);
+            }
+            else
+            {
+                if (!healthSlider.gameObject.activeInHierarchy)
+                {
+                    healthSlider.gameObject.SetActive(true);
+                    easeSlider.gameObject.SetActive(true);
+                }
+            }
+            if (healthSlider.value <= 0)
+            {
+                Destroy(healthSlider.gameObject);
+                Destroy(easeSlider.gameObject);
             }
         }
-        if (healthSlider.value <= 0)
-        {
-            Destroy(healthSlider.gameObject);
-            Destroy(easeSlider.gameObject);
-        }
+
     }
 }
