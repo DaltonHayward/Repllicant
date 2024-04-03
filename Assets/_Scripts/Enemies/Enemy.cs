@@ -69,11 +69,13 @@ public class Enemy : MonoBehaviour, ISubscriber
         {
             navMeshAgent.speed *= float.Parse(parts[1].Trim());
         }
-        else if (channel.StartsWith("Shocked:"));
+        else if (channel.StartsWith("Shocked:"))
         {
             Debug.Log("Enemy is shocked");
             string[] sections = channel.Split(':');
             string[] values = sections[1].Split(',');
+            Debug.Log(values.Length);
+            Debug.Log(values[0]);
 
             if (values.Length == 2)
             {
@@ -82,7 +84,7 @@ public class Enemy : MonoBehaviour, ISubscriber
 
                 if (float.TryParse(values[0].Trim(), out damage) && int.TryParse(values[1].Trim(), out jumps))
                 {
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, 20f);
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
                     Collider[] enemyColliders = colliders.Where(collider => collider.gameObject.CompareTag("Enemy") && collider.gameObject!=this.gameObject).ToArray();
                     if(enemyColliders.Length > 0)
                     {

@@ -62,7 +62,7 @@ public class Wood : Collectible, ISubscriber
 
                 if (float.TryParse(values[0].Trim(), out damage) && int.TryParse(values[1].Trim(), out jumps))
                 {
-                    Collider[] colliders = Physics.OverlapSphere(transform.position, 20f);
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
                     Collider[] CollectiblesColliders = colliders.Where(collider => collider.gameObject != this.gameObject && collider.gameObject.GetComponent<Collectible>() != null).ToArray();
                     Debug.Log("Wood collectibles:"+CollectiblesColliders.Length);
                     if (CollectiblesColliders.Length > 0)
