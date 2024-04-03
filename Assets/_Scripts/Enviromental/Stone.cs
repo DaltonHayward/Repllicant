@@ -57,10 +57,12 @@ public class Stone : Collectible, ISubscriber
         if (hardnessPercent < 1) 
         {
             hp -= (damage - (damage * hardnessPercent));
+            // rock collision sound trigger here
         }
 
         if (hp <= 0) 
         {
+            // rock break sound trigger here
             InstantiateLoot();
             Destroy(gameObject);
         }

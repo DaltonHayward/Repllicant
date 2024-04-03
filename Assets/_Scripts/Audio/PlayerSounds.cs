@@ -19,6 +19,7 @@ public class PlayerSounds : MonoBehaviour
     [SerializeField] private FMODUnity.EventReference _toolswing;
     private FMOD.Studio.EventInstance toolswing;
 
+
     private void Awake() 
     {
         if (! _footsteps.IsNull)
@@ -44,6 +45,7 @@ public class PlayerSounds : MonoBehaviour
             
             toolswing = FMODUnity.RuntimeManager.CreateInstance(_toolswing);
         }
+
     }
 
     public void PlayFootstep()
