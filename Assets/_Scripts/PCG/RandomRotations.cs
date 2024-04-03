@@ -14,8 +14,8 @@ public class RandomRotations : MonoBehaviour
         foreach (Transform t in transform)
         {
             t.transform.rotation = Quaternion.Euler(t.localEulerAngles.x, Random.Range(0, 360), t.localEulerAngles.z);
-            t.GetComponent<Wood>().sureToDrop = sureToDrop;
-            t.GetComponent<Wood>().dropWhenStoned = dropWhenStoned;
+            t.GetComponentInChildren<Wood>().sureToDrop = sureToDrop;
+            t.GetComponentInChildren<Wood>().dropWhenStoned = dropWhenStoned;
         }
     }
 }

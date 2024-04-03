@@ -93,8 +93,9 @@ public class Enemy : MonoBehaviour, ISubscriber
                         {
                             GameObject lightning = Instantiate(InventoryController.instance.lightningEffect);
                             
-                            lightning.transform.position = gameObject.transform.position;
-                            lightning.GetComponent<LightningBullet>().SetDirection(collider.bounds.center,damage-5,"Shocked:"+damage);
+                            lightning.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1, gameObject.transform.position.z);
+
+                            lightning.GetComponent<LightningBullet>().SetDirection(new Vector3(collider.transform.position.x, collider.transform.position.y+1,collider.transform.position.z),damage-5,"Shocked:"+damage);
                             damage = (float)(damage *.90);
                             jumps--;
                             
