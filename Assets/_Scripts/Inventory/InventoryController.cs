@@ -69,6 +69,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
     Inventory_Item equippedPickaxe;
     Inventory_Item equippedAxe;
 
+    public GameObject lightningEffect;
 
 
     /// <summary>

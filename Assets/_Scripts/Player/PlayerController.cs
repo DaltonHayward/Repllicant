@@ -2,6 +2,7 @@ using ReplicantPackage;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TreeEditor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -75,6 +76,10 @@ public class PlayerController : MonoBehaviour, ISubscriber
     [SerializeField]
     private float _windowBetweenComboAttacks = 0.3f;
     public IEnumerator PetrifyCooldownCoroutine;
+    private Coroutine _attackDrift;
+    public LayerMask layerMask;
+    private Plane plane = new Plane(Vector3.up, 0.5f);
+    
 
     public Vector3 strokeBackTargetPosition;
 
@@ -361,19 +366,16 @@ public class PlayerController : MonoBehaviour, ISubscriber
             if (Time.time - _lastComboEnd > _timeBetweenCombos && _comboCounter < Combo.Count && (InputManager.instance.AttackInput || _bufferNextAttack))
             {
                 CancelInvoke("EndCombo");
-                //_stateBeforeAttacking = (_playerState != State.SWINGING) ? _playerState : _stateBeforeAttacking;
                 _playerState = State.SWINGING;
-
 
                 if (Time.time - _lastClickedTime > _windowUntilCanBuffer && InputManager.instance.AttackInput && Time.time - _lastClickedTime < _windowBetweenComboAttacks)
                 {
                     _bufferNextAttack = true;
                 }
 
-
-                //Debug.Log(Combo[_comboCounter].AttackLength);
                 if (Time.time - _lastClickedTime >= _windowBetweenComboAttacks || (_bufferNextAttack && Time.time - _lastClickedTime >= _windowBetweenComboAttacks))
                 {
+                    AttackMovement();
                     FireAttack();
                     _bufferNextAttack = false;
                 }
@@ -401,13 +403,59 @@ public class PlayerController : MonoBehaviour, ISubscriber
         }
     }
 
+    private void AttackMovement()
+    {
+        // look at mouse on attack
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (plane.Raycast(ray, out float distance))
+        {
+            Vector3 rayPos = ray.GetPoint(distance);
+            Vector3 targetPos = new Vector3(rayPos.x, transform.position.y, rayPos.z);
+            transform.LookAt(targetPos);
+        }
+
+        bool canMove = true;
+        Collider[] targets = Physics.OverlapSphere(transform.position, 1f, layerMask);
+        foreach (Collider target in targets)
+        {
+            // get the direction we are facing 
+            Vector3 direction = (target.transform.position - transform.position);
+
+            // returns the angle (from, to)
+            float angleToTarget = Vector3.Angle(direction, transform.forward);
+            float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+
+            // when the angle is at -70 or +70, then it is in view
+            Debug.Log((angleToTarget >= -70 && angleToTarget <= 70) + " here " + angleToTarget + ", " + distanceToTarget);
+            if (angleToTarget >= -55 && angleToTarget <= 55 || angleToTarget >= -90 && angleToTarget <= 90 && distanceToTarget < 1.3f)
+            {
+                canMove = false;
+            }
+        }
+
+        if (canMove) { _attackDrift = StartCoroutine(AttackDrift()); }
+            
+    }
+
+    IEnumerator AttackDrift()
+    {
+        Vector3 endpoint = transform.position + transform.forward * 0.5f;
+        float elapsedTime = 0;
+        while (elapsedTime < 1f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, endpoint, 5 * Time.deltaTime);
+            yield return null;
+            elapsedTime += Time.deltaTime;
+        }
+    }
+
     private void FireAttack()
     {
         // overide current attack animation
         _animator.runtimeAnimatorController = Combo[_comboCounter].AnimatorOV;
         // play new animation
         _animator.Play("Attack", 0, 0);
-        
+
         // handle dmg, visual effect-----------------
 
         _comboCounter++;
@@ -517,11 +565,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
             float speed = _dodgeCurve.Evaluate(timer);
             _controller.Move((dir * speed* MoveSpeed) * Time.deltaTime);
             timer += Time.deltaTime;
-            Debug.Log(timer);
             yield return null;
         }
 
-        Debug.Log("HerE");
         _playerState = State.STANDING;
     }
 

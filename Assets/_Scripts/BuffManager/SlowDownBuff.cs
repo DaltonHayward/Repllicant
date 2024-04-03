@@ -12,10 +12,10 @@ using UnityEngine;
 /// </summary>
 public class SlowDownBuff:Buff
 {
-    protected float dis;//减速范围  //半径
-    protected float intervalTime;//间隔时间
+    protected float dis;//Area, radius
+    protected float intervalTime;//time between refresh buff time
     protected Collider[] colliders=new Collider[10];
-    protected float slowDown;//减速数值 %
+    protected float slowDown;//slow down rate
 
     public GameObject player;
 
