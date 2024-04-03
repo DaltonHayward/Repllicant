@@ -36,10 +36,15 @@ public class Boar : Enemy
     public Vector3 chargeTargetPosition;
     public BoarState state;
     public float skillSpeed;
+
+    [SerializeField]
+    public GameObject bossHealth;
+
     public void Die()
     {
         Destroy(gameObject);
     }
+
     public int lookAccurate = 10;
     float subAngle;
     List<GameObject> target = new List<GameObject>();
@@ -77,6 +82,13 @@ public class Boar : Enemy
 
         if (Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(transform.position.x, 0, transform.position.z)) < chargeRange)
         {
+
+            if (bossHealth != null)
+            {
+                bossHealth.transform.GetChild(0).gameObject.SetActive(true);
+                bossHealth.transform.GetChild(1).gameObject.SetActive(true);
+            }
+
             chargeclock += Time.deltaTime;
             if (chargeclock > chargeInternal)
             {
@@ -85,6 +97,14 @@ public class Boar : Enemy
                 chargeclock = 0;
                 chargeDir = new Vector3((player.position - transform.position).normalized.x, 0, (player.position - transform.position).normalized.z);
                 chargedistance = Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(transform.position.x, 0, transform.position.z));
+            }
+        }
+        else
+        {
+            if (bossHealth != null)
+            {
+                bossHealth.transform.GetChild(0).gameObject.SetActive(false);
+                bossHealth.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
 
