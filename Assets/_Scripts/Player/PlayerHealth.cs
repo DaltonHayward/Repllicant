@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(DamageIndicator))]
+
 public class PlayerHealth : MonoBehaviour, IDataPersistance
 {
     public float maxHealth = 100f; // Player Max health
@@ -19,8 +21,12 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
     // Coupled EffectableObject script here so that effects can be applied to the player health
     protected EffectableObject Effectable;
 
+    // for red damage taken effect
+    DamageIndicator damageIndicator;
+
     void Start()
     {
+        damageIndicator = GetComponent<DamageIndicator>();
         StartCoroutine(RefreshHPBar(0.5f));
         isDead = false;
     }
@@ -43,6 +49,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
     {
         if (_invincibleDuration <= 0 && !isDead) 
         {
+            //damageIndicator.Hurt();
             currentHealth -= damage; // Reduce HP when take damage
             Debug.Log("Player health is now " + currentHealth); // Print current HP
             slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
@@ -67,7 +74,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         Debug.Log("Player is dead!"); // Death logic
         // 这里可以添加重启游戏或者显示游戏结束界面的逻辑
         //You can add game over scene logic here
-        InventoryController.instance.PlayerDeath();
+        //InventoryController.instance.PlayerDeath();
         isDead = true;
         deathScreen.SetActive(true);
         deathScreen.GetComponent<CanvasGroup>().alpha = 0;

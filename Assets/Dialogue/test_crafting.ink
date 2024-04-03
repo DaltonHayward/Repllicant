@@ -1,14 +1,15 @@
-EXTERNAL OpenCrafting()
+EXTERNAL npcAddItem(itemToAdd)
 -> main
 
 === main ===
-Hello! I am a simple test NPC. 
-This is a test of my crafting function.
-Do you want to craft?
+Hello! I am a simple test NPC. #speaker:Mr. Testing
+This is a test of my ability to add items to your inventory!
+Do you want a sword? You might need one!
 + [Yes]
     Let's craft!
-    ~ OpenCrafting()
-    Here's an extra comment!
+    ~ npcAddItem("Sword")
+    ~ npcAddItem("Axe")
+    ~ npcAddItem("Pickaxe")
     -> END
 + [No]
     Well... I'll be here if you change your mind!

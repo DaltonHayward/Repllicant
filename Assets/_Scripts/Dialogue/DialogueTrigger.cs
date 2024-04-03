@@ -10,9 +10,7 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private GameObject visualCue;
 
     [Header("Ink JSON")]
-    [SerializeField] public TextAsset inkJSON;
-
-
+    [SerializeField] public TextAsset inkJSON; // move this to dialogue manager
 
     private bool playerInRange;
 
@@ -34,7 +32,7 @@ public class DialogueTrigger : MonoBehaviour
             {
                 _playerController.SetState(PlayerController.State.DIALOG);
                 StartCoroutine(_playerController.SlowDown());
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON); 
             }
         }
         else
@@ -56,4 +54,6 @@ public class DialogueTrigger : MonoBehaviour
             playerInRange = false;
         }
     }
+
+    
 }

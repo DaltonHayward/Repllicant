@@ -39,6 +39,7 @@ public class DataPersistanceManager : MonoBehaviour
     public void NewGame()
     {
         this.gameData = new GameData();
+        SaveGame();
     }
 
     public void LoadGame()
@@ -96,5 +97,10 @@ public class DataPersistanceManager : MonoBehaviour
         IEnumerable<IDataPersistance> dataPersistanceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistance>();
         // return them in a list
         return new List<IDataPersistance>(dataPersistanceObjects);
+    }
+
+    public bool IsNewGame()
+    {
+        return !(gameData.firstSpawn);
     }
 }

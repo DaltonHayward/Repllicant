@@ -3,14 +3,10 @@
 === main ===
  Well, look who's awake! Hate to be the bearer of bad news, but your ship crashed and your crew has gone off. 
 You look confused...
-Do you need me to explain a few things? You look like you might not even know my name...
-<<<<<<< HEAD
-+ [Im good.]
-    Alright! Alight! Get going then if you're in such a rush!
-=======
+Do you need me to explain a few things? 
+
 + [I don't need help!]
     Alright! Alright! Get going then if you're in such a rush!
->>>>>>> e0f74a1636efb4a398d8d5eb52406638efef2969
     -> END
 + [Yes please]
     -> tutorial
