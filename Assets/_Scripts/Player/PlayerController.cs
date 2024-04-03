@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
 {
     // Coupled EffectableObject script here so that effects can be applied to the player
-    protected EffectableObject Effectable;
-    [SerializeField] private PlayerFootsteps playerFootsteps;
+    public EffectableObject Effectable; //should be protected but ¯\_(ツ)_/¯
+    [SerializeField] private PlayerSounds playerSounds;
     
     private Transform _playerCamera;
     [Header("Player")]
@@ -89,9 +89,9 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     // Equipment
     public enum Equipment { WEAPON, PICKAXE, AXE };
-    private Equipment _currentEquipment;
-    private int _currentTool;
-    private EquippedTool[] _tools;
+    private Equipment _currentEquipment; 
+    private int _currentTool; 
+    private EquippedTool[] _tools; 
     public Transform ToolHolder;
     private bool _canScroll = true;
     [SerializeField]
@@ -546,6 +546,7 @@ public class PlayerController : MonoBehaviour, ISubscriber
         if (InputManager.instance.DodgeInput && InputDirection != Vector3.zero && _canDodge)
         {
             StartCoroutine(Dodge());
+            
             GetComponent<PlayerHealth>().Invincible(_delayBeforeInvinsible, _invinsibleDuration);
             StartCoroutine(DodgeCooldown());
         }
@@ -901,7 +902,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
                 Destroy(pickaxeHolder.GetChild(0).gameObject);
                 _tools[1] = null;
-
                 break;
 
             case Equipment.AXE:
@@ -1027,7 +1027,35 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     private void PlayFootstep()
     {
-        playerFootsteps.PlayFootstep();
+        playerSounds.PlayFootstep();
         
     }
+
+    private void PlayDodge()
+    {
+        playerSounds.PlayDodge();
+        
+    }
+
+    private void PlayAttack01()
+    {
+        playerSounds.PlayAttack01();
+    }
+
+    private void PlayToolSwing()
+    {
+        playerSounds.PlayToolSwing();
+    }
+
+    public string GetCurrentEquipment()
+    {
+        return _currentEquipment.ToString();
+    }
+
+    public int GetCurrentTool()
+    {
+        return _currentTool;
+    }
+
+    
 }

@@ -179,7 +179,7 @@ public class InventoryInteraction : MonoBehaviour
             Destroy(child.gameObject);
         }*/
         GameObject notification = Instantiate(CraftingManager.instance.notificationText, parent);
-        notification.transform.GetComponent<TextMeshProUGUI>().text = (itemToAdd + " added");
+        notification.transform.GetComponent<TextMeshProUGUI>().text = (AddSpaces(itemToAdd) + " added");
         
         StartCoroutine(ClearNotifications(notification));
         
@@ -194,7 +194,7 @@ public class InventoryInteraction : MonoBehaviour
             Destroy(child.gameObject);
         }*/
         GameObject notification = Instantiate(CraftingManager.instance.notificationText, parent);
-        notification.transform.GetComponent<TextMeshProUGUI>().text = (itemToAdd + " removed");
+        notification.transform.GetComponent<TextMeshProUGUI>().text = (AddSpaces(itemToAdd) + " removed");
         notification.transform.GetComponent<TextMeshProUGUI>().color = Color.red;
         
         StartCoroutine(ClearNotifications(notification));
@@ -210,6 +210,12 @@ public class InventoryInteraction : MonoBehaviour
         {
             Destroy(notification);
         }
+    }
+
+    private string AddSpaces(string itemName)
+    {
+        string name = System.Text.RegularExpressions.Regex.Replace(itemName, "([a-z])([A-Z])", "$1 $2");
+        return name;
     }
 
 }

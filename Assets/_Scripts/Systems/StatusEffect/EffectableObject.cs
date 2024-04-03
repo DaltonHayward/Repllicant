@@ -13,6 +13,7 @@ public class EffectableObject : MonoBehaviour
 {
     List<BaseEffect> ActiveEffects = new List<BaseEffect>();
 
+
     // Update is called once per frame
     void Update()
     {
@@ -27,6 +28,11 @@ public class EffectableObject : MonoBehaviour
                 ActiveEffects.RemoveAt(index);
             }
         }
+    }
+
+    public List<BaseEffect> GetBaseEffects()
+    {
+        return ActiveEffects;
     }
 
     public void ApplyEffect(BaseEffect effectTemplate)

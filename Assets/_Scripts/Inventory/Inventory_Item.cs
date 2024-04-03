@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class Inventory_Item : MonoBehaviour
 {
@@ -77,6 +78,7 @@ public class Inventory_Item : MonoBehaviour
     {
         this.itemData = itemData;
         itemName = itemData.Name;
+        
 
         /*envModel = Instantiate(itemData.envModel, gameObject.transform);
         envModel.SetActive(false); 
@@ -155,5 +157,6 @@ public class Inventory_Item : MonoBehaviour
         outlineImage.enabled = false;
     }
 
+    
 
 }
