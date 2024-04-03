@@ -205,8 +205,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
             case State.INTERACTING:
                 HandleInteract();
-                HandleMenuPress();
-                ToggleInventory();
                 break;
 
             case State.INVENTORY:

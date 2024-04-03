@@ -44,13 +44,13 @@ public class EquippedPickaxe : EquippedTool
                 if (invTool.isShocked)
                 {
                     var Jumps = 3;
-                    Debug.Log("Sword Sending Shocked Message" + Damage);
-                    subscriber.ReceiveMessage("Shocked:" + Damage + "," + Jumps);
+                    Debug.Log("Sword Sending Shocked Message" + Damage/2);
+                    subscriber.ReceiveMessage("Shocked:" + Damage/2 + "," + Jumps);
                 }
                 else
                 {
-                    Debug.Log("Sword Sending Attacked Message" + Damage);
-                    subscriber.ReceiveMessage("Attacked:" + Damage);
+                    Debug.Log("Sword Sending Attacked Message" + Damage/2);
+                    subscriber.ReceiveMessage("Attacked:" + Damage/2);
                 }
             }
         }

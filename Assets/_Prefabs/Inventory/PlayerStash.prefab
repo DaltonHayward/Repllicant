@@ -177,8 +177,7 @@ GameObject:
   - component: {fileID: 3801383737389812534}
   - component: {fileID: 8220334828278087136}
   - component: {fileID: 2551192148179243100}
-  - component: {fileID: 2364138207152227496}
-  - component: {fileID: 7744185838864178558}
+  - component: {fileID: 3578127162783799605}
   - component: {fileID: 2905523431612671500}
   - component: {fileID: 5230048978405777197}
   m_Layer: 0
@@ -196,7 +195,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3833587885929530471}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.9669992, z: -0, w: -0.25477964}
+  m_LocalRotation: {x: 0, y: 0.9669993, z: -0, w: -0.2547791}
   m_LocalPosition: {x: 171.33498, y: 13.961425, z: -90.2995}
   m_LocalScale: {x: 1.2418997, y: 1.2298, z: 1.2180115}
   m_ConstrainProportionsScale: 0
@@ -257,29 +256,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2364138207152227496
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3833587885929530471}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7372710628413522813, guid: 721802e1fc935344ba69b92b6c2c4128, type: 3}
---- !u!65 &7744185838864178558
+--- !u!65 &3578127162783799605
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,10 +273,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7557513, y: 0.75820345, z: 0.4871867}
-  m_Center: {x: -0.36536044, y: 0.37910268, z: 0.23110098}
+  m_Size: {x: 0.7557514, y: 1.0984423, z: 0.4871868}
+  m_Center: {x: -0.36537573, y: 0.54922116, z: 0.23109338}
 --- !u!65 &2905523431612671500
 BoxCollider:
   m_ObjectHideFlags: 0
