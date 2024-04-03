@@ -29,11 +29,35 @@ public class EquippedPickaxe : EquippedTool
                     c.TakeDamage(Damage);
                 }
             }
+
+            _animator.CrossFade("Blend Tree", 0.07f, 0);
+            _playerController.StopCoroutine(_playerController.Reset);
+            _playerController.SetState(PlayerController.State.STANDING);
         }
 
-        _animator.CrossFade("Blend Tree", 0.07f, 0);
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("hit weapon");
+            ISubscriber subscriber = other.GetComponent<ISubscriber>();
+            if (subscriber != null)
+            {
+                if (invTool.isShocked)
+                {
+                    var Jumps = 3;
+                    Debug.Log("Sword Sending Shocked Message" + Damage);
+                    subscriber.ReceiveMessage("Shocked:" + Damage + "," + Jumps);
+                }
+                else
+                {
+                    Debug.Log("Sword Sending Attacked Message" + Damage);
+                    subscriber.ReceiveMessage("Attacked:" + Damage);
+                }
+            }
+        }
+
+        // disable collider after collision
         _playerController.EndCollision();
-        _playerController.StopCoroutine(_playerController.Reset);
-        _playerController.SetState(PlayerController.State.STANDING);
     }
+
+
 }
