@@ -6,6 +6,7 @@ public class EquippedTool : MonoBehaviour
 {
     public float BaseDamage;
     public float BurningDamage;
+    public bool isBurning = false;
     [HideInInspector]
     public float Damage;
     [SerializeField]
@@ -24,10 +25,10 @@ public class EquippedTool : MonoBehaviour
 
     public void Update()
     {
-        Damage=BaseDamage*500;
         if (invTool.isBurning)
         {
             // set dmg
+            isBurning = true;
             Damage = BurningDamage;
             if (!fireSystem.isPlaying)
             {
@@ -38,20 +39,21 @@ public class EquippedTool : MonoBehaviour
         else if (!invTool.isBurning)
         {
             // reset dmg
+            isBurning = false;   
             Damage = BaseDamage;
             if (fireSystem.isPlaying)
             {
                 fireSystem.Stop();
             }
         }
-        // if (invTool.isShocked)
-        // {
-        //     Damage = BaseDamage;
-        // }
-        // else if (!invTool.isShocked)
-        // {
-        //     Damage = BaseDamage;
-        // }
+        if (invTool.isShocked)
+        {
+            Damage = BaseDamage;
+        }
+        else if (!invTool.isShocked)
+        {
+            Damage = BaseDamage;
+        }
     }
 
     public void SetInvTool(InvTool tool)

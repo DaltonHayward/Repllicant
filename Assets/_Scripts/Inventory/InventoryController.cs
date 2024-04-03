@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Ink.Parsed;
+using ToolTipUI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -68,6 +69,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
     Inventory_Item equippedPickaxe;
     Inventory_Item equippedAxe;
 
+    public GameObject lightningEffect;
 
 
     /// <summary>
@@ -113,6 +115,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
         if (selectedItemGrid == null)
         {
             InventoryHighlight.Display(false);
+            TooltipSystem.HideToolTip();
             // Clicked while droping
             if (Input.GetMouseButtonDown(0) && selectedItem != null)
             {
@@ -221,12 +224,14 @@ public class InventoryController : MonoBehaviour,IDataPersistance
             if (itemToHighlight != null)
             {
                 InventoryHighlight.Display(true);
+                TooltipSystem.ShowToolTip(itemToHighlight.itemData);
                 InventoryHighlight.Highlight(itemToHighlight);
                 InventoryHighlight.SetPosition(selectedItemGrid, itemToHighlight);
             }
             else
             {
                 InventoryHighlight.Display(false);
+                TooltipSystem.HideToolTip();
             }
         }
         else
@@ -234,6 +239,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
             InventoryHighlight.Display(selectedItemGrid.BoundryCheck(gridPosition.x, gridPosition.y, selectedItem.WIDTH, selectedItem.HEIGHT));
             InventoryHighlight.Highlight(selectedItem);
             InventoryHighlight.SetPosition(selectedItemGrid, selectedItem, gridPosition.x, gridPosition.y);
+            TooltipSystem.HideToolTip();
 
         }
     }

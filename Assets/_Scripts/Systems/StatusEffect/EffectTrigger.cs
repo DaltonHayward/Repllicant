@@ -18,6 +18,7 @@ public class EffectTrigger : MonoBehaviour
         if (effectableObject != null)
         {
             effectableObject.ApplyEffect(Effect);
+
         }
     }
 }
