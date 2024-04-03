@@ -21,6 +21,7 @@ public class Siren : MonoBehaviour, ISubscriber
 
     public GameObject player;
     public GameObject timeManager;
+    public GameObject bossHealth;
     private Event e;
 
     private IEnumerator damageCoroutine;
@@ -171,6 +172,11 @@ public class Siren : MonoBehaviour, ISubscriber
                 // when the angle is at -90 or +90, then it is in view (180?FOV)
                 CharacterController cc = player.GetComponent<CharacterController>();
 
+                if (bossHealth != null)
+                {
+                    bossHealth.transform.GetChild(0).gameObject.SetActive(true);
+                    bossHealth.transform.GetChild(1).gameObject.SetActive(true);
+                }
                 // get the distance between the player and the siren
                 float dist = Vector3.Distance(player.transform.position, transform.position);
 
@@ -203,6 +209,11 @@ public class Siren : MonoBehaviour, ISubscriber
                     }
                     animator.SetFloat("move", 1);
                     animator.SetBool("attack", true);
+                }
+                else if (bossHealth != null && dist > _songRange)
+                {
+                    bossHealth.transform.GetChild(0).gameObject.SetActive(false);
+                    bossHealth.transform.GetChild(1).gameObject.SetActive(false);
                 }
             }
         }

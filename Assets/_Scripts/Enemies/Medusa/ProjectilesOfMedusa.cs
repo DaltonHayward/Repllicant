@@ -10,7 +10,7 @@ public class ProjectilesOfMedusa : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshCollider>().sharedMesh = mesh;
     }
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Wood>() != null)//根据是否有wood组件判断是不是树
         {
@@ -34,7 +34,7 @@ public class ProjectilesOfMedusa : MonoBehaviour
             Debug.Log("解除石化");
         }
 
-    }
+    }*/
     void DrawHalfCycle(float radius, float innerRadius, int segments, float angleDegree, Vector3 centerCircle)
     {
         //顶点
