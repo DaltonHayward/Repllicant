@@ -993,7 +993,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
     private void PlayAttack01()
     {
-        Debug.Log("Player Controller Attack Trigger");
         playerSounds.PlayAttack01();
     }
 
