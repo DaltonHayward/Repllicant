@@ -3,6 +3,7 @@ EXTERNAL UpdateTutorialStatus(status)
 -> main
 
 === main ===
+#speaker:Dalton
 Thanks for clearing the area for me, before you explore the main island you should craft yourself a torch! 
 Pick up the wood from the trees you cut down, and use it to make a torch.
 -> torch

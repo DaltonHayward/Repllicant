@@ -144,6 +144,18 @@ public class InventoryInteraction : MonoBehaviour
 
         // add inventory items
         AddInventoryItems(itemRecipe.output);
+        try 
+        {
+            if (itemRecipe.recipeName == "Torch")
+            {
+                if (TutorialManager.instance.tProgress < 4)
+                {
+                    TutorialManager.instance.UpdateTutorialProgress(4);
+                }
+            }
+              
+                }
+        catch { }
     }
 
 

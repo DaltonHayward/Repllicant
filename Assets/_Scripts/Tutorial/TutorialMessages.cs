@@ -21,6 +21,7 @@ public class TutorialMessages : MonoBehaviour
     }
     public void ChangeTutorialMessage(string message)
     {
+        Debug.Log(message);
         gameObject.GetComponentInChildren<TextMeshProUGUI>().text = message;
     }
 }

@@ -12,12 +12,14 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
     [SerializeField] GameObject scientistCamp;
     [SerializeField] GameObject tutorialObjects;
     [SerializeField] GameObject boat;
+    [SerializeField] GameObject compass;
     // NPC bools
     public bool daltonNPC = false;
     public bool techNPC = false;
     public bool avNPC = false;
     public bool scientistNPC = false;
     public bool firstSpawn = false;
+    public int tProgress = 0;
 
     // tutorial messages
     [SerializeField] GameObject tutorialMessages;
@@ -41,36 +43,48 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
     public void UpdateTutorialProgress(int progress)
     {
         string message = "";
+        tProgress = progress;
         switch (progress)
         {
             case 0:
+                Debug.Log("Changing to next tutorial step:" + progress);
                 message = "Talk to the strange man";
                 tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
                 break;
             case 1:
+                Debug.Log("Changing to next tutorial step:" + progress);
                 message = "Clear the area for Dalton's camp. Open your inventory by pressing 'TAB', then equip both tools by right-clicking on each of them and selecting equip. Use the scroll wheel to change tool/weapon";
                 tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
                 break;
             case 2:
+                Debug.Log("Changing to next tutorial step:" + progress);
                 message = "Return to Dalton";
                 tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
                 // logic for changing dalton ink here
+                tutorialDalton.GetComponent<TutorialDalton>().ChangeDialogue(1);
                 break;
             case 3:
+                Debug.Log("Changing to next tutorial step:" + progress);
                 message = "Craft a torch by opening the crafting menu in the top right. Select the torch from the menu and craft";
                 tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
                 break;
             case 4:
+                Debug.Log("Changing to next tutorial step:" + progress);
                 message = "Talk to Dalton once more";
                 tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
                 // logic for changing dalton ink here
+                tutorialDalton.GetComponent<TutorialDalton>().ChangeDialogue(2);
                 break;
             case 5:
+                Debug.Log("Changing to next tutorial step:" + progress);
                 message = "Find the boat and use it to reach the main island so you can rescue your other crewmates";
                 tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
                 boat.GetComponentInChildren<Interactor>().interactable = true;
+                compass.SetActive(true);
+                daltonNPC = true;
                 break;
             default:
+                Debug.Log("Changing to next tutorial step:" + progress);
                 // Default case
                 tutorialMessages.SetActive(false);
                 break;
@@ -90,6 +104,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         { 
             daltonCamp.SetActive(true);
             boat.GetComponentInChildren<Interactor>().interactable = true;
+            compass.SetActive(true);
         }
         // put player in front of tutorial dalton
         else 
@@ -115,6 +130,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         avNPC = gameData.avNPC;
         scientistNPC= gameData.scientistNPC;
         firstSpawn = gameData.firstSpawn;
+        tProgress = gameData.tProgress;
         StartCoroutine(NPCCheckCR(0.5f));
     }
 
@@ -125,12 +141,14 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
         gameData.avNPC = avNPC;
         gameData.scientistNPC = scientistNPC;
         gameData.firstSpawn = firstSpawn;
+        gameData.tProgress = tProgress;
     }
 
     IEnumerator NPCCheckCR(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         NPCCheck();
+        UpdateTutorialProgress(tProgress);
     }
 
     IEnumerator TeleportPlayer(float seconds)

@@ -10,7 +10,7 @@ I'm Dalton! #speaker:Dalton
 Do you need me to explain a few things? 
 
 + [I don't need help!]
-    Alright! Alright! Get going then if you're in such a rush!
+    Alright! Alright! I can take a hint...
     -> tools
 + [Yes please]
     -> tutorial
@@ -47,9 +47,9 @@ Cycle items by using the -scroll wheel-
 -> tools
 
 === tools ===
-Before you go, I need your help to set up camp.
-Clear those trees and rocks for me will yah?
-Here are some tools that should help.
+But first... could you do me a favour?
+    And clear those trees and rocks for me so I can set up my tent?
+    Here are some tools that should help.
 ~ npcAddItem("Sword")
 ~ npcAddItem("Axe")
 ~ npcAddItem("Pickaxe")

@@ -30,6 +30,7 @@ public class GameData
     // World info
     public float time;
     public bool firstSpawn;
+    public int tProgress;
 
 
     // the values defined in this constructor will be the default values when no data to load
@@ -45,7 +46,7 @@ public class GameData
         this.avNPC = false;
         this.scientistNPC = false;
         this.sirenDefeated = false;
-
+        this.tProgress = 0;
 
         
         this.InvItems_Names = new List<string>();
