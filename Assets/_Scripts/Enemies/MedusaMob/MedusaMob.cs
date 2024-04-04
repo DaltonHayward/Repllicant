@@ -41,7 +41,8 @@ public class MedusaMob : Enemy
     public BoarState state;
     public float skillSpeed;
 
-    [SerializeField] BaseEffect Effect; 
+    [SerializeField] BaseEffect Effect; // add this to use slow effect
+    SphereCollider sphereCollider; 
     /*public void Die()
     {
         Destroy(gameObject);
@@ -50,9 +51,7 @@ public class MedusaMob : Enemy
     float subAngle;
     List<GameObject> target = new List<GameObject>();
 
-    // [SerializeField] BaseEffect Effect; // add this to use slow effect
-    // could just add the collider on to this script (or have the trigger be added to the player damage trigger)
-    // set up a OnTriggerEnter for the collider and use this logic:
+    
     // var effectableObject = other.GetComponent<EffectableObject>();
     // if (effectableObject != null)
     // effectableObject.ApplyEffect(Effect);
@@ -81,6 +80,7 @@ public class MedusaMob : Enemy
         base.Start();
         subAngle = 45f / lookAccurate;
         gameObject.AddComponent<SlowDownBuff>().Init(gameObject);
+        SphereCollider sphereCollider = GetComponent<SphereCollider>();
     }
 
 

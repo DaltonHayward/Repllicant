@@ -330,7 +330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 148.6467
+      value: 138.04
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       propertyPath: m_LocalPosition.y
@@ -338,7 +338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -90.703705
+      value: -83.24
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1207,9 +1207,6 @@ PrefabInstance:
       addedObject: {fileID: 8469948212154769266}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7590604486959375458}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4935856630236652422}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       insertIndex: -1
@@ -1223,6 +1220,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3560210889248423340}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6329990567878645342}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8989481930609829800}
   m_SourcePrefab: {fileID: 100100000, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
 --- !u!1 &6095199400200482740 stripped
 GameObject:
@@ -1251,19 +1254,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7590604486959375458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6095199400200482740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: deb3d68f9ca08c84aa374ab0fce6529c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!114 &4935856630236652422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,6 +1296,7 @@ MonoBehaviour:
   chargeTargetPosition: {x: 0, y: 0, z: 0}
   state: 0
   skillSpeed: 0
+  Effect: {fileID: 0}
   lookAccurate: 10
 --- !u!95 &7201318304824328432
 Animator:
@@ -1389,6 +1380,41 @@ CapsuleCollider:
   m_Radius: 1.5
   m_Height: 8
   m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6329990567878645342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6095199400200482740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3e3ba13377c3084ebb3419bb958c0ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Effect: {fileID: 11400000, guid: c93c6d63332db0d418b7d7b0a089e0e2, type: 2}
+  sphereCollider: {fileID: 8989481930609829800}
+--- !u!135 &8989481930609829800
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6095199400200482740}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &6907869968695555342 stripped
 Transform:
