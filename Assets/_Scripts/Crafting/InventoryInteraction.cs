@@ -4,6 +4,7 @@ using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// OWNER: Spencer Martin
@@ -139,30 +140,22 @@ public class InventoryInteraction : MonoBehaviour
     // function for crafting an item
     public void CraftItem(BaseItemRecipe itemRecipe)
     {
-        if (ItemCheck(itemRecipe.input))
-        {
-            // remove inventory items
-            RemoveInventoryItems(itemRecipe.input);
 
-            // add inventory items
-            AddInventoryItems(itemRecipe.output);
-            try
+        // remove inventory items
+        RemoveInventoryItems(itemRecipe.input);
+
+        // add inventory items
+        AddInventoryItems(itemRecipe.output);
+
+        if (SceneManager.GetActiveScene().buildIndex == 2) { 
+        if (itemRecipe.recipeName == "Torch")
+        {
+            if (TutorialManager.instance.tProgress < 4)
             {
-                if (itemRecipe.recipeName == "Torch")
-                {
-                    if (TutorialManager.instance.tProgress < 4)
-                    {
-                        TutorialManager.instance.UpdateTutorialProgress(4);
-                    }
-                }
-
+                TutorialManager.instance.UpdateTutorialProgress(4);
             }
-            catch { }
         }
-        else
-        {
-            return;
-        }
+    }
     }
 
 

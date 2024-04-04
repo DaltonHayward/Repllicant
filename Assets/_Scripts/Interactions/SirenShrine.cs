@@ -25,6 +25,10 @@ public class SirenShrine : MonoBehaviour
         {
             SceneChange(scene);
         }
+        else
+        {
+            GetComponentInChildren<Interactor>().FailedCheck();
+        }
     }
 
     private void SceneChange(int scene)

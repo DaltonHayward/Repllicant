@@ -43,6 +43,7 @@ public class OpenStash : MonoBehaviour
         PlayerController player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         if (player._playerState == PlayerController.State.MOVING || player._playerState == PlayerController.State.STANDING || player._playerState == PlayerController.State.INTERACTING)
         {
+            Debug.Log("Stash opened");
             stashUI.enabled = !isStashOpen;
             PlayerUI.enabled = !isStashOpen;
             isStashOpen = !isStashOpen;

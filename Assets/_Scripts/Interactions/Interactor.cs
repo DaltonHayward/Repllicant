@@ -44,22 +44,12 @@ public class Interactor : MonoBehaviour
                     StartCoroutine(DisplayFailedConditionalText());
                 }
             }
-
-            //if (stashScript.IsStashOpen() && (InputManager.instance.MenuOpenCloseInput || InputManager.instance.InventoryInput))
-            //{
-                if (interactable)
-                {
-                    if (interactBehaviour != null)
-                    {
-                        interactBehaviour.Invoke();
-                    }
-                }
-                else
-                {
-                    StartCoroutine(DisplayFailedConditionalText());
-                }
-            //}
         }
+    }
+
+    public void FailedCheck()
+    {
+        StartCoroutine(DisplayFailedConditionalText());
     }
 
     // on fail

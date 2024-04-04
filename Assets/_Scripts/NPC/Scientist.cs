@@ -5,6 +5,7 @@ using UnityEngine;
 public class Scientist : MonoBehaviour
 {
     [SerializeField] ProgressManager progressManager;
+    [SerializeField] BaseItemRecipe recipe;
     private GameObject player;
     // keep track of if player has interacted with this npc in this scene instance
     public bool interacted = false;
@@ -24,6 +25,19 @@ public class Scientist : MonoBehaviour
     {
         if (progressManager != null) { progressManager.scientist = true; }
         HealPlayer();
+        // check player inventory for reagents
+        InventoryInteraction inventory = CraftingManager.instance.GetComponent<InventoryInteraction>();
+
+        var item1 = new ItemTypeAndCount("IonizedEtherCrystal", 1);
+        Debug.Log("test");
+
+        ItemTypeAndCount[] items = { item1 };
+        Debug.Log(inventory.ItemCheck(items));
+        if (inventory.ItemCheck(items))
+        {
+            inventory.CraftItem(recipe);
+        }
+
     }
 
     public void HealPlayer()

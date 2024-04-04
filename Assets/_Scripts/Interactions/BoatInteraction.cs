@@ -16,7 +16,6 @@ public class BoatInteraction : MonoBehaviour
 
     private void SceneChange(int scene) 
     {
-        TutorialManager.instance.tProgress = 999;
         UIManager.instance.loadingScreen.gameObject.SetActive(true);
         UIManager.instance.loadingScreen.alpha = 1f;
         DataPersistanceManager.instance.SaveGame();

@@ -494,6 +494,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scientist
       objectReference: {fileID: 0}
+    - target: {fileID: 9176703136085633883, guid: 361502f79c55ed84b9d91a0c2eb6451e, type: 3}
+      propertyPath: recipe
+      value: 
+      objectReference: {fileID: 11400000, guid: 6c2dc5af555412f42967ad48f9d448d0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1926,6 +1930,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 447485732455405582, guid: 8d82e48f7b1392d49953700821e4f47a, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 6760304967453545182}
     - target: {fileID: 1320666702988915854, guid: 8d82e48f7b1392d49953700821e4f47a, type: 3}
       propertyPath: target
       value: 
@@ -2339,6 +2347,26 @@ PrefabInstance:
       propertyPath: notificationPanel
       value: 
       objectReference: {fileID: 20321678}
+    - target: {fileID: 7035412418529476175, guid: 9f2f0b9b5cc98784ab99ef110e3ed4cc, type: 3}
+      propertyPath: recipes.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035412418529476175, guid: 9f2f0b9b5cc98784ab99ef110e3ed4cc, type: 3}
+      propertyPath: recipes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 561ee8eec494ae4448e1e9b0825b89e7, type: 2}
+    - target: {fileID: 7035412418529476175, guid: 9f2f0b9b5cc98784ab99ef110e3ed4cc, type: 3}
+      propertyPath: recipes.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: a7b6e0cec15144741a9a30ccdc972bad, type: 2}
+    - target: {fileID: 7035412418529476175, guid: 9f2f0b9b5cc98784ab99ef110e3ed4cc, type: 3}
+      propertyPath: recipes.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: df61c8f917311fb4e82b4941be6b574e, type: 2}
+    - target: {fileID: 7035412418529476175, guid: 9f2f0b9b5cc98784ab99ef110e3ed4cc, type: 3}
+      propertyPath: recipes.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: a9300d3205589e8419381ed885f912a6, type: 2}
     - target: {fileID: 8523911933262242561, guid: 9f2f0b9b5cc98784ab99ef110e3ed4cc, type: 3}
       propertyPath: m_Name
       value: CraftingManager
@@ -2353,71 +2381,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6512149751614931692, guid: 6caccc982f2050745bcb51f3e89cfea4, type: 3}
   m_PrefabInstance: {fileID: 588492365}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &976961007
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3801383737389812534, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 146.4668
-      objectReference: {fileID: 0}
-    - target: {fileID: 3801383737389812534, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.008666992
-      objectReference: {fileID: 0}
-    - target: {fileID: 3801383737389812534, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -67.35924
-      objectReference: {fileID: 0}
-    - target: {fileID: 3801383737389812534, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.2547791
-      objectReference: {fileID: 0}
-    - target: {fileID: 3801383737389812534, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3801383737389812534, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.9669993
-      objectReference: {fileID: 0}
-    - target: {fileID: 3801383737389812534, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3801383737389812534, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3801383737389812534, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 209.521
-      objectReference: {fileID: 0}
-    - target: {fileID: 3801383737389812534, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3833587885929530471, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: m_Name
-      value: PlayerStash
-      objectReference: {fileID: 0}
-    - target: {fileID: 5230048978405777197, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: stashUI
-      value: 
-      objectReference: {fileID: 1157540462}
-    - target: {fileID: 5230048978405777197, guid: 046060e959ca370448feb70138515502, type: 3}
-      propertyPath: PlayerUI
-      value: 
-      objectReference: {fileID: 1126447358}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 046060e959ca370448feb70138515502, type: 3}
 --- !u!1 &1012708353 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8041097003339915595, guid: 6caccc982f2050745bcb51f3e89cfea4, type: 3}
@@ -3188,6 +3151,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8885769955061379400, guid: 763840f17194f124bbaa1394dbbdef56, type: 3}
+      propertyPath: recipe
+      value: 
+      objectReference: {fileID: 11400000, guid: f7857d684d32b3f429b84b81f9d4567f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4318,6 +4285,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 588492370}
     m_Modifications:
+    - target: {fileID: 1778552882891596887, guid: 1341e393156ef2e4e9f69694cafa3e0e, type: 3}
+      propertyPath: recipe
+      value: 
+      objectReference: {fileID: 11400000, guid: 4cf23c395b636f241bd7fa6c8e2ff8f8, type: 2}
     - target: {fileID: 2273642452818906165, guid: 1341e393156ef2e4e9f69694cafa3e0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.91
@@ -4361,6 +4332,10 @@ PrefabInstance:
     - target: {fileID: 4292831400463093472, guid: 1341e393156ef2e4e9f69694cafa3e0e, type: 3}
       propertyPath: m_Name
       value: Technologist
+      objectReference: {fileID: 0}
+    - target: {fileID: 4292831400463093472, guid: 1341e393156ef2e4e9f69694cafa3e0e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4983215813699235414, guid: 1341e393156ef2e4e9f69694cafa3e0e, type: 3}
       propertyPath: inkJSON
@@ -4852,9 +4827,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5395350667693765750, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+      propertyPath: maxHealth
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5395350667693765750, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 2092857106}
+    - target: {fileID: 5395350667693765750, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+      propertyPath: currentHealth
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5045,7 +5028,7 @@ PrefabInstance:
     - target: {fileID: 5230048978405777197, guid: 046060e959ca370448feb70138515502, type: 3}
       propertyPath: PlayerUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1157540462}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5749,5 +5732,4 @@ SceneRoots:
   - {fileID: 1762307254}
   - {fileID: 1795018855}
   - {fileID: 1431447461}
-  - {fileID: 976961007}
   - {fileID: 218711199}
