@@ -26,7 +26,7 @@ public class SlowDownBuff:Buff
         //player = GameObject.FindWithTag("Player").gameObject;
     }
 
-    public void Init(GameObject user,float slowDown=0.7f, float dis=10,float intervalTime=0.5f)
+    public void Init(GameObject user,float slowDown=0.5f, float dis=10,float intervalTime=0.5f)
     {
         this.user = user;
         this.dis = dis;
@@ -81,7 +81,8 @@ public class SlowDownBuff:Buff
         {
             if (player.TryGetComponent(out ISubscriber subscriber))
             {
-                subscriber.ReceiveMessage("SpeedChange:" + (1 / slowDown).ToString());
+                subscriber.ReceiveMessage("HarpyResetMove");
+                subscriber.ReceiveMessage("HarpyResetSprint");
             }
         }
     }

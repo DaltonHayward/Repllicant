@@ -37,7 +37,7 @@ public class Compass : MonoBehaviour
 
         // Convert rotation to UI space
         Vector3 eulerRotation = rotation.eulerAngles;
-        eulerRotation.z = -eulerRotation.y;
+        eulerRotation.z = -eulerRotation.y + 46;
         eulerRotation.x = eulerRotation.y = 0;
 
         // Apply rotation to compass UI
