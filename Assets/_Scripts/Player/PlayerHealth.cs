@@ -10,15 +10,12 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour, IDataPersistance
 {
-    [SerializeField] protected UnityEvent<PlayerHealth> OnPlayerDied = new UnityEvent<PlayerHealth>();
+    //[SerializeField] protected UnityEvent<PlayerHealth> OnPlayerDied = new UnityEvent<PlayerHealth>();
     public float maxHealth = 500f; // Player Max health
     public float currentHealth; // Player current health
 
-    //public float healthRecoveryRate = 10f;
-    //public float healthRecoveryDelay = 5f;
-
     protected float previousHealth = 0f;
-    //protected float HealthRecoveryDelayRemaining = 0f;
+    
 
     public bool isDead;
 
@@ -59,13 +56,14 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         }
     }
 
-    public void TakeDamage(float damage) //could be nice to provide a type or source here for resilience to certain damage etc.
+    public void TakeDamage(float damage) 
     {
         if (_invincibleDuration <= 0 && !isDead) 
         {
             //damageIndicator.Hurt();
             //currentHealth -= damage; // Reduce HP when take damage
             currentHealth = Mathf.Max(currentHealth - damage, 0f);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Player/Damage/DamageVocal", GetComponent<Transform>().position);
             
 
             if (currentHealth <= 0f && previousHealth > 0f)
@@ -92,13 +90,13 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         isDead = true;
         deathScreen.SetActive(true);
         deathScreen.GetComponent<CanvasGroup>().alpha = 0;
-        //FadeIn(deathScreen.GetComponent<CanvasGroup>(), 0.5f);
-        deathScreen.GetComponent<CanvasFader>().Fade();
+        FadeIn(deathScreen.GetComponent<CanvasGroup>(), 0.5f);
+        //deathScreen.GetComponent<CanvasFader>().Fade();
         deathScreen.GetComponent<CanvasGroup>().interactable = true;
         Heal(maxHealth);
-        OnPlayerDied.Invoke(this);
+        //OnPlayerDied.Invoke(this);
     }
-    /*
+    
     // Call this method to fade in the canvas group
     public void FadeIn(CanvasGroup canvasGroup, float fadeDuration)
     {
@@ -116,7 +114,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
             yield return null;
         }
         cg.alpha = endAlpha;
-    }*/
+    }
 
     public void Invincible(float delay, float invincibleLength)
     {

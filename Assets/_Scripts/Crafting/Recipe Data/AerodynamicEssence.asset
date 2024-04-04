@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f9a7d73652d7c469931c98b91edb13, type: 3}
-  m_Name: Effect_Heal
+  m_Script: {fileID: 11500000, guid: fd48fa4bf677d4641886f75c5b9b1125, type: 3}
+  m_Name: AerodynamicEssence
   m_EditorClassIdentifier: 
-  Duration: 5
-  name: Heal
-  HealthModifier: 1.1
+  recipeName: AerodynamicEssence
+  input:
+  - name: SyntheticPlumeCore
+    count: 5
+  output: {fileID: 11400000, guid: 48df921c4fcece44c8180089b6875f02, type: 2}

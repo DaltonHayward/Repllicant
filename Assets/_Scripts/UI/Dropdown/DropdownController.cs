@@ -56,6 +56,12 @@ public class DropdownController : MonoBehaviour
                 unequipButton.GetComponent<Button>().onClick.AddListener(() => InventoryController.instance.UnequipTool(_clickedOnItem));
                 unequipButton.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip";
             }
+            else if (_clickedOnItem != null && _clickedOnItem.itemData.isConsumable)
+            {
+                GameObject consumeButton = Instantiate(buttonPrefab, dropdown.transform);
+                consumeButton.GetComponent<Button>().onClick.AddListener(() => InventoryController.instance.Consume(_clickedOnItem));
+                consumeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Consume";
+            }
         }
 
         GameObject discardButton = Instantiate(buttonPrefab, dropdown.transform);

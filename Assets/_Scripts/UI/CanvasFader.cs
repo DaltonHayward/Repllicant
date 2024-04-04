@@ -31,5 +31,7 @@ public class CanvasFader : MonoBehaviour
 
             yield return null;
         }
+        canvGroup.alpha = end;
     }
+
 }

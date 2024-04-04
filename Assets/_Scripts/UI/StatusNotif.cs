@@ -11,6 +11,8 @@ public class StatusNotif : MonoBehaviour
 
     [SerializeField] public GameObject statusText;
 
+    [SerializeField] public GameObject statusSprite;
+
     [SerializeField] public Transform statusPanel;
 
     [SerializeField] public PlayerController playerController;
@@ -58,10 +60,11 @@ public class StatusNotif : MonoBehaviour
 
             for (int i = 0; i < activeEffects.Count; i++)
             {
-                GameObject newStatus = Instantiate(statusText, statusPanel);
+                GameObject newStatus = Instantiate(statusSprite, statusPanel); //statusText previously
                 //newStatus.name = activeEffects[i].name;
                 //currentEffects.Add(newStatus);
-                newStatus.transform.GetComponent<TextMeshProUGUI>().text = activeEffects[i].name;
+                //newStatus.transform.GetComponent<TextMeshProUGUI>().text = activeEffects[i].name;
+                newStatus.transform.GetComponent<Image>().sprite = activeEffects[i].sprite;
             }
         }
 

@@ -11,7 +11,7 @@ public class BaseEffect : ScriptableObject
 {
     [SerializeField] protected float Duration = 0f;
 
-    //[SerializeField] public Sprite sprite;
+    [SerializeField] public Sprite sprite;
 
     public bool IsActive => DurationRemaining > 0f;
 

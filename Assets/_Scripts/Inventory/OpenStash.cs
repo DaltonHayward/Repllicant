@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class OpenStash : MonoBehaviour
 {
-
     public Canvas stashUI;
     public Canvas PlayerUI;
     private bool isStashOpen = false;
@@ -50,11 +49,17 @@ public class OpenStash : MonoBehaviour
             if (isStashOpen)
             {
                 player.SetState(PlayerController.State.INTERACTING);
+                StartCoroutine(player.SlowDown());
             }
             else
             {
                 player.SetState(PlayerController.State.STANDING);
             }
         }
+    }
+
+    public bool IsStashOpen()
+    {
+        return isStashOpen;
     }
 }
