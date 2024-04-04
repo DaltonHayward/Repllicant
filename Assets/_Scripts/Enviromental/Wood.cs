@@ -36,7 +36,7 @@ public class Wood : Collectible, ISubscriber
     {
         hp -= damage;
         // add collision sound trigger here - check if 'stoned' lmao
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Player/Tool/WoodHit");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Player/Tool/WoodHit", GetComponent<Transform>().position);
         
         if (hp <= 0) {
             Destroy(gameObject);

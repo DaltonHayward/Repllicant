@@ -51,12 +51,23 @@ public class InvTool : MonoBehaviour, ISubscriber, Burnable
         isBurning = true;
         Inventory_Item item = GetComponent<Inventory_Item>();
         //Update sprite
+         if(isBurning && isShocked){
+        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[3].sprite);
+        }
+        else{
         item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[1].sprite);
+        
+        }
 
         yield return new WaitForSeconds(burnTime);
 
         // reset sprite
+        if(isShocked){
+        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[2].sprite);
+        }
+        else{
         item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[0].sprite);
+        }
         isBurning = false;
     }
 
@@ -65,13 +76,25 @@ public class InvTool : MonoBehaviour, ISubscriber, Burnable
         isShocked = true;
         Inventory_Item item = GetComponent<Inventory_Item>();
         //Update sprite
-        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[1].sprite);
+        if(isBurning && isShocked){
+        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[3].sprite);
+        }
+        else{
+        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[2].sprite);
+        
+        }
 
         yield return new WaitForSeconds(burnTime);
 
-        // reset sprite
-        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[0].sprite);
         isShocked = false;
+
+        // reset sprite
+        if(isBurning){
+        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[1].sprite);
+        }
+        else{
+        item.UpdateSprite(GetComponent<Inventory_Item>().itemData.sprites[0].sprite);
+        }
     }
 
    

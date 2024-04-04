@@ -233,6 +233,8 @@ public class DialogueManager : MonoBehaviour
 
             else
             {
+                LetterSound(dialogueText.text[dialogueText.maxVisibleCharacters]);
+                //Debug.Log(dialogueText.text[dialogueText.maxVisibleCharacters]);
                 dialogueText.maxVisibleCharacters++;
                 yield return new WaitForSeconds(typingSpeed);
             }
@@ -244,6 +246,17 @@ public class DialogueManager : MonoBehaviour
         DisplayChoices();
 
         canContinueToNextLine = true;
+    }
+
+    // Audio Trigger - takes a letter, converts to uppercase, triggers FMOD oneshot for that letter
+    private void LetterSound(char letter)
+    {
+        letter = char.ToUpper(letter);
+        if (Char.IsLetter(letter))
+        {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Dialogue/" + letter);
+        }
+        
     }
 
     private void DisplayChoices()

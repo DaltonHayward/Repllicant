@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 namespace ToolTipUI
 {
@@ -12,6 +13,7 @@ namespace ToolTipUI
         [SerializeField] private GameObject popupCanvasObject;
         [SerializeField] private RectTransform popupObject;
         [SerializeField] private TextMeshProUGUI header;
+        [SerializeField] private GameObject content;
         [SerializeField] private Vector3 offset;
         [SerializeField] private float padding;
 
@@ -62,6 +64,11 @@ namespace ToolTipUI
             current.popupCanvasObject.SetActive(true);
             //current.GetComponent<CanvasFader>().Fade();
             current.header.transform.GetComponent<TextMeshProUGUI>().text = current.AddSpaces(item.name);
+            /*if (item.description != null)
+            {
+                GameObject newContent = Instantiate(current.content, current.popupObject);
+                newContent.transform.GetComponent<TextMeshProUGUI>().text = item.description;
+            }*/
             LayoutRebuilder.ForceRebuildLayoutImmediate(current.popupObject);
         }
 
