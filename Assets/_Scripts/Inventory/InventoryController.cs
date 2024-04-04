@@ -567,13 +567,12 @@ public class InventoryController : MonoBehaviour,IDataPersistance
    
     #endregion
 
-    public void RollLoot(ItemGrid lootGrid){
-        int lootAmount = Random.Range(1, 4);
+    public void RollLoot(ItemGrid lootGrid, int min, int max){
+        int lootAmount = Random.Range(min, max);
         for (int i = 0; i < lootAmount; i++)
         {
             int selectedUID = Random.Range(0, itemDataEntries.Count);
             ItemData itemData = itemDataEntries[selectedUID].itemData;
-            Debug.Log("Looted: " + itemData.Name + " at " + lootGrid);
             Inventory_Item newItem = Instantiate(ItemPrefab).GetComponent<Inventory_Item>();
             newItem.Set(itemData);
             Vector2Int? storePos = lootGrid.FindSpace(newItem);
