@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
+
 
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Items/New Item")]
@@ -20,6 +22,8 @@ public class ItemData : ScriptableObject
     public int width;
     public int height;
     public bool isEquipable;
+    public bool isConsumable;
+    public float healAmount;
     public GameObject worldModel;
     public List<ItemSprites> sprites;
     [Header("Inventory Effect Fields")]
@@ -28,4 +32,5 @@ public class ItemData : ScriptableObject
     [Header("Tool Fields")]
     public GameObject equippedModel;
     public PlayerController.Equipment toolType;
+    public string Description = "Empty";
 }
