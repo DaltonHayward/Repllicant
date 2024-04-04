@@ -78,6 +78,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4787923778160866049}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7341788573382387869}
   m_SourcePrefab: {fileID: 100100000, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
 --- !u!1 &6792555130541092465 stripped
 GameObject:
@@ -151,12 +154,15 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   commonItems:
   - {fileID: 8760400047210153315, guid: 10845fb4af130834498f4164a7e03bdb, type: 3}
-  uncommonItems: []
-  rareItems: []
-  legendaryItems: []
-  commonItemProbability: 100
-  uncommonItemsProbability: 0
-  rareItemsProbability: 0
+  uncommonItems:
+  - {fileID: 8760400047210153315, guid: eba719d5ad4c96545854a8ce38a9de71, type: 3}
+  rareItems:
+  - {fileID: 8760400047210153315, guid: d71c1f45bd726a04c82e9156c05e87cf, type: 3}
+  legendaryItems:
+  - {fileID: 8760400047210153315, guid: 62eb1f1652f95bf4c8ccd5eea60e5a67, type: 3}
+  commonItemProbability: 0.4
+  uncommonItemsProbability: 0.3
+  rareItemsProbability: 0.3
   legendaryItemsProbability: 0
   skillCD: 0
   rangedEnemy: 0
@@ -176,6 +182,7 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 1
   attackDamage: 0
+  lifeTime: 15
 --- !u!114 &5398212453731545611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,5 +208,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31dd08e50d136c8499b60e22be2b7d4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7341788573382387869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792555130541092465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5134944ed213a284b80d7ea9243479c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
