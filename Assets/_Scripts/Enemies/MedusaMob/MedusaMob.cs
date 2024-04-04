@@ -40,10 +40,12 @@ public class MedusaMob : Enemy
     public Vector3 chargeTargetPosition;
     public BoarState state;
     public float skillSpeed;
-    public void Die()
+
+    [SerializeField] BaseEffect Effect; 
+    /*public void Die()
     {
         Destroy(gameObject);
-    }
+    }*/
     public int lookAccurate = 10;
     float subAngle;
     List<GameObject> target = new List<GameObject>();

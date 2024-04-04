@@ -64,11 +64,11 @@ namespace ToolTipUI
             current.popupCanvasObject.SetActive(true);
             //current.GetComponent<CanvasFader>().Fade();
             current.header.transform.GetComponent<TextMeshProUGUI>().text = current.AddSpaces(item.name);
-            /*if (item.description != null)
+            if (item.Description != null)
             {
                 GameObject newContent = Instantiate(current.content, current.popupObject);
-                newContent.transform.GetComponent<TextMeshProUGUI>().text = item.description;
-            }*/
+                newContent.transform.GetComponent<TextMeshProUGUI>().text = item.Description;
+            }
             LayoutRebuilder.ForceRebuildLayoutImmediate(current.popupObject);
         }
 
