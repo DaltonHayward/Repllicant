@@ -21,13 +21,33 @@ public class EquippedGUI : MonoBehaviour
     void Start()
     {
         equipped = playerController.GetCurrentEquipment();
+        
+        
         UpdateEquippedUI();
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        EquippedTool[] tools = playerController.GetTools();
+
+        bool toolsNull = true;
+        foreach (EquippedTool tool in tools)
+        {
+            if (tool != null)
+            {
+                toolsNull = false;
+            }
+        }
+        if (toolsNull)
+        {
+            equippedPanel.gameObject.SetActive(false);
+        }
+        if (!toolsNull)
+        {
+            equippedPanel.gameObject.SetActive(true);
+        }
+        
         string newEquipped = playerController.GetCurrentEquipment();
         
         if (newEquipped != equipped)
