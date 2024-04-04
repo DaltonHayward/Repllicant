@@ -15,6 +15,15 @@ public class Interactor : MonoBehaviour
     [SerializeField] public bool interactable = true;
     // assign any behaviour on interaction
     [SerializeField] UnityEvent interactBehaviour;
+    private OpenStash stashScript;
+    private PlayerController _playerController;
+
+    private void Awake()
+    {
+        stashScript = GetComponentInParent<OpenStash>();
+        _playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+    }
+
 
     void OnTriggerStay(Collider other)
     {
@@ -22,6 +31,21 @@ public class Interactor : MonoBehaviour
         {
             transform.GetChild(0).gameObject.SetActive(true);
             if (InputManager.instance.InteractInput)
+            {
+                if (interactable)
+                {
+                    if (interactBehaviour != null)
+                    {
+                        interactBehaviour.Invoke();
+                    }
+                }
+                else
+                {
+                    StartCoroutine(DisplayFailedConditionalText());
+                }
+            }
+
+            if (stashScript.IsStashOpen() && (InputManager.instance.MenuOpenCloseInput || InputManager.instance.InventoryInput))
             {
                 if (interactable)
                 {
