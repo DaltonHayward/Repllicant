@@ -205,8 +205,6 @@ public class PlayerController : MonoBehaviour, ISubscriber
 
             case State.INTERACTING:
                 HandleInteract();
-                HandleMenuPress();
-                ToggleInventory();
                 break;
 
             case State.INVENTORY:
@@ -1055,6 +1053,11 @@ public class PlayerController : MonoBehaviour, ISubscriber
     public int GetCurrentTool()
     {
         return _currentTool;
+    }
+
+    public EquippedTool CurrentTool()
+    {
+        return _tools[_currentTool];
     }
 
     

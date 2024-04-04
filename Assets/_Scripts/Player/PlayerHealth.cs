@@ -56,7 +56,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistance
         }
     }
 
-    public void TakeDamage(float damage) //could be nice to provide a type or source here for resilience to certain damage etc.
+    public void TakeDamage(float damage) 
     {
         if (_invincibleDuration <= 0 && !isDead) 
         {

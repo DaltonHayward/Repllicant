@@ -12,6 +12,8 @@ public class InkExternalFunctions
         story.BindExternalFunction("OpenCrafting", () => OpenCrafting());
 
         story.BindExternalFunction("npcAddItem", (string itemToAdd) => NPCAddItem(itemToAdd));
+
+        story.BindExternalFunction("UpdateTutorialStatus", (int status) => UpdateTutorialStatus(status));
         
     }
 
@@ -33,6 +35,9 @@ public class InkExternalFunctions
         CraftingManager.instance.inventoryInteraction.NPCAddItem(itemToAdd);
     }
 
-    
+    public void UpdateTutorialStatus(int status)
+    {
+        TutorialManager.instance.UpdateTutorialProgress(status);
+    }
 
 }
