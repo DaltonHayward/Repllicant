@@ -21,6 +21,7 @@ namespace ToolTipUI
         private static TooltipSystem current;
 
 
+        GameObject newContent;
 
         private void Awake()
         {
@@ -61,13 +62,15 @@ namespace ToolTipUI
 
         public static void ShowToolTip(ItemData item)
         {
+            Destroy(current.newContent);
+            
             current.popupCanvasObject.SetActive(true);
             //current.GetComponent<CanvasFader>().Fade();
             current.header.transform.GetComponent<TextMeshProUGUI>().text = current.AddSpaces(item.name);
             if (item.Description != null)
             {
-                GameObject newContent = Instantiate(current.content, current.popupObject);
-                newContent.transform.GetComponent<TextMeshProUGUI>().text = item.Description;
+                current.newContent = Instantiate(current.content, current.popupObject);
+                current.newContent.transform.GetComponent<TextMeshProUGUI>().text = item.Description;
             }
             LayoutRebuilder.ForceRebuildLayoutImmediate(current.popupObject);
         }
@@ -76,10 +79,7 @@ namespace ToolTipUI
         {
 
             current.popupCanvasObject.SetActive(false);
-            foreach (Transform child in current.popupObject)
-            {
-                Destroy(child.gameObject);
-            }
+
             //current.GetComponent<CanvasFader>().Fade();
         }
 
