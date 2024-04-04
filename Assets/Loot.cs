@@ -9,10 +9,12 @@ public class Loot : MonoBehaviour
     public InventoryController inventoryController;
     public Canvas LootUI;
     private bool isChestOpen = false;
+    public int minItems = 1;
+    public int maxItems = 5;
     void Start()
     {
         ItemGrid lootgrid = GetComponentInChildren<ItemGrid>(); 
-        InventoryController.instance.RollLoot(lootgrid);
+        InventoryController.instance.RollLoot(lootgrid, minItems, maxItems);
     }    
     public void OpenTheStash()
     {
