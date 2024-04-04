@@ -22,15 +22,14 @@ public class Wood : Collectible, ISubscriber
     public ParticleSystem fireSystem;
     [Range(0,1)]
     public float burnChance = 0.7f;
-    private IEnumerator burnCD;
-    private IEnumerator burnTick;
-    public GameObject fireLight;
+    private Coroutine burnCD;
+    private Coroutine burnTick;
+    private Light fireLight;
 
-    private void Start()
+    private void Awake()
     {
         dropItemStart = sureToDrop;
-        burnCD = BurnCooldown();
-        burnTick = BurnTick();
+        fireLight = fireSystem.GetComponentInChildren<Light>();
     }
 
     override public void TakeDamage(float damage)
@@ -68,17 +67,15 @@ public class Wood : Collectible, ISubscriber
 
         isBurning = true;
         sureToDrop = burningItemDrop;
-        fireLight.SetActive(true);
+        fireLight.enabled = true;
 
         if (!fireSystem.isPlaying)
         {
             fireSystem.Play();
         }
 
-        StartCoroutine(burnCD);
-        StopCoroutine(burnTick);
-        StartCoroutine(burnTick);
-
+        burnCD = StartCoroutine(BurnCooldown());
+        burnTick = StartCoroutine(BurnTick());
     }
 
     private void StopBurn()
@@ -88,14 +85,13 @@ public class Wood : Collectible, ISubscriber
         {
             isBurning = false;
             StopCoroutine(burnTick);
-            StartCoroutine(burnCD);
-            fireLight.SetActive(false);
+            StopCoroutine(burnCD);
+            fireLight.enabled = false;
 
             if (fireSystem.isPlaying)
             {
                 fireSystem.Stop();
             }
-
         }
     }
 
@@ -105,7 +101,7 @@ public class Wood : Collectible, ISubscriber
         yield return new WaitForSeconds(rand);
         isBurning = false;
         sureToDrop = dropItemStart;
-        fireLight.SetActive(false);
+        fireLight.enabled = false;
 
         if (fireSystem.isPlaying)
         {
@@ -176,6 +172,7 @@ public class Wood : Collectible, ISubscriber
             {
                 // reset burn cooldown
                 StopCoroutine(burnCD);
+                StopCoroutine(burnTick);
                 Burn();
             }
             else
