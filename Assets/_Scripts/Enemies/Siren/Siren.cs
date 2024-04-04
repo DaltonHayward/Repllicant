@@ -74,7 +74,10 @@ public class Siren : MonoBehaviour, ISubscriber
         // calc distance to player
         float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
-        transform.LookAt(player.transform.position);
+        Vector3 targetPostition = new Vector3(player.transform.position.x,
+                                       this.transform.position.y,
+                                       player.transform.position.z);
+        this.transform.LookAt(targetPostition);
         if (distanceToPlayer < chaseRange && distanceToPlayer > 2f)
         {
             speed = 0.5f;
