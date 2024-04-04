@@ -68,11 +68,11 @@ public class COW : MonoBehaviour
         if (Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(transform.position.x, 0, transform.position.z)) < chargeRange)
         {
 
-            /*if (bossHealth != null)
+            if (bossHealth != null)
             {
                 bossHealth.transform.GetChild(0).gameObject.SetActive(true);
                 bossHealth.transform.GetChild(1).gameObject.SetActive(true);
-            }*/
+            }
             chargeclock += Time.deltaTime;
             if (chargeclock > chargeInternal)
             {
@@ -83,14 +83,14 @@ public class COW : MonoBehaviour
                 chargedistance = Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(transform.position.x, 0, transform.position.z));
             }
         }
-        /*else 
+        else 
         {
             if (bossHealth != null)
             {
                 bossHealth.transform.GetChild(0).gameObject.SetActive(false);
                 bossHealth.transform.GetChild(1).gameObject.SetActive(false);
             }
-        }*/
+        }
 
 
         switch (state)
