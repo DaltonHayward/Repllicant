@@ -139,23 +139,30 @@ public class InventoryInteraction : MonoBehaviour
     // function for crafting an item
     public void CraftItem(BaseItemRecipe itemRecipe)
     {
-        // remove crafting ingredient items from inventory
-        RemoveInventoryItems(itemRecipe.input);
-
-        // add inventory items
-        AddInventoryItems(itemRecipe.output);
-        try 
+        if (ItemCheck(itemRecipe.input))
         {
-            if (itemRecipe.recipeName == "Torch")
+            // remove inventory items
+            RemoveInventoryItems(itemRecipe.input);
+
+            // add inventory items
+            AddInventoryItems(itemRecipe.output);
+            try
             {
-                if (TutorialManager.instance.tProgress < 4)
+                if (itemRecipe.recipeName == "Torch")
                 {
-                    TutorialManager.instance.UpdateTutorialProgress(4);
+                    if (TutorialManager.instance.tProgress < 4)
+                    {
+                        TutorialManager.instance.UpdateTutorialProgress(4);
+                    }
                 }
+
             }
-              
-                }
-        catch { }
+            catch { }
+        }
+        else
+        {
+            return;
+        }
     }
 
 
@@ -179,7 +186,7 @@ public class InventoryInteraction : MonoBehaviour
         AddInventoryItems(item);
 
 
-        
+
     }
 
     public void AddItemNotification(string itemToAdd)
@@ -192,9 +199,9 @@ public class InventoryInteraction : MonoBehaviour
         }*/
         GameObject notification = Instantiate(CraftingManager.instance.notificationText, parent);
         notification.transform.GetComponent<TextMeshProUGUI>().text = (AddSpaces(itemToAdd) + " added");
-        
+
         StartCoroutine(ClearNotifications(notification));
-        
+
     }
 
     public void RemoveItemNotification(string itemToAdd)
@@ -208,9 +215,9 @@ public class InventoryInteraction : MonoBehaviour
         GameObject notification = Instantiate(CraftingManager.instance.notificationText, parent);
         notification.transform.GetComponent<TextMeshProUGUI>().text = (AddSpaces(itemToAdd) + " removed");
         notification.transform.GetComponent<TextMeshProUGUI>().color = Color.red;
-        
+
         StartCoroutine(ClearNotifications(notification));
-        
+
     }
 
 
