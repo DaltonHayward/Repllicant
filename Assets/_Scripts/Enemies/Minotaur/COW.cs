@@ -46,9 +46,6 @@ public class COW : MonoBehaviour
     public float commonItemProbability, uncommonItemsProbability, rareItemsProbability, legendaryItemsProbability;//The probabilities of each item must add up to 1
     private RoleAnimation animator;
 
-    [SerializeField]
-    public GameObject bossHealth;
-
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -67,11 +64,6 @@ public class COW : MonoBehaviour
 
         if (Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(transform.position.x, 0, transform.position.z)) < chargeRange)
         {
-            if (bossHealth != null)
-            {
-                bossHealth.transform.GetChild(0).gameObject.SetActive(true);
-                bossHealth.transform.GetChild(1).gameObject.SetActive(true);
-            }
             chargeclock += Time.deltaTime;
             if (chargeclock > chargeInternal)
             {
@@ -82,14 +74,7 @@ public class COW : MonoBehaviour
                 chargedistance = Vector3.Distance(new Vector3(player.position.x, 0, player.position.z), new Vector3(transform.position.x, 0, transform.position.z));
             }
         }
-        else
-        {
-            if (bossHealth != null)
-            {
-                bossHealth.transform.GetChild(0).gameObject.SetActive(false);
-                bossHealth.transform.GetChild(1).gameObject.SetActive(false);
-            }
-        }
+
 
 
         switch (state)

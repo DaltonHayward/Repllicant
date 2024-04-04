@@ -8,12 +8,12 @@ public class SirenBossHealthBar : MonoBehaviour
     public GameObject siren;
     public Slider healthSlider;
     public Slider easeSlider;
+    public GameObject text;
     public float maxHealth;
     public float health;
 
     private float lerpSpeed = 0.05f;
 
-    float timeUntilHidden = 0f;
 
     private void Awake()
     {
@@ -32,11 +32,6 @@ public class SirenBossHealthBar : MonoBehaviour
         // billboard the health bar to always face camera
         transform.LookAt(transform.position + Camera.main.transform.forward);
 
-        // update hidden value on damage
-        if (health != siren.GetComponent<Siren>().hp)
-        {
-            timeUntilHidden = 3f; // how long until the health bar will be hidden again
-        }
         // update health bar to match enemies health
         health = siren.GetComponent<Siren>().hp;
 
@@ -52,28 +47,19 @@ public class SirenBossHealthBar : MonoBehaviour
             easeSlider.value = Mathf.Lerp(easeSlider.value, health, lerpSpeed);
         }
 
-        // calculate time until the bar is hidden from player
-        timeUntilHidden -= Time.deltaTime;
         if (healthSlider != null)
         {
-            if (timeUntilHidden <= 0)
+            if (!healthSlider.gameObject.activeInHierarchy)
             {
-                timeUntilHidden = 0;
-                healthSlider.gameObject.SetActive(false);
-                easeSlider.gameObject.SetActive(false);
-            }
-            else
-            {
-                if (!healthSlider.gameObject.activeInHierarchy)
-                {
-                    healthSlider.gameObject.SetActive(true);
-                    easeSlider.gameObject.SetActive(true);
-                }
+                healthSlider.gameObject.SetActive(true);
+                easeSlider.gameObject.SetActive(true);
+                text.gameObject.SetActive(true);
             }
             if (healthSlider.value <= 0)
             {
                 Destroy(healthSlider.gameObject);
                 Destroy(easeSlider.gameObject);
+                Destroy(text.gameObject);
             }
         }
 
