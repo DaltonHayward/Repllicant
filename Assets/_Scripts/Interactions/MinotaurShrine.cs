@@ -14,10 +14,11 @@ public class MinotaurShrine : MonoBehaviour
         // check player inventory for reagents
         InventoryInteraction inventory = craftingManager.GetComponent<InventoryInteraction>();
 
-        var item1 = new ItemTypeAndCount("Wood", 1);
-        var item2 = new ItemTypeAndCount("Axe", 1);
+        var item1 = new ItemTypeAndCount("EnergenicCircuitMatrix", 1);
+        var item2 = new ItemTypeAndCount("SolidifiedMystforce", 1);
+        var item3 = new ItemTypeAndCount("WindborneEssence", 1);
 
-        ItemTypeAndCount[] items = { item1, item2 };
+        ItemTypeAndCount[] items = { item1, item2, item3 };
         Debug.Log(inventory.ItemCheck(items));
         if (inventory.ItemCheck(items))
         {

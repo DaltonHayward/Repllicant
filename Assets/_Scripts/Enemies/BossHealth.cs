@@ -30,9 +30,9 @@ public class BossHealth : MonoBehaviour
             slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
         }
         
-        if (boss.GetComponent<Boar>() != null)
+        if (boss.GetComponent<COW>() != null)
         {
-            currentHealth = Mathf.RoundToInt(boss.GetComponent<Boar>().hp);
+            currentHealth = Mathf.RoundToInt(boss.GetComponent<COW>().hp);
             slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
         }
     }
