@@ -17,9 +17,9 @@ public class SirenShrine : MonoBehaviour
         var item1 = new ItemTypeAndCount("ArcaneConductorMatrix", 1);
         var item2 = new ItemTypeAndCount("CrystallizedEtherforce", 1);
         var item3 = new ItemTypeAndCount("AerodynamicEssence", 1);
+        Debug.Log("test");
 
-
-        ItemTypeAndCount[] items = {item1, item2};
+        ItemTypeAndCount[] items = {item1, item2, item3};
         Debug.Log(inventory.ItemCheck(items));
         if (inventory.ItemCheck(items))
         {
