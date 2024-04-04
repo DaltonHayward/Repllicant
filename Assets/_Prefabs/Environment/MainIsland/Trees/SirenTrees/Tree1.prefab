@@ -1,5 +1,72 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1167323656349473396
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5527527644788778655}
+    m_Modifications:
+    - target: {fileID: 1947871717301538, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_Name
+      value: FireBall-Pixel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+--- !u!4 &1170335656650652262 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+  m_PrefabInstance: {fileID: 1167323656349473396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1365391813376720508 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198706150799401992, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+  m_PrefabInstance: {fileID: 1167323656349473396}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3512736119026374659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -196,7 +263,10 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 7983912288042882115, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
     - {fileID: 3671387078121073655, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8324813413160911495, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1170335656650652262}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 543116996558746003, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
       insertIndex: -1
@@ -223,12 +293,20 @@ MonoBehaviour:
   sureToDrop: {fileID: 5370432301953082585, guid: eac811f6c02eb024b9655abc5f605ef0, type: 3}
   DropItemAndProbability_List: []
   dropWhenStoned: {fileID: 8760400047210153315, guid: fd2383f5619f7e443ae977adb8d36a6f, type: 3}
+  burningItemDrop: {fileID: 0}
   dropItemStart: {fileID: 0}
   isStoned: 0
   stoneMaterial: {fileID: 2100000, guid: 9f7cb414d3ae21c448d4d37557e18733, type: 2}
   woodMaterial: {fileID: 2100000, guid: 203f9731d33c0bf43b983fbc34da8e2d, type: 2}
+  fireSystem: {fileID: 1365391813376720508}
+  burnChance: 0.7
 --- !u!4 &4599409972994164263 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 64870818309513791, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
+  m_PrefabInstance: {fileID: 4553724893888537624}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5527527644788778655 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8324813413160911495, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
   m_PrefabInstance: {fileID: 4553724893888537624}
   m_PrefabAsset: {fileID: 0}
