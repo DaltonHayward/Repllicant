@@ -1258,7 +1258,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6095199400200482740}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: deb3d68f9ca08c84aa374ab0fce6529c, type: 3}
   m_Name: 
@@ -1306,6 +1306,7 @@ MonoBehaviour:
   chargeTargetPosition: {x: 0, y: 0, z: 0}
   state: 0
   skillSpeed: 0
+  Effect: {fileID: 0}
   lookAccurate: 10
 --- !u!95 &7201318304824328432
 Animator:

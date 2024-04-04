@@ -29,6 +29,12 @@ public class BossHealth : MonoBehaviour
             currentHealth = Mathf.RoundToInt(boss.GetComponent<Siren>().hp);
             slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
         }
+        
+        if (boss.GetComponent<COW>() != null)
+        {
+            currentHealth = Mathf.RoundToInt(boss.GetComponent<COW>().hp);
+            slider.GetComponent<HealthBarText>().ChangeHealthSlider(currentHealth, maxHealth);
+        }
     }
 
     IEnumerator RefreshHPBar(float seconds)
