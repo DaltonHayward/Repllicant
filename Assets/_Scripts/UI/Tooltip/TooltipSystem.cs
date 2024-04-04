@@ -67,7 +67,7 @@ namespace ToolTipUI
             current.popupCanvasObject.SetActive(true);
             //current.GetComponent<CanvasFader>().Fade();
             current.header.transform.GetComponent<TextMeshProUGUI>().text = current.AddSpaces(item.name);
-            if (item.Description != null)
+            if (item.Description != null && item.Description != "Empty")
             {
                 current.newContent = Instantiate(current.content, current.popupObject);
                 current.newContent.transform.GetComponent<TextMeshProUGUI>().text = item.Description;

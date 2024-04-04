@@ -32,5 +32,5 @@ public class ItemData : ScriptableObject
     [Header("Tool Fields")]
     public GameObject equippedModel;
     public PlayerController.Equipment toolType;
-    public string Description = "Empty";
+    public string Description = null;
 }
