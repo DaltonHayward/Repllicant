@@ -5,6 +5,7 @@ using Ink.Parsed;
 using ToolTipUI;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 //using static UnityEditor.Progress;
@@ -49,6 +50,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
     InventoryHighlight InventoryHighlight;
     Inventory_Item itemToHighlight;
     Vector2 oldPosition;
+    public Canvas playerCanvas;
 
     public GameObject staticPlayerInventory;
     public static ItemGrid playerInventory;
@@ -564,6 +566,27 @@ public class InventoryController : MonoBehaviour,IDataPersistance
   
    
     #endregion
+
+    public void RollLoot(ItemGrid lootGrid, int min, int max){
+        int lootAmount = Random.Range(min, max);
+        for (int i = 0; i < lootAmount; i++)
+        {
+            int selectedUID = Random.Range(0, itemDataEntries.Count);
+            ItemData itemData = itemDataEntries[selectedUID].itemData;
+            Inventory_Item newItem = Instantiate(ItemPrefab).GetComponent<Inventory_Item>();
+            newItem.Set(itemData);
+            Vector2Int? storePos = lootGrid.FindSpace(newItem);
+            if (storePos != null)
+            {
+                lootGrid.putItemInInventory(newItem, storePos.Value.x, storePos.Value.y);
+            }
+            else
+            {
+                return;
+            }
+        }
+
+    }
     public void LoadData( GameData gameData)
     {
         for (int i = 0; i < gameData.InvItems_Names.Count; i++)
