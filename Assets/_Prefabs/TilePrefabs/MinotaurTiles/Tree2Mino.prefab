@@ -825,7 +825,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5927323698802403304}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -856,6 +856,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5927323698802403304}
     m_Modifications:
+    - target: {fileID: 1249437983784993135, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3327696584940388683, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
       propertyPath: fireSystem
       value: 
@@ -867,6 +871,14 @@ PrefabInstance:
     - target: {fileID: 3958732185875577994, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
       propertyPath: m_Name
       value: Tree1Mino
+      objectReference: {fileID: 0}
+    - target: {fileID: 3958732185875577994, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4127447878502662993, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4448410047066973744, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
       propertyPath: m_LocalPosition.x
@@ -914,13 +926,48 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7919193126593868958, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5175617535977125156}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3958732185875577994, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5505809554444491881}
   m_SourcePrefab: {fileID: 100100000, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
 --- !u!4 &1650802017787041345 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4448410047066973744, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
   m_PrefabInstance: {fileID: 3121908159258914929}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2135554070352596219 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3958732185875577994, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
+  m_PrefabInstance: {fileID: 3121908159258914929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &5505809554444491881
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135554070352596219}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &5095153233053271279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7919193126593868958, guid: 1ec804954d6f4f3439b109c1af973023, type: 3}
@@ -934,9 +981,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5095153233053271279}
     m_Modifications:
+    - target: {fileID: 1866692896978666, guid: bd10d6a691f8c1c47ab05b3cad59befb, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1947871717301538, guid: bd10d6a691f8c1c47ab05b3cad59befb, type: 3}
       propertyPath: m_Name
       value: FireBall-Pixel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947871717301538, guid: bd10d6a691f8c1c47ab05b3cad59befb, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4209731392266258, guid: bd10d6a691f8c1c47ab05b3cad59befb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -981,6 +1036,10 @@ PrefabInstance:
     - target: {fileID: 198706150799401992, guid: bd10d6a691f8c1c47ab05b3cad59befb, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965094611119489433, guid: bd10d6a691f8c1c47ab05b3cad59befb, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

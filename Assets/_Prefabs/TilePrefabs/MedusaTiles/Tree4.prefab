@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1156889068021121510}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -862,9 +862,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8380105790555599627}
     m_Modifications:
+    - target: {fileID: 1866692896978666, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1947871717301538, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
       propertyPath: m_Name
       value: FireBall-Pixel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947871717301538, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
       propertyPath: m_LocalPosition.x
@@ -914,6 +922,10 @@ PrefabInstance:
       propertyPath: InitialModule.startLifetime.scalar
       value: 2.41
       objectReference: {fileID: 0}
+    - target: {fileID: 7965094611119489433, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -937,6 +949,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1156889068021121510}
     m_Modifications:
+    - target: {fileID: 56998825333874850, guid: f0e4653fc97c2044c8e5df8338c74558, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020232231028913843, guid: f0e4653fc97c2044c8e5df8338c74558, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3763145578231485745, guid: f0e4653fc97c2044c8e5df8338c74558, type: 3}
       propertyPath: fireSystem
       value: 
@@ -989,19 +1009,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree4Medusa
       objectReference: {fileID: 0}
+    - target: {fileID: 7920231666627779679, guid: f0e4653fc97c2044c8e5df8338c74558, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2347660088142564199, guid: f0e4653fc97c2044c8e5df8338c74558, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4201833552224991540}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7920231666627779679, guid: f0e4653fc97c2044c8e5df8338c74558, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4177431639906514718}
   m_SourcePrefab: {fileID: 100100000, guid: f0e4653fc97c2044c8e5df8338c74558, type: 3}
 --- !u!4 &3636953190153158281 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7395332870645368549, guid: f0e4653fc97c2044c8e5df8338c74558, type: 3}
   m_PrefabInstance: {fileID: 6113792317672077420}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4121599621090583603 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7920231666627779679, guid: f0e4653fc97c2044c8e5df8338c74558, type: 3}
+  m_PrefabInstance: {fileID: 6113792317672077420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &4177431639906514718
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4121599621090583603}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &8380105790555599627 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2347660088142564199, guid: f0e4653fc97c2044c8e5df8338c74558, type: 3}

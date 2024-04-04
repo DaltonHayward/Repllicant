@@ -405,7 +405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4310338015410550371}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -856,9 +856,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 66786820440856404}
     m_Modifications:
+    - target: {fileID: 1866692896978666, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1947871717301538, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
       propertyPath: m_Name
       value: FireBall-Pixel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947871717301538, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4209731392266258, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
       propertyPath: m_LocalPosition.x
@@ -903,6 +911,10 @@ PrefabInstance:
     - target: {fileID: 198706150799401992, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 2.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965094611119489433, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -971,6 +983,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TreeAccent3
       objectReference: {fileID: 0}
+    - target: {fileID: 3393088675430361119, guid: 3610cb2d44779994ba7861f40445aebb, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3969173873600866930, guid: 3610cb2d44779994ba7861f40445aebb, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6546251384118273014, guid: 3610cb2d44779994ba7861f40445aebb, type: 3}
       propertyPath: fireSystem
       value: 
@@ -979,6 +999,10 @@ PrefabInstance:
       propertyPath: burningItemDrop
       value: 
       objectReference: {fileID: 5370432301953082585, guid: 9fc141b52c63cae4fbe618d142b25e9d, type: 3}
+    - target: {fileID: 9058462078573012045, guid: 3610cb2d44779994ba7861f40445aebb, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

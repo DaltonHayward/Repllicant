@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8742815815929749021}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -866,9 +866,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8025302039242175907}
     m_Modifications:
+    - target: {fileID: 1866692896978666, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1947871717301538, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
       propertyPath: m_Name
       value: FireBall-Pixel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947871717301538, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
       propertyPath: m_LocalPosition.x
@@ -926,6 +934,10 @@ PrefabInstance:
       propertyPath: InitialModule.startLifetime.scalar
       value: 2.52
       objectReference: {fileID: 0}
+    - target: {fileID: 7965094611119489433, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -949,9 +961,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8742815815929749021}
     m_Modifications:
+    - target: {fileID: 1120688311508448296, guid: 362ebb442e187df49b6e2f81b6dd1ab0, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6294162660237295959, guid: 362ebb442e187df49b6e2f81b6dd1ab0, type: 3}
       propertyPath: m_Name
       value: Tree6Medusa
+      objectReference: {fileID: 0}
+    - target: {fileID: 6294162660237295959, guid: 362ebb442e187df49b6e2f81b6dd1ab0, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8921442238304160081, guid: 362ebb442e187df49b6e2f81b6dd1ab0, type: 3}
       propertyPath: fireSystem
@@ -1019,13 +1039,48 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5890659193143790694, guid: 362ebb442e187df49b6e2f81b6dd1ab0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 339125277364091092}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6294162660237295959, guid: 362ebb442e187df49b6e2f81b6dd1ab0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1981534025507138785}
   m_SourcePrefab: {fileID: 100100000, guid: 362ebb442e187df49b6e2f81b6dd1ab0, type: 3}
 --- !u!4 &4635288579206220112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9129799866196029589, guid: 362ebb442e187df49b6e2f81b6dd1ab0, type: 3}
   m_PrefabInstance: {fileID: 4530703672065587653}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7618139397510019218 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6294162660237295959, guid: 362ebb442e187df49b6e2f81b6dd1ab0, type: 3}
+  m_PrefabInstance: {fileID: 4530703672065587653}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1981534025507138785
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7618139397510019218}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &8025302039242175907 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5890659193143790694, guid: 362ebb442e187df49b6e2f81b6dd1ab0, type: 3}

@@ -405,7 +405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4310338015410550371}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -856,6 +856,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4310338015410550371}
     m_Modifications:
+    - target: {fileID: 1191828806098308175, guid: aaec715be2eed194294d721352662470, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442718772166944189, guid: aaec715be2eed194294d721352662470, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2620387451102638757, guid: aaec715be2eed194294d721352662470, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.399
@@ -908,6 +916,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree5 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3393088675430361119, guid: aaec715be2eed194294d721352662470, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2751303342532132777, guid: aaec715be2eed194294d721352662470, type: 3}
     m_RemovedGameObjects: []
@@ -915,10 +927,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 510771255317981078, guid: aaec715be2eed194294d721352662470, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1670691357495355279}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3393088675430361119, guid: aaec715be2eed194294d721352662470, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1650034755359831879}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaec715be2eed194294d721352662470, type: 3}
 --- !u!4 &1241019886468659327 stripped
 Transform:
@@ -930,34 +939,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2620387451102638757, guid: aaec715be2eed194294d721352662470, type: 3}
   m_PrefabInstance: {fileID: 1598323506726936553}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4123272982886938614 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3393088675430361119, guid: aaec715be2eed194294d721352662470, type: 3}
-  m_PrefabInstance: {fileID: 1598323506726936553}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1650034755359831879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4123272982886938614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c033f70b1b219fc4eafb5873bbb62fc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 100
-  sureToDrop: {fileID: 5370432301953082585, guid: eac811f6c02eb024b9655abc5f605ef0, type: 3}
-  DropItemAndProbability_List: []
-  dropWhenStoned: {fileID: 8760400047210153315, guid: fd2383f5619f7e443ae977adb8d36a6f, type: 3}
-  burningItemDrop: {fileID: 0}
-  dropItemStart: {fileID: 0}
-  isStoned: 0
-  stoneMaterial: {fileID: 0}
-  woodMaterial: {fileID: 0}
-  fireSystem: {fileID: 0}
-  burnChance: 0.7
 --- !u!1001 &1666763190206138269
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -966,9 +947,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1241019886468659327}
     m_Modifications:
+    - target: {fileID: 1866692896978666, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1947871717301538, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
       propertyPath: m_Name
       value: FireBall-Pixel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947871717301538, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4209731392266258, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1017,6 +1006,10 @@ PrefabInstance:
     - target: {fileID: 198706150799401992, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 2.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965094611119489433, guid: 67d9952987a21144891ace6d9c0c6d56, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

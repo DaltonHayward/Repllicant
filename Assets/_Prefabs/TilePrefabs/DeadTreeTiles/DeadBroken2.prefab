@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1156889068021121510}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -722,6 +722,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: FallenDeadTree2
       objectReference: {fileID: 0}
+    - target: {fileID: 3393088675430361119, guid: 0cecf93d24b75b943ab062cc71a1fb6a, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5781211638157273404, guid: 0cecf93d24b75b943ab062cc71a1fb6a, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028687670468581417, guid: 0cecf93d24b75b943ab062cc71a1fb6a, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7574439703556902031, guid: 0cecf93d24b75b943ab062cc71a1fb6a, type: 3}
       propertyPath: fireSystem
       value: 
@@ -756,9 +768,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7092234582154613801}
     m_Modifications:
+    - target: {fileID: 1866692896978666, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1947871717301538, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
       propertyPath: m_Name
       value: FireBall-Pixel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947871717301538, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4209731392266258, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -831,6 +851,10 @@ PrefabInstance:
     - target: {fileID: 198706150799401992, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965094611119489433, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

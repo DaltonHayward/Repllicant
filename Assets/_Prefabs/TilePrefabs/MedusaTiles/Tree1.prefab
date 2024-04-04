@@ -849,7 +849,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5927323698802403304}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -892,6 +892,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree1Medusa
       objectReference: {fileID: 0}
+    - target: {fileID: 3958732185875577994, guid: d71203bbf7c9ea5478984f886718b42c, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4448410047066973744, guid: d71203bbf7c9ea5478984f886718b42c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.1
@@ -932,13 +936,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7201337244728558241, guid: d71203bbf7c9ea5478984f886718b42c, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7571988209334481759, guid: d71203bbf7c9ea5478984f886718b42c, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6639603944030081422, guid: d71203bbf7c9ea5478984f886718b42c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8775407506606497612}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3958732185875577994, guid: d71203bbf7c9ea5478984f886718b42c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2831197652396954894}
   m_SourcePrefab: {fileID: 100100000, guid: d71203bbf7c9ea5478984f886718b42c, type: 3}
 --- !u!4 &357680387087821002 stripped
 Transform:
@@ -950,6 +965,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4448410047066973744, guid: d71203bbf7c9ea5478984f886718b42c, type: 3}
   m_PrefabInstance: {fileID: 6400214241421064516}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7935937395294766542 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3958732185875577994, guid: d71203bbf7c9ea5478984f886718b42c, type: 3}
+  m_PrefabInstance: {fileID: 6400214241421064516}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &2831197652396954894
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7935937395294766542}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &8774830771286310750
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -958,9 +1005,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 357680387087821002}
     m_Modifications:
+    - target: {fileID: 1866692896978666, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1947871717301538, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
       propertyPath: m_Name
       value: FireBall-Pixel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947871717301538, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4209731392266258, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1005,6 +1060,10 @@ PrefabInstance:
     - target: {fileID: 198706150799401992, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 2.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965094611119489433, guid: 9f3e212de3f0bb64a89089ac414ed460, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
