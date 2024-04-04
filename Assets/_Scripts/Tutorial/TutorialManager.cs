@@ -11,6 +11,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
     [SerializeField] GameObject aviatorCamp;
     [SerializeField] GameObject scientistCamp;
     [SerializeField] GameObject tutorialObjects;
+    [SerializeField] GameObject boat;
     // NPC bools
     public bool daltonNPC = false;
     public bool techNPC = false;
@@ -21,15 +22,75 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
     // tutorial messages
     [SerializeField] GameObject tutorialMessages;
 
+    public static TutorialManager instance;
+
+    private void Awake()
+    {
+        // singleton
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    // updates tutorial progress
+    public void UpdateTutorialProgress(int progress)
+    {
+        string message = "";
+        switch (progress)
+        {
+            case 0:
+                message = "Talk to the strange man";
+                tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
+                break;
+            case 1:
+                message = "Clear the area for Dalton's camp. Open your inventory by pressing 'TAB', then equip both tools by right-clicking on each of them and selecting equip. Use the scroll wheel to change tool/weapon";
+                tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
+                break;
+            case 2:
+                message = "Return to Dalton";
+                tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
+                // logic for changing dalton ink here
+                break;
+            case 3:
+                message = "Craft a torch by opening the crafting menu in the top right. Select the torch from the menu and craft";
+                tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
+                break;
+            case 4:
+                message = "Talk to Dalton once more";
+                tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
+                // logic for changing dalton ink here
+                break;
+            case 5:
+                message = "Find the boat and use it to reach the main island so you can rescue your other crewmates";
+                tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
+                boat.GetComponentInChildren<Interactor>().interactable = true;
+                break;
+            default:
+                // Default case
+                tutorialMessages.SetActive(false);
+                break;
+        }
+    }
+
     // enables each camp
     public void NPCCheck()
     {
+        // if the player has just started a new game, tp them to starting location
         if (!firstSpawn) 
         {
             firstSpawn = true;
             StartCoroutine(TeleportPlayer(2.5f));
         }
-        if (daltonNPC) { daltonCamp.SetActive(true);}
+        if (daltonNPC) 
+        { 
+            daltonCamp.SetActive(true);
+            boat.GetComponentInChildren<Interactor>().interactable = true;
+        }
         // put player in front of tutorial dalton
         else 
         { 
