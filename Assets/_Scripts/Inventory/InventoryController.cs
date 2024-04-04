@@ -549,6 +549,18 @@ public class InventoryController : MonoBehaviour,IDataPersistance
         playerController.UnequipTool(item.itemData.toolType);
     }
 
+    public void Consume(Inventory_Item item)
+    {
+        string name = LookUpItem(item.itemData.Name).Name;
+        if (name == "Potion"){
+            Player.GetComponent<PlayerHealth>().Heal(item.itemData.healAmount);
+            playerInventory.RemoveItem(item);
+            Destroy(item.gameObject);
+        }
+        HideContextMenu();
+       
+    }
+
   
    
     #endregion

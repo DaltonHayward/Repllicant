@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EquippedAxe : EquippedTool
 {
+
     public void OnTriggerEnter(Collider other)
     {
         Collectible c = other.GetComponent<Collectible>();
@@ -48,11 +49,33 @@ public class EquippedAxe : EquippedTool
                     c.TakeDamage(Damage/10);
                 }
             }
+
+            _animator.CrossFade("Blend Tree", 0.07f, 0);
+            _playerController.StopCoroutine(_playerController.Reset);
+            _playerController.SetState(PlayerController.State.STANDING);
         }
 
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("hit weapon");
+            ISubscriber subscriber = other.GetComponent<ISubscriber>();
+            if (subscriber != null)
+            {
+                if (invTool.isShocked)
+                {
+                    var Jumps = 3;
+                    Debug.Log("Sword Sending Shocked Message" + Damage/2);
+                    subscriber.ReceiveMessage("Shocked:" + Damage/2 + "," + Jumps);
+                }
+                else
+                {
+                    Debug.Log("Sword Sending Attacked Message" + Damage/2);
+                    subscriber.ReceiveMessage("Attacked:" + Damage/2);
+                }
+            }
+        }
 
-        _animator.CrossFade("Blend Tree", 0.07f, 0);
-        _playerController.StopCoroutine(_playerController.Reset);
-        _playerController.SetState(PlayerController.State.STANDING);
+        // disable collider after collision
+        _playerController.EndCollision();
     }
 }

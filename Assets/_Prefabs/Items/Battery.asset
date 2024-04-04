@@ -16,12 +16,15 @@ MonoBehaviour:
   width: 1
   height: 1
   isEquipable: 0
+  isConsumable: 0
+  healAmount: 0
   worldModel: {fileID: 8760400047210153315, guid: 2acc1451ca0b347ce9283ab59b9d41a5, type: 3}
   sprites:
   - spriteName: Base
-    sprite: {fileID: -1702559450, guid: 7cdac68bf896eda4893dc08f44e278cf, type: 3}
+    sprite: {fileID: 21300000, guid: 3b260db471df1c848a0df0f587d89ee8, type: 3}
   range: 1
   effects:
   - Shock
   equippedModel: {fileID: 0}
   toolType: 0
+  Description: Empty

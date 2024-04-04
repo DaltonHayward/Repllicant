@@ -20,7 +20,7 @@ public class ObstacleChecker : MonoBehaviour, IDataPersistance
     {
         if (this.transform.childCount == 0 )
         {
-            manager.daltonNPC = true;
+            manager.UpdateTutorialProgress(2);
             Debug.Log("All obstacles are gone");
             StartCoroutine(Deactivate(2));
         }
