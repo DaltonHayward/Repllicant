@@ -9,6 +9,8 @@ using UnityEngine;
 public class EffectTrigger : MonoBehaviour
 {
     [SerializeField] BaseEffect Effect;
+
+    [SerializeField] SphereCollider sphereCollider;
    
     private void OnTriggerEnter(Collider other) 
     {
