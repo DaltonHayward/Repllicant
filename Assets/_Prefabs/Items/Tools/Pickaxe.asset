@@ -16,12 +16,14 @@ MonoBehaviour:
   width: 2
   height: 3
   isEquipable: 1
+  isConsumable: 0
+  healAmount: 0
   worldModel: {fileID: 6551310768165042004, guid: b15047b1e155eda4d89e70f14a033753, type: 3}
   sprites:
   - spriteName: Base
     sprite: {fileID: 21300000, guid: b8a4ac0239297204fae2ef469010f11f, type: 3}
   - spriteName: Burning
-    sprite: {fileID: 834507406, guid: b81af41b01b7db347aa31cbd3af945f3, type: 3}
+    sprite: {fileID: 21300000, guid: b8a4ac0239297204fae2ef469010f11f, type: 3}
   - spriteName: Elect
     sprite: {fileID: 21300000, guid: 901adb6eaf860264ea94ef8f76162e76, type: 3}
   - spriteName: ElectBurning
@@ -30,3 +32,4 @@ MonoBehaviour:
   effects: []
   equippedModel: {fileID: 699386282119447561, guid: 75e1230b2b378664c86c9606600e4d59, type: 3}
   toolType: 1
+  Description: 
