@@ -76,6 +76,10 @@ namespace ToolTipUI
         {
 
             current.popupCanvasObject.SetActive(false);
+            foreach (Transform child in current.popupObject)
+            {
+                Destroy(child.gameObject);
+            }
             //current.GetComponent<CanvasFader>().Fade();
         }
 
