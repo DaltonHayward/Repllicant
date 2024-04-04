@@ -45,8 +45,8 @@ public class Interactor : MonoBehaviour
                 }
             }
 
-            if (stashScript.IsStashOpen() && (InputManager.instance.MenuOpenCloseInput || InputManager.instance.InventoryInput))
-            {
+            //if (stashScript.IsStashOpen() && (InputManager.instance.MenuOpenCloseInput || InputManager.instance.InventoryInput))
+            //{
                 if (interactable)
                 {
                     if (interactBehaviour != null)
@@ -58,7 +58,7 @@ public class Interactor : MonoBehaviour
                 {
                     StartCoroutine(DisplayFailedConditionalText());
                 }
-            }
+            //}
         }
     }
 

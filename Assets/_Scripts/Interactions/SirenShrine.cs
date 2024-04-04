@@ -14,10 +14,12 @@ public class SirenShrine : MonoBehaviour
         // check player inventory for reagents
         InventoryInteraction inventory = craftingManager.GetComponent<InventoryInteraction>();
 
-        var item1 = new ItemTypeAndCount("Arcane Conductor Matrix", 1);
-        var item2 = new ItemTypeAndCount("Crystallized Etherforce", 1);
+        var item1 = new ItemTypeAndCount("ArcaneConductorMatrix", 1);
+        var item2 = new ItemTypeAndCount("CrystallizedEtherforce", 1);
+        var item3 = new ItemTypeAndCount("AerodynamicEssence", 1);
+        Debug.Log("test");
 
-        ItemTypeAndCount[] items = {item1, item2};
+        ItemTypeAndCount[] items = {item1, item2, item3};
         Debug.Log(inventory.ItemCheck(items));
         if (inventory.ItemCheck(items))
         {

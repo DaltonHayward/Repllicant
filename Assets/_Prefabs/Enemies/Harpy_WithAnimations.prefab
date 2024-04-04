@@ -328,10 +328,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4533586146812897701, guid: db12915d759a9234881ea03319c6ecc2, type: 3}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 7037085196188806849}
     - target: {fileID: 7276105634059460039, guid: db12915d759a9234881ea03319c6ecc2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1059,16 +1055,10 @@ PrefabInstance:
       addedObject: {fileID: 8597414975198799207}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -6144614687648712594}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -1275345397078748986}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4170326704919989154}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7037085196188806849}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7653831275184931265}
@@ -1081,9 +1071,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4065788385165867830}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5457898252828566956}
   m_SourcePrefab: {fileID: 100100000, guid: 2133c881666adc54185854ffa60e1f85, type: 3}
 --- !u!4 &7232743858075456561 stripped
 Transform:
@@ -1150,29 +1137,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5134944ed213a284b80d7ea9243479c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &-6144614687648712594
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8004038497722273419}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5
-  m_Height: 8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-1275345397078748986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,49 +1172,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7037085196188806849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8004038497722273419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75415cd9b773eb04983f3baf468047d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 200
-  attack: 10
-  chaseRange: 15
-  attackRange: 1
-  speed: 5
-  attackSpeed: 1
-  lastAttackTime: 0
-  lastSkillTime: 0
-  player: {fileID: 0}
-  navMeshAgent: {fileID: 0}
-  commonItems:
-  - {fileID: 8760400047210153315, guid: eba719d5ad4c96545854a8ce38a9de71, type: 3}
-  uncommonItems:
-  - {fileID: 8760400047210153315, guid: d71c1f45bd726a04c82e9156c05e87cf, type: 3}
-  rareItems:
-  - {fileID: 8760400047210153315, guid: 62eb1f1652f95bf4c8ccd5eea60e5a67, type: 3}
-  legendaryItems: []
-  commonItemProbability: 70
-  uncommonItemsProbability: 25
-  rareItemsProbability: 5
-  legendaryItemsProbability: 0
-  strokeBackDistance: 0
-  WaveAttack: 0
-  chargespeed: 0
-  chargeRange: 0
-  chargeInternal: 0
-  chargeclock: 0
-  chargeTargetPosition: {x: 0, y: 0, z: 0}
-  state: 0
-  skillSpeed: 0
-  lookAccurate: 10
 --- !u!95 &7653831275184931265
 Animator:
   serializedVersion: 5
@@ -1334,16 +1255,3 @@ CapsuleCollider:
   m_Height: 8
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5457898252828566956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8004038497722273419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: deb3d68f9ca08c84aa374ab0fce6529c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}

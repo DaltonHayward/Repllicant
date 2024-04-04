@@ -1009,6 +1009,15 @@ public class PlayerController : MonoBehaviour, ISubscriber
             MoveSpeed *= float.Parse(channel.Split(':')[1]);
             SprintSpeed *= float.Parse(channel.Split(':')[1]);
         }
+        if (channel.Split(':')[0].Equals("HarpyResetMove"))
+        {
+            MoveSpeed = 5;
+        }
+        if (channel.Split(':')[0].Equals("HarpyResetSprint"))
+        {
+            SprintSpeed = 10;
+        }
+     
 
     }
 
