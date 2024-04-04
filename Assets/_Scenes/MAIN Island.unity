@@ -1472,7 +1472,7 @@ PrefabInstance:
     - target: {fileID: 5671307036201023219, guid: b1e20119ca49b8e4f9fb6446c9c47c9c, type: 3}
       propertyPath: playerController
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1514273373}
     - target: {fileID: 5840804929253114192, guid: b1e20119ca49b8e4f9fb6446c9c47c9c, type: 3}
       propertyPath: playerController
       value: 
@@ -1492,7 +1492,7 @@ PrefabInstance:
     - target: {fileID: 7702898480219008371, guid: b1e20119ca49b8e4f9fb6446c9c47c9c, type: 3}
       propertyPath: playerHealth
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1244334459}
     - target: {fileID: 9036175415793609513, guid: b1e20119ca49b8e4f9fb6446c9c47c9c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -8247,7 +8247,7 @@ MonoBehaviour:
     itemData: {fileID: 11400000, guid: d4d9fa9f0f5e42d488a20927158781da, type: 2}
   _timeBetweenEffectApplication: 3
   DropdownHovered: 0
-  lightningEffect: {fileID: 0}
+  lightningEffect: {fileID: 1606555898920376828, guid: 13c490c29d846417c8b7d1b9b9efec63, type: 3}
 --- !u!4 &810560881 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8204881242111733437, guid: d369b3b75f8be8f49afa16f2a251e6d2, type: 3}
@@ -12767,6 +12767,10 @@ PrefabInstance:
       propertyPath: playerSounds
       value: 
       objectReference: {fileID: 1173081640}
+    - target: {fileID: 5051895226653657304, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+      propertyPath: _rotationSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5395350667693765750, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
       propertyPath: slider
       value: 
@@ -12791,6 +12795,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1514273374}
   m_SourcePrefab: {fileID: 100100000, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+--- !u!114 &1244334459 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5395350667693765750, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+  m_PrefabInstance: {fileID: 1244334458}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514273360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94228558959a4754ba662ca1cbfc048f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1248817505 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7395332870645368549, guid: f5001259d60e54c41aafa76a58a08844, type: 3}
@@ -20063,9 +20078,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2370373785013833126, guid: a0baa5ea2f1c9e6438899c81f9266c5d, type: 3}
+      propertyPath: Bridges.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370373785013833126, guid: a0baa5ea2f1c9e6438899c81f9266c5d, type: 3}
       propertyPath: Bridges.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1296708071}
     - target: {fileID: 2370373785013833126, guid: a0baa5ea2f1c9e6438899c81f9266c5d, type: 3}
       propertyPath: Bridges.Array.data[1]
       value: 
@@ -23821,9 +23840,21 @@ PrefabInstance:
       propertyPath: m_Tiles.Array.data[1885].second.m_TileSpriteIndex
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 276317493106658974, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 284392014229054585, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 460899022371513044, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemiesSpawnable
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783337262895083471, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 912554429912239680, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: structures.Array.size
@@ -23840,6 +23871,10 @@ PrefabInstance:
     - target: {fileID: 1006795362782127491, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemiesSpawnable
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124549893872435105, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1186048249836136039, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemiesSpawnable
@@ -24081,6 +24116,14 @@ PrefabInstance:
       propertyPath: structures.Array.data[15]
       value: 
       objectReference: {fileID: 11400000, guid: 3c20ae8e10e8daf4b835d369003aee50, type: 2}
+    - target: {fileID: 2087475053676484231, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2135497060028123553, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2576836554477646559, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemiesSpawnable
       value: 0
@@ -24088,6 +24131,10 @@ PrefabInstance:
     - target: {fileID: 2586530176937252920, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemiesSpawnable
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2762376790427202674, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3093523386400586089, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: structures.Array.size
@@ -24104,6 +24151,10 @@ PrefabInstance:
     - target: {fileID: 3180644074912068590, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: m_Name
       value: SirenToMinoGate2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3214045512388172006, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3247577668556340560, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyMax
@@ -24129,6 +24180,10 @@ PrefabInstance:
       propertyPath: enemyPrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 758053738808146258, guid: 57433c07a797fd34fb180da013c39791, type: 3}
+    - target: {fileID: 3298962844352426789, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3435026185360058631, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: structures.Array.size
       value: 6
@@ -24171,9 +24226,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3772502897548907700, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3890887040909134518, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926847396591207684, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4143274772216514829, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -24281,6 +24344,10 @@ PrefabInstance:
       propertyPath: enemyPrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 5580844548074024994, guid: e43a2a3dbcf88d541846992d13fc7d39, type: 3}
+    - target: {fileID: 4693603354079143510, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4785899773187355756, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyMax
       value: 5
@@ -24459,7 +24526,11 @@ PrefabInstance:
       objectReference: {fileID: 8760400047210153315, guid: fd2383f5619f7e443ae977adb8d36a6f, type: 3}
     - target: {fileID: 6652890632408701172, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6668520450871510683, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6800881404632760311, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemiesSpawnable
@@ -24569,6 +24640,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7793156939167195401, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8017373010847833044, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8831683295309799582, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: m_Name
       value: PCG
@@ -24645,6 +24724,10 @@ PrefabInstance:
       propertyPath: structures.Array.data[10]
       value: 
       objectReference: {fileID: 11400000, guid: 3f5eebab7d705f948b886850b3754334, type: 2}
+    - target: {fileID: 9102069159319365969, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9122338884528636746, guid: f91a4b9ced1d3a34cac2271b53f92357, type: 3}
       propertyPath: enemyMax
       value: 3
@@ -29107,3 +29190,5 @@ SceneRoots:
   - {fileID: 1560807552}
   - {fileID: 1173081639}
   - {fileID: 1545968411390437927}
+  - {fileID: 8791738631082083093}
+  - {fileID: 1037035263}

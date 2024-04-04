@@ -616,6 +616,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5367749948877723057, guid: a4d87ad295f3ea944866a1d26c22628a, type: 3}
+      propertyPath: Bridges.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5367749948877723057, guid: a4d87ad295f3ea944866a1d26c22628a, type: 3}
       propertyPath: Bridges.Array.data[0]
       value: 
       objectReference: {fileID: 1296708071}
@@ -4511,7 +4515,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StashGrid: {fileID: 0}
   Player: {fileID: 0}
-  items: []
+  items:
+  - {fileID: 11400000, guid: 48df921c4fcece44c8180089b6875f02, type: 2}
+  - {fileID: 11400000, guid: db30037bd7784b849b1a9b08fe128362, type: 2}
+  - {fileID: 11400000, guid: 5e9492e07c7692e4498c6ef3067a714f, type: 2}
   ItemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 1126447360}
   playerCanvas: {fileID: 0}
@@ -4565,7 +4572,7 @@ MonoBehaviour:
     itemData: {fileID: 11400000, guid: d4d9fa9f0f5e42d488a20927158781da, type: 2}
   _timeBetweenEffectApplication: 3
   DropdownHovered: 0
-  lightningEffect: {fileID: 0}
+  lightningEffect: {fileID: 1606555898920376828, guid: 13c490c29d846417c8b7d1b9b9efec63, type: 3}
 --- !u!1 &1811951252 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6199860974603105174, guid: dd82fd7649fece64a90cbbc504a5f0e0, type: 3}
@@ -4828,6 +4835,10 @@ PrefabInstance:
       propertyPath: playerSounds
       value: 
       objectReference: {fileID: 418223981}
+    - target: {fileID: 5051895226653657304, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+      propertyPath: _rotationSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5051895226653657304, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
       propertyPath: playerFootsteps
       value: 
@@ -5516,7 +5527,7 @@ Transform:
   m_GameObject: {fileID: 6760304967453545180}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: 151.2, y: 6.4278774, z: -100.950455}
+  m_LocalPosition: {x: 156, y: 6.427876, z: -67.56045}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

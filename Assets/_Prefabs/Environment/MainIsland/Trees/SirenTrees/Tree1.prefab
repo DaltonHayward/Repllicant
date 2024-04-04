@@ -77,7 +77,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5696497
+      value: 1.963
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -85,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.27242327
+      value: -2.18
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -134,6 +134,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
       propertyPath: m_Name
       value: Tree1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9c2ee04e4e46c444cbdcf0c49e6772d0, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -239,6 +243,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 543116996558746003, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1734197304830844950, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -258,6 +266,10 @@ PrefabInstance:
     - target: {fileID: 6027326707571041378, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
       propertyPath: m_Name
       value: Simple_Tree_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027326707571041378, guid: 7b8adf1af5908b6448f11dd204ea4b12, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -293,7 +305,7 @@ MonoBehaviour:
   sureToDrop: {fileID: 5370432301953082585, guid: eac811f6c02eb024b9655abc5f605ef0, type: 3}
   DropItemAndProbability_List: []
   dropWhenStoned: {fileID: 8760400047210153315, guid: fd2383f5619f7e443ae977adb8d36a6f, type: 3}
-  burningItemDrop: {fileID: 0}
+  burningItemDrop: {fileID: 5370432301953082585, guid: 9fc141b52c63cae4fbe618d142b25e9d, type: 3}
   dropItemStart: {fileID: 0}
   isStoned: 0
   stoneMaterial: {fileID: 2100000, guid: 9f7cb414d3ae21c448d4d37557e18733, type: 2}

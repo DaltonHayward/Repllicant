@@ -744,38 +744,10 @@ PrefabInstance:
     - {fileID: 2751303342532132777, guid: aaec715be2eed194294d721352662470, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3393088675430361119, guid: aaec715be2eed194294d721352662470, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1650034755359831879}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaec715be2eed194294d721352662470, type: 3}
 --- !u!4 &3635282593206807884 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2620387451102638757, guid: aaec715be2eed194294d721352662470, type: 3}
   m_PrefabInstance: {fileID: 1598323506726936553}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4123272982886938614 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3393088675430361119, guid: aaec715be2eed194294d721352662470, type: 3}
-  m_PrefabInstance: {fileID: 1598323506726936553}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1650034755359831879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4123272982886938614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c033f70b1b219fc4eafb5873bbb62fc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 100
-  sureToDrop: {fileID: 0}
-  DropItemAndProbability_List: []
-  dropWhenStoned: {fileID: 0}
-  dropItemStart: {fileID: 0}
-  isStoned: 0
-  stoneMaterial: {fileID: 0}
-  woodMaterial: {fileID: 0}

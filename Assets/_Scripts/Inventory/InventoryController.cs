@@ -164,7 +164,7 @@ public class InventoryController : MonoBehaviour,IDataPersistance
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && items.Count != 0)
         {
             CreateRandomItem();
             Inventory_Item itemtoInsert = selectedItem;
