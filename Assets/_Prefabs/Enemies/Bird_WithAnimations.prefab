@@ -938,9 +938,6 @@ PrefabInstance:
       addedObject: {fileID: 1516314257769345521}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e455935d8f68a124ea610a23c1501f76, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5832148195926230971}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e455935d8f68a124ea610a23c1501f76, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1938306813985929555}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e455935d8f68a124ea610a23c1501f76, type: 3}
       insertIndex: -1
@@ -982,18 +979,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5832148195926230971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7277670552455599702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31dd08e50d136c8499b60e22be2b7d4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1938306813985929555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,10 +991,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e257feb564c5a4499b5f5fbd24465e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 60
-  attack: 1
-  chaseRange: 30
-  attackRange: 20
+  hp: 75
+  attack: 5
+  chaseRange: 20
+  attackRange: 10
   speed: 6
   attackSpeed: 1
   lastAttackTime: 0
@@ -1027,7 +1012,10 @@ MonoBehaviour:
   uncommonItemsProbability: 0.3
   rareItemsProbability: 0.3
   legendaryItemsProbability: 0
-  skillCD: 10
+  birdClone: {fileID: 1566754017886646626, guid: 3b9fb46bedab7da44bbe921a56a89666, type: 3}
+  activeClones: []
+  skillCD: 15
+  canCopy: 1
   rangedEnemy: 0
   bullet: {fileID: 7006130546387146752, guid: 5970db2b67ff3e9488cc37b1a973d876, type: 3}
 --- !u!95 &3928873324922274701
@@ -1098,7 +1086,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 1.5
-  m_Center: {x: 0, y: -0.08, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &3888199579157415855
 MonoBehaviour:
   m_ObjectHideFlags: 0

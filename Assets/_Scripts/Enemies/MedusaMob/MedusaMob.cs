@@ -43,18 +43,11 @@ public class MedusaMob : Enemy
 
     [SerializeField] BaseEffect Effect; // add this to use slow effect
     SphereCollider sphereCollider; 
-    /*public void Die()
-    {
-        Destroy(gameObject);
-    }*/
+    
     public int lookAccurate = 10;
     float subAngle;
     List<GameObject> target = new List<GameObject>();
 
-    
-    // var effectableObject = other.GetComponent<EffectableObject>();
-    // if (effectableObject != null)
-    // effectableObject.ApplyEffect(Effect);
 
     public void LookAround()
     {
@@ -79,7 +72,7 @@ public class MedusaMob : Enemy
     {
         base.Start();
         subAngle = 45f / lookAccurate;
-        gameObject.AddComponent<SlowDownBuff>().Init(gameObject);
+        //gameObject.AddComponent<SlowDownBuff>().Init(gameObject);
         SphereCollider sphereCollider = GetComponent<SphereCollider>();
     }
 
@@ -199,20 +192,5 @@ public class MedusaMob : Enemy
                 break;
         }
     }
-/*    public void Die1()
-    {
-        Destroy(gameObject);
-    }
-    
-    public void TakeDamage1(float damage)
-    {
-        hp -= damage;
-        if (hp <= 0)
-            Die();
-    }*/
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, chaseRange);
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
+
 }
