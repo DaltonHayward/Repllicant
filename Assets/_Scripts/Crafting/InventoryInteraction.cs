@@ -147,7 +147,7 @@ public class InventoryInteraction : MonoBehaviour
         // add inventory items
         AddInventoryItems(itemRecipe.output);
 
-        if (SceneManager.GetActiveScene().buildIndex == 2) { 
+        if (SceneManager.GetActiveScene().buildIndex == 1) { 
         if (itemRecipe.recipeName == "Torch")
         {
             if (TutorialManager.instance.tProgress < 4)

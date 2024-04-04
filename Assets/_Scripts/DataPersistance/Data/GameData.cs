@@ -60,7 +60,7 @@ public class GameData
         this.StashItems_yCord = new List<int>();
         this.StashItems_Rotated = new List<bool>();
 
-        this.time = 0;
+        this.time = 7;
 
     }
 }
