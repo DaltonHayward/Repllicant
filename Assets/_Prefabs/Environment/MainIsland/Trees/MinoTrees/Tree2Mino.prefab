@@ -267,9 +267,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8407349123019820138, guid: 4a3b80cca51b1434a915abace9078f44, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2048270647159098325}
-    - targetCorrespondingSourceObject: {fileID: 8407349123019820138, guid: 4a3b80cca51b1434a915abace9078f44, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8903855888635363083}
   m_SourcePrefab: {fileID: 100100000, guid: 4a3b80cca51b1434a915abace9078f44, type: 3}
 --- !u!1 &718093347928048586 stripped
 GameObject:
@@ -299,33 +296,6 @@ MonoBehaviour:
   woodMaterial: {fileID: 2100000, guid: 203f9731d33c0bf43b983fbc34da8e2d, type: 2}
   fireSystem: {fileID: 1763765212096395787}
   burnChance: 0.7
---- !u!54 &8903855888635363083
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 718093347928048586}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!4 &7340612165942157076 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1766781855866015924, guid: 4a3b80cca51b1434a915abace9078f44, type: 3}

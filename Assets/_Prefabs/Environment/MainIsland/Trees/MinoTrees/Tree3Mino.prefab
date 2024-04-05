@@ -92,6 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8204881242111733437}
+  - component: {fileID: 7713554117378572604}
   m_Layer: 0
   m_Name: Tree3Mino
   m_TagString: Untagged
@@ -116,6 +117,33 @@ Transform:
   - {fileID: 6842965866068429995}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &7713554117378572604
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956234594410841806}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1452730613117584379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -200,9 +228,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4780884486047509172, guid: f3f4672cf8d5a044b956f3eb40348953, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4065096509470536954}
-    - targetCorrespondingSourceObject: {fileID: 4780884486047509172, guid: f3f4672cf8d5a044b956f3eb40348953, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6316421467207172516}
   m_SourcePrefab: {fileID: 100100000, guid: f3f4672cf8d5a044b956f3eb40348953, type: 3}
 --- !u!1 &6228548480159983951 stripped
 GameObject:
@@ -232,33 +257,6 @@ MonoBehaviour:
   woodMaterial: {fileID: 2100000, guid: 203f9731d33c0bf43b983fbc34da8e2d, type: 2}
   fireSystem: {fileID: 3965143532789020443}
   burnChance: 0.7
---- !u!54 &6316421467207172516
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6228548480159983951}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!4 &6842965866068429995 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5394815342861373264, guid: f3f4672cf8d5a044b956f3eb40348953, type: 3}
