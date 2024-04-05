@@ -27,9 +27,6 @@ public class Siren : MonoBehaviour, ISubscriber
     private float damageRate;
     private Animator animator;
 
-    [SerializeField]
-    public GameObject bossHealth; 
-
     // set up progress
     [SerializeField] public bool isBoss = false;
     public SirenBossKill killProg;
@@ -87,7 +84,6 @@ public class Siren : MonoBehaviour, ISubscriber
         else 
         {
             speed = 0.1f;
-            //animator.SetFloat("move", 0);
         }
     }
 
@@ -177,11 +173,6 @@ public class Siren : MonoBehaviour, ISubscriber
                 // when the angle is at -90 or +90, then it is in view (180?FOV)
                 CharacterController cc = player.GetComponent<CharacterController>();
 
-                if (bossHealth != null)
-                {
-                    bossHealth.transform.GetChild(0).gameObject.SetActive(true);
-                    bossHealth.transform.GetChild(1).gameObject.SetActive(true);
-                }
                 // get the distance between the player and the siren
                 float dist = Vector3.Distance(player.transform.position, transform.position);
 
@@ -214,11 +205,6 @@ public class Siren : MonoBehaviour, ISubscriber
                     }
                     animator.SetFloat("move", 1);
                     animator.SetBool("attack", true);
-                }
-                else if (bossHealth != null && dist > _songRange)
-                {
-                    bossHealth.transform.GetChild(0).gameObject.SetActive(false);
-                    bossHealth.transform.GetChild(1).gameObject.SetActive(false);
                 }
             }
         }
