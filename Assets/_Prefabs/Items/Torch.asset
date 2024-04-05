@@ -16,6 +16,8 @@ MonoBehaviour:
   width: 1
   height: 3
   isEquipable: 0
+  isConsumable: 0
+  healAmount: 0
   worldModel: {fileID: 8760400047210153315, guid: 5a61e8027f8fb5245b97b87becabe23a, type: 3}
   sprites:
   - spriteName: Base
@@ -25,3 +27,4 @@ MonoBehaviour:
   - Burning
   equippedModel: {fileID: 0}
   toolType: 0
+  Description: May have an effect on items...

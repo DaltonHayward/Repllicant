@@ -16,6 +16,8 @@ MonoBehaviour:
   width: 1
   height: 3
   isEquipable: 1
+  isConsumable: 0
+  healAmount: 0
   worldModel: {fileID: 6551310768165042004, guid: cf643c4cbe9020d429e82da13a7f47a4, type: 3}
   sprites:
   - spriteName: Base
@@ -30,3 +32,4 @@ MonoBehaviour:
   effects: []
   equippedModel: {fileID: 6551310768165042004, guid: add05c8206a7ed34f955f1ab96b44fbd, type: 3}
   toolType: 0
+  Description: Used to Slash, effected by Fire and Electricity

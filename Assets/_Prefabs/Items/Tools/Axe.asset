@@ -16,6 +16,8 @@ MonoBehaviour:
   width: 2
   height: 3
   isEquipable: 1
+  isConsumable: 0
+  healAmount: 0
   worldModel: {fileID: 699386282119447561, guid: eb5ff714f1a94944096dc60ea1d9e53d, type: 3}
   sprites:
   - spriteName: Base
@@ -30,3 +32,4 @@ MonoBehaviour:
   effects: []
   equippedModel: {fileID: 699386282119447561, guid: 5600fb6ab7186b346af872d99bab71f4, type: 3}
   toolType: 2
+  Description: Effective against wood, effected by Fire and Electricity

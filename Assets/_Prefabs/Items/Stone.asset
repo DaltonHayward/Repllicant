@@ -16,6 +16,8 @@ MonoBehaviour:
   width: 2
   height: 2
   isEquipable: 0
+  isConsumable: 0
+  healAmount: 0
   worldModel: {fileID: 8760400047210153315, guid: fd2383f5619f7e443ae977adb8d36a6f, type: 3}
   sprites:
   - spriteName: Base
@@ -24,3 +26,4 @@ MonoBehaviour:
   effects: []
   equippedModel: {fileID: 0}
   toolType: 0
+  Description: Used for crafting
