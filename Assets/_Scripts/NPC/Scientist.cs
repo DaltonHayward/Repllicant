@@ -23,7 +23,14 @@ public class Scientist : MonoBehaviour
 
     public void SendToBase()
     {
-        if (progressManager != null) { progressManager.scientist = true; }
+        if (progressManager != null) 
+        { 
+            progressManager.scientist = true;
+            if ((progressManager.aviator == true) && (progressManager.tech == true) && (progressManager.scientist == true) && (progressManager.tProgress < 11))
+            {
+                progressManager.UpdateTutorialProgress(11);
+            }
+        }
         HealPlayer();
         // check player inventory for reagents
         InventoryInteraction inventory = CraftingManager.instance.GetComponent<InventoryInteraction>();

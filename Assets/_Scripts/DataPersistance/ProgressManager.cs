@@ -10,23 +10,61 @@ public class ProgressManager : MonoBehaviour, IDataPersistance
     [SerializeField] GameObject scientistNPC;
     [SerializeField] GameObject gate;
     [SerializeField] GameObject boat2;
+    // tutorial messages
+    [SerializeField] GameObject tutorialMessages;
     // bools
     public bool tech = false;
     public bool aviator = false;
     public bool scientist = false;
     public bool sirenDefeated = false;
 
+
     public bool isBossFight = false;
+    public int tProgress = 0;
 
     public static ProgressManager instance { get; private set; }
 
     private void Awake()
     {
-        if (instance != null)
+        // singleton
+        if (instance == null)
         {
-            Debug.LogError("Found more than one ProgressManager in the scene");
+            instance = this;
         }
-        instance = this;
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    // updates tutorial progress
+    public void UpdateTutorialProgress(int progress)
+    {
+        string message = "";
+        tProgress = progress;
+        switch (progress)
+        {
+            case 10:
+                Debug.Log("Changing to next tutorial step:" + progress);
+                message = "Find your three other crewmates.";
+                tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
+                break;
+            case 11:
+                Debug.Log("Changing to next tutorial step:" + progress);
+                message = "Bring the three reagents to your crewmates to obtain the necessary items to challenge the Siren.";
+                tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
+                break;
+            case 12:
+                Debug.Log("Changing to next tutorial step:" + progress);
+                message = "Proceed through the gate to continue exploring...";
+                tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
+                break;
+            default:
+                Debug.Log("Changing to next tutorial step:" + progress);
+                // Default case
+                tutorialMessages.SetActive(false);
+                break;
+        }
     }
 
     // enables 
@@ -39,6 +77,7 @@ public class ProgressManager : MonoBehaviour, IDataPersistance
         { 
             GameObject.FindWithTag("Player").transform.position = new Vector3(149.089996f, 0, 132.199997f); 
             if (boat2 != null) { boat2.SetActive(true); }
+            if (tProgress < 12) { UpdateTutorialProgress(12); }
         }
         if (gate != null)
         {
@@ -52,8 +91,16 @@ public class ProgressManager : MonoBehaviour, IDataPersistance
         aviator = gameData.avNPC;
         scientist = gameData.scientistNPC;
         sirenDefeated = gameData.sirenDefeated;
+        tProgress = gameData.tProgress;
        
+        StartCoroutine(Checks(1));
+    }
+
+    IEnumerator Checks(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
         ProgressCheck();
+        UpdateTutorialProgress(tProgress);
     }
 
     public void SaveData(ref GameData gameData)
@@ -62,6 +109,7 @@ public class ProgressManager : MonoBehaviour, IDataPersistance
         gameData.avNPC = aviator;
         gameData.scientistNPC = scientist;
         gameData.sirenDefeated = sirenDefeated;
+        gameData.tProgress = tProgress;
         
     }
 }
