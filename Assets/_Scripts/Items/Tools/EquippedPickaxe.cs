@@ -13,7 +13,12 @@ public class EquippedPickaxe : EquippedTool
             if (c.GetType() == typeof(Wood))
             {
                 if(invTool.isShocked){
-                c.GetComponent<Wood>().ReceiveMessage("Shocked:"+Damage/2+","+3);
+                    if(isBurning){
+                        c.GetComponent<Wood>().ReceiveMessage("Shocked&Burning:"+Damage+","+3);
+                    }
+                    else{
+                        c.GetComponent<Wood>().ReceiveMessage("Shocked:"+Damage/2+","+3);
+                    }
                 }
                 else{
                     c.TakeDamage(Damage/2);
@@ -43,13 +48,19 @@ public class EquippedPickaxe : EquippedTool
             {
                 if (invTool.isShocked)
                 {
+                    if (invTool.isBurning)
+                    {
+                        var Jumps = 3;
+                        subscriber.ReceiveMessage("Shocked&Burning:" + Damage + "," + Jumps);
+                    }
+                    else
+                    {
                     var Jumps = 3;
-                    Debug.Log("Sword Sending Shocked Message" + Damage/2);
                     subscriber.ReceiveMessage("Shocked:" + Damage/2 + "," + Jumps);
+                    }
                 }
                 else
                 {
-                    Debug.Log("Sword Sending Attacked Message" + Damage/2);
                     subscriber.ReceiveMessage("Attacked:" + Damage/2);
                 }
             }
