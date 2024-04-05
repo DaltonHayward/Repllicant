@@ -1282,11 +1282,12 @@ MonoBehaviour:
   - {fileID: 8760400047210153315, guid: d71c1f45bd726a04c82e9156c05e87cf, type: 3}
   rareItems:
   - {fileID: 8760400047210153315, guid: 62eb1f1652f95bf4c8ccd5eea60e5a67, type: 3}
-  legendaryItems: []
-  commonItemProbability: 0.4
+  legendaryItems:
+  - {fileID: 8760400047210153315, guid: d08008181cb0e1241a5b249183230f1a, type: 3}
+  commonItemProbability: 0.3
   uncommonItemsProbability: 0.3
   rareItemsProbability: 0.3
-  legendaryItemsProbability: 0
+  legendaryItemsProbability: 0.1
   strokeBackDistance: 0
   WaveAttack: 0
   chargespeed: 0
