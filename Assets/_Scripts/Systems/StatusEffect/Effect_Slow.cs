@@ -15,6 +15,7 @@ public class Effect_Slow : BaseEffect
     
     public override float Effect_MovementSpeed(float originalMovementSpeed)
     {
+    
         return originalMovementSpeed * MovementSpeedModifier;
     }
 }

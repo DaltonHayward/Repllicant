@@ -41,14 +41,14 @@ public class MedusaMob : Enemy
     public BoarState state;
     public float skillSpeed;
 
-    [SerializeField] BaseEffect Effect; // add this to use slow effect
-    SphereCollider sphereCollider; 
+    //[SerializeField] BaseEffect Effect; // add this to use slow effect
+    //SphereCollider sphereCollider; 
     
     public int lookAccurate = 10;
     float subAngle;
     List<GameObject> target = new List<GameObject>();
 
-
+    /*
     public void LookAround()
     {
         target.Clear();
@@ -67,19 +67,19 @@ public class MedusaMob : Enemy
                 target.Add(hit.collider.gameObject);
             }
         }
-    }
+    }*/
+
     public override void Start()
     {
         base.Start();
         subAngle = 45f / lookAccurate;
         //gameObject.AddComponent<SlowDownBuff>().Init(gameObject);
-        SphereCollider sphereCollider = GetComponent<SphereCollider>();
+        //SphereCollider sphereCollider = GetComponent<SphereCollider>();
     }
 
 
     Vector3 chargeDir;
     bool playerIsDamageByCharge = false;
-    bool meduIsDamageByCharge = false;
     public override void Update()
     {
 
@@ -152,7 +152,7 @@ public class MedusaMob : Enemy
                 {
 
                     //Shock wave
-                    LookAround();
+                    //LookAround();
 
 
                     lastSkillTime = Time.time;
