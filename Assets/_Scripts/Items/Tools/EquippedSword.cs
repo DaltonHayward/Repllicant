@@ -13,7 +13,12 @@ public class EquippedSword : EquippedTool
             ISubscriber subscriber = other.GetComponent<ISubscriber>();
             if (subscriber != null)
             {
-                if (invTool.isShocked)
+                if (invTool.isShocked && invTool.isBurning)
+                {
+                    var Jumps = 3;
+                    subscriber.ReceiveMessage("Shocked&Burning:" + Damage*2 + "," + Jumps);
+                }
+                else if (invTool.isShocked)
                 {
                     var Jumps = 3;
                     Debug.Log("Sword Sending Shocked Message"+Damage);

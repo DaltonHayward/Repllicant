@@ -1920,7 +1920,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4030122560207157671, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
   m_PrefabInstance: {fileID: 1868804914}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1868804915}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccb1205e297cff64baceb1af60a92a79, type: 3}
@@ -1931,7 +1931,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5395350667693765750, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
   m_PrefabInstance: {fileID: 1868804914}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1868804915}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94228558959a4754ba662ca1cbfc048f, type: 3}
@@ -1942,7 +1942,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5051895226653657304, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
   m_PrefabInstance: {fileID: 1868804914}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1868804915}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09bcf9fca3e40af419cf958d7350f342, type: 3}
@@ -4207,14 +4207,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StashGrid: {fileID: 0}
-  Player: {fileID: 0}
+  Player: {fileID: 1868804915}
   items:
   - {fileID: 11400000, guid: 48df921c4fcece44c8180089b6875f02, type: 2}
   - {fileID: 11400000, guid: db30037bd7784b849b1a9b08fe128362, type: 2}
   - {fileID: 11400000, guid: 5e9492e07c7692e4498c6ef3067a714f, type: 2}
   ItemPrefab: {fileID: 5408347633595325484, guid: dc8d742e3f007448faf33a9145193841, type: 3}
   canvasTransform: {fileID: 1126447360}
-  playerCanvas: {fileID: 0}
+  playerCanvas: {fileID: 1126447358}
   staticPlayerInventory: {fileID: 1126447359}
   itemDataEntries:
   - Name: Sword
@@ -4569,6 +4569,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+--- !u!1 &1868804915 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 769206792841266335, guid: 59476abdbc3bbc142b2a18647269bade, type: 3}
+  m_PrefabInstance: {fileID: 1868804914}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1910031556
 PrefabInstance:
   m_ObjectHideFlags: 0

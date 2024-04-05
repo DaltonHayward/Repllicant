@@ -31,14 +31,10 @@ public class ItemController : MonoBehaviour
                 //Inventory_Item newItem = Instantiate(InventoryController.instance.ItemPrefab).GetComponent<Inventory_Item>();
                 if (!isPickedUp && InventoryController.playerInventory.CheckForFreeSpace(itemData))
                 {
-                    Debug.Log("Picked up " + itemData.Name + isPickedUp);
                     isPickedUp = true;
                     InventoryController.instance.InsertNewItem(itemData, InventoryController.playerInventory);
-                    Debug.Log("Added " + itemData.Name + " to inventory");
                     CraftingManager.instance.inventoryInteraction.AddItemNotification(itemData.Name);
-                    Debug.Log("Setting child to false");
                     transform.GetChild(0).gameObject.SetActive(false);
-                    Debug.Log("Should destroy");
                     Destroy(gameObject);
                 }
                 else

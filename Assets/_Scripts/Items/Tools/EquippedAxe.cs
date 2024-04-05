@@ -30,8 +30,13 @@ public class EquippedAxe : EquippedTool
                 // send fire signal if burning
                 ISubscriber subscriber = other.GetComponent<ISubscriber>();
                 if(invTool.isShocked && subscriber != null){
-                c.GetComponent<Wood>().ReceiveMessage("Shocked:"+Damage+","+3);
-                }
+                    if(isBurning){
+                        c.GetComponent<Wood>().ReceiveMessage("Shocked&Burning:"+Damage+","+3);
+                    }
+                    else{
+                        c.GetComponent<Wood>().ReceiveMessage("Shocked:"+Damage+","+3);
+                    }
+                }    
                 if (isBurning && subscriber != null)
                 {
                     
@@ -61,7 +66,12 @@ public class EquippedAxe : EquippedTool
             ISubscriber subscriber = other.GetComponent<ISubscriber>();
             if (subscriber != null)
             {
-                if (invTool.isShocked)
+                if (invTool.isShocked&&invTool.isBurning)
+                {
+                    var Jumps = 3;
+                    subscriber.ReceiveMessage("Shocked&Burning:" + Damage*1.2 + "," + Jumps);
+                }
+                else if (invTool.isShocked)
                 {
                     var Jumps = 3;
                     Debug.Log("Sword Sending Shocked Message" + Damage/2);

@@ -137,12 +137,10 @@ public class Wood : Collectible, ISubscriber
             Debug.Log("Enemy is shocked");
             string[] sections = channel.Split(':');
             string[] values = sections[1].Split(',');
-
             if (values.Length == 2)
             {
                 float damage;
                 int jumps;
-
                 if (float.TryParse(values[0].Trim(), out damage) && int.TryParse(values[1].Trim(), out jumps))
                 {
                     Collider[] colliders = Physics.OverlapSphere(transform.position, 10f);
@@ -159,11 +157,15 @@ public class Wood : Collectible, ISubscriber
                             lightning.GetComponent<LightningBullet>().SetDirection(collider.bounds.center,damage-5,"Shocked:"+damage);
                             damage = (float)(damage *.90);
                             jumps--;
-                            
-                            collider.gameObject.GetComponent<ISubscriber>().ReceiveMessage("Shocked:" + damage + "," + jumps);
+                            if (channel.Contains("Burning")){
+                                collider.gameObject.GetComponent<ISubscriber>().ReceiveMessage("Shocked&Burning:" + damage + "," + jumps);
+                            }
+                            else{
+                                collider.gameObject.GetComponent<ISubscriber>().ReceiveMessage("Shocked:" + damage + "," + jumps);
+                            }
+                            Debug.Log("MessageSendingDone");
                             TakeDamage(damage);
                         }
-                        
                     }
                     else
                     {
@@ -173,7 +175,7 @@ public class Wood : Collectible, ISubscriber
             }
         }
 
-        if (channel.Equals("Burning"))
+        if (channel.Contains("Burning"))
         {
             if (isBurning)
             {
