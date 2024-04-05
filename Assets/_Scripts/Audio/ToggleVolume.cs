@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ControllerVCA : MonoBehaviour
+public class ToggleVolume : MonoBehaviour
 {
 
     private FMOD.Studio.VCA controllerVCA;
 
     public string nameVCA;
 
-    private Slider slider;
+    private Toggle toggle;
 
     // Start is called before the first frame update
     void Start()
     {
         controllerVCA = FMODUnity.RuntimeManager.GetVCA("vca:/" + nameVCA);
-        slider = GetComponent<Slider>();
+        toggle = GetComponent<Toggle>();
     }
 
-   
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
     public void SetVolume(float volume)
     {
