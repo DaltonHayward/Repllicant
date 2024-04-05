@@ -127,7 +127,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 145.17435, y: -0.51, z: -68.434494}
-  m_LocalScale: {x: 2.458, y: 1.4011356, z: 1}
+  m_LocalScale: {x: 1.3270249, y: 1.4011356, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4578846681889098397}
@@ -199,14 +199,17 @@ MonoBehaviour:
   lastSkillTime: 0
   player: {fileID: 0}
   navMeshAgent: {fileID: 0}
-  commonItems: []
+  commonItems:
+  - {fileID: 8760400047210153315, guid: d90d23a4c475e78408ed1ba383caed33, type: 3}
   uncommonItems: []
-  rareItems: []
-  legendaryItems: []
-  commonItemProbability: 1
+  rareItems:
+  - {fileID: 8760400047210153315, guid: 5a61e8027f8fb5245b97b87becabe23a, type: 3}
+  legendaryItems:
+  - {fileID: 8760400047210153315, guid: 2acc1451ca0b347ce9283ab59b9d41a5, type: 3}
+  commonItemProbability: 0.6
   uncommonItemsProbability: 0
-  rareItemsProbability: 0
-  legendaryItemsProbability: 0
+  rareItemsProbability: 0.3
+  legendaryItemsProbability: 0.1
   strokeBackDistance: 0
   WaveAttack: 0
   chargespeed: 0
