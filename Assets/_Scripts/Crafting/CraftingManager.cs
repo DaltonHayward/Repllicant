@@ -85,6 +85,19 @@ public class CraftingManager : MonoBehaviour
         isCraftingOpened = false;
     }
 
+    public void CraftingToggle(bool active)
+    {
+        if (active == true)
+        {
+            EnterCraftingMode();
+        }
+
+        if (active == false)
+        {
+            ExitCraftingMode();
+        }
+    }
+
     public void CraftSelectedItem()
     {
         
