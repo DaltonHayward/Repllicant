@@ -40,7 +40,7 @@ public class EffectableObject : MonoBehaviour
         bool active = false;
         for (int i = 0; i < ActiveEffects.Count; i++)
         {
-            if (ActiveEffects[i].name == effectTemplate.name)
+            if (ActiveEffects[i].name == effectTemplate.name && ActiveEffects[i].IsActive)
             {
                 Debug.Log("EFFECT ACTIVE = TRUE");
                 active = true;
