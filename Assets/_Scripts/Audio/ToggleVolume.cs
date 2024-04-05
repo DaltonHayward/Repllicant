@@ -15,7 +15,8 @@ public class ToggleVolume : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controllerVCA = FMODUnity.RuntimeManager.GetVCA("vca:/" + nameVCA);
+        controllerVCA = FMODUnity.RuntimeManager.GetVCA("vca:/Master");
+        //vca:/Master
         toggle = GetComponent<Toggle>();
     }
 
@@ -25,8 +26,18 @@ public class ToggleVolume : MonoBehaviour
         
     }
 
-    public void SetVolume(float volume)
+    public void SetVolume(bool value)
     {
+        float volume = 1f;
+        if (value == true)
+        {
+            volume = 0f;
+        }
+        if (value == false)
+        {
+            volume = 1f;
+        }
+
         controllerVCA.setVolume(volume);
     }
 }

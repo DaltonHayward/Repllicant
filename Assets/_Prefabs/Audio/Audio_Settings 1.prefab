@@ -344,7 +344,7 @@ MonoBehaviour:
       - m_Target: {fileID: 4619257510678231931}
         m_TargetAssemblyTypeName: ToggleVolume, Assembly-CSharp
         m_MethodName: SetVolume
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -550,6 +550,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Music_Volume_Slider (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2004312225741136245, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
+      propertyPath: nameVCA
+      value: Music
+      objectReference: {fileID: 0}
     - target: {fileID: 3290169550156630942, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -588,7 +592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4035827572550709535, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4035827572550709535, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -814,6 +818,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Master_Volume_Slider
       objectReference: {fileID: 0}
+    - target: {fileID: 2004312225741136245, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
+      propertyPath: nameVCA
+      value: Master
+      objectReference: {fileID: 0}
     - target: {fileID: 2438358501989834556, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
       propertyPath: m_Color.b
       value: 0.33962262
@@ -864,7 +872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4035827572550709535, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4035827572550709535, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -1106,6 +1114,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SFX_Volume_Slider (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2004312225741136245, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
+      propertyPath: nameVCA
+      value: SFX
+      objectReference: {fileID: 0}
     - target: {fileID: 3290169550156630942, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1144,7 +1156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4035827572550709535, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4035827572550709535, guid: c3405a428db1ba440b2e8b336bb2a226, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
