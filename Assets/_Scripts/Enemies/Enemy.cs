@@ -56,7 +56,6 @@ public class Enemy : MonoBehaviour, ISubscriber
         // handles attack message
         if (channel.StartsWith("Attacked"))
         {
-            Debug.Log("Enemy attacked");
             // apply damage from message
             float damage;
             if (float.TryParse(parts[1].Trim(), out damage))
@@ -69,7 +68,7 @@ public class Enemy : MonoBehaviour, ISubscriber
         {
             navMeshAgent.speed *= float.Parse(parts[1].Trim());
         }
-        else if (channel.StartsWith("Shocked:"))
+        else if (channel.Contains("Shocked"))
         {
             Debug.Log("Enemy is shocked");
             string[] sections = channel.Split(':');

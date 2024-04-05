@@ -15,6 +15,7 @@ public class EquippedSword : EquippedTool
             {
                 if (invTool.isShocked && invTool.isBurning)
                 {
+                    Debug.Log("Sword Sending Shocked&Burning Message"+Damage);
                     var Jumps = 3;
                     subscriber.ReceiveMessage("Shocked&Burning:" + Damage*2 + "," + Jumps);
                 }
