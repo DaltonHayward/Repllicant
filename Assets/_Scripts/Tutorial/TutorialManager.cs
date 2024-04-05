@@ -82,7 +82,7 @@ public class TutorialManager : MonoBehaviour, IDataPersistance
                 boat.GetComponentInChildren<Interactor>().interactable = true;
                 compass.SetActive(true);
                 daltonNPC = true;
-                tProgress = 999;
+                tProgress = 10;
                 break;
             default:
                 Debug.Log("Changing to next tutorial step:" + progress);

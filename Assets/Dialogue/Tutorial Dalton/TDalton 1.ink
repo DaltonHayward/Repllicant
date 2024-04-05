@@ -30,8 +30,6 @@ Once you have something equipped, you can swing it by left-clicking.
 You can cycle your equipped items by using the -scroll wheel- on your mouse.
 Does that make sense?
 + [Ya I guess]
-    Great! Now... could you do me a favour?
-    And clear those trees and rocks for me so I can set up my tent?
     -> tools
 + [Umm not really]
     -> tutorialRecap
@@ -47,7 +45,7 @@ Cycle items by using the -scroll wheel-
 -> tools
 
 === tools ===
-But first... could you do me a favour?
+Before you go... could you do me a favour?
     And clear those trees and rocks for me so I can set up my tent?
     Here are some tools that should help.
 ~ npcAddItem("Sword")
