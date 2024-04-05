@@ -51,7 +51,7 @@ public class ProgressManager : MonoBehaviour, IDataPersistance
                 break;
             case 11:
                 Debug.Log("Changing to next tutorial step:" + progress);
-                message = "Bring the three reagents to your crewmates to obtain the necessary items to challenge the Siren.";
+                message = "Bring the three reagents obtained by defeating monsters back to your crewmates to obtain the necessary items to challenge the Siren.";
                 tutorialMessages.GetComponent<TutorialMessages>().ChangeTutorialMessage(message);
                 break;
             case 12:

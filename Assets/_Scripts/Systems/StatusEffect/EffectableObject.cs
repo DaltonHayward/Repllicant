@@ -18,14 +18,20 @@ public class EffectableObject : MonoBehaviour
     void Update()
     {
         // tick active effects - cleanup any that are finished (loops backwards on purpose)
-        for (int index = ActiveEffects.Count - 1; index >= 0; --index)
+        //for (int index = 0; index < ActiveEffects.Count; index++) //for (int index = ActiveEffects.Count - 1; index >= 0; --index)
+        foreach (BaseEffect active in ActiveEffects)
         {
-            ActiveEffects[index].TickEffect();
+            //ActiveEffects[index].TickEffect();
+            active.TickEffect();
 
             // check if effect is finished
-            if (!ActiveEffects[index].IsActive)
+            //if (!ActiveEffects[index].IsActive)
+            if (!active.IsActive)
             {
-                ActiveEffects.RemoveAt(index);
+                //ActiveEffects.RemoveAt(index);
+                ActiveEffects.Remove(active);
+
+                Debug.Log(ActiveEffects.Count);
             }
         }
     }
@@ -40,7 +46,7 @@ public class EffectableObject : MonoBehaviour
         bool active = false;
         for (int i = 0; i < ActiveEffects.Count; i++)
         {
-            if (ActiveEffects[i].name == effectTemplate.name)
+            if (ActiveEffects[i].name == effectTemplate.name && ActiveEffects[i].IsActive)
             {
                 Debug.Log("EFFECT ACTIVE = TRUE");
                 active = true;
